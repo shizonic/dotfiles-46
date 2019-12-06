@@ -1,6 +1,6 @@
 [user]
         email = paxchristi888@gmail.com
         name = Adam Schaefers
-	signingkey = D8B69F47DF12D190A5EAF311436087C84C06B40B
+        signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 [commit]
-	gpgsign = true
+        gpgsign = true

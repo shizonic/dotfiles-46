@@ -13,14 +13,22 @@
 (use-package better-defaults
   :config
   (ido-mode t)
-  (setq ido-enable-flex-matching t
+  (setq ido-everywhere t
+        ido-enable-flex-matching t
+        ido-use-filename-at-point 'guess
+        ido-create-new-buffer 'always
         visible-bell nil
         tab-always-indent 'complete
         tramp-default-method "ssh"
         vc-follow-symlinks t
         tramp-copy-size-limit nil
         browse-url-browser-function 'eww-browse-url
-        save-interprogram-paste-before-kill t)
+        save-interprogram-paste-before-kill t
+        dired-auto-revert-buffer t)
+
+  (setq-default indent-tabs-mode nil
+          tab-width 8
+          fill-column 80)
 
   (delete-selection-mode 1)
 
@@ -29,20 +37,7 @@
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
 
-  (setq-default indent-tabs-mode nil
-                tab-width 8
-                fill-column 80)
-
   (fset 'yes-or-no-p 'y-or-n-p)
-
-  (setq dired-auto-revert-buffer t)
-  ;; (require 'dired-x)
-  ;; (add-hook 'dired-load-hook
-  ;;           (function (lambda () (load "dired-x"))))
-
-  ;; (with-eval-after-load 'async
-  ;;   (autoload 'dired-async-mode "dired-async.el" nil t)
-  ;;   (dired-lasync-mode 1))
 
   (winner-mode 1)
 
@@ -60,7 +55,7 @@
 (global-set-key (kbd "C-c i") 'my-erc)
 (global-set-key (kbd "C-c b") 'eww)
 (global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c s") '(lambda () (interactive)(shell)(delete-other-windows)))
+(global-set-key (kbd "C-c s") 'shell)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
@@ -121,7 +116,6 @@
   :config
   (setq password-cache-expiry nil)
   (setq epa-pinentry-mode 'loopback))
-  ;; (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version)))
 
 (load-file "~/.emacs.code.el")
 (load-file "~/.emacs.gnus.el")

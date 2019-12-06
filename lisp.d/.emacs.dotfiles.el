@@ -14,7 +14,7 @@
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
   (setq dotfiles-bash-logout "
-  if [ $\(tty\) = \"/dev/tty2\"; then
+  if [ $\(tty\) = \"/dev/tty2\" ]; then
       keychain --agents gpg -k all
       keychain --agents ssh -k all]
   fi

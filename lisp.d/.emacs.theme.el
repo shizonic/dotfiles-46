@@ -4,6 +4,27 @@
 (display-time-mode 1)
 (blink-cursor-mode 1)
 
+(setq redshift '1000)
+
+(defun my-set-redshift (redshift)
+  (start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift))))
+
+(defun my-redshift-setter (x)
+  (if (> x 0)
+      (setq-local n '250)
+    (setq-local n '-250))
+  (setq redshift (+ n redshift))
+  (if (< redshift 1000)
+      (setq redshift '1000))
+  (if (> redshift 25000)
+      (setq redshift '25000))
+  (my-set-redshift redshift))
+
+(global-set-key (kbd "M-+") (lambda()(interactive)(my-redshift-setter 1)))
+(global-set-key (kbd "M--") (lambda()(interactive)(my-redshift-setter -1)))
+(global-set-key (kbd "<M-kp-multiply>") (lambda()(interactive)
+                                          (start-process-shell-command "redshift" nil "redshift -x")))
+
 (defun my-set-font (my-font my-font-size)
   (set-face-attribute 'default nil :font (concat my-font "-" (number-to-string my-font-size))))
 

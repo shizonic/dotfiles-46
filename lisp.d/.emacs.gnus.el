@@ -28,7 +28,7 @@
         (princ email (current-buffer))))))
 
 (setq gnus-use-full-window nil)
-(setq gnus-site-init-file "~/.emacs.gnus.el")
+(setq gnus-site-init-file "~/repos/dotfiles/lisp.d/.emacs.gnus.el")
 (setq gnus-save-newsrc-file nil)
 (setq gnus-startup-file "~/.emacs.d/.newsrc")
 (setq message-directory "~/.emacs.d/mail/")

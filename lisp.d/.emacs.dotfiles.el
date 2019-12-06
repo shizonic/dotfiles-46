@@ -36,7 +36,7 @@
   \[[ $- != *i* ]] && return
 
   unalias ls
-  PS1='$'
+  PS1='$ '
 
   keyopen () {
       eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906)

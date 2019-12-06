@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; general information
+;; misc
 (setq gc-cons-threshold 100000000
       debug-on-error nil
       custom-file "/dev/null"
@@ -9,7 +9,7 @@
       initial-major-mode 'emacs-lisp-mode
       inhibit-startup-screen nil)
 
-;; "(bail)" if no ssl enforcement
+;; enforce ssl
 (if (and (and (executable-find "gnutls-cli")
               (executable-find "python3"))
          (eq (call-process "python3" nil nil nil "-m" "certifi") 0))
@@ -24,7 +24,6 @@
               "\\\\" "/"
               (replace-regexp-in-string
                "\n" ""
-               (shell-command-to-string "python3 -m certifi")
                (shell-command-to-string "python3 -m certifi")))))
         (setq tls-program
               (list
@@ -54,9 +53,11 @@
 
 (setq use-package-always-ensure t)
 
+;; speed up use-package
 (use-package async
   :config (async-bytecomp-package-mode 1))
 
+;; update daily
 (use-package auto-package-update :defer t
   :init
   (setq auto-package-update-delete-old-versions t
@@ -65,7 +66,7 @@
         auto-package-update-prompt-before-update nil)
   (auto-package-update-maybe))
 
-;; load my elisp files
+;; load my elisp
 (use-package load-dir
   :config
   (setq load-dirs "~/repos/dotfiles/lisp.d")

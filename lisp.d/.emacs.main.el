@@ -43,7 +43,7 @@
 (global-set-key (kbd "C-c i") 'my-erc)
 (global-set-key (kbd "C-c b") 'eww)
 (global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c s") 'shell)
+(global-set-key (kbd "C-c $") 'shell)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
@@ -62,7 +62,7 @@
   :defer t
   :bind (("C-c r" . crux-rename-buffer-and-file)
          ("C-c k" . crux-kill-whole-line)
-         ("C-c $" . crux-create-scratch-buffer)
+         ("C-c #" . crux-create-scratch-buffer)
          ("C-o" . crux-smart-open-line-above)
          ("C-j" . crux-smart-open-line)
          ("C-c r" . crux-recentf-find-file)

@@ -1,4 +1,0 @@
-application/pdf; emacsclient %s
-image/png; emacsclient %s
-image/jpeg; emacsclient %s
-image/gif; emacsclient %s

@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (setq my-font "Noto Sans Mono")
 (setq my-font-size '10)
 (setq display-time-default-load-average nil)
@@ -54,6 +56,6 @@
       :config
       (doom-modeline-mode 1))
 
-(use-package plan9-theme
+(use-package plan9-theme :disabled
   :config
   (load-theme 'plan9 t))

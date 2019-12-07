@@ -1,13 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; misc
 (setq gc-cons-threshold 100000000
-      debug-on-error nil
-      custom-file "/dev/null"
-      user-full-name "Adam Schaefers"
-      user-mail-address "paxchristi888@gmail.com"
-      initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen nil)
+      debug-on-error nil)
 
 ;; enforce ssl
 (if (and (and (executable-find "gnutls-cli")
@@ -71,3 +65,5 @@
   :config
   (setq load-dirs "~/repos/dotfiles/lisp.d")
   (load-dirs))
+
+(add-hook 'after-init-hook 'server-start t)

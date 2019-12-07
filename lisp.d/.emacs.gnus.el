@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; use my custom address inserter
 (setq my-contacts-file "~/contacts.el")
 (when (file-exists-p my-contacts-file)

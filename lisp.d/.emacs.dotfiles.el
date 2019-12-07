@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (defun dotfiles-install ()
   (interactive)
 
@@ -100,7 +102,6 @@ xset b off
 xset dpms 0 0 1860
 
 xset r rate 200 60
-setxkbmap -option ctrl:swap_lalt_lctl -option caps:menu
 
 touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
 xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1

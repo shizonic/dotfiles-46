@@ -1,106 +1,93 @@
-(use-package better-defaults
-  :config
-  (ido-mode t)
-  (setq ido-everywhere t
-        ido-enable-flex-matching t
-        ido-use-filename-at-point 'guess
-        ido-create-new-buffer 'always
-        visible-bell nil
-        tab-always-indent 'complete
-        tramp-default-method "ssh"
-        vc-follow-symlinks t
-        tramp-copy-size-limit nil
-        browse-url-browser-function 'eww-browse-url
-        save-interprogram-paste-before-kill t
-        dired-auto-revert-buffer t)
+;;; -*- lexical-binding: t; -*-
 
-  (setq-default indent-tabs-mode nil
-          tab-width 8
-          fill-column 80)
+;; first things
+(setq user-full-name "Adam Schaefers"
+      user-mail-address "paxchristi888@gmail.com"
+      initial-major-mode 'emacs-lisp-mode
+      inhibit-startup-screen nil
+      custom-file "/dev/null")
 
-  (delete-selection-mode 1)
+;; begin with `better-defaults'
+(progn
+  (unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode))
+    (ido-mode t)
+    (setq ido-enable-flex-matching t))
 
-  (prefer-coding-system 'utf-8)
-  (set-default-coding-systems 'utf-8)
-  (set-terminal-coding-system 'utf-8)
-  (set-keyboard-coding-system 'utf-8)
+  (unless (eq window-system 'ns)
+    (menu-bar-mode -1))
+  (when (fboundp 'tool-bar-mode)
+    (tool-bar-mode -1))
+  (when (fboundp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
+  (when (fboundp 'horizontal-scroll-bar-mode)
+    (horizontal-scroll-bar-mode -1))
 
-  (fset 'yes-or-no-p 'y-or-n-p)
+  (autoload 'zap-up-to-char "misc"
+    "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-  (winner-mode 1)
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
 
-  (defun spacemacs/alternate-buffer (&optional window)
-    (interactive)
-    (let ((current-buffer (window-buffer window)))
-      (switch-to-buffer
-       (cl-find-if (lambda (buffer)
-                     (not (eq buffer current-buffer)))
-                   (mapcar #'car (window-prev-buffers window)))))))
+  (require 'saveplace)
+  (setq-default save-place t)
 
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
-(global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-(global-set-key (kbd "C-c i") 'my-erc)
-(global-set-key (kbd "C-c b") 'eww)
-(global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c $") 'shell)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
-(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
-(global-set-key (kbd "<f5>") 'compile)
-(global-set-key (kbd "C-c ;") 'comment-line)
-(global-set-key (kbd "C-c t r") 'region-to-termbin)
-(global-set-key (kbd "C-c t b") 'buffer-to-termbin)
-(global-set-key (kbd "<s-return>")
-                '(lambda (command)
-                   (interactive (list (read-shell-command "$ ")))
-                   (start-process-shell-command command nil command)))
+  (global-set-key (kbd "M-/") 'hippie-expand)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+  (global-set-key (kbd "M-z") 'zap-up-to-char)
 
-(use-package browse-kill-ring :bind (("M-y" . browse-kill-ring)))
+  (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+  (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+  (global-set-key (kbd "C-M-s") 'isearch-forward)
+  (global-set-key (kbd "C-M-r") 'isearch-backward)
 
-(use-package crux
-  :defer t
-  :bind (("C-c r" . crux-rename-buffer-and-file)
-         ("C-c k" . crux-kill-whole-line)
-         ("C-c #" . crux-create-scratch-buffer)
-         ("C-o" . crux-smart-open-line-above)
-         ("C-j" . crux-smart-open-line)
-         ("C-c r" . crux-recentf-find-file)
-         ("C-c r" . crux-rename-buffer-and-file)
-         ("C-c d" . crux-duplicate-current-line-or-region)
-         ("C-c D" . crux-delete-buffer-and-file)
-         ("C-c K" . crux-kill-other-buffers)
-         ("C-c I" . crux-find-user-init-file)))
+  (show-paren-mode 1)
+  (setq-default indent-tabs-mode nil)
+  (setq save-interprogram-paste-before-kill t
+        apropos-do-all t
+        mouse-yank-at-point t
+        require-final-newline t
+        visible-bell t
+        load-prefer-newer t
+        ediff-window-setup-function 'ediff-setup-windows-plain
+        save-place-file (concat user-emacs-directory "places")
+        backup-directory-alist `(("." . ,(concat user-emacs-directory
+                                                 "backups")))))
 
-(use-package hydra
-  :init (use-package transpose-frame :defer t)
-  :bind (("<menu>" . windows-hydra/body))
-  :config
-  (defhydra windows-hydra (:exit nil)
-    ("h" (call-interactively 'shrink-window-horizontally) "shrink-left")
-    ("j" (call-interactively 'shrink-window) "shrink-down")
-    ("k" (call-interactively 'enlarge-window) "grow-up")
-    ("l" (call-interactively 'enlarge-window-horizontally) "grow-right")
-    ("r" (rotate-frame-anticlockwise) "rotate")
-    ("o" (call-interactively 'other-window))
-    ("1" (call-interactively 'delete-other-windows))
-    ("2" (call-interactively 'split-window-below))
-    ("3" (call-interactively 'split-window-right))
-    ("0" (call-interactively 'delete-window))
-    ("<menu>" nil)))
+;; my preferences on top of `better-defaults'
+;; + settings I found from Prelude and Spacemacs
+(ido-mode t)
+(setq ido-everywhere t
+      ido-enable-flex-matching t
+      ido-use-filename-at-point 'guess
+      ido-create-new-buffer 'always
+      visible-bell nil
+      tab-always-indent 'complete
+      tramp-default-method "ssh"
+      vc-follow-symlinks t
+      tramp-copy-size-limit nil
+      browse-url-browser-function 'eww-browse-url
+      save-interprogram-paste-before-kill t
+      dired-auto-revert-buffer t)
 
-(use-package pdf-tools
-  :magic ("%PDF" . pdf-view-mode)
-  :config
-  (pdf-tools-install :no-query))
+(setq-default indent-tabs-mode nil
+              tab-width 8
+              fill-column 80)
 
-(use-package edit-server :defer t
-  :init
-  (add-hook 'after-init-hook 'server-start t)
-  (add-hook 'after-init-hook 'edit-server-start t))
+(delete-selection-mode 1)
 
-(use-package keychain-environment
-  :init (use-package pinentry :config (pinentry-start))
-  :config
-  (setq password-cache-expiry nil)
-  (setq epa-pinentry-mode 'loopback))
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(winner-mode 1)
+
+(defun spacemacs/alternate-buffer (&optional window)
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))

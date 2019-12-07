@@ -1,3 +1,11 @@
+;;; -*- lexical-binding: t; -*-
+
+(use-package keychain-environment
+  :init (use-package pinentry :config (pinentry-start))
+  :config
+  (setq password-cache-expiry nil)
+  (setq epa-pinentry-mode 'loopback))
+
 (defun region-to-termbin (start end)
   "push the marked region to termbin.com via shell command"
   (interactive "r")

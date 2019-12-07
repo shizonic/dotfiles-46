@@ -4,13 +4,13 @@
   "Swapping lctl and lalt is the easiest way to make Emacs ergo-friendly.")
 (when (and (bound-and-true-p swap-lctl-lalt)
            (executable-find "setxkbmap"))
-    (start-process-shell-command "setxkbmap" nil "setxkbmap -option ctrl:swap_lalt_lctl"))
+    (start-process-shell-command "setxkbmap" nil "setxkbmap -option ctrl:swap_lalt_lctl && xset r rate 200 60"))
 
 (defvar hydra-on-caps t
   "Place a helpful hydra menu on Caps Lock.")
 (when (and (bound-and-true-p hydra-on-caps)
            (executable-find "setxkbmap"))
-    (start-process-shell-command "setxkbmap" nil "setxkbmap -option caps:menu"))
+    (start-process-shell-command "setxkbmap" nil "setxkbmap -option caps:menu && xset r rate 200 60"))
 
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))

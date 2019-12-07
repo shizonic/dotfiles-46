@@ -4,7 +4,17 @@
   :init (use-package pinentry :config (pinentry-start))
   :config
   (setq password-cache-expiry nil)
-  (setq epa-pinentry-mode 'loopback))
+  (setq epa-pinentry-mode 'loopback)
+
+  (defun keychain-unlock ()
+    (interactive)
+    (async-shell-command
+     "eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906) \
+  && emacsclient -e '(keychain-refresh-environment)'"))
+
+  (defun keychain-lock ()
+    (interactive)
+    (async-shell-command "keychain --agents ssh,gpg -k all")))
 
 (defun region-to-termbin (start end)
   "push the marked region to termbin.com via shell command"

@@ -15,6 +15,8 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 (global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
+(global-set-key (kbd "<home>") 'keychain-unlock)
+(global-set-key (kbd "<end>") 'keychain-lock)
 (global-set-key (kbd "C-c i") 'my-erc)
 (global-set-key (kbd "C-c b") 'eww)
 (global-set-key (kbd "C-c m") 'gnus)

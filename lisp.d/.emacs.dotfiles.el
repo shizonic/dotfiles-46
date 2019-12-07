@@ -20,7 +20,7 @@ fi")
   (f-write-text dotfiles-bash-logout 'utf-8 "~/.bash_logout")
 
   (setq dotfiles-bash-profile "export EDITOR=emacsclient
-export VISUAL=emacsclient
+export VISUAL=$EDITOR
 export PATH=~/bin:$PATH
 
 \[[ -f ~/.bashrc ]] && . ~/.bashrc")
@@ -31,15 +31,7 @@ export PATH=~/bin:$PATH
 
 unalias ls
 PS1='$ '
-
-keyopen () {
-    eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906)
-    emacsclient -e \"\(keychain-refresh-environment\)\"
-}
-
-keykill () {
-    keychain --agents ssh,gpg -k all
-}")
+")
 
   (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")
 
@@ -79,12 +71,8 @@ pinentry-program /usr/bin/pinentry-emacs")
   (setq dotfiles-config-gtk-3-0-settings "\[Settings]
 gtk-theme-name=Adwaita
 gtk-icon-theme-name=Adwaita
-gtk-font-name=Noto Sans 10
-gtk-cursor-theme-name=Adwaita
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle=hintslight
-gtk-xft-rgba=rgb")
+gtk-font-name=Noto Sans 12
+gtk-cursor-theme-name=Adwaita")
 
   (make-directory "~/.config/gtk-3.0" t)
   (f-write-text dotfiles-config-gtk-3-0-settings 'utf-8 "~/.config/gtk-3.0/settings.ini")

@@ -103,6 +103,7 @@ picom --backend glx &
 
 export XDG_CURRENT_DESKTOP=\"Exwm\";
 export _JAVA_AWT_WM_NONREPARENTING=\"1\";
+export GTK_MODULES="${GTK_MODULES:+$GTK_MODULES:}canberra-gtk-module"
 
 dbus-launch --exit-with-session emacs
 

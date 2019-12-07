@@ -92,11 +92,11 @@
 
 (setq-default mode-line-format '((:eval (simple-mode-line-render
                                          ;; left
-                                         (format-mode-line "%* %b %l:%c")
+                                         (format-mode-line "[%*] %b %l:%c [%m]")
                                          ;; right
                                          (format-mode-line (concat
                                                             random-quote
-                                                            (format-time-string " %Y-%m-%d %I:%M%p")))))))
+                                                            (format-time-string " [%Y-%m-%d] [%I:%M%p]")))))))
 
 ;; misc
 

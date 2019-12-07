@@ -14,7 +14,8 @@
                                      "#commanduser"
                                      "##apoptosis"
                                      "#phrackaged2"
-                                     "#artix")))
+                                     "#artix"
+                                     "#kisslinux")))
 
   (defun my-erc-multi-line-disable (string)
     "disable sending of multi-line messages entirely to avoid accidental flooding"
@@ -22,8 +23,6 @@
         (setq str nil)))
   (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable)
 
-  (setq erc-query-display 'buffer
-        erc-auto-query 'bury)
   (erc-track-mode -1)
   (use-package ercn
     :config

@@ -3,7 +3,7 @@
 (defun dotfiles-install ()
   (interactive)
 
-  (require 'f)
+  (use-package f)
   (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
 
   (make-directory "~/bin" t)
@@ -30,8 +30,7 @@ export PATH=~/bin:$PATH
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 
 unalias ls
-PS1='$ '
-")
+PS1='$ '")
 
   (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")
 

@@ -34,8 +34,14 @@
 ;; bootstrap use-package
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("gnu-elpa"     . "https://elpa.gnu.org/packages/"))
+      package-archive-priorities
+      '(("melpa-stable" . 5)
+        ("gnu-elpa"     . 1)
+        ("melpa"        . 10)))
 
 (package-initialize)
 

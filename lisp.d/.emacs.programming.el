@@ -38,22 +38,18 @@
 (electric-pair-mode 1)
 
 (use-package magit
-  :defer 5
+  :defer t
+  :pin melpa-stable
   :bind (("C-c g" . magit-status))
   :config
   (setq magit-diff-refine-hunk t)
   (setq magit-repository-directories '(("~/repos" . 1))))
 
 (use-package projectile
-  :defer 5
-  :bind-keymap ("C-c p" . projectile-command-map)
+  :defer t
+  :bind-keymap (("C-c p" . projectile-command-map))
   :config
-  (projectile-mode 1)
-
-  (when (require 'magit nil t)
-    (mapc 'projectile-add-known-project
-          (mapcar 'file-name-as-directory (magit-list-repos)))
-    (projectile-save-known-projects)))
+  (projectile-mode 1))
 
 (use-package flycheck
   :defer t

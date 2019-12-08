@@ -60,6 +60,7 @@
       ido-enable-flex-matching t
       ido-use-filename-at-point 'guess
       ido-create-new-buffer 'always
+      ido-auto-merge-work-directories-length -1
       visible-bell nil
       tab-always-indent 'complete
       tramp-default-method "ssh"

@@ -2,7 +2,7 @@
 
 ;; Swapping lctl and lalt is the easiest way to make Emacs ergo-friendly.
 ;; And Place a helpful hydra menu on Caps Lock.
-;; (start-process-shell-command "setxkbmap" nil "setxkbmap -option ctrl:swap_lalt_lctl -option caps:menu")
+(start-process-shell-command "setxkbmap" nil "setxkbmap -option ctrl:swap_lalt_lctl -option caps:menu")
 
 ;; Faster keyboard repeat
 (start-process-shell-command "xset" nil "xset r rate 200 60")
@@ -21,7 +21,7 @@
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
 (global-set-key (kbd "<f5>") 'compile)
-(global-set-key (kbd "C-c ;") 'comment-line)
+(global-set-key (kbd "C-c C-;") 'comment-line)
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 (global-set-key (kbd "<s-return>")
@@ -35,6 +35,7 @@
   :defer t
   :bind (("C-c r" . crux-rename-buffer-and-file)
          ("C-c k" . crux-kill-whole-line)
+         ("<C-backspace>" . crux-kill-line-backwards)
          ("C-c #" . crux-create-scratch-buffer)
          ("C-o" . crux-smart-open-line-above)
          ("C-j" . crux-smart-open-line)

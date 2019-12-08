@@ -17,7 +17,6 @@
 (global-set-key (kbd "C-c m") 'gnus)
 (global-set-key (kbd "C-c $") 'shell)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c e") (lambda()(interactive)(load-file "~/.emacs")))
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
 (global-set-key (kbd "<f5>") 'compile)

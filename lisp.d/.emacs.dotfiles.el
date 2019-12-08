@@ -19,13 +19,18 @@ fi")
 
   (f-write-text dotfiles-bash-logout 'utf-8 "~/.bash_logout")
 
-  (setq dotfiles-bash-profile "export EDITOR=emacsclient
+  (setq dotfiles-profile "export EDITOR=emacsclient
 export VISUAL=$EDITOR
 export PATH=~/bin:$PATH
 
-\[[ -f ~/.bashrc ]] && . ~/.bashrc")
+\[ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\"
 
-  (f-write-text dotfiles-bash-profile 'utf-8 "~/.bash_profile")
+echo \"start X?\"
+read -r && \[ -z \"$DISPLAY\" ] &&
+    sx
+")
+
+  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 

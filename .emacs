@@ -2,6 +2,7 @@
 
 (setq gc-cons-threshold 100000000
       debug-on-error nil)
+(toggle-frame-fullscreen)
 
 ;; enforce ssl
 (if (and (and (executable-find "gnutls-cli")

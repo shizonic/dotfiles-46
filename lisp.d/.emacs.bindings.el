@@ -1,4 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
+;; nearly all of my binds are in this file
+;; except some that are in .emacs.programming.el
 
 ;; Swapping lctl and lalt is the easiest way to make Emacs ergo-friendly.
 ;; And Place a helpful hydra menu on Caps Lock.

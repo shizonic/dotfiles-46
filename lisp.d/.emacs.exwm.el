@@ -34,27 +34,19 @@
               ([?\C-s] . [?\C-f]))))
     (exwm-enable)
     (exwm-config-ido))
-  (exwm-config-default)
+  (exwm-config-default))
 
-  (exwm-input-set-key (kbd "<s-return>") ;; a simple launcher
-                '(lambda (command)
-                   (interactive (list (read-shell-command "$ ")))
-                   (start-process-shell-command command nil command)))
-  (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-  (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-  (exwm-input-set-key (kbd "<menu>") 'windows-hydra/body)
+(use-package desktop-environment
+  :config
+  (desktop-environment-mode 1)
+  (setq desktop-environment-brightness-set-command "lux.sh %s"
+        desktop-environment-brightness-normal-increment "-a 5%"
+        desktop-environment-brightness-normal-decrement "-s 5%"
+        desktop-environment-brightness-get-command "lux.sh -G")
 
-  (use-package desktop-environment
-    :config
-    (desktop-environment-mode 1)
-    (setq desktop-environment-brightness-set-command "lux.sh %s"
-          desktop-environment-brightness-normal-increment "-a 5%"
-          desktop-environment-brightness-normal-decrement "-s 5%"
-          desktop-environment-brightness-get-command "lux.sh -G")
-
-    (exwm-input-set-key
-     (kbd "<s-kp-multiply>") 'desktop-environment-toggle-mute)
-    (exwm-input-set-key
-     (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
-    (exwm-input-set-key
-     (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)))
+  (exwm-input-set-key
+   (kbd "<s-kp-multiply>") 'desktop-environment-toggle-mute)
+  (exwm-input-set-key
+   (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
+  (exwm-input-set-key
+   (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement))

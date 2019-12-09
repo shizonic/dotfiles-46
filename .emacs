@@ -52,7 +52,8 @@
 (eval-when-compile
   (require 'use-package))
 
-(setq use-package-always-ensure t)
+(setq use-package-always-ensure t
+      use-package-always-demand t)
 
 ;; speed up use-package
 (use-package async

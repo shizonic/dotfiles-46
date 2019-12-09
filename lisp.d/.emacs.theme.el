@@ -1,10 +1,10 @@
 ;;; -*- lexical-binding: t; -*-
-(setq my-theme "dark")
+(setq my-theme "light")
 
 ;; font
 
 (setq my-font "Noto Sans Mono")
-(setq my-font-size '22)
+(setq my-font-size '15)
 
 (defun my-set-font (my-font my-font-size)
   (set-face-attribute 'default nil :font (concat my-font "-" (number-to-string my-font-size))))
@@ -62,19 +62,6 @@
 
 ;; modeline
 
-(use-package all-the-icons :defer t :disabled
-  :init (unless (file-exists-p "~/.local/share/fonts/all-the-icons.ttf")
-          (all-the-icons-install-fonts t)))
-
-(use-package all-the-icons-dired :defer t :disabled
-  :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-
-(use-package doom-modeline :disabled
-  :config
-  (setq display-time-default-load-average nil)
-  (display-time-mode 1)
-  (doom-modeline-mode 1))
-
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
  aligned respectively."
@@ -90,7 +77,8 @@
   (random-choice
    '("[♥][♦] Hacker's Delight [♣][♠]")))
 
-(setq-default mode-line-format '((:eval (simple-mode-line-render
+(setq-default mode-line-format
+              '((:eval (simple-mode-line-render
                                          ;; left
                                          (format-mode-line "%* %b %l:%c %m")
                                          ;; right

@@ -9,7 +9,7 @@
 
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
-(global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
+(global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "<home>") 'keychain-unlock)
 (global-set-key (kbd "<end>") 'keychain-lock)
 (global-set-key (kbd "C-c i") 'my-erc)
@@ -28,10 +28,19 @@
                    (interactive (list (read-shell-command "$ ")))
                    (start-process-shell-command command nil command)))
 
+(with-eval-after-load 'exwm
+    (exwm-input-set-key (kbd "<s-return>") ;; a simple launcher
+                '(lambda (command)
+                   (interactive (list (read-shell-command "$ ")))
+                   (start-process-shell-command command nil command)))
+
+  (exwm-input-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
+  (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
+  (exwm-input-set-key (kbd "<menu>") 'windows-hydra/body))
+
 (use-package browse-kill-ring :bind (("M-y" . browse-kill-ring)))
 
 (use-package crux
-  :defer t
   :bind (("C-c r" . crux-rename-buffer-and-file)
          ("C-c k" . crux-kill-whole-line)
          ("<C-backspace>" . crux-kill-line-backwards)
@@ -46,7 +55,7 @@
          ("C-c I" . crux-find-user-init-file)))
 
 (use-package hydra
-  :init (use-package transpose-frame :defer t)
+  :init (use-package transpose-frame)
   :bind (("<menu>" . windows-hydra/body))
   :config
   (defhydra windows-hydra (:exit nil)

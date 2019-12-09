@@ -61,6 +61,7 @@
       ido-use-filename-at-point 'guess
       ido-create-new-buffer 'always
       ido-auto-merge-work-directories-length -1
+      frame-resize-pixelwise t ;; for ratpoison
       visible-bell nil
       tab-always-indent 'complete
       tramp-default-method "ssh"
@@ -68,7 +69,8 @@
       tramp-copy-size-limit nil
       browse-url-browser-function 'eww-browse-url
       save-interprogram-paste-before-kill t
-      dired-auto-revert-buffer t)
+      dired-auto-revert-buffer t
+      max-mini-window-height nil)
 
 (setq-default indent-tabs-mode nil
               tab-width 8

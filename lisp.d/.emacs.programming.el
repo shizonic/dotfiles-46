@@ -28,17 +28,13 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (message "pushing buffer to termbin.com...")
   (shell-command-on-region (point-min) (point-max) "nc termbin.com 9999" "*Termbin*"))
 
-(require 'whitespace)
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(require 'paren)
 (show-paren-mode 1)
 
-(require 'elec-pair)
 (electric-pair-mode 1)
 
 (use-package magit
-  :defer t
   :pin melpa-stable
   :bind (("C-c g" . magit-status))
   :config
@@ -46,16 +42,16 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (setq magit-repository-directories '(("~/repos" . 1))))
 
 (use-package projectile
-  :defer t
   :bind-keymap (("C-c p" . projectile-command-map))
   :config
   (projectile-mode 1))
 
 (use-package flycheck
-  :defer t
   :bind (("C-c f" . flycheck-mode)))
 
 ;;; LANGS
+
+;; shell
 
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
@@ -67,12 +63,60 @@ emacsclient -e '(keychain-refresh-environment)'"))
                   (async-shell-command (buffer-file-name))))))
 (add-hook 'sh-mode-hook 'my-shell-mode-hook)
 
-(require 'lisp-mode)
+;; C
+
+(defun c-mode-common-defaults ()
+  (setq c-default-style "k&r"
+        c-basic-offset 4)
+  (c-set-offset 'substatement-open 0))
+
+(add-hook 'c-mode-common-hook 'c-mode-common-defaults)
+
+(defun makefile-mode-defaults ()
+  (whitespace-toggle-options '(tabs))
+  (setq indent-tabs-mode t))
+
+(add-hook 'makefile-mode-hook 'makefile-mode-defaults)
+
+;; lisp
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (or lispy-mode parinfer-mode smartparens-strict-mode paredit-mode) (equal (substring str -1) ")"))
+  (if (and (parinfer-mode) (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
+
+(global-set-key "%" 'match-paren)
+
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
+        ((looking-at "\\s)") (forward-char 1) (backward-list 1))
+        (t (self-insert-command (or arg 1)))))
+
+(use-package smartparens
+  :bind (("C-c (" . sp-wrap-round)
+         ("C-c )" . sp-unwrap-sexp)))
+
+(use-package indent-guide
+  :config
+  (setq indent-guide-recursive t)
+  (indent-guide-global-mode 1))
+
+(use-package parinfer
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'parinfer-mode)
+  (add-hook 'lisp-mode-hook 'parinfer-mode)
+  (add-hook 'cider-repl-mode-hook 'parinfer-mode)
+  (add-hook 'common-lisp-mode-hook 'parinfer-mode)
+  (add-hook 'slime-repl-mode-hook 'parinfer-mode)
+  (add-hook 'scheme-mode-hook 'parinfer-mode)
+  :config
+  (setq parinfer-extensions
+        '(defaults
+           smart-tab
+           smart-yank))
+  (global-set-key (kbd "C-c ,") 'parinfer-toggle-mode))
 
 (defun my-ielm ()
   (interactive)
@@ -93,70 +137,16 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook 'elisp-slime-nav-mode)))
 
-(use-package smartparens :defer t
-  :bind (("C-c (" . sp-wrap-round)
-         ("C-c )" . sp-unwrap-sexp)))
-
-(use-package parinfer
-  :defer t
+(use-package slime
   :init
-  (add-hook 'clojure-mode-hook #'parinfer-mode)
-  (add-hook 'cider-repl-mode-hook #'parinfer-mode)
-  (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-  (add-hook 'common-lisp-mode-hook #'parinfer-mode)
-  (add-hook 'scheme-mode-hook #'parinfer-mode)
-  (add-hook 'lisp-mode-hook #'parinfer-mode)
-  :config (use-package lispy)
-  (setq parinfer-extensions
-        '(defaults
-           pretty-parens
-           lispy
-           smart-tab
-           smart-yank))
-  (global-set-key (kbd "C-c ,") 'parinfer-toggle-mode)
-  (define-key parinfer-mode-map (kbd "M-a") 'backward-list)
-  (define-key parinfer-mode-map (kbd "M-e") 'forward-list))
-
-(use-package clojure-mode
-  :defer t
+  (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
+  (add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))
   :config
-  (add-hook 'clojure-mode-hook 'subword-mode))
+  (setq slime-default-lisp 'sbcl)
+  (setq slime-contribs '(slime-fancy slime-cl-indent))
+  (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+        slime-fuzzy-completion-in-place t
+        slime-enable-evaluate-in-emacs t
+        slime-autodoc-use-multiline-p t)
 
-(use-package cider
-  :defer t
-  :config
-  (setq nrepl-log-messages t)
-  (add-hook 'cider-mode-hook 'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook 'eldoc-mode))
-
-(use-package web-mode
-  :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist
-               '("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode)))
-
-(use-package js2-mode
-  :defer t
-  :init
-  (if (>= emacs-major-version '27)
-      (add-hook 'js-mode-hook 'js2-minor-mode)
-    (progn
-      (add-to-list 'auto-mode-alist '("\\.js\\'"  . js2-mode))
-      (add-to-list 'auto-mode-alist '("\\.pac\\'"   . js2-mode))
-      (add-to-list 'interpreter-mode-alist '("node" . js2-mode)))))
-
-(use-package markdown-mode
-  :defer t
-  :init
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-  (setq markdown-fontify-code-blocks-natively t))
+  (define-key slime-mode-map (kbd "C-c C-s") 'slime-selector))

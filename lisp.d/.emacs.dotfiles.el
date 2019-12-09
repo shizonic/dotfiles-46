@@ -9,7 +9,14 @@
   (make-directory "~/bin" t)
   (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
 
-  (setq dotfiles-xresources "Xcursor.theme: Adwaita")
+  (setq dotfiles-xresources "Xcursor.theme: Adwaita
+Xft.dpi: 96
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
@@ -76,10 +83,27 @@ pinentry-program /usr/bin/pinentry-emacs")
 gtk-theme-name=Adwaita
 gtk-icon-theme-name=Adwaita
 gtk-font-name=Noto Sans 12
-gtk-cursor-theme-name=Adwaita")
+gtk-cursor-theme-name=Adwaita
+gtk-xft-antialias=1
+gtk-xft-hinting=1
+gtk-xft-hintstyle=hintslight
+gtk-xft-rgba=rgb")
+
 
   (make-directory "~/.config/gtk-3.0" t)
   (f-write-text dotfiles-config-gtk-3-0-settings 'utf-8 "~/.config/gtk-3.0/settings.ini")
+
+  (setq dotfiles-config-mpv "vo=gpu
+profile=gpu-hq
+scale=ewa_lanczossharp
+cscale=ewa_lanczossharp
+video-sync=display-resample
+interpolation
+tscale=oversample")
+
+
+  (make-directory "~/.config/mpv" t)
+  (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")
 
   (setq dotfiles-config-sx-sxrc "#!/bin/sh
 

@@ -20,7 +20,7 @@ Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
-  (setq dotfiles-bash-logout "if [ $\(tty\) = \"/dev/tty2\" ]; then
+  (setq dotfiles-bash-logout "if [ $\(tty\) = \"/dev/tty1\" ]; then
     keychain --agents ssh,gpg -k all
 fi")
 

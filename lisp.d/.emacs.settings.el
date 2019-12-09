@@ -54,7 +54,6 @@
                                                  "backups")))))
 
 ;; my preferences on top of `better-defaults'
-;; + settings I found from Prelude and Spacemacs
 (ido-mode t)
 (setq ido-everywhere t
       ido-enable-flex-matching t
@@ -67,7 +66,6 @@
       tramp-default-method "ssh"
       vc-follow-symlinks t
       tramp-copy-size-limit nil
-      browse-url-browser-function 'eww-browse-url
       save-interprogram-paste-before-kill t
       dired-auto-revert-buffer t
       max-mini-window-height nil)
@@ -94,3 +92,30 @@
      (cl-find-if (lambda (buffer)
                    (not (eq buffer current-buffer)))
                  (mapcar #'car (window-prev-buffers window))))))
+
+(defun my-external-browser (url)
+  (start-process-shell-command "chrome" nil (concat "chrome " url)))
+
+;; opened by eww with "&" key
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'my-external-browser)
+
+(defvar yt-dl-player "vlc"
+  "Video player used by `eww-open-yt-dl'")
+
+(defun eww-open-yt-dl ()
+  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
+Specify the video player to use by setting the value of `yt-dl-player'"
+  (interactive)
+  (if (executable-find "youtube-dl")
+      (progn
+        (eww-copy-page-url)
+        (start-process-shell-command "youtube-dl" nil
+                                     (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))
+    (progn
+      (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
+      (with-output-to-temp-buffer xbuff
+        (print "Ensure youtube-dl is installed on the system and try again...")))))
+
+;; browse youtube videos from eww  with "^" key
+(with-eval-after-load 'eww (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))

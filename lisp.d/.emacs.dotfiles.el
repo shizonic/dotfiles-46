@@ -111,7 +111,6 @@ while ! xprop -root | grep -q Free; do sleep 1; done
 internal=LVDS1
 external=VGA1
 if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
-redshift -x && redshift -O 2000
 xset +dpms
 xset s 1800
 xset b off

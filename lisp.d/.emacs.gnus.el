@@ -14,7 +14,7 @@
     (setq my-contact-keys (cl-loop for (key . value) in my-contact-list
                                    collect key))
 
-    (defun my-insert-contact ()
+    (defun abook ()
       "Insert an email address from `my-contact-list' to the current buffer."
       (interactive)
       (require 'cl-lib)

@@ -17,8 +17,6 @@
   (my-set-font my-font my-font-size))
 
 (my-set-font my-font my-font-size)
-(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
-(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
 
 ;; redshift
 
@@ -37,12 +35,6 @@
   (if (> redshift 25000)
       (setq redshift '25000))
   (my-set-redshift redshift))
-
-(global-set-key (kbd "M-+") (lambda()(interactive)(my-redshift-setter 1)))
-(global-set-key (kbd "M--") (lambda()(interactive)(my-redshift-setter -1)))
-(global-set-key (kbd "<M-kp-multiply>") (lambda()(interactive)
-                                          (setq redshift '1000)
-                                          (start-process-shell-command "redshift" nil "redshift -x")))
 
 ;; theme
 

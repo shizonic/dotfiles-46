@@ -110,3 +110,12 @@
     (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
   (exwm-input-set-key
     (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement))
+
+(global-set-key (kbd "M-+") (lambda()(interactive)(my-redshift-setter 1)))
+(global-set-key (kbd "M--") (lambda()(interactive)(my-redshift-setter -1)))
+(global-set-key (kbd "<M-kp-multiply>") (lambda()(interactive)
+                                          (setq redshift '1000)
+                                          (start-process-shell-command "redshift" nil "redshift -x")))
+
+(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
+(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))

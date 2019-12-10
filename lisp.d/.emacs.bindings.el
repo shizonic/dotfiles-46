@@ -78,3 +78,35 @@
     ("3" (call-interactively 'split-window-right))
     ("0" (call-interactively 'delete-window))
     ("<menu>" nil)))
+
+(with-eval-after-load 'exwm
+  (require 'exwm-config)
+  (defun exwm-config-default ()
+    ;; Line-editing shortcuts
+    (unless (get 'exwm-input-simulation-keys 'saved-value)
+      (setq exwm-input-simulation-keys
+            '(
+              ([?\C-b] . [left])
+              ([?\M-b] . [C-left])
+              ([?\C-f] . [right])
+              ([?\M-f] . [C-right])
+              ([?\C-p] . [up])
+              ([?\C-n] . [down])
+              ([?\C-a] . [home])
+              ([?\C-e] . [end])
+              ([?\M-v] . [prior])
+              ([?\C-v] . [next])
+              ([?\C-d] . [delete])
+              ([?\C-k] . [S-end delete])
+              ([?\C-w] . [?\C-x])
+              ([?\M-w] . [?\C-c])
+              ([?\C-y] . [?\C-v])
+              ([?\C-s] . [?\C-f])))))
+  (exwm-config-default)
+
+  (exwm-input-set-key
+   (kbd "<s-kp-multiply>") 'desktop-environment-toggle-mute)
+  (exwm-input-set-key
+    (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
+  (exwm-input-set-key
+    (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement))

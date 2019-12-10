@@ -41,8 +41,8 @@
   (global-set-key (kbd "C-c k") 'crux-kill-whole-line)
   (global-set-key (kbd "<C-backspace>") 'crux-kill-line-backwards)
   (global-set-key (kbd "C-c #") 'crux-create-scratch-buffer)
-  (global-set-key (kbd "C-c o") 'crux-smart-open-line-above)
-  (global-set-key (kbd "C-c j") 'crux-smart-open-line)
+  (global-set-key (kbd "C-o") 'crux-smart-open-line-above)
+  (global-set-key (kbd "C-j") 'crux-smart-open-line)
   (global-set-key (kbd "C-c k") 'crux-recentf-find-file)
   (global-set-key (kbd "C-c R") 'crux-rename-buffer-and-file)
   (global-set-key (kbd "C-c d") 'crux-duplicate-current-line-or-region)
@@ -80,30 +80,6 @@
     ("<menu>" nil)))
 
 (with-eval-after-load 'exwm
-  (require 'exwm-config)
-  (defun exwm-config-default ()
-    ;; Line-editing shortcuts
-    (unless (get 'exwm-input-simulation-keys 'saved-value)
-      (setq exwm-input-simulation-keys
-            '(
-              ([?\C-b] . [left])
-              ([?\M-b] . [C-left])
-              ([?\C-f] . [right])
-              ([?\M-f] . [C-right])
-              ([?\C-p] . [up])
-              ([?\C-n] . [down])
-              ([?\C-a] . [home])
-              ([?\C-e] . [end])
-              ([?\M-v] . [prior])
-              ([?\C-v] . [next])
-              ([?\C-d] . [delete])
-              ([?\C-k] . [S-end delete])
-              ([?\C-w] . [?\C-x])
-              ([?\M-w] . [?\C-c])
-              ([?\C-y] . [?\C-v])
-              ([?\C-s] . [?\C-f])))))
-  (exwm-config-default)
-
   (exwm-input-set-key
    (kbd "<s-kp-multiply>") 'desktop-environment-toggle-mute)
   (exwm-input-set-key

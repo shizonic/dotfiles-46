@@ -85,15 +85,6 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (if (and (parinfer-mode) (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
-(global-set-key "%" 'match-paren)
-
-(defun match-paren (arg)
-  "Go to the matching paren if on a paren; otherwise insert %."
-  (interactive "p")
-  (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
-        ((looking-at "\\s)") (forward-char 1) (backward-list 1))
-        (t (self-insert-command (or arg 1)))))
-
 (use-package smartparens
   :bind (("C-c (" . sp-wrap-round)
          ("C-c )" . sp-unwrap-sexp)))
@@ -104,16 +95,16 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (indent-guide-global-mode 1))
 
 (use-package parinfer
-  :init
+  :init (use-package lispy)
   (add-hook 'emacs-lisp-mode-hook 'parinfer-mode)
   (add-hook 'lisp-mode-hook 'parinfer-mode)
-  (add-hook 'cider-repl-mode-hook 'parinfer-mode)
   (add-hook 'common-lisp-mode-hook 'parinfer-mode)
   (add-hook 'slime-repl-mode-hook 'parinfer-mode)
   (add-hook 'scheme-mode-hook 'parinfer-mode)
   :config
   (setq parinfer-extensions
         '(defaults
+           lispy
            smart-tab
            smart-yank))
   (global-set-key (kbd "C-c ,") 'parinfer-toggle-mode))

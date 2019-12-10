@@ -94,7 +94,7 @@
                  (mapcar #'car (window-prev-buffers window))))))
 
 (defun my-external-browser (url)
-  (start-process-shell-command "chrome" nil (concat "chrome " url)))
+  (start-process-shell-command "chromium" nil (concat "chromium " url)))
 
 ;; opened by eww with "&" key
 (setq browse-url-browser-function 'eww-browse-url

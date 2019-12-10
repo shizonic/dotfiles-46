@@ -35,7 +35,6 @@ emacsclient -e '(keychain-refresh-environment)'"))
 (electric-pair-mode 1)
 
 (use-package magit
-  ;; :pin melpa-stable
   :bind (("C-c g" . magit-status))
   :config
   (setq magit-diff-refine-hunk t)

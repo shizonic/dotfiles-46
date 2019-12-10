@@ -35,18 +35,15 @@ emacsclient -e '(keychain-refresh-environment)'"))
 (electric-pair-mode 1)
 
 (use-package magit
-  :bind (("C-c g" . magit-status))
   :config
   (setq magit-diff-refine-hunk t)
   (setq magit-repository-directories '(("~/repos" . 1))))
 
 (use-package projectile
-  :bind-keymap (("C-c p" . projectile-command-map))
   :config
   (projectile-mode 1))
 
-(use-package flycheck
-  :bind (("C-c f" . flycheck-mode)))
+(use-package flycheck)
 
 ;;; LANGS
 
@@ -85,8 +82,9 @@ emacsclient -e '(keychain-refresh-environment)'"))
       (progn (backward-delete-char 1) (forward-char))))
 
 (use-package smartparens
-  :bind (("C-c (" . sp-wrap-round)
-         ("C-c )" . sp-unwrap-sexp)))
+  :config
+  (global-set-key (kbd "C-c (") 'sp-wrap-round)
+  (global-set-key (kbd "C-c )") 'sp-unwrap-sexp))
 
 (use-package indent-guide
   :config

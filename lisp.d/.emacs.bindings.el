@@ -12,16 +12,22 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 (global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
+(global-set-key (kbd "<menu>") 'windows-hydra/body)
 (global-set-key (kbd "<home>") 'keychain-unlock)
 (global-set-key (kbd "<end>") 'keychain-lock)
 (global-set-key (kbd "C-c i") 'my-erc)
 (global-set-key (kbd "C-c b") 'eww)
 (global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c $") 'shell)
+(global-set-key (kbd "C-c $") 'eshell)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
 (global-set-key (kbd "<f5>") 'compile)
+(global-set-key (kbd "C-c g") 'magit-status)
+(global-set-key (kbd "C-c p") 'projectile-command-map)
+(global-set-key (kbd "C-c f") 'flycheck-mode)
+(global-set-key (kbd "C-c r") 'crux-rename-buffer-and-file)
+
 (global-set-key (kbd "C-c C-;") 'comment-line)
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
@@ -29,6 +35,20 @@
                 '(lambda (command)
                    (interactive (list (read-shell-command "$ ")))
                    (start-process-shell-command command nil command)))
+
+(use-package crux
+  :config
+  (global-set-key (kbd "C-c k") 'crux-kill-whole-line)
+  (global-set-key (kbd "<C-backspace>") 'crux-kill-line-backwards)
+  (global-set-key (kbd "C-c #") 'crux-create-scratch-buffer)
+  (global-set-key (kbd "C-c o") 'crux-smart-open-line-above)
+  (global-set-key (kbd "C-c j") 'crux-smart-open-line)
+  (global-set-key (kbd "C-c k") 'crux-recentf-find-file)
+  (global-set-key (kbd "C-c R") 'crux-rename-buffer-and-file)
+  (global-set-key (kbd "C-c d") 'crux-duplicate-current-line-or-region)
+  (global-set-key (kbd "C-c D") 'crux-delete-buffer-and-file)
+  (global-set-key (kbd "C-c K") 'crux-kill-other-buffers)
+  (global-set-key (kbd "C-c I") 'crux-find-user-init-file))
 
 (with-eval-after-load 'exwm
     (exwm-input-set-key (kbd "<s-return>") ;; a simple launcher
@@ -40,25 +60,11 @@
   (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
   (exwm-input-set-key (kbd "<menu>") 'windows-hydra/body))
 
-(use-package browse-kill-ring :bind (("M-y" . browse-kill-ring)))
-
-(use-package crux
-  :bind (("C-c r" . crux-rename-buffer-and-file)
-         ("C-c k" . crux-kill-whole-line)
-         ("<C-backspace>" . crux-kill-line-backwards)
-         ("C-c #" . crux-create-scratch-buffer)
-         ("C-o" . crux-smart-open-line-above)
-         ("C-j" . crux-smart-open-line)
-         ("C-c r" . crux-recentf-find-file)
-         ("C-c r" . crux-rename-buffer-and-file)
-         ("C-c d" . crux-duplicate-current-line-or-region)
-         ("C-c D" . crux-delete-buffer-and-file)
-         ("C-c K" . crux-kill-other-buffers)
-         ("C-c I" . crux-find-user-init-file)))
+(use-package browse-kill-ring :config
+  (global-set-key (kbd "M-y") 'browse-kill-ring))
 
 (use-package hydra
   :init (use-package transpose-frame)
-  :bind (("<menu>" . windows-hydra/body))
   :config
   (defhydra windows-hydra (:exit nil)
     ("h" (call-interactively 'shrink-window-horizontally) "shrink-left")

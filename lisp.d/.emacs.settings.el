@@ -119,3 +119,8 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; browse youtube videos from eww  with "^" key
 (with-eval-after-load 'eww (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
+
+(use-package pdf-tools
+  :magic ("%PDF" . pdf-view-mode)
+  :config
+  (pdf-tools-install :no-query))

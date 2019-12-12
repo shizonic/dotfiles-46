@@ -4,7 +4,7 @@
 ;; font
 
 (setq my-font "Noto Sans Mono")
-(setq my-font-size '22)
+(setq my-font-size '10)
 
 (defun my-set-font (my-font my-font-size)
   (set-face-attribute 'default nil :font (concat my-font "-" (number-to-string my-font-size))))

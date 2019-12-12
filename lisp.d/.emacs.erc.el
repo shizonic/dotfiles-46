@@ -27,11 +27,9 @@
     (setq ercn-notify-rules
       '((current-nick . all)
         (keyword . all)
-        (pal . all)
         (query-buffer . all))))
 
   (defun do-notify (nickname message)
     (start-process "notify-send" nil "notify-send" nickname message))
 
-  (add-hook 'ercn-notify-hook 'do-notify)
-  (setq erc-pals '("bayprogrammer")))
+  (add-hook 'ercn-notify-hook 'do-notify))

@@ -26,28 +26,20 @@
 (global-set-key (kbd "C-c C-;") 'comment-line)
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
-(global-set-key (kbd "<s-return>")
-                '(lambda (command)
-                   (interactive (list (read-shell-command "$ ")))
-                   (start-process-shell-command command nil command)))
 
 (use-package crux
   :config
-  (global-set-key (kbd "C-c k") 'crux-kill-whole-line)
+  (global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
+  (global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
   (global-set-key (kbd "<C-backspace>") 'crux-kill-line-backwards)
-  (global-set-key (kbd "C-c #") 'crux-create-scratch-buffer)
   (global-set-key (kbd "C-o") 'crux-smart-open-line-above)
   (global-set-key (kbd "C-j") 'crux-smart-open-line)
-  (global-set-key (kbd "C-c R") 'crux-rename-buffer-and-file)
-  (global-set-key (kbd "C-c d") 'crux-duplicate-current-line-or-region)
-  (global-set-key (kbd "C-c D") 'crux-delete-buffer-and-file)
-  (global-set-key (kbd "C-c K") 'crux-kill-other-buffers)
-  (global-set-key (kbd "C-c I") 'crux-find-user-init-file))
+  (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region))
 
 (with-eval-after-load 'exwm
   (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
   (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-  (exwm-input-set-key (kbd "<menu>") 'windows-hydra/body))
+  (exwm-input-set-key (kbd "<menu>") 'menu-hydra/body))
 
 (use-package browse-kill-ring :config
   (global-set-key (kbd "M-y") 'browse-kill-ring))
@@ -55,7 +47,16 @@
 (use-package hydra
   :init (use-package transpose-frame)
   :config
-  (defhydra windows-hydra (:exit nil)
+  (defhydra menu-hydra (:exit t)
+    ("w" (call-interactively 'windows-hydra/body) "win")
+    ("b" (call-interactively 'eww) "eww")
+    ("g" (call-interactively 'gnus) "gnus")
+    ("a" (call-interactively 'abook) "abook")
+    ("e" (call-interactively 'my-erc) "erc")
+    ("s" (call-interactively 'eshell-here) "eshell")
+    ("<menu>" nil)))
+
+(defhydra windows-hydra (:exit nil)
     ("h" (call-interactively 'shrink-window-horizontally))
     ("j" (call-interactively 'shrink-window))
     ("k" (call-interactively 'enlarge-window))
@@ -66,13 +67,7 @@
     ("2" (call-interactively 'split-window-below))
     ("3" (call-interactively 'split-window-right))
     ("0" (call-interactively 'delete-window))
-    ("e" (call-interactively 'eww))
-    ("g" (call-interactively 'gnus))
-    ("a" (call-interactively 'abook))
-    ("e" (call-interactively 'my-erc))
-    ("#" (call-interactively 'crux-create-scratch-buffer))
-    ("$" (call-interactively 'eshell-here))
-    ("<menu>" nil)))
+    ("<menu>" nil))
 
 (with-eval-after-load 'exwm
   (exwm-input-set-key

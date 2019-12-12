@@ -32,7 +32,7 @@ directory to make multiple eshell windows easier."
 
 ;; eww-youtube-dl-mpv
 
-(defvar yt-dl-player "vlc"
+(defvar yt-dl-player "mpv"
   "Video player used by `eww-open-yt-dl'")
 
 (defun eww-open-yt-dl ()

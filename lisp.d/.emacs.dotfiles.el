@@ -32,9 +32,7 @@ export PATH=~/bin:$PATH
 
 \[ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\"
 
-echo \"start X?\"
-read -r && \[ -z \"$DISPLAY\" ] &&
-    sx
+\[ -z \"$DISPLAY\" ] && sx
 ")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.bash_profile")

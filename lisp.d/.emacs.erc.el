@@ -13,9 +13,7 @@
                                      "#emacs"
                                      "#commanduser"
                                      "##apoptosis"
-                                     "#phrackaged2"
-                                     "#artix"
-                                     "#kisslinux")))
+                                     "#phrackaged2")))
 
   (defun my-erc-multi-line-disable (string)
     "disable sending of multi-line messages entirely to avoid accidental flooding"

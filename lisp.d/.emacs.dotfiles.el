@@ -9,8 +9,7 @@
   (make-directory "~/bin" t)
   (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
 
-  (setq dotfiles-xresources "Xcursor.theme: Adwaita
-Xft.dpi: 96
+  (setq dotfiles-xresources "Xft.dpi: 96
 Xft.autohint: 0
 Xft.antialias: 1
 Xft.hinting: true
@@ -32,15 +31,13 @@ export PATH=~/bin:$PATH
 
 \[ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\"
 
-\[ -z \"$DISPLAY\" ] && sx
-")
+\[ -z \"$DISPLAY\" ] && \[ \"$(tty)\" = \"/dev/tty1\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.bash_profile")
 
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 
-PS1='$ '
-")
+PS1='$ '")
 
   (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")
 
@@ -60,15 +57,6 @@ image/gif; emacsclient %s")
 
   (f-write-text dotfiles-mailcap 'utf-8 "~/.mailcap")
 
-  (setq dotfiles-icons-default-index-theme "\[Icon Theme]
-Name=Default
-Comment=Default Cursor Theme
-Inherits=Adwaita")
-
-  (make-directory "~/.icons/default" t)
-
-  (f-write-text dotfiles-icons-default-index-theme 'utf-8 "~/.icons/default/index.theme")
-
   (setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
 max-cache-ttl 84000
 allow-emacs-pinentry
@@ -76,19 +64,6 @@ allow-loopback-pinentry
 pinentry-program /usr/bin/pinentry-emacs")
 
   (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
-
-  (setq dotfiles-config-gtk-3-0-settings "\[Settings]
-gtk-theme-name=Adwaita
-gtk-icon-theme-name=Adwaita
-gtk-font-name=Noto Sans 12
-gtk-cursor-theme-name=Adwaita
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle=hintslight
-gtk-xft-rgba=rgb")
-
-  (make-directory "~/.config/gtk-3.0" t)
-  (f-write-text dotfiles-config-gtk-3-0-settings 'utf-8 "~/.config/gtk-3.0/settings.ini")
 
   (setq dotfiles-config-mpv "profile=gpu-hq
 scale=ewa_lanczossharp

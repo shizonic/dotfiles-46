@@ -18,6 +18,7 @@
 (global-set-key (kbd "C-c i") 'my-erc)
 (global-set-key (kbd "C-c b") 'eww)
 (global-set-key (kbd "C-c m") 'gnus)
+(global-set-key (kbd "C-c a") 'abook)
 (global-set-key (kbd "C-c $") 'eshell-here)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))

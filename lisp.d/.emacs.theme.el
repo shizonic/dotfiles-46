@@ -4,7 +4,7 @@
 ;; font
 
 (setq my-font "Noto Sans Mono")
-(setq my-font-size '10)
+(setq my-font-size '22)
 
 (defun my-set-font (my-font my-font-size)
   (set-face-attribute 'default nil :font (concat my-font "-" (number-to-string my-font-size))))
@@ -24,7 +24,7 @@
 
 ;; redshift
 
-(setq redshift '3000)
+(setq redshift '1000)
 (start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift)))
 
 (defun my-set-redshift (redshift)

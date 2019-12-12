@@ -91,4 +91,5 @@
   (start-process-shell-command "netsurf" nil (concat "netsurf " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'my-external-browser)
+      shr-external-browser 'my-external-browser
+      eww-search-prefix "https://www.google.com/search?hl=en&q=")

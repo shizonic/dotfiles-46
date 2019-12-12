@@ -1,4 +1,10 @@
 #!/bin/bash
 notification=$*
 [[ $notification =~ ^[[:alnum:]\ ,.!]+$ ]] || exit 1
-emacsclient -e "(message \"$notification\")"
+
+n=0
+while [ "$n" -ne 5 ]; do
+      emacsclient -e "(message \"$notification\")"
+      ((n++))
+      sleep 1
+done

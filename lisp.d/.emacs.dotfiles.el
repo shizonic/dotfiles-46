@@ -40,10 +40,7 @@ export PATH=~/bin:$PATH
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 
 PS1='$ '
-
-sudo\(\) {
-    su -c \"$*\"
-}")
+")
 
   (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")
 

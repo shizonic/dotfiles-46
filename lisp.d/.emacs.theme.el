@@ -4,7 +4,7 @@
 ;; font
 
 (setq my-font "Noto Sans Mono")
-(setq my-font-size '15)
+(setq my-font-size '10)
 
 (defun my-set-font (my-font my-font-size)
   (set-face-attribute 'default nil :font (concat my-font "-" (number-to-string my-font-size))))
@@ -20,7 +20,8 @@
 
 ;; redshift
 
-(setq redshift '1000)
+(setq redshift '3000)
+(start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift)))
 
 (defun my-set-redshift (redshift)
   (start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift))))
@@ -45,7 +46,7 @@
 (use-package nofrils-acme-theme
   :if (string= my-theme "light")
   :config
-  (load-theme 'nofrils-acme t))
+  (load-theme 'nofrils-sepia t))
 
 (use-package sexy-monochrome-theme
   :if (string= my-theme "dark")

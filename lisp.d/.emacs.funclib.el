@@ -32,12 +32,6 @@ directory to make multiple eshell windows easier."
 
 ;; eww-youtube-dl-mpv
 
-(defun my-external-browser (url)
-  (start-process-shell-command "netsurf" nil (concat "netsurf " url)))
-
-(setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'my-external-browser)
-
 (defvar yt-dl-player "vlc"
   "Video player used by `eww-open-yt-dl'")
 
@@ -56,7 +50,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
         (print "Ensure youtube-dl is installed on the system and try again...")))))
 
 (with-eval-after-load 'eww (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
-
 
 ;; abook
 

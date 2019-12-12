@@ -86,3 +86,9 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (winner-mode 1)
+
+(defun my-external-browser (url)
+  (start-process-shell-command "netsurf" nil (concat "netsurf " url)))
+
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'my-external-browser)

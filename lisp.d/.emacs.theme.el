@@ -13,6 +13,10 @@
   (if (> x 0)
       (setq-local n '1)
     (setq-local n -1))
+  (when (< my-font-size 10)
+      (setq my-font-size 10))
+  (when (> my-font-size 25)
+      (setq my-font-size 25))
   (setq my-font-size (+ n my-font-size))
   (my-set-font my-font my-font-size))
 

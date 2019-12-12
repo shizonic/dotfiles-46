@@ -18,7 +18,7 @@
 (global-set-key (kbd "C-c i") 'my-erc)
 (global-set-key (kbd "C-c b") 'eww)
 (global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c $") 'eshell)
+(global-set-key (kbd "C-c $") 'eshell-here)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
@@ -43,7 +43,6 @@
   (global-set-key (kbd "C-c #") 'crux-create-scratch-buffer)
   (global-set-key (kbd "C-o") 'crux-smart-open-line-above)
   (global-set-key (kbd "C-j") 'crux-smart-open-line)
-  (global-set-key (kbd "C-c k") 'crux-recentf-find-file)
   (global-set-key (kbd "C-c R") 'crux-rename-buffer-and-file)
   (global-set-key (kbd "C-c d") 'crux-duplicate-current-line-or-region)
   (global-set-key (kbd "C-c D") 'crux-delete-buffer-and-file)
@@ -77,6 +76,9 @@
     ("2" (call-interactively 'split-window-below))
     ("3" (call-interactively 'split-window-right))
     ("0" (call-interactively 'delete-window))
+    ("b" (call-interactively 'eww ) "browser")
+    ("m" (call-interactively 'gnus ) "mail")
+    ("i" (call-interactively 'my-erc ) "irc")
     ("<menu>" nil)))
 
 (with-eval-after-load 'exwm

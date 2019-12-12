@@ -60,23 +60,13 @@
   (let* ((available-width (- (window-width) (length left) 2)))
     (format (format " %%s %%%ds " available-width) left right)))
 
-(defun random-choice (items)
-  (let* ((size (length items))
-         (index (random size)))
-    (nth index items)))
-
-(defvar random-quote
-  (random-choice
-   '("[♥][♦] Hacker's Delight [♣][♠]")))
-
 (setq-default mode-line-format
               '((:eval (simple-mode-line-render
                                          ;; left
                                          (format-mode-line "%* %b %l:%c %m")
                                          ;; right
                                          (format-mode-line (concat
-                                                            random-quote
-                                                            (format-time-string " %Y-%m-%d [%I:%M%p]")))))))
+                                                            (format-time-string " %I:%M%p")))))))
 
 ;; misc
 

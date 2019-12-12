@@ -10,9 +10,9 @@
          (eq (call-process "python3" nil nil nil "-m" "certifi") 0))
     (progn
       (with-eval-after-load 'gnutls
-        (setq gnutls-log-level 0)
-        (setq gnutls-verify-error t)
-        (setq gnutls-min-prime-bits 3072))
+        (setq gnutls-log-level 0
+              gnutls-verify-error t
+              gnutls-min-prime-bits 3072))
       (setq tls-checktrust t)
       (let ((trustfile
              (replace-regexp-in-string

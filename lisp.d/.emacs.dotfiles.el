@@ -37,12 +37,15 @@ read -r && \[ -z \"$DISPLAY\" ] &&
     sx
 ")
 
-  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
+  (f-write-text dotfiles-profile 'utf-8 "~/.bash_profile")
 
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 
-unalias ls
-PS1='$ '")
+PS1='$ '
+
+sudo\(\) {
+    su -c \"$*\"
+}")
 
   (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")
 
@@ -125,16 +128,10 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 xsetroot -solid black -cursor_name left_ptr
 xrdb -merge ~/.Xresources
 
-dunst &
-picom --backend glx &
-
 export XDG_CURRENT_DESKTOP=\"Exwm\";
 export _JAVA_AWT_WM_NONREPARENTING=\"1\";
-export GTK_MODULES=\"${GTK_MODULES:+$GTK_MODULES:}canberra-gtk-module\"
 
-dbus-launch --exit-with-session emacs
-
-trap 'kill $(jobs -p)' EXIT # kill forked jobs on exit")
+exec emacs")
 
   (make-directory "~/.config/sx" t)
   (f-write-text dotfiles-config-sx-sxrc 'utf-8 "~/.config/sx/sxrc"))

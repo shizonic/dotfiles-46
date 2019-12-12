@@ -60,7 +60,6 @@
       ido-use-filename-at-point 'guess
       ido-create-new-buffer 'always
       ido-auto-merge-work-directories-length -1
-      frame-resize-pixelwise t ;; for ratpoison
       visible-bell nil
       tab-always-indent 'complete
       tramp-default-method "ssh"
@@ -84,43 +83,3 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (winner-mode 1)
-
-(defun spacemacs/alternate-buffer (&optional window)
-  (interactive)
-  (let ((current-buffer (window-buffer window)))
-    (switch-to-buffer
-     (cl-find-if (lambda (buffer)
-                   (not (eq buffer current-buffer)))
-                 (mapcar #'car (window-prev-buffers window))))))
-
-(defun my-external-browser (url)
-  (start-process-shell-command "chromium" nil (concat "chromium " url)))
-
-;; opened by eww with "&" key
-(setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'my-external-browser)
-
-(defvar yt-dl-player "vlc"
-  "Video player used by `eww-open-yt-dl'")
-
-(defun eww-open-yt-dl ()
-  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
-Specify the video player to use by setting the value of `yt-dl-player'"
-  (interactive)
-  (if (executable-find "youtube-dl")
-      (progn
-        (eww-copy-page-url)
-        (start-process-shell-command "youtube-dl" nil
-                                     (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))
-    (progn
-      (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
-      (with-output-to-temp-buffer xbuff
-        (print "Ensure youtube-dl is installed on the system and try again...")))))
-
-;; browse youtube videos from eww  with "^" key
-(with-eval-after-load 'eww (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
-
-(use-package pdf-tools
-  :magic ("%PDF" . pdf-view-mode)
-  :config
-  (pdf-tools-install :no-query))

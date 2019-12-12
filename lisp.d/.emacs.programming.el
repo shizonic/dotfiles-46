@@ -81,11 +81,6 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (if (and (parinfer-mode) (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
-(use-package smartparens
-  :config
-  (global-set-key (kbd "C-c (") 'sp-wrap-round)
-  (global-set-key (kbd "C-c )") 'sp-unwrap-sexp))
-
 (use-package indent-guide
   :config
   (setq indent-guide-recursive t)
@@ -97,7 +92,6 @@ emacsclient -e '(keychain-refresh-environment)'"))
   (add-hook 'lisp-mode-hook 'parinfer-mode)
   (add-hook 'common-lisp-mode-hook 'parinfer-mode)
   (add-hook 'slime-repl-mode-hook 'parinfer-mode)
-  (add-hook 'scheme-mode-hook 'parinfer-mode)
   :config
   (setq parinfer-extensions
         '(defaults

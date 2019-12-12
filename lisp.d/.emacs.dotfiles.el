@@ -87,18 +87,15 @@ gtk-xft-hinting=1
 gtk-xft-hintstyle=hintslight
 gtk-xft-rgba=rgb")
 
-
   (make-directory "~/.config/gtk-3.0" t)
   (f-write-text dotfiles-config-gtk-3-0-settings 'utf-8 "~/.config/gtk-3.0/settings.ini")
 
-  (setq dotfiles-config-mpv "vo=gpu
-profile=gpu-hq
+  (setq dotfiles-config-mpv "profile=gpu-hq
 scale=ewa_lanczossharp
 cscale=ewa_lanczossharp
 video-sync=display-resample
 interpolation
 tscale=oversample")
-
 
   (make-directory "~/.config/mpv" t)
   (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")

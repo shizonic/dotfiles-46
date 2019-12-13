@@ -1,10 +1,13 @@
 ;;; -*- lexical-binding: t; -*-
 
-(setq gc-cons-threshold 100000000
+(setq my-lisp-files "~/repos/dotfiles/lisp.d"
+      gc-cons-threshold 100000000
       debug-on-error nil)
-(toggle-frame-fullscreen)
 
-;; enforce ssl
+(add-hook 'after-init-hook 'server-start t)
+
+;; boiler plate code
+
 (if (and (and (executable-find "gnutls-cli")
               (executable-find "python3"))
          (eq (call-process "python3" nil nil nil "-m" "certifi") 0))
@@ -82,7 +85,5 @@
        ((and (eq isdir nil) (string= (substring path -3) ".el"))
         (load (file-name-sans-extension fullpath)))))))
 
-(load-directory "~/repos/dotfiles/lisp.d")
-
-;; start an Emacs server
-(add-hook 'after-init-hook 'server-start t)
+(when (file-directory-p my-lisp-files)
+  (load-directory my-lisp-files))

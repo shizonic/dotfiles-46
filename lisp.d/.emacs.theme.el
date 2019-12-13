@@ -1,9 +1,8 @@
 ;;; -*- lexical-binding: t; -*-
-(setq my-theme "light")
 
 ;; font
 
-(setq my-font "Noto Sans Mono")
+(setq my-font "Source Code Pro")
 (setq my-font-size '10)
 
 (defun my-set-font (my-font my-font-size)
@@ -13,10 +12,10 @@
   (if (> x 0)
       (setq-local n '1)
     (setq-local n -1))
-  (when (< my-font-size 10)
-      (setq my-font-size 10))
-  (when (> my-font-size 25)
-      (setq my-font-size 25))
+  (when (< my-font-size 11)
+      (setq my-font-size 11))
+  (when (> my-font-size 24)
+      (setq my-font-size 24))
   (setq my-font-size (+ n my-font-size))
   (my-set-font my-font my-font-size))
 
@@ -24,7 +23,7 @@
 
 ;; redshift
 
-(setq redshift '1000)
+(setq redshift '3000)
 (start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift)))
 
 (defun my-set-redshift (redshift)
@@ -48,14 +47,8 @@
     (disable-theme i)))
 
 (use-package nofrils-acme-theme
-  :if (string= my-theme "light")
   :config
   (load-theme 'nofrils-sepia t))
-
-(use-package sexy-monochrome-theme
-  :if (string= my-theme "dark")
-  :config
-  (load-theme 'sexy-monochrome t))
 
 ;; modeline
 
@@ -76,4 +69,3 @@
 ;; misc
 
 (blink-cursor-mode -1)
-(fringe-mode -1)

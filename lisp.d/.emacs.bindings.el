@@ -12,7 +12,7 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 (global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-(global-set-key (kbd "<menu>") 'windows-hydra/body)
+(global-set-key (kbd "<menu>") 'menu-hydra/body)
 (global-set-key (kbd "<home>") 'keychain-unlock)
 (global-set-key (kbd "<end>") 'keychain-lock)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -44,12 +44,19 @@
 (use-package browse-kill-ring :config
   (global-set-key (kbd "M-y") 'browse-kill-ring))
 
+(global-set-key (kbd "<s-return>")
+                '(lambda (url)
+                   (interactive (list
+                                 (read-shell-command "")))
+                   (start-process-shell-command "netsurf" nil (concat "netsurf google.com/search?hl=en\\&q=" url))))
+
 (use-package hydra
   :init (use-package transpose-frame)
   :config
   (defhydra menu-hydra (:exit t)
     ("w" (call-interactively 'windows-hydra/body) "win")
     ("b" (call-interactively 'eww) "eww")
+    ("B" (call-interactively 'eww-browse-with-external-browser) "netsurf")
     ("g" (call-interactively 'gnus) "gnus")
     ("a" (call-interactively 'abook) "abook")
     ("e" (call-interactively 'my-erc) "erc")

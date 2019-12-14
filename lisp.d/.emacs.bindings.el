@@ -11,6 +11,9 @@
 
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
+
+(windmove-default-keybindings)
+
 (global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "<menu>") 'menu-hydra/body)
 (global-set-key (kbd "<home>") 'keychain-unlock)
@@ -43,12 +46,6 @@
 
 (use-package browse-kill-ring :config
   (global-set-key (kbd "M-y") 'browse-kill-ring))
-
-(global-set-key (kbd "<s-return>")
-                '(lambda (url)
-                   (interactive (list
-                                 (read-shell-command "")))
-                   (start-process-shell-command "netsurf" nil (concat "netsurf google.com/search?hl=en\\&q=" url))))
 
 (use-package hydra
   :init (use-package transpose-frame)

@@ -17,7 +17,8 @@
   (when (> my-font-size 24)
       (setq my-font-size 24))
   (setq my-font-size (+ n my-font-size))
-  (my-set-font my-font my-font-size))
+  (my-set-font my-font my-font-size)
+  (message (concat "Font Size: " (number-to-string my-font-size))))
 
 (my-set-font my-font my-font-size)
 
@@ -69,3 +70,4 @@
 ;; misc
 
 (blink-cursor-mode -1)
+(fringe-mode -1)

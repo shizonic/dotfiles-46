@@ -4,9 +4,7 @@
       gc-cons-threshold 100000000
       debug-on-error nil)
 
-(add-hook 'after-init-hook 'server-start t)
-
-;; boiler plate code
+;; boiler plate below
 
 (if (and (and (executable-find "gnutls-cli")
               (executable-find "python3"))
@@ -34,7 +32,6 @@
       (print "Ensure python3, certifi and gnutls-cli are installed to enforce TLS..."))
     (bail)))
 
-;; bootstrap use-package
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
@@ -58,11 +55,9 @@
 (setq use-package-always-ensure t
       use-package-always-demand t)
 
-;; speed up use-package
 (use-package async
   :config (async-bytecomp-package-mode 1))
 
-;; update daily
 (use-package auto-package-update :defer t
   :init
   (setq auto-package-update-delete-old-versions t
@@ -71,7 +66,6 @@
         auto-package-update-prompt-before-update nil)
   (auto-package-update-maybe))
 
-;; load my elisp
 (defun load-directory (directory)
   "Load recursively all `.el' files in DIRECTORY."
   (dolist (element (directory-files-and-attributes directory nil nil nil))
@@ -87,3 +81,5 @@
 
 (when (file-directory-p my-lisp-files)
   (load-directory my-lisp-files))
+
+(server-start)

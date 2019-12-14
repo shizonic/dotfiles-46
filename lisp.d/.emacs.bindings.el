@@ -58,6 +58,7 @@
     ("a" (call-interactively 'abook) "abook")
     ("e" (call-interactively 'my-erc) "erc")
     ("s" (call-interactively 'eshell-here) "eshell")
+    ("m" (call-interactively 'emms-hydra/body) "eMMs")
     ("<menu>" nil)))
 
 (defhydra windows-hydra (:exit nil)
@@ -71,6 +72,12 @@
     ("2" (call-interactively 'split-window-below))
     ("3" (call-interactively 'split-window-right))
     ("0" (call-interactively 'delete-window))
+    ("<menu>" nil))
+
+(defhydra emms-hydra (:exit t)
+    ("r" (call-interactively 'emms-streams) "radio stationss")
+    ("i" (call-interactively 'emms-playlist-mode-go) "interactive playlist")
+    ("f" (call-interactively 'emms-playlist-) "play file")
     ("<menu>" nil))
 
 (with-eval-after-load 'exwm

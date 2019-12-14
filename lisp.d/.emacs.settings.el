@@ -93,3 +93,11 @@
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'my-external-browser
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(use-package emms
+  :config
+  (emms-standard)
+  (emms-default-players)
+
+  (when (file-directory-p "~/Downloads")
+    (setq emms-source-file-default-directory "~/Downloads")))

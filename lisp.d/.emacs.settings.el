@@ -72,6 +72,14 @@
       dired-auto-revert-buffer t
       max-mini-window-height nil)
 
+(require 'dired-x)
+(add-hook 'dired-load-hook
+          (function (lambda () (load "dired-x"))))
+
+(with-eval-after-load 'async
+  (autoload 'dired-async-mode "dired-async.el" nil t)
+  (dired-async-mode 1))
+
 (setq-default indent-tabs-mode nil
               tab-width 8
               fill-column 80)

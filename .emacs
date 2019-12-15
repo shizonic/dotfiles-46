@@ -35,13 +35,11 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-        ("melpa-stable" . "https://stable.melpa.org/packages/")
+      '(("melpa-stable" . "https://stable.melpa.org/packages/")
         ("gnu-elpa"     . "https://elpa.gnu.org/packages/"))
       package-archive-priorities
-      '(("melpa-stable" . 5)
-        ("gnu-elpa"     . 1)
-        ("melpa"        . 10)))
+      '(("melpa-stable" . 1)
+        ("gnu-elpa"     . 10)))       
 
 (package-initialize)
 

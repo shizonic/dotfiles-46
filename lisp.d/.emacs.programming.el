@@ -53,6 +53,8 @@ emacsclient -e '(keychain-refresh-environment)'"))
 
 ;; shell
 
+(defalias 'troot #'(lambda()(interactive)(cd "/su:root@kiss:"))) ;; tramp root
+
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
 

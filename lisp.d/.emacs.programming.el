@@ -53,18 +53,6 @@ emacsclient -e '(keychain-refresh-environment)'"))
 
 ;;; LANGS
 
-;; shell
-
-(add-hook 'after-save-hook
-          'executable-make-buffer-file-executable-if-script-p)
-
-(defun my-shell-mode-hook()
-  (setq-local compile-command
-              '((lambda()
-                  (save-buffer)
-                  (async-shell-command (buffer-file-name))))))
-(add-hook 'sh-mode-hook 'my-shell-mode-hook)
-
 ;; C
 
 (defun c-mode-common-defaults ()

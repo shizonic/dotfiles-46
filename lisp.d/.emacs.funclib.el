@@ -10,6 +10,7 @@
     (insert-file-contents FILEPATH)
     (split-string (buffer-string) delim t)))
 
+(getenv "PATH")
 (defun split-string-by-delim (data delim)
   ;; e.g. (split-string-by-delim "23:25:35" ":")
   ;; note: useful when used also with subr-x's join-string...

@@ -4,8 +4,10 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com"
       initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen nil
+      inhibit-startup-screen t
       custom-file "/dev/null")
+
+(add-hook 'after-init-hook 'about-emacs)
 
 ;; begin with `better-defaults'
 (progn

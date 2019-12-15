@@ -6,6 +6,10 @@
 
 ;; boiler plate below
 
+(require 'seq)
+(require 'cl-lib)
+(require 'subr-x)
+
 (if (and (and (executable-find "gnutls-cli")
               (executable-find "python3"))
          (eq (call-process "python3" nil nil nil "-m" "certifi") 0))

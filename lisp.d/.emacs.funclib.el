@@ -3,17 +3,16 @@
 ;; Elisp Function Library
 ;; handy functions I have adopted or made up to do my bidding
 
-(require 'seq)
-(require 'cl-lib)
-
-(defun split-file-by-lines (FILEPATH)
-  "Return a list of lines of a file at FILEPATH."
+(defun split-file-by-delim (FILEPATH delim)
+  ;; e.g. (split-file-by-delim "~/.bashrc" "\n")
+    ;; note: useful when used also with subr-x's join-string...
   (with-temp-buffer
     (insert-file-contents FILEPATH)
-    (split-string (buffer-string) "\n" t)))
+    (split-string (buffer-string) delim t)))
 
 (defun split-string-by-delim (data delim)
   ;; e.g. (split-string-by-delim "23:25:35" ":")
+  ;; note: useful when used also with subr-x's join-string...
   (with-temp-buffer
     (princ data (current-buffer))
     (split-string (buffer-string) delim t)))
@@ -210,3 +209,5 @@ Omitting FRAME means currently selected frame."
   (transpose-frame-set-arrangement (transpose-frame-get-arrangement frame) frame
                                    'transpose 'flip)
   (if (interactive-p) (recenter)))
+
+(provide 'funclib)

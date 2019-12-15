@@ -38,8 +38,8 @@
       '(("melpa-stable" . "https://stable.melpa.org/packages/")
         ("gnu-elpa"     . "https://elpa.gnu.org/packages/"))
       package-archive-priorities
-      '(("melpa-stable" . 1)
-        ("gnu-elpa"     . 10)))       
+      '(("melpa-stable" . 1) ;; fallback to melpa-stable
+        ("gnu-elpa"     . 10))) ;; gnu-elpa has priority
 
 (package-initialize)
 

@@ -77,7 +77,7 @@
 (defhydra emms-hydra (:exit t)
     ("r" (call-interactively 'emms-streams) "radio stationss")
     ("i" (call-interactively 'emms-playlist-mode-go) "interactive playlist")
-    ("f" (call-interactively 'emms-playlist-) "play file")
+    ("f" (call-interactively 'emms-play-file) "play file")
     ("<menu>" nil))
 
 (with-eval-after-load 'exwm

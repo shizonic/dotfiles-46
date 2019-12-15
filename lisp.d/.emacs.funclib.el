@@ -5,17 +5,20 @@
 
 (require 'cl-lib)
 
-;; switch buffer back-and-forth
+(defun read-lines (FILEPATH)
+  "Return a list of lines of a file at FILEPATH."
+  (with-temp-buffer
+    (insert-file-contents FILEPATH)
+    (split-string (buffer-string) "\n" t)))
 
 (defun spacemacs/alternate-buffer (&optional window)
+  "switch buffer back-and-forth"
   (interactive)
   (let ((current-buffer (window-buffer window)))
     (switch-to-buffer
      (cl-find-if (lambda (buffer)
                    (not (eq buffer current-buffer)))
                  (mapcar #'car (window-prev-buffers window))))))
-
-;; eshell
 
 (defun eshell-here ()
   "Opens up a new shell in the directory associated with the
@@ -29,8 +32,6 @@ directory to make multiple eshell windows easier."
     (eshell "new")
     (rename-buffer (concat "*eshell: " name "*"))))
 
-
-;; eww-youtube-dl-mpv
 
 (defvar yt-dl-player "mpv"
   "Video player used by `eww-open-yt-dl'")

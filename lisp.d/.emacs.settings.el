@@ -4,11 +4,8 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com"
       initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
+      inhibit-startup-screen nil
       custom-file "/dev/null")
-
-;; start to eshell
-(add-hook 'after-init-hook 'eshell-here)
 
 ;; begin with `better-defaults'
 (progn

@@ -35,7 +35,7 @@ export PATH=~/bin:$PATH
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 
 echo \"start X?\"
-read -r && \[ -z \"$DISPLAY\" ] && \[ \"$(tty)\" = \"/dev/tty1\" ] && xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty")
+read -r && \[ -z \"$DISPLAY\" ] && xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.bash_profile")
 
@@ -85,7 +85,7 @@ tscale=oversample")
   (make-directory "~/.config/mpv" t)
   (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")
 
-  (setq dotfiles-config-sx-sxrc "#!/bin/sh
+  (setq dotfiles-xinitrc "#!/bin/sh
 
 while ! xprop -root | grep -q Free; do sleep 1; done
 internal=LVDS1
@@ -110,8 +110,7 @@ export _JAVA_AWT_WM_NONREPARENTING=\"1\";
 
 exec emacs")
 
-  (make-directory "~/.config/sx" t)
-  (f-write-text dotfiles-config-sx-sxrc 'utf-8 "~/.config/sx/sxrc"))
+  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
 
 (when (not (file-exists-p "~/.emacs.d/.dotfiles"))
   (dotfiles-install))

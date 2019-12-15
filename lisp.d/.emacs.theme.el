@@ -1,5 +1,9 @@
 ;;; -*- lexical-binding: t; -*-
 
+;; misc
+(fringe-mode -1)
+(blink-cursor-mode -1)
+
 ;; font
 
 (setq my-font "Liberation Mono")
@@ -17,15 +21,14 @@
   (when (> my-font-size 24)
       (setq my-font-size 24))
   (setq my-font-size (+ n my-font-size))
-  (my-set-font my-font my-font-size)
-  (message (concat "Font Size: " (number-to-string my-font-size))))
+  (my-set-font my-font my-font-size))
+3  (message (concat "Font Size: " (number-to-string my-font-size)))
 
 (my-set-font my-font my-font-size)
 
 ;; redshift
 
 (setq redshift '3000)
-(start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift)))
 
 (defun my-set-redshift (redshift)
   (start-process-shell-command "redshift" nil (concat "redshift -x && redshift -O " (number-to-string redshift))))
@@ -49,7 +52,11 @@
 
 (use-package nofrils-acme-theme :disabled
   :config
-  (load-theme 'nofrils-sepia t))
+  (load-theme 'nofrils-acme t))
+
+(use-package cyberpunk-theme
+  :config
+  (load-theme 'cyberpunk t))
 
 ;; modeline
 
@@ -66,8 +73,3 @@
                                          ;; right
                                          (format-mode-line (concat
                                                             (format-time-string " %I:%M%p")))))))
-
-;; misc
-
-;; (blink-cursor-mode -1)
-;; (fringe-mode -1)

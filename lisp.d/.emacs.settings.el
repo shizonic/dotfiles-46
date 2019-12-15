@@ -92,8 +92,10 @@
 
 (winner-mode 1)
 
+(require 'eww)
+
 (defun my-external-browser (url)
-  (start-process-shell-command "netsurf" nil (concat "netsurf " url)))
+  (start-process-shell-command "chromium" nil (concat "chromium " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'my-external-browser

@@ -47,6 +47,8 @@ exec /usr/bin/Xorg -nolisten tcp \"$@\" vt$XDG_VTNR")
 
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 
+alias sx=\"xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty\"
+
 PS1='$ '")
 
   (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")

@@ -49,7 +49,6 @@
   (global-set-key (kbd "M-y") 'browse-kill-ring))
 
 (use-package hydra
-  :init (use-package transpose-frame)
   :config
   (defhydra menu-hydra (:exit t)
     ("w" (call-interactively 'windows-hydra/body) "win")

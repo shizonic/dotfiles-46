@@ -53,7 +53,7 @@
   (defhydra menu-hydra (:exit t)
     ("w" (call-interactively 'windows-hydra/body) "win")
     ("b" (call-interactively 'eww) "eww")
-    ("B" (call-interactively 'eww-browse-with-external-browser) "netsurf")
+    ("B" (call-interactively 'eww-browse-with-external-browser) "chromium")
     ("g" (call-interactively 'gnus) "gnus")
     ("a" (call-interactively 'abook) "abook")
     ("e" (call-interactively 'my-erc) "erc")

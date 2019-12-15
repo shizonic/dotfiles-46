@@ -37,7 +37,8 @@
   (global-set-key (kbd "<C-backspace>") 'crux-kill-line-backwards)
   (global-set-key (kbd "C-o") 'crux-smart-open-line-above)
   (global-set-key (kbd "C-j") 'crux-smart-open-line)
-  (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region))
+  (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
+  (global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region))
 
 (with-eval-after-load 'exwm
   (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)

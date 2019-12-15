@@ -2,7 +2,7 @@
 
 ;; font
 
-(setq my-font "Source Code Pro")
+(setq my-font "Liberation Mono")
 (setq my-font-size '10)
 
 (defun my-set-font (my-font my-font-size)
@@ -47,7 +47,7 @@
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
-(use-package nofrils-acme-theme
+(use-package nofrils-acme-theme :disabled
   :config
   (load-theme 'nofrils-sepia t))
 
@@ -69,5 +69,5 @@
 
 ;; misc
 
-(blink-cursor-mode -1)
-(fringe-mode -1)
+;; (blink-cursor-mode -1)
+;; (fringe-mode -1)

@@ -7,7 +7,7 @@
 ;; font
 
 (setq my-font "Liberation Mono")
-(setq my-font-size '10)
+(setq my-font-size '18)
 
 (defun my-set-font (my-font my-font-size)
   (set-face-attribute 'default nil :font (concat my-font "-" (number-to-string my-font-size))))
@@ -21,8 +21,8 @@
   (when (> my-font-size 24)
       (setq my-font-size 24))
   (setq my-font-size (+ n my-font-size))
-  (my-set-font my-font my-font-size))
-3  (message (concat "Font Size: " (number-to-string my-font-size)))
+  (my-set-font my-font my-font-size)
+  (message (concat "Font Size: " (number-to-string my-font-size))))
 
 (my-set-font my-font my-font-size)
 

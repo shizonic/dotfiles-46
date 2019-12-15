@@ -31,9 +31,19 @@ export PATH=~/bin:$PATH
 
 \[ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\"
 
-\[ -z \"$DISPLAY\" ] && \[ \"$(tty)\" = \"/dev/tty1\" ] && sx")
+. /home/adam/.nix-profile/etc/profile.d/nix.sh
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
+
+echo \"start X?\"
+read -r && \[ -z \"$DISPLAY\" ] && \[ \"$(tty)\" = \"/dev/tty1\" ] && xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.bash_profile")
+
+  (setq dotfiles-xserverrc "#!/bin/sh
+
+exec /usr/bin/Xorg -nolisten tcp \"$@\" vt$XDG_VTNR")
+
+  (f-write-text dotfiles-xserverrc 'utf-8 "~/.xserverrc")
 
   (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
 
@@ -61,7 +71,7 @@ image/gif; emacsclient %s")
 max-cache-ttl 84000
 allow-emacs-pinentry
 allow-loopback-pinentry
-pinentry-program /usr/bin/pinentry-emacs")
+pinentry-program /home/adam/bin/pinentry-emacs")
 
   (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
 

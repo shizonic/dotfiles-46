@@ -1,7 +1,11 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package keychain-environment
-  :init (use-package pinentry :config (pinentry-start))
+  :init
+  (defun pinentry-emacs (desc prompt ok error)
+    (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
+      str))
+  ;; :init (use-package pinentry :config (pinentry-start))
   :config
   (setq password-cache-expiry nil)
   (setq epa-pinentry-mode 'loopback)

@@ -5,7 +5,7 @@
 
   (setenv "PAGER" "cat")
   (setenv "EDITOR" "emacsclient")
-  (setenv "VISUAL" "emacsclient")
+  (setenv "VISUAL" (getenv "EDITOR"))
 
   (setq my-add-to-path (concat
                         "/rocks/bin:"

@@ -53,7 +53,9 @@ emacsclient -e '(keychain-refresh-environment)'"))
 
 ;; shell
 
-(defalias 'troot #'(lambda()(interactive)(cd "/su:root@kiss:"))) ;; tramp root
+(defalias 'troot '(lambda()(interactive)(cd "/su:root@kiss:/root"))) ;; tramp root
+(defun eshell/emacs (file)
+  (find-file file))
 
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)

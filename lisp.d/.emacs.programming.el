@@ -45,6 +45,8 @@ emacsclient -e '(keychain-refresh-environment)'"))
 
 (use-package projectile
   :config
+  (add-to-list 'projectile-globally-ignored-directories ".emacs.d")
+  (add-to-list 'projectile-globally-ignored-directories "nix")
   (projectile-mode 1))
 
 (use-package flycheck)

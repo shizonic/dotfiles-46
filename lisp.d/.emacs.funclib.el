@@ -5,11 +5,17 @@
 
 (require 'cl-lib)
 
-(defun read-lines (FILEPATH)
+(defun split-file-by-lines (FILEPATH)
   "Return a list of lines of a file at FILEPATH."
   (with-temp-buffer
     (insert-file-contents FILEPATH)
     (split-string (buffer-string) "\n" t)))
+
+(defun split-string-by-delim (data delim)
+  ;; e.g. (split-string-by-delim "23:25:35" ":")
+  (with-temp-buffer
+    (princ data (current-buffer))
+    (split-string (buffer-string) delim t)))
 
 (defun spacemacs/alternate-buffer (&optional window)
   "switch buffer back-and-forth"

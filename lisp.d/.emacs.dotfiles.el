@@ -25,13 +25,9 @@ fi")
 
   (f-write-text dotfiles-bash-logout 'utf-8 "~/.bash_logout")
 
-  (setq dotfiles-profile "export EDITOR=emacsclient
-export VISUAL=$EDITOR
-export PATH=~/bin:$PATH
+  (setq dotfiles-profile ". \"$HOME/.bashrc\"
 
-\[ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\"
-
-. /home/adam/.nix-profile/etc/profile.d/nix.sh
+. \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 
 echo \"start X?\"

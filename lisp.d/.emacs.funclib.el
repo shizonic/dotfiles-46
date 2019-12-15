@@ -3,6 +3,7 @@
 ;; Elisp Function Library
 ;; handy functions I have adopted or made up to do my bidding
 
+(require 'seq)
 (require 'cl-lib)
 
 (defun split-file-by-lines (FILEPATH)

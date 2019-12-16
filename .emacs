@@ -3,6 +3,7 @@
 ;; first things
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com"
+      my-contacts-file "~/contacts.el"
       initial-major-mode 'emacs-lisp-mode
       inhibit-startup-screen t
       custom-file "/dev/null"

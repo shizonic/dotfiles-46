@@ -191,4 +191,13 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command "kiss update")
   (kiss-pop))
 
+(defun spacemacs/alternate-buffer (&optional window)
+  "switch buffer back-and-forth ... from spacEmacs!"
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))
+
 (provide 'my-libs)

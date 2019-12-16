@@ -36,11 +36,8 @@
   (use-package use-package)
   (use-package hydra)
   (use-package browse-kill-ring)
-  (use-package ercn)
   (use-package exwm)
-  (use-package xelb)
   (use-package desktop-environment)
-  (use-package gnus-desktop-notify)
   (use-package keychain-environment)
   (use-package magit)
   (use-package projectile)
@@ -98,7 +95,7 @@
 ;; update packages
 (setq auto-package-update-delete-old-versions t
       auto-package-update-hide-results t
-      auto-package-update-interval 1
+      auto-package-update-interval 30 ;; update monthly
       auto-package-update-prompt-before-update nil)
 (auto-package-update-maybe)
 
@@ -106,7 +103,6 @@
 (add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
 (require 'my-libs)
 (require 'transpose-frame)
-(require 'spacemacs)
 
 ;; load lisp.d/ files
 (when (file-directory-p (concat my-dotfiles-dir "/" my-lisp-files))

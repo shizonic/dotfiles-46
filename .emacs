@@ -80,11 +80,13 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
-      '(("melpa-stable" . "https://stable.melpa.org/packages/")
+      '(("melpa"        . "https://melpa.org/packages/")
+        ("melpa-stable" . "https://stable.melpa.org/packages/")
         ("gnu-elpa"     . "https://elpa.gnu.org/packages/"))
       package-narchive-priorities
-      '(("melpa-stable" . 1)    ;; fallback to melpa-stable
-        ("gnu-elpa"     . 10))) ;; gnu-elpa has priority
+      '(("melpa" . 10)
+        ("melpa-stable" . 5)    ;; fallback to melpa-stable
+        ("gnu-elpa"     . 1))) ;; gnu-elpa has priority
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -95,7 +97,7 @@
 ;; update packages
 (setq auto-package-update-delete-old-versions t
       auto-package-update-hide-results t
-      auto-package-update-interval 30 ;; update monthly
+      auto-package-update-interval 1 ;; bleeding edge melpa
       auto-package-update-prompt-before-update nil)
 (auto-package-update-maybe)
 

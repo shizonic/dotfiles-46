@@ -80,6 +80,9 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+(setq password-cache-expiry nil
+      epa-pinentry-mode 'loopback)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (winner-mode 1)

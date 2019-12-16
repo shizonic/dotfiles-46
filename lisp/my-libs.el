@@ -130,9 +130,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
     str))
 
-(setq password-cache-expiry nil)
-(setq epa-pinentry-mode 'loopback)
-
 (defun keychain-unlock ()
     (interactive)
     (async-shell-command

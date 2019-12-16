@@ -46,7 +46,8 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (with-output-to-temp-buffer xbuff
         (print "Ensure youtube-dl is installed on the system and try again...")))))
 
-(define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
 
 ;; abook
 

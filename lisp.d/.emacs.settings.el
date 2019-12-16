@@ -93,7 +93,6 @@
       shr-external-browser 'my-external-browser
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
-
 (emms-standard)
 (emms-default-players)
 (when (file-directory-p "~/Downloads")

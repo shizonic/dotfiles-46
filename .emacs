@@ -56,7 +56,8 @@
   (use-package parinfer)
   (use-package lispy)
   (use-package elisp-slime-nav)
-  (use-package slime))
+  (use-package slime)
+  (use-package emms))
 
 ;; ensure a tls connection
 (if (and (and (executable-find "gnutls-cli")

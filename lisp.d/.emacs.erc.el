@@ -22,12 +22,10 @@
   (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable)
 
   (erc-track-mode -1)
-  (use-package ercn
-    :config
-    (setq ercn-notify-rules
-      '((current-nick . all)
-        (keyword . all)
-        (query-buffer . all))))
+  (setq ercn-notify-rules
+        '((current-nick . all)
+          (keyword . all)
+          (query-buffer . all)))
 
   (defun do-notify (nickname message)
     (start-process "notify-send" nil "notify-send" nickname message))

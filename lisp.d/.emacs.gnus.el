@@ -70,9 +70,7 @@
       (3 (message "Gnus timed out."))
     ad-do-it))
 
-(use-package gnus-desktop-notify
-  :after gnus
-  :config
+(with-eval-after-load 'gnus
   (setq gnus-desktop-notify-function 'gnus-desktop-notify-exec
         gnus-desktop-notify-exec-program "notify-send")
   (gnus-desktop-notify-mode)

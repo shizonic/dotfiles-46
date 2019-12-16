@@ -3,7 +3,6 @@
 (defun dotfiles-install ()
   (interactive)
 
-  (use-package f)
   (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
 
   (make-directory "~/bin" t)

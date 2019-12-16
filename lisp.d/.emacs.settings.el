@@ -1,14 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; first things
-(setq user-full-name "Adam Schaefers"
-      user-mail-address "paxchristi888@gmail.com"
-      initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
-      custom-file "/dev/null")
-
-(add-hook 'after-init-hook 'about-emacs)
-
 ;; begin with `better-defaults'
 (progn
   (unless (or (fboundp 'helm-mode) (fboundp 'ivy-mode))
@@ -75,9 +66,8 @@
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
 
-(with-eval-after-load 'async
-  (autoload 'dired-async-mode "dired-async.el" nil t)
-  (dired-async-mode 1))
+(autoload 'dired-async-mode "dired-async.el" nil t)
+(dired-async-mode 1)
 
 (setq-default indent-tabs-mode nil
               tab-width 8
@@ -103,10 +93,8 @@
       shr-external-browser 'my-external-browser
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
-(use-package emms
-  :config
-  (emms-standard)
-  (emms-default-players)
 
-  (when (file-directory-p "~/Downloads")
-    (setq emms-source-file-default-directory "~/Downloads")))
+(emms-standard)
+(emms-default-players)
+(when (file-directory-p "~/Downloads")
+  (setq emms-source-file-default-directory "~/Downloads"))

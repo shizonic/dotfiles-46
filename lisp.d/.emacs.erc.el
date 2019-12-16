@@ -19,15 +19,4 @@
     "disable sending of multi-line messages entirely to avoid accidental flooding"
     (if (string-match-p "\n+" string)
         (setq str nil)))
-  (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable)
-
-  (erc-track-mode -1)
-  (setq ercn-notify-rules
-        '((current-nick . all)
-          (keyword . all)
-          (query-buffer . all)))
-
-  (defun do-notify (nickname message)
-    (start-process "notify-send" nil "notify-send" nickname message))
-
-  (add-hook 'ercn-notify-hook 'do-notify))
+  (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable))

@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (setq gnus-use-full-window nil)
-(setq gnus-site-init-file "~/repos/dotfiles/lisp.d/.emacs.gnus.el")
+(setq gnus-site-init-file (concat my-dotfiles-dir "/" my-lisp-files "/.emacs.gnus.el"))
 (setq gnus-save-newsrc-file nil)
 (setq gnus-startup-file "~/.emacs.d/.newsrc")
 (setq message-directory "~/.emacs.d/mail/")
@@ -62,16 +62,3 @@
  gnus-keep-backlog '0)
 
 (setq gnus-no-groups-message "")
-
-(with-eval-after-load 'gnus (gnus-demon-add-handler 'gnus-demon-scan-news 1 t))
-
-(defadvice gnus-demon-scan-news (around gnus-demon-timeout activate)
-  (with-timeout
-      (3 (message "Gnus timed out."))
-    ad-do-it))
-
-(with-eval-after-load 'gnus
-  (setq gnus-desktop-notify-function 'gnus-desktop-notify-exec
-        gnus-desktop-notify-exec-program "notify-send")
-  (gnus-desktop-notify-mode)
-  (gnus-demon-add-scanmail))

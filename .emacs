@@ -13,13 +13,11 @@
       gc-cons-threshold 100000000
       debug-on-error nil)
 
-;; startup
-(add-hook 'window-setup-hook '(lambda()
-                               (when (get-buffer "*scratch*")
+;; startup to eshell *only*
+(add-hook 'after-init-hook '(lambda()
+                              (when (get-buffer "*scratch*")
                                 (kill-buffer "*scratch*"))
-                               (eshell)
-                               (about-emacs)
-                               (emacs-init-time)))
+                              (eshell)))
 
 ;; defer nothing
 (with-eval-after-load 'use-package (setq use-package-always-ensure t use-package-always-demand t)

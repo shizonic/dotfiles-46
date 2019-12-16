@@ -157,12 +157,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command (concat "kiss b" " " my-read))
   (kiss-pop))
 
-(defun kiss-build-world ()
-  (interactive)
-  (cd "/su:root@kiss:")
-  (async-shell-command "kiss b")
-  (kiss-pop))
-
 (defun kiss-install ()
   (interactive)
   (cd "/su:root@kiss:")

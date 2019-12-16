@@ -28,6 +28,14 @@ directory to make multiple eshell windows easier."
     (eshell "new")
     (rename-buffer (concat "*eshell: " name "*"))))
 
+(defun spacemacs/alternate-buffer (&optional window)
+  "switch buffer back-and-forth ... from spacEmacs!"
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))
 
 (defvar yt-dl-player "mpv"
   "Video player used by `eww-open-yt-dl'")
@@ -191,13 +199,15 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command "kiss update")
   (kiss-pop))
 
-(defun spacemacs/alternate-buffer (&optional window)
-  "switch buffer back-and-forth ... from spacEmacs!"
-  (interactive)
-  (let ((current-buffer (window-buffer window)))
-    (switch-to-buffer
-     (cl-find-if (lambda (buffer)
-                   (not (eq buffer current-buffer)))
-                 (mapcar #'car (window-prev-buffers window))))))
+(defhydra kiss-hydra (:exit t)
+  "Kiss Package Manager"
+  ("u" (call-interactively 'kiss-update) "update")
+  ("b" (call-interactively 'kiss-build) "build")
+  ("i" (call-interactively 'kiss-install) "install")
+  ("r" (call-interactively 'kiss-remove) "remove")
+  ("s" (call-interactively 'kiss-search) "search")
+  ("c" (call-interactively 'kiss-checksum) "checksum")
+  ("l" (call-interactively 'kiss-list) "list")
+  ("<menu>" nil))
 
 (provide 'my-libs)

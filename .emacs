@@ -86,7 +86,7 @@
       package-narchive-priorities
       '(("melpa" . 10)
         ("melpa-stable" . 5)    ;; fallback to melpa-stable
-        ("gnu-elpa"     . 1))) ;; gnu-elpa has priority
+        ("gnu-elpa"     . 1)))  ;; or gnu-elpa
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)

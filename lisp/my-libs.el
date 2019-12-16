@@ -139,4 +139,56 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
+(defun kiss-pop ()
+  (switch-to-buffer "*Async Shell Command*")
+  (delete-other-windows))
+
+(defun kiss-list ()
+  (interactive)
+  (cd "/su:root@kiss:/root")
+  (async-shell-command "kiss list")
+  (kiss-pop))
+
+(defun kiss-build (x)
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command (concat "kiss b" " " x))
+  (kiss-pop))
+
+(defun kiss-build-world ()
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command "kiss b")
+  (kiss-pop))
+
+(defun kiss-install (x)
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command (concat "kiss i" " " x))
+  (kiss-pop))
+
+(defun kiss-remove (x)
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command (concat "kiss remove" " " x))
+  (kiss-pop))
+
+(defun kiss-search (x)
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command (concat "kiss search" " " x))
+  (kiss-pop))
+
+(defun kiss-checksum (x)
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command (concat "kiss checksum" " " x))
+  (kiss-pop))
+
+(defun kiss-update ()
+  (interactive)
+  (cd "/su:root@kiss:")
+  (async-shell-command "kiss update")
+  (kiss-pop))
+
 (provide 'my-libs)

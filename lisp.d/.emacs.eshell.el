@@ -22,11 +22,10 @@
                                                my-add-to-path
                                                (getenv "PATH"))) ":")))":"))
 
-;; aliases
+;; eshell alias / functions
 
-(defalias 'troot '(lambda()(interactive)(cd "/su:root@kiss:/root"))) ;; tramp root
-
-;; functions
+(defun eshell/troot ()
+ (cd (concat "/su:root@"system-name":")))
 
 (defun eshell/emacs (file)
   (find-file file))

@@ -148,54 +148,58 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; a front-end to getkiss.org package manager
 
+(defun tramp-root ()
+  (interactive)
+  (cd (concat "/su:root@"system-name":")))
+
 (defun kiss-pop ()
   (switch-to-buffer "*Async Shell Command*")
   (delete-other-windows))
 
 (defun kiss-list ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (async-shell-command "kiss list")
   (kiss-pop))
 
 (defun kiss-build ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (setq-local my-read (read-string "Build package(s):" ""))
   (async-shell-command (concat "kiss b" " " my-read))
   (kiss-pop))
 
 (defun kiss-install ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (setq-local my-read (read-string "Install package(s):" ""))
   (async-shell-command (concat "kiss i" " " my-read))
   (kiss-pop))
 
 (defun kiss-remove ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (setq-local my-read (read-string "Remove package(s):" ""))
   (async-shell-command (concat "kiss remove" " " my-read))
   (kiss-pop))
 
 (defun kiss-search ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (setq-local my-read (read-string "Search package(s):" ""))
   (async-shell-command (concat "kiss search" " " my-read))
   (kiss-pop))
 
 (defun kiss-checksum ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (setq-local my-read (read-string "Checksum package(s):" ""))
   (async-shell-command (concat "kiss checksum" " " my-read))
   (kiss-pop))
 
 (defun kiss-update ()
   (interactive)
-  (cd "/su:root@kiss:")
+  (tramp-root)
   (async-shell-command "kiss update")
   (kiss-pop))
 

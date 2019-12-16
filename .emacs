@@ -13,20 +13,14 @@
       debug-on-error nil)
 
 ;; startup
-(add-hook 'after-init-hook '(lambda()
-                              (when (get-buffer "*scratch*")
+(add-hook 'window-setup-hook '(lambda()
+                               (when (get-buffer "*scratch*")
                                 (kill-buffer "*scratch*"))
-                              (eshell)
-                              (about-emacs)
-                              (emacs-init-time)))
+                               (eshell)
+                               (about-emacs)
+                               (emacs-init-time)))
 
-;; require lisp/ libs
-(add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
-(require 'my-libs)
-(require 'transpose-frame)
-(require 'spacemacs)
-
-;; defer nothing, load everything !!!
+;; defer nothing
 (with-eval-after-load 'use-package (setq use-package-always-ensure t use-package-always-demand t)
   (require 'cl-lib)   ;; Common Lisp extensions
   (require 'seq)      ;; Sequence manipulation functions
@@ -59,7 +53,7 @@
   (use-package slime)
   (use-package emms))
 
-;; ensure a tls connection
+;; ensure tls
 (if (and (and (executable-find "gnutls-cli")
               (executable-find "python3"))
          (eq (call-process "python3" nil nil nil "-m" "certifi") 0))
@@ -93,7 +87,7 @@
       '(("melpa-stable" . "https://stable.melpa.org/packages/")
         ("gnu-elpa"     . "https://elpa.gnu.org/packages/"))
       package-narchive-priorities
-      '(("melpa-stable" . 1) ;; fallback to melpa-stable
+      '(("melpa-stable" . 1)    ;; fallback to melpa-stable
         ("gnu-elpa"     . 10))) ;; gnu-elpa has priority
 (package-initialize)
 (unless (package-installed-p 'use-package)
@@ -108,6 +102,12 @@
       auto-package-update-interval 1
       auto-package-update-prompt-before-update nil)
 (auto-package-update-maybe)
+
+;; require lisp/ libs
+(add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
+(require 'my-libs)
+(require 'transpose-frame)
+(require 'spacemacs)
 
 ;; load lisp.d/ files
 (when (file-directory-p (concat my-dotfiles-dir "/" my-lisp-files))

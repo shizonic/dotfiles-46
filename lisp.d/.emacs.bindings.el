@@ -51,6 +51,7 @@
   ("B" (call-interactively 'eww-browse-with-external-browser) "ext. browse")
   ("g" (call-interactively 'gnus) "gnus")
   ("a" (call-interactively 'abook) "abook")
+  ("k" (call-interactively 'kiss-hydra/body) "kiss")
   ("e" (call-interactively 'my-erc) "erc")
   ("$" (call-interactively 'eshell-here) "eshell")
   ("#" (call-interactively 'crux-create-scratch-buffer) "scratch")
@@ -74,6 +75,10 @@
     ("r" (call-interactively 'emms-streams) "radio stationss")
     ("i" (call-interactively 'emms-playlist-mode-go) "interactive playlist")
     ("f" (call-interactively 'emms-play-file) "play file")
+    ("<menu>" nil))
+
+(defhydra kiss-hydra (:exit t)
+    ("u" (call-interactively 'kiss-update) "update")
     ("<menu>" nil))
 
 

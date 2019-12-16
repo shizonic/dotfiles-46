@@ -12,18 +12,13 @@
       gc-cons-threshold 100000000
       debug-on-error nil)
 
-;; startup to eshell
+;; startup
 (add-hook 'after-init-hook '(lambda()
-                              (interactive)
                               (when (get-buffer "*scratch*")
                                 (kill-buffer "*scratch*"))
-                              (eshell)))
-
-;; require handy built-in libs
-(require 'seq)
-(require 'cl-lib)
-(require 'subr-x)
-(require 'eww)
+                              (eshell)
+                              (about-emacs)
+                              (emacs-init-time)))
 
 ;; require lisp/ libs
 (add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
@@ -32,10 +27,17 @@
 (require 'spacemacs)
 
 ;; defer nothing, load everything !!!
-(with-eval-after-load 'use-package
-  (use-package f)
-  (setq use-package-always-ensure t use-package-always-demand t)
-  (use-package async)
+(with-eval-after-load 'use-package (setq use-package-always-ensure t use-package-always-demand t)
+  (require 'cl-lib)   ;; Common Lisp extensions
+  (require 'seq)      ;; Sequence manipulation functions
+  (require 'subr-x)   ;; Extra Lisp functions
+  (use-package async  ;; Asynchronous processing library
+    :config (async-bytecomp-package-mode 1))
+  (use-package dash)  ;; A modern list library
+  (use-package a)     ;; Associative data structure functions
+  (use-package s)     ;; String manipulation library
+  (use-package f)     ;; Modern API for working with files and directories
+  (use-package ht)    ;; The missing hash table library
   (use-package auto-package-update)
   (use-package crux)
   (use-package use-package)
@@ -54,9 +56,9 @@
   (use-package parinfer)
   (use-package lispy)
   (use-package elisp-slime-nav)
-  (use-package slime)
-  (use-package nofrils-acme-theme))
+  (use-package slime))
 
+;; ensure a tls connection
 (if (and (and (executable-find "gnutls-cli")
               (executable-find "python3"))
          (eq (call-process "python3" nil nil nil "-m" "certifi") 0))
@@ -83,6 +85,7 @@
       (print "Ensure python3, certifi and gnutls-cli are installed to enforce TLS..."))
     (bail)))
 
+;; bootstrap use-package
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
@@ -91,27 +94,23 @@
       package-narchive-priorities
       '(("melpa-stable" . 1) ;; fallback to melpa-stable
         ("gnu-elpa"     . 10))) ;; gnu-elpa has priority
-
 (package-initialize)
-
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 (eval-when-compile
   (require 'use-package))
 
-(async-bytecomp-package-mode 1)
-
+;; update packages
 (setq auto-package-update-delete-old-versions t
       auto-package-update-hide-results t
       auto-package-update-interval 1
       auto-package-update-prompt-before-update nil)
-
 (auto-package-update-maybe)
 
-;; load lisp.d/
+;; load lisp.d/ files
 (when (file-directory-p (concat my-dotfiles-dir "/" my-lisp-files))
   (load-directory (concat my-dotfiles-dir "/" my-lisp-files)))
 
+;; start an Emacs server
 (server-start)

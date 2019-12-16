@@ -81,6 +81,7 @@
   ("u" (call-interactively 'kiss-update) "update")
   ("b" (call-interactively 'kiss-build) "build")
   ("i" (call-interactively 'kiss-install) "install")
+  ("r" (call-interactively 'kiss-install) "remove")
   ("s" (call-interactively 'kiss-search) "search")
   ("c" (call-interactively 'kiss-checksum) "checksum")
   ("l" (call-interactively 'kiss-list) "list")

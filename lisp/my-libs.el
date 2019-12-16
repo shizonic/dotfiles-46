@@ -145,7 +145,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 (defun kiss-list ()
   (interactive)
-  (cd "/su:root@kiss:/root")
+  (cd "/su:root@kiss:")
   (async-shell-command "kiss list")
   (kiss-pop))
 

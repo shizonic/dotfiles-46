@@ -18,12 +18,6 @@ Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
-  (setq dotfiles-bash-logout "if [ $\(tty\) = \"/dev/tty1\" ]; then
-    keychain --agents ssh,gpg -k all
-fi")
-
-  (f-write-text dotfiles-bash-logout 'utf-8 "~/.bash_logout")
-
   (setq dotfiles-profile ". \"$HOME/.bashrc\"
 
 . \"$HOME/.nix-profile/etc/profile.d/nix.sh\"

@@ -3,7 +3,6 @@
 ;; misc
 
 (fringe-mode -1)
-(blink-cursor-mode 1)
 
 ;; font
 
@@ -17,12 +16,11 @@
 (setq redshift '3000)
 (my-set-redshift redshift)
 
-;; theme
+;; disable old theme before enabling a new theme
 
-;; (defadvice load-theme (before disable-themes-first activate)
-;;   (dolist (i custom-enabled-themes)
-;;     (disable-theme i)))
-;; (load-theme 'nofrils-acme t)
+(defadvice load-theme (before disable-themes-first activate)
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
 
 ;; modeline
 

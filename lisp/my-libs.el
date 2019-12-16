@@ -51,7 +51,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; abook
 
-(setq my-contacts-file "~/contacts.el")
 (when (file-exists-p my-contacts-file)
   (progn
     (load-file my-contacts-file)
@@ -71,9 +70,9 @@ Specify the video player to use by setting the value of `yt-dl-player'"
         (fset 'my-read 'completing-read)
 
         ;; interactive menu + convert chosen item (key) from string to data
-        (setq interactive-chosen-key (intern (my-read "Contact Name:" item)))
+        (setq-local interactive-chosen-key (intern (my-read "Contact Name:" item)))
         ;; match key to list and get associated email (value), convert back to string
-        (setq email (format "%s" (cdr (assq interactive-chosen-key my-contact-list))))
+        (setq-local email (format "%s" (cdr (assq interactive-chosen-key my-contact-list))))
 
         ;; output email address to buffer
         (princ email (current-buffer))))))
@@ -139,6 +138,8 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
+;; a front-end to getkiss.org package manager
+
 (defun kiss-pop ()
   (switch-to-buffer "*Async Shell Command*")
   (delete-other-windows))
@@ -149,10 +150,11 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command "kiss list")
   (kiss-pop))
 
-(defun kiss-build (x)
+(defun kiss-build ()
   (interactive)
   (cd "/su:root@kiss:")
-  (async-shell-command (concat "kiss b" " " x))
+  (setq-local my-read (read-string "Build package(s):" ""))
+  (async-shell-command (concat "kiss b" " " my-read))
   (kiss-pop))
 
 (defun kiss-build-world ()
@@ -161,28 +163,32 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command "kiss b")
   (kiss-pop))
 
-(defun kiss-install (x)
+(defun kiss-install ()
   (interactive)
   (cd "/su:root@kiss:")
-  (async-shell-command (concat "kiss i" " " x))
+  (setq-local my-read (read-string "Install package(s):" ""))
+  (async-shell-command (concat "kiss i" " " my-read))
   (kiss-pop))
 
-(defun kiss-remove (x)
+(defun kiss-remove ()
   (interactive)
   (cd "/su:root@kiss:")
-  (async-shell-command (concat "kiss remove" " " x))
+  (setq-local my-read (read-string "Remove package(s):" ""))
+  (async-shell-command (concat "kiss remove" " " my-read))
   (kiss-pop))
 
-(defun kiss-search (x)
+(defun kiss-search ()
   (interactive)
   (cd "/su:root@kiss:")
-  (async-shell-command (concat "kiss search" " " x))
+  (setq-local my-read (read-string "Search package(s):" ""))
+  (async-shell-command (concat "kiss search" " " my-read))
   (kiss-pop))
 
-(defun kiss-checksum (x)
+(defun kiss-checksum ()
   (interactive)
   (cd "/su:root@kiss:")
-  (async-shell-command (concat "kiss checksum" " " x))
+  (setq-local my-read (read-string "Checksum package(s):" ""))
+  (async-shell-command (concat "kiss checksum" " " my-read))
   (kiss-pop))
 
 (defun kiss-update ()

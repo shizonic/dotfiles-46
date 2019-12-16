@@ -78,9 +78,14 @@
     ("<menu>" nil))
 
 (defhydra kiss-hydra (:exit t)
-    ("u" (call-interactively 'kiss-update) "update")
-    ("<menu>" nil))
-
+  ("u" (call-interactively 'kiss-update) "update")
+  ("b" (call-interactively 'kiss-build) "build")
+  ("w" (call-interactively 'kiss-build-world) "build-world")
+  ("i" (call-interactively 'kiss-install) "install")
+  ("s" (call-interactively 'kiss-search) "search")
+  ("c" (call-interactively 'kiss-checksum) "checksum")
+  ("l" (call-interactively 'kiss-list) "list")
+  ("<menu>" nil))
 
 (exwm-input-set-key
  (kbd "<s-kp-multiply>") 'desktop-environment-toggle-mute)

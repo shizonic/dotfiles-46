@@ -60,6 +60,7 @@
   ("<menu>" nil))
 
 (defhydra windows-hydra (:exit nil)
+  "Window"
   ("h" (call-interactively 'shrink-window-horizontally))
   ("j" (call-interactively 'shrink-window))
   ("k" (call-interactively 'enlarge-window))

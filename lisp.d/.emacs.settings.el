@@ -101,7 +101,8 @@
 (when (file-directory-p "~/Downloads")
   (setq emms-source-file-default-directory "~/Downloads"))
 (defhydra emms-hydra (:exit t)
-    ("r" (call-interactively 'emms-streams) "radio stationss")
-    ("i" (call-interactively 'emms-playlist-mode-go) "interactive playlist")
-    ("f" (call-interactively 'emms-play-file) "play file")
-    ("<menu>" nil))
+  "eMMs"
+  ("r" (call-interactively 'emms-streams) "radio stationss")
+  ("i" (call-interactively 'emms-playlist-mode-go) "interactive playlist")
+  ("f" (call-interactively 'emms-play-file) "play file")
+  ("<menu>" nil))

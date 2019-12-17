@@ -45,7 +45,7 @@
 (exwm-input-set-key (kbd "<f12>") (lambda()
                                     (interactive)
                                     (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile")
-                                    (rootoor)))
+                                    (my-tramp-root-switcher)))
 (exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
 
 (global-set-key (kbd "M-y") 'browse-kill-ring)

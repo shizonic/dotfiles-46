@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 iptables -F
 iptables -X
@@ -128,13 +128,6 @@ COMMIT
 -A OUTPUT -j REJECT --reject-with icmp-port-unreachable
 COMMIT
 EOF
-
-# systemctl restart libvirtd
-# sleep 2
-# mod0="$(iptables --line-numbers -nL LIBVIRT_FWO | awk '$5=="192.168.122.0/24" {print $1; exit}')"
-# iptables -R LIBVIRT_FWO "$mod0" -s 192.168.122.0/24 -i virbr0 -o tun+ -j ACCEPT
-# mod1="$(iptables --line-numbers -nL LIBVIRT_FWO | awk '$5=="10.0.2.0/24" {print $1; exit}')"
-# iptables -R LIBVIRT_FWO "$mod1" -s 10.0.2.0/24 -i virbr1 -o tun+ -j ACCEPT
 
 ip6tables -F
 ip6tables -X

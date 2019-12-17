@@ -42,7 +42,10 @@
 (exwm-input-set-key (kbd "<XF86PowerOff>") (lambda()(interactive)(root)(async-shell-command "poweroff")))
 (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-(exwm-input-set-key (kbd "<f12>") 'rootoor)
+(exwm-input-set-key (kbd "<f12>") (lambda()
+                                    (interactive)
+                                    (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile")
+                                    (rootoor)))
 (exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
 
 (global-set-key (kbd "M-y") 'browse-kill-ring)

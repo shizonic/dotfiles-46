@@ -13,7 +13,7 @@
 
 ;; PATH
 
-(setq my-inherited-path (getenv "PATH"))
+(setq my-path-inherited (getenv "PATH"))
 
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
@@ -30,8 +30,17 @@
                (delete-dups (split-string-by-delim
                              (setenv "PATH" (concat
                                              my-path-insert
-                                             my-inherited-path
+                                             my-path-inherited
                                              my-path-append)) ":")))":"))
+
+(setq my-path (concat "PATH=" (getenv "PATH")))
+
+(setq my-sync-root-path t) ;; keep root's PATH in sync with user/Emacs
+
+(defun root-path ()
+  (interactive)
+  (when (bound-and-true-p my-sync-root-path)
+      (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile")))
 
 ;; eshell alias / functions
 

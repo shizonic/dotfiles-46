@@ -18,15 +18,15 @@ Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
-  (setq dotfiles-profile ". \"$HOME/.bashrc\"
-
+  (setq dotfiles-profile "PATH=~/bin:$PATH
+]
 . \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 
 echo \"start X?\"
-read -r && \[ -z \"$DISPLAY\" ] && xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty")
+read -r && \[ -z \"$DISPLAY\" ] && sx")
 
-  (f-write-text dotfiles-profile 'utf-8 "~/.bash_profile")
+  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
   (setq dotfiles-xserverrc "#!/bin/sh
 
@@ -34,18 +34,10 @@ exec /usr/bin/Xorg -nolisten tcp \"$@\" vt$XDG_VTNR")
 
   (f-write-text dotfiles-xserverrc 'utf-8 "~/.xserverrc")
 
-  (setq dotfiles-bashrc "\[[ $- != *i* ]] && return
-
-alias sx=\"xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty\"
-
-PS1='$ '")
-
-  (f-write-text dotfiles-bashrc 'utf-8 "~/.bashrc")
-
   (setq dotfiles-gitconfig "\[user]
-        email = paxchristi888@gmail.com
-        name = Adam Schaefers
-        signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
+email = paxchristi888@gmail.com
+name = Adam Schaefers
+signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 \[commit]
         gpgsign = true")
 

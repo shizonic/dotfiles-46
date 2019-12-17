@@ -13,6 +13,7 @@
                                      "#kisslinux"
                                      "#emacs"
                                      "#commanduser"
+                                     "#liguros"
                                      "#phrackaged2")))
 
   (defun my-erc-multi-line-disable (string)

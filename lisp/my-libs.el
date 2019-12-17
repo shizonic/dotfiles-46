@@ -146,7 +146,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
-;; tramp
+;; tramp stuff
 
 (defun my-pwd ()
   (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
@@ -159,6 +159,14 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (cd (concat "/su:root@"system-name":"default-directory)))
 
+(defun rootoor ()
+  (interactive)
+  (if (string-match "@" (pwd))
+      (toor)
+    (root))
+  (pwd))
+
+
 ;; a front-end to getkiss.org package manager
 
 (defun kiss-pop ()
@@ -167,50 +175,57 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 (defun kiss-list ()
   (interactive)
-  (root)
+  (rootoor)
   (async-shell-command "kiss list")
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defun kiss-build ()
   (interactive)
-  (root)
+  (rootoor)
   (setq-local my-read (read-string "Build package(s):" ""))
   (async-shell-command (concat "kiss b" " " my-read))
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defun kiss-install ()
   (interactive)
-  (root)
+  (rootoor)
   (setq-local my-read (read-string "Install package(s):" ""))
   (async-shell-command (concat "kiss i" " " my-read))
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defun kiss-remove ()
   (interactive)
-  (root)
+  (rootoor)
   (setq-local my-read (read-string "Remove package(s):" ""))
   (async-shell-command (concat "kiss remove" " " my-read))
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defun kiss-search ()
   (interactive)
-  (root)
+  (rootoor)
   (setq-local my-read (read-string "Search package(s):" ""))
   (async-shell-command (concat "kiss search" " " my-read))
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defun kiss-checksum ()
   (interactive)
-  (root)
+  (rootoor)
   (setq-local my-read (read-string "Checksum package(s):" ""))
   (async-shell-command (concat "kiss checksum" " " my-read))
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defun kiss-update ()
   (interactive)
-  (root)
+  (rootoor)
   (async-shell-command "kiss update")
-  (kiss-pop))
+  (kiss-pop)
+  (rootoor))
 
 (defhydra kiss-hydra (:exit t)
   "Kiss Package Manager"

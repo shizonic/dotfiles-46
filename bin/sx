@@ -1,0 +1,3 @@
+#!/rocks/bin/mksh
+
+xinit ~/.xinitrc -- /usr/bin/X :0 vt1 -keeptty

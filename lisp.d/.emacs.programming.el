@@ -4,13 +4,15 @@
   "push the marked region to termbin.com via shell command"
   (interactive "r")
   (message "pushing region to termbin.com...")
-  (shell-command-on-region start end "nc termbin.com 9999" "*Termbin*"))
+  (shell-command-on-region start end "nc termbin.com 9999" "*Termbin*")
+  (switch-to-buffer "*Termbin*"))
 
 (defun buffer-to-termbin ()
   "push the whole buffer to termbin.com via shell command"
   (interactive)
   (message "pushing buffer to termbin.com...")
-  (shell-command-on-region (point-min) (point-max) "nc termbin.com 9999" "*Termbin*"))
+  (shell-command-on-region (point-min) (point-max) "nc termbin.com 9999" "*Termbin*")
+  (switch-to-buffer "*Termbin*"))
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 

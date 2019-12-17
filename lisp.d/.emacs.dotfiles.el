@@ -19,7 +19,7 @@ Xft.lcdfilter: lcddefault")
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
   (setq dotfiles-profile "PATH=~/bin:$PATH
-]
+
 . \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 

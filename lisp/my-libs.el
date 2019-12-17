@@ -146,11 +146,20 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
-;; a front-end to getkiss.org package manager
+;; tramp
+
+(defun my-pwd ()
+  (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
+
+(defun toor ()
+  (interactive)
+  (cd (my-pwd)))
 
 (defun root ()
   (interactive)
-  (cd (concat "/su:root@"system-name":")))
+  (cd (concat "/su:root@"system-name":"default-directory)))
+
+;; a front-end to getkiss.org package manager
 
 (defun kiss-pop ()
   (switch-to-buffer "*Async Shell Command*")

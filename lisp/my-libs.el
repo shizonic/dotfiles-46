@@ -166,18 +166,27 @@ Specify the video player to use by setting the value of `yt-dl-player'"
     (root))
   (pwd))
 
+(defun my-copy-path-to-root ()
+  "Why would you want to do this!!!"
+  (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile"))
+
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path) ;; tramp/eshell adopt remote .profile path
+
 (defun my-tramp-root-switcher ()
   (interactive)
   (if (string-match "*eshell" (format "%s" (current-buffer)))
       (progn
         (if (string-match "@" (pwd))
             (progn
+              (my-copy-path-to-root)
               (insert (concat "cd" " " (my-pwd)))
               (eshell-send-input))
           (progn
+            (my-copy-path-to-root)
             (insert (concat "cd /su:root@"system-name":"default-directory))
             (eshell-send-input))))
     (progn
+      (my-copy-path-to-root)
       (rootoor))))
 
 ;; a front-end to getkiss.org package manager

@@ -39,7 +39,7 @@
 (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
 (global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
 
-(exwm-input-set-key (kbd "<XF86PowerOff>") (lambda()(interactive)(tramp-root)(async-shell-command "poweroff")))
+(exwm-input-set-key (kbd "<XF86PowerOff>") (lambda()(interactive)(root)(async-shell-command "poweroff")))
 (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 (exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)

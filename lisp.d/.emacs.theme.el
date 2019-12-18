@@ -15,7 +15,7 @@
 
 ;; font
 
-(setq my-font "Liberation Mono")
+(setq my-font "Source Code Pro")
 (setq my-font-size '22)
 
 (my-set-font my-font my-font-size)

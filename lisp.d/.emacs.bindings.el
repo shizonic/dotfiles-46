@@ -105,5 +105,7 @@
                       (interactive)
                       (desktop-environment-brightness-decrement)))
 
-(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
-(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
+(global-set-key (kbd "<C-kp-add>")
+                (lambda()(interactive)(my-font-resizer 1)))
+(global-set-key (kbd "<C-kp-subtract>")
+                (lambda()(interactive)(my-font-resizer -1)))

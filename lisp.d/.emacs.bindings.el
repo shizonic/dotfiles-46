@@ -16,8 +16,8 @@
 
 (global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "<menu>") 'menu-hydra/body)
-(global-set-key (kbd "<home>") 'keychain-unlock)
-(global-set-key (kbd "<end>") 'keychain-lock)
+(global-set-key (kbd "<home>") (lambda()(interactive)(toor)(keychain-unlock)))
+(global-set-key (kbd "<end>") (lambda()(interactive)(toor)(keychain-lock)))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))

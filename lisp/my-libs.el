@@ -152,25 +152,18 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
 
 (defun toor ()
-  (interactive)
-  (cd (my-pwd)))
+  (if (string-match "@" (pwd))
+      (cd (my-pwd))))
 
 (defun root ()
-  (interactive)
-  (cd (concat "/su:root@"system-name":"default-directory)))
+  (if (not (string-match "@" (pwd)))
+   (cd (concat "/su:root@"system-name":"default-directory))))
 
-(defun rootoor ()
-  (interactive)
+(defun tooroot ()
   (if (string-match "@" (pwd))
       (toor)
     (root))
   (pwd))
-
-(defun my-copy-path-to-root ()
-  "Why would you want to do this!!!"
-  (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile"))
-
-(add-to-list 'tramp-remote-path 'tramp-own-remote-path) ;; tramp/eshell adopt remote .profile path
 
 (defun my-tramp-root-switcher ()
   (interactive)

@@ -35,12 +35,28 @@
 
 (setq my-path (concat "PATH=" (getenv "PATH")))
 
-(setq my-sync-root-path t) ;; keep root's PATH in sync with user/Emacs
+(defvar my-sync-root-path t
+  "Keep root's PATH in sync with user/Emacs")
 
 (defun root-path ()
   (interactive)
   (when (bound-and-true-p my-sync-root-path)
-      (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile")))
+    (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile")))
+
+(defun my-copy-path-to-root ()
+  "Why would you want to do this!!!"
+  (if (bound-and-true-p my-sync-root-path)
+      (progn
+        (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+        (setq tramp-remote-process-environment
+              '("ENV=''"
+                "TMOUT=0"
+                "LC_CTYPE=''"
+                "EDITOR=ed"
+                "PAGER=cat"
+                "MAKEFLAGS=j5"
+                "CFLAGS=-O3 -pipe"
+                "CXXFLAGS=-O3 -pipe")))))
 
 ;; eshell alias / functions
 

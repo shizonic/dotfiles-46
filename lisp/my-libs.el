@@ -16,20 +16,6 @@
     (princ STRING (current-buffer))
     (split-string (buffer-string) delim t)))
 
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
-current buffer's file. The eshell is renamed to match that
-directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (name (car (last (split-string parent "/" t)))))
-    (eshell "new")
-    (insert "(eshell-smart-initialize)")
-    (eshell-send-input)
-    (rename-buffer (concat "*eshell: " name "*"))))
-
 (defun match-paren (arg)
   "Go to the matching paren if on a paren; otherwise insert %."
   (interactive "p")

@@ -98,12 +98,27 @@
     (insert "cd ..")
     (eshell-send-input))
   (if (numberp counter)
-    (while (> counter 0)
-      (up)
-      (setq counter (1- counter)))
+      (while (> counter 0)
+        (up)
+        (setq counter (1- counter)))
     (up)))
 
 ;; MISC
+
+(defun eshell-here ()
+  "Opens up a new shell in the directory associated with the
+current buffer's file. The eshell is renamed to match that
+directory to make multiple eshell windows easier."
+  (interactive)
+  (let* ((parent (if (buffer-file-name)
+                     (file-name-directory (buffer-file-name))
+                   default-directory))
+         (name (car (last (split-string parent "/" t)))))
+    (eshell "new")
+    (insert "(eshell-smart-initialize)")
+    (eshell-send-input)
+    (rename-buffer (concat "*eshell: " name "*"))))
+
 
 ;; make scripts executeable automatically
 (add-hook 'after-save-hook

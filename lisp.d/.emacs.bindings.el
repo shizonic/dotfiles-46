@@ -69,8 +69,6 @@
   ("<menu>" nil))
 
 (exwm-input-set-key
- (kbd "<s-kp-multiply>") 'deskktop-environment-toggle-mute)
-(exwm-input-set-key
  (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
 (exwm-input-set-key
  (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
@@ -90,11 +88,22 @@
 (exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
 
 
-(exwm-input-set-key (kbd "<s-right>") (lambda()(interactive)(my-redshift-setter 1)))
-(exwm-input-set-key (kbd "<s-left>") (lambda()(interactive)(my-redshift-setter -1)))
-(exwm-input-set-key (kbd "<s-up>") (lambda()(interactive)(desktop-environment-brightness-increment)))
-(exwm-input-set-key (kbd "<s-down>") (lambda()(interactive)(desktop-environment-brightness-decrement)))
-
+(exwm-input-set-key (kbd "<s-right>")
+                    (lambda()
+                      (interactive)
+                      (my-redshift-setter 1)))
+(exwm-input-set-key (kbd "<s-left>")
+                    (lambda()
+                      (interactive)
+                      (my-redshift-setter -1)))
+(exwm-input-set-key (kbd "<s-up>")
+                    (lambda()
+                      (interactive)
+                      (desktop-environment-brightness-increment)))
+(exwm-input-set-key (kbd "<s-down>")
+                    (lambda()
+                      (interactive)
+                      (desktop-environment-brightness-decrement)))
 
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))

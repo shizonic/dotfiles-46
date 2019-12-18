@@ -190,15 +190,15 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (progn
         (if (string-match "@" (pwd))
             (progn
-              (my-copy-path-to-root)
+              (my-path-env-to-root)
               (insert (concat "cd" " " (my-pwd)))
               (eshell-send-input))
           (progn
-            (my-copy-path-to-root)
+            (my-path-env-to-root)
             (insert (concat "cd /su:root@"system-name":"default-directory))
             (eshell-send-input))))
     (progn
-      (my-copy-path-to-root)
+      (my-path-env-to-root)
       (tooroot))))
 
 ;; a front-end to getkiss.org package manager

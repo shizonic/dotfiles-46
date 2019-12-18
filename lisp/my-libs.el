@@ -24,8 +24,10 @@ directory to make multiple eshell windows easier."
   (let* ((parent (if (buffer-file-name)
                      (file-name-directory (buffer-file-name))
                    default-directory))
-         (name   (car (last (split-string parent "/" t)))))
+         (name (car (last (split-string parent "/" t)))))
     (eshell "new")
+    (insert "(eshell-smart-initialize)")
+    (eshell-send-input)
     (rename-buffer (concat "*eshell: " name "*"))))
 
 (defun match-paren (arg)

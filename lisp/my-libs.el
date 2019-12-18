@@ -254,7 +254,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
                         (k . kiss)
                         (e . erc)
                         (r . emms-streams)
-                        (mm . emms-play-file)
+                        (m . emms-play-file)
                         (p . emms-playlist-mode-go)))
 
   (setq-local
@@ -263,7 +263,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
     "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[mm]edia " ""))
 
   (setq-local option-keys (cl-loop for (key . value) in options
-                                     collect key))
+                                   collect key))
 
   (funcall (cdr (assq (intern my-read) options))))
 

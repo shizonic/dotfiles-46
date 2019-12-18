@@ -38,15 +38,6 @@
 (global-set-key (kbd "C-j") 'crux-smart-open-line)
 (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
 (global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
-
-(exwm-input-set-key (kbd "<XF86PowerOff>") (lambda()(interactive)(root)(async-shell-command "poweroff")))
-(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-(exwm-input-set-key (kbd "<f12>") (lambda()
-                                    (interactive)
-                                    (my-tramp-root-switcher)))
-(exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
-
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 
 (defhydra menu-hydra (:exit t)
@@ -84,11 +75,26 @@
 (exwm-input-set-key
  (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
 
-(global-set-key (kbd "M-+") (lambda()(interactive)(my-redshift-setter 1)))
-(global-set-key (kbd "M--") (lambda()(interactive)(my-redshift-setter -1)))
-(global-set-key (kbd "<M-kp-multiply>") (lambda()(interactive)
-                                          (setq redshift '1000)
-                                          (start-process-shell-command "redshift" nil "redshift -x")))
+(exwm-input-set-key (kbd "<XF86PowerOff>")
+                    (lambda()
+                      (interactive)
+                      (root)
+                      (async-shell-command "poweroff")))
+
+(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
+(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
+
+(exwm-input-set-key (kbd "<f12>") (lambda()
+                                    (interactive)
+                                    (my-tramp-root-switcher)))
+(exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
+
+
+(exwm-input-set-key (kbd "<s-right>") (lambda()(interactive)(my-redshift-setter 1)))
+(exwm-input-set-key (kbd "<s-left>") (lambda()(interactive)(my-redshift-setter -1)))
+(exwm-input-set-key (kbd "<s-up>") (lambda()(interactive)(desktop-environment-brightness-increment)))
+(exwm-input-set-key (kbd "<s-down>") (lambda()(interactive)(desktop-environment-brightness-decrement)))
+
 
 (global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))

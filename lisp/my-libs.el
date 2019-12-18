@@ -148,8 +148,25 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; tramp stuff
 
+;; my path manipulation tools
+(if (and
+     (bound-and-true-p my-path-insert)
+     (bound-and-true-p my-path-append))
+    (setq-local my-path-inherited (getenv "PATH"))
+    (setenv "PATH"
+            (string-join
+             (setq my-path
+                   (delete-dups (split-string-by-delim
+                                 (setenv "PATH" (concat
+                                                 my-path-insert
+                                                 my-path-inherited
+                                                 my-path-append)) ":")))":"))
+  (setq my-path (concat "PATH=" (getenv "PATH"))))
+
 (defun my-pwd ()
   (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
+
+;; tramp back and forth regular user / root (using `su')
 
 (defun toor ()
   (if (string-match "@" (pwd))
@@ -166,6 +183,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (pwd))
 
 (defun my-tramp-root-switcher ()
+  "tramp back and forth between root and regular user."
   (interactive)
   (if (string-match "*eshell" (format "%s" (current-buffer)))
       (progn

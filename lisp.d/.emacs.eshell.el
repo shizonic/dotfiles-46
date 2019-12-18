@@ -13,7 +13,8 @@
 
 ;; PATH
 
-(setq my-path-inherited (getenv "PATH"))
+(defvar my-sync-root-path t
+  "Keep root's (tramp-)PATH in sync with user/Emacs?")
 
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
@@ -24,30 +25,13 @@
 
 (setq my-path-append ":/foo/bar")
 
-(setenv "PATH"
-        (string-join
-         (setq my-path
-               (delete-dups (split-string-by-delim
-                             (setenv "PATH" (concat
-                                             my-path-insert
-                                             my-path-inherited
-                                             my-path-append)) ":")))":"))
-
-(setq my-path (concat "PATH=" (getenv "PATH")))
-
-(defvar my-sync-root-path t
-  "Keep root's PATH in sync with user/Emacs")
-
-(defun root-path ()
-  (interactive)
-  (when (bound-and-true-p my-sync-root-path)
-    (f-write-text my-path 'utf-8 "/su:root@kiss:/root/.profile")))
-
-(defun my-copy-path-to-root ()
+(defun my-path-env-to-root ()
   "Why would you want to do this!!!"
   (if (bound-and-true-p my-sync-root-path)
       (progn
+        ;; add local users path to roots path
         (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+        ;; define roots env
         (setq tramp-remote-process-environment
               '("ENV=''"
                 "TMOUT=0"
@@ -60,10 +44,8 @@
 
 ;; eshell alias / functions
 
-(defun eshell/troot ()
- (cd (concat "/su:root@"system-name":")))
-
 (defun eshell/emacs (file)
+  "Intercept the accidental execution of emacs"
   (find-file file))
 
 ;; MISC

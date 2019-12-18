@@ -254,13 +254,13 @@ Specify the video player to use by setting the value of `yt-dl-player'"
                         (k . kiss)
                         (e . erc)
                         (r . emms-streams)
-                        (m . emms-play-file)
+                        (m . (lambda ()(interactive)(call-interactively 'emms-play-file)))
                         (p . emms-playlist-mode-go)))
 
   (setq-local
    my-read
    (read-string
-    "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[mm]edia " ""))
+    "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[m]edia " ""))
 
   (setq-local option-keys (cl-loop for (key . value) in options
                                    collect key))

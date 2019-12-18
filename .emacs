@@ -45,7 +45,8 @@
   (use-package parinfer)
   (use-package elisp-slime-nav)
   (use-package slime)
-  (use-package emms))
+  (use-package emms)
+  (use-package nofrils-acme-theme))
 
 ;; ensure tls
 (if (and (and (executable-find "gnutls-cli")

@@ -28,6 +28,13 @@ directory to make multiple eshell windows easier."
     (eshell "new")
     (rename-buffer (concat "*eshell: " name "*"))))
 
+(defun match-paren (arg)
+  "Go to the matching paren if on a paren; otherwise insert %."
+  (interactive "p")
+  (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
+        ((looking-at "\\s)") (forward-char 1) (backward-list 1))
+        (t (self-insert-command (or arg 1)))))
+
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
 current window."

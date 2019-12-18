@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
-;; nearly all of my binds are in this file
-;; except some that are in .emacs.programming.el
+
+;; nearly all of my binds are here
 
 ;; Swapping lctl and lalt is the easiest way to make Emacs ergo-friendly.
 ;; And Place a helpful hydra menu on Caps Lock.
@@ -14,7 +14,6 @@
 
 (windmove-default-keybindings)
 
-(global-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "<menu>") 'menu-hydra/body)
 (global-set-key (kbd "<home>") (lambda()(interactive)(toor)(keychain-unlock)))
 (global-set-key (kbd "<end>") (lambda()(interactive)(toor)(keychain-lock)))
@@ -38,6 +37,7 @@
 (global-set-key (kbd "C-j") 'crux-smart-open-line)
 (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
 (global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
+(global-set-key "%" 'match-paren)
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 
 (defhydra menu-hydra (:exit t)
@@ -73,6 +73,7 @@
                       (async-shell-command "poweroff")))
 
 (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
+(exwm-input-set-key (kbd "<s-tab>") 'spacemacs/alternate-buffer)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 
 (exwm-input-set-key (kbd "<f12>") (lambda()
@@ -83,11 +84,23 @@
 (exwm-input-set-key (kbd "s-2") 'split-window-below)
 (exwm-input-set-key (kbd "s-3") 'split-window-right)
 (exwm-input-set-key (kbd "s-0") 'delete-window)
-(exwm-input-set-key (kbd "<s-backspace>") 'kill-buffer-and-window)
+(exwm-input-set-key (kbd "s-x") '(lambda ()
+                                   (interactive)
+                                   (kill-buffer (current-buffer))))
 (exwm-input-set-key (kbd "s-u") 'winner-undo)
+(exwm-input-set-key (kbd "s-U") 'winner-redo)
 (exwm-input-set-key (kbd "s-r") 'rotate-frame-anticlockwise)
 (exwm-input-set-key (kbd "s-o") 'other-window)
 
+;; https://github.com/DamienCassou/desktop-environment/issues/1
+(with-eval-after-load 'desktop-environment
+  (setf
+         (alist-get (elt (kbd "s-l") 0) desktop-environment-mode-map nil t)
+         nil)
+  (exwm-input-set-key (kbd "s-l") 'spacemacs/alternate-window))
+
+
+;; redshift
 (exwm-input-set-key (kbd "<s-right>")
                     (lambda()
                       (interactive)
@@ -96,6 +109,8 @@
                     (lambda()
                       (interactive)
                       (my-redshift-setter -1)))
+
+;; brightness
 (exwm-input-set-key (kbd "<s-up>")
                     (lambda()
                       (interactive)
@@ -105,6 +120,7 @@
                       (interactive)
                       (desktop-environment-brightness-decrement)))
 
+;; font resize
 (global-set-key (kbd "<C-kp-add>")
                 (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>")

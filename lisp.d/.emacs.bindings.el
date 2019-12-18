@@ -3,16 +3,30 @@
 ;; nearly all of my binds are here
 
 ;; Swapping lctl and lalt is the easiest way to make Emacs ergo-friendly.
-;; And Place a helpful hydra menu on Caps Lock.
-(start-process-shell-command "setxkbmap" nil "setxkbmap -option ctrl:swap_lalt_lctl -option caps:menu")
+;; Also swap <caps> with <menu> and bind to M-x Compile.
+(start-process-shell-command
+ "setxkbmap" nil "setxkbmap -option ctrl:swap_lalt_lctl -option caps:menu")
+
+(global-set-key (kbd "<menu>") 'compile)
 
 ;; Faster keyboard repeat
-(start-process-shell-command "xset" nil "xset r rate 200 60")
+(start-process-shell-command
+ "xset" nil "xset r rate 200 60")
 
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 
 (windmove-default-keybindings)
+(with-eval-after-load 'desktop-environment
+  (setf ;; https://github.com/DamienCassou/desktop-environment/issues/1
+
+         (alist-get (elt (kbd "s-l") 0) desktop-environment-mode-map nil t)
+         nil)
+  (exwm-input-set-key (kbd "s-l") 'windmove-right))
+
+(exwm-input-set-key (kbd "s-h") 'windmove-left)
+(exwm-input-set-key (kbd "s-j") 'windmove-down)
+(exwm-input-set-key (kbd "s-k") 'windmove-up)
 
 (global-set-key (kbd "<home>") (lambda()(interactive)(toor)(keychain-unlock)))
 (global-set-key (kbd "<end>") (lambda()(interactive)(toor)(keychain-lock)))
@@ -42,7 +56,6 @@
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 
 (defhydra menu-hydra (:exit t)
-  "<Menu>"
   ("b" (call-interactively 'eww) "eww")
   ("B" (call-interactively 'eww-browse-with-external-browser) "ext. browse")
   ("g" (call-interactively 'gnus) "gnus")
@@ -62,8 +75,6 @@
   ("l" (call-interactively 'enlarge-window-horizontally))
   ("<menu>" nil))
 
-(exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
-
 (exwm-input-set-key
  (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
 (exwm-input-set-key
@@ -75,8 +86,6 @@
                       (root)
                       (async-shell-command "poweroff")))
 
-(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-(exwm-input-set-key (kbd "<s-tab>") 'spacemacs/alternate-buffer)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 
 (exwm-input-set-key (kbd "<f12>") (lambda()
@@ -94,14 +103,8 @@
 (exwm-input-set-key (kbd "s-U") 'winner-redo)
 (exwm-input-set-key (kbd "s-r") 'rotate-frame-anticlockwise)
 (exwm-input-set-key (kbd "s-o") 'other-window)
-
-;; https://github.com/DamienCassou/desktop-environment/issues/1
-(with-eval-after-load 'desktop-environment
-  (setf
-         (alist-get (elt (kbd "s-l") 0) desktop-environment-mode-map nil t)
-         nil)
-  (exwm-input-set-key (kbd "s-l") 'spacemacs/alternate-window))
-
+(exwm-input-set-key (kbd "s-O") 'spacemacs/alternate-window)
+(exwm-input-set-key (kbd "<s-tab>") 'spacemacs/alternate-buffer)
 
 ;; redshift
 (exwm-input-set-key (kbd "<s-right>")

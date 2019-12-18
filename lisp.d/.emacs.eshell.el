@@ -2,12 +2,6 @@
 
 ;; prompt
 
-(require 'eshell)
-(require 'em-smart)
-(setq eshell-where-to-jump 'begin)
-(setq eshell-review-quick-commands t)
-(setq eshell-smart-space-goes-to-end t)
-
 (setq eshell-prompt-function
       (lambda ()
         (concat

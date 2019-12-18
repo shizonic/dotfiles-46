@@ -103,7 +103,6 @@
 
 ;; require lisp/ libs
 (add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
-(require 'em-smart)
 (require 'my-libs)
 (require 'transpose-frame)
 

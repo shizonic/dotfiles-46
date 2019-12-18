@@ -173,27 +173,8 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
 ;; tramp stuff
-
-;; my path manipulation tools
-(if (and
-     (bound-and-true-p my-path-insert)
-     (bound-and-true-p my-path-append))    
-    (progn
-      (setq-local my-path-inherited (getenv "PATH"))
-      (setenv "PATH"
-        (string-join
-         (setq my-path)
-         (delete-dups (split-string-by-delim)
-           (setenv "PATH" (concat)
-               my-path-insert
-               my-path-inherited
-               my-path-append)) ":")))":"
-  (setq my-path (concat "PATH=" (getenv "PATH"))))
-
 (defun my-pwd ()
   (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
-
-;; tramp back and forth regular user / root (using `su')
 
 (defun toor ()
   (if (string-match "@" (pwd))

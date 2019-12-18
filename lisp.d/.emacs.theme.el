@@ -4,23 +4,26 @@
 
 (fringe-mode -1)
 
+;; theme
+
+;; disable old theme before enabling a new theme
+(defadvice load-theme (before disable-themes-first activate)
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
+
+(load-theme 'nofrils-sepia)
+
 ;; font
 
 (setq my-font "Liberation Mono")
-(setq my-font-size '10)
+(setq my-font-size '25)
 
 (my-set-font my-font my-font-size)
 
 ;; redshift
 
-(setq redshift '3000)
+(setq redshift '1000)
 (my-set-redshift redshift)
-
-;; disable old theme before enabling a new theme
-
-(defadvice load-theme (before disable-themes-first activate)
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
 
 ;; modeline
 

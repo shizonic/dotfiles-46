@@ -2,20 +2,20 @@
 
 ;; prompt
 
-(setq eshell-prompt-function)
-(lambda ())
-(concat)
-(propertize "┌─[" 'face `(:foreground "green4"))
-(propertize (user-login-name) 'face `(:foreground "black"))
-(propertize "@" 'face `(:foreground "green4"))
-(propertize (system-name) 'face `(:foreground "black"))
-(propertize "]──[" 'face `(:foreground "green4"))
-(propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "black"))
-(propertize "]──[" 'face `(:foreground "green4"))
-(propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
-(propertize "]\n" 'face `(:foreground "green4"))
-(propertize "└─>" 'face `(:foreground "green4"))
-(propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green4"))
+(setq eshell-prompt-function
+      (lambda ()
+        (concat
+         (propertize "┌─[" 'face `(:foreground "green4"))
+         (propertize (user-login-name) 'face `(:foreground "black"))
+         (propertize "@" 'face `(:foreground "green4"))
+         (propertize (system-name) 'face `(:foreground "black"))
+         (propertize "]──[" 'face `(:foreground "green4"))
+         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "black"))
+         (propertize "]──[" 'face `(:foreground "green4"))
+         (propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
+         (propertize "]\n" 'face `(:foreground "green4"))
+         (propertize "└─>" 'face `(:foreground "green4"))
+         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green4")))))
 
 ;; environment variables
 

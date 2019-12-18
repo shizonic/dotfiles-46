@@ -152,6 +152,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (if (and
      (bound-and-true-p my-path-insert)
      (bound-and-true-p my-path-append))
+    (progn
     (setq-local my-path-inherited (getenv "PATH"))
     (setenv "PATH"
             (string-join
@@ -161,7 +162,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
                                                  my-path-insert
                                                  my-path-inherited
                                                  my-path-append)) ":")))":"))
-  (setq my-path (concat "PATH=" (getenv "PATH"))))
+  (setq my-path (concat "PATH=" (getenv "PATH")))))
 
 (defun my-pwd ()
   (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))

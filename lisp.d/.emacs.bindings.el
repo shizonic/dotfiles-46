@@ -14,7 +14,6 @@
 
 (windmove-default-keybindings)
 
-(global-set-key (kbd "<menu>") 'menu-hydra/body)
 (global-set-key (kbd "<home>") (lambda()(interactive)(toor)(keychain-unlock)))
 (global-set-key (kbd "<end>") (lambda()(interactive)(toor)(keychain-lock)))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -26,6 +25,8 @@
 (global-set-key (kbd "C-c f") 'flycheck-mode)
 
 (global-set-key (kbd "C-;") 'comment-line)
+(global-set-key (kbd "s-p") 'backward-paragraph)
+(global-set-key (kbd "s-n") 'forward-paragraph)
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 
@@ -46,7 +47,7 @@
   ("B" (call-interactively 'eww-browse-with-external-browser) "ext. browse")
   ("g" (call-interactively 'gnus) "gnus")
   ("a" (call-interactively 'abook) "abook")
-  ("k" (call-interactively 'kiss-hydra/body) "kiss")
+  ("k" (call-interactively 'kiss) "kiss")
   ("e" (call-interactively 'my-erc) "erc")
   ("$" (call-interactively 'eshell-here) "eshell")
   ("#" (call-interactively 'crux-create-scratch-buffer) "scratch")
@@ -60,6 +61,8 @@
   ("k" (call-interactively 'enlarge-window))
   ("l" (call-interactively 'enlarge-window-horizontally))
   ("<menu>" nil))
+
+(exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
 
 (exwm-input-set-key
  (kbd "<s-kp-add>") 'desktop-environment-volume-increment)

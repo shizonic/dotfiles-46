@@ -22,7 +22,8 @@ Xft.lcdfilter: lcddefault")
 export CFLAGS=\"-O3 -pipe\"
 export CXXFLAGS=\"-O3 -pipe\"
 export MAKEFLAGS=\"-j$(nproc)\""))
-  (f-write-text root-dot-profile 'utf-8 "/su:root@kiss:/root/.profile")
+  (f-write-text root-dot-profile 'utf-8
+                (concat "/su:root@"system-name":/root/.profile"))
 
   (setq dotfiles-profile "PATH=~/bin:$PATH
 

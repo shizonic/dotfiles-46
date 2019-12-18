@@ -178,7 +178,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (if (and
      (bound-and-true-p my-path-insert)
      (bound-and-true-p my-path-append))
-    (progn
+    (progn)
     (setq-local my-path-inherited (getenv "PATH"))
     (setenv "PATH"
             (string-join
@@ -188,7 +188,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
                                                  my-path-insert
                                                  my-path-inherited
                                                  my-path-append)) ":")))":"))
-  (setq my-path (concat "PATH=" (getenv "PATH")))))
+  (setq my-path (concat "PATH=" (getenv "PATH"))))
 
 (defun my-pwd ()
   (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
@@ -229,66 +229,12 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; a front-end to getkiss.org package manager
 
-(defun kiss-pop ()
-  (switch-to-buffer "*Async Shell Command*")
-  (delete-other-windows))
-
-(defun kiss-list ()
+(defun kiss ()
   (interactive)
   (root)
-  (async-shell-command "kiss list")
-  (kiss-pop))
-
-(defun kiss-build ()
-  (interactive)
-  (root)
-  (setq-local my-read (read-string "Build package(s):" ""))
-  (async-shell-command (concat "kiss b" " " my-read))
-  (kiss-pop))
-
-(defun kiss-install ()
-  (interactive)
-  (root)
-  (setq-local my-read (read-string "Install package(s):" ""))
-  (async-shell-command (concat "kiss i" " " my-read))
-  (kiss-pop))
-
-(defun kiss-remove ()
-  (interactive)
-  (root)
-  (setq-local my-read (read-string "Remove package(s):" ""))
-  (async-shell-command (concat "kiss remove" " " my-read))
-  (kiss-pop))
-
-(defun kiss-search ()
-  (interactive)
-  (root)
-  (setq-local my-read (read-string "Search package(s):" ""))
-  (async-shell-command (concat "kiss search" " " my-read))
-  (kiss-pop))
-
-(defun kiss-checksum ()
-  (interactive)
-  (root)
-  (setq-local my-read (read-string "Checksum package(s):" ""))
-  (async-shell-command (concat "kiss checksum" " " my-read))
-  (kiss-pop))
-
-(defun kiss-update ()
-  (interactive)
-  (root)
-  (async-shell-command "kiss update")
-  (kiss-pop))
-
-(defhydra kiss-hydra (:exit t)
-  "Kiss Package Manager"
-  ("u" (call-interactively 'kiss-update) "update")
-  ("b" (call-interactively 'kiss-build) "build")
-  ("i" (call-interactively 'kiss-install) "install")
-  ("r" (call-interactively 'kiss-remove) "remove")
-  ("s" (call-interactively 'kiss-search) "search")
-  ("c" (call-interactively 'kiss-checksum) "checksum")
-  ("l" (call-interactively 'kiss-list) "list")
-  ("<menu>" nil))
+  (setq-local my-read (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg]" ""))
+  (async-shell-command (concat "kiss " my-read))
+  (delete-other-windows)
+  (switch-to-buffer "*Async Shell Command*"))
 
 (provide 'my-libs)

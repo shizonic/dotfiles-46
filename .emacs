@@ -16,10 +16,11 @@
 ;; startup to eshell *only*
 (add-hook 'after-init-hook '(lambda()
                               (kill-buffer "*scratch*")
-                              (eshell)))
+                              (eshell-here)))
 
 ;; defer nothing
-(with-eval-after-load 'use-package (setq use-package-always-ensure t use-package-always-demand t)
+(with-eval-after-load 'use-package
+  (setq use-package-always-ensure t use-package-always-demand t)
   (require 'cl-lib)   ;; Common Lisp extensions
   (require 'seq)      ;; Sequence manipulation functions
   (require 'subr-x)   ;; Extra Lisp functions
@@ -42,7 +43,7 @@
   (use-package flycheck)
   (use-package indent-guide)
   (use-package aggressive-indent)
-  (use-package paredit)
+  (use-package smartparens)
   (use-package elisp-slime-nav)
   (use-package slime)
   (use-package emms)
@@ -102,6 +103,7 @@
 
 ;; require lisp/ libs
 (add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
+(require 'em-smart)
 (require 'my-libs)
 (require 'transpose-frame)
 

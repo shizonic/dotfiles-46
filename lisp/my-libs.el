@@ -177,17 +177,17 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 ;; my path manipulation tools
 (if (and
      (bound-and-true-p my-path-insert)
-     (bound-and-true-p my-path-append))
-    (progn)
-    (setq-local my-path-inherited (getenv "PATH"))
-    (setenv "PATH"
-            (string-join
-             (setq my-path
-                   (delete-dups (split-string-by-delim
-                                 (setenv "PATH" (concat
-                                                 my-path-insert
-                                                 my-path-inherited
-                                                 my-path-append)) ":")))":"))
+     (bound-and-true-p my-path-append))    
+    (progn
+      (setq-local my-path-inherited (getenv "PATH"))
+      (setenv "PATH"
+        (string-join
+         (setq my-path)
+         (delete-dups (split-string-by-delim)
+           (setenv "PATH" (concat)
+               my-path-insert
+               my-path-inherited
+               my-path-append)) ":")))":"
   (setq my-path (concat "PATH=" (getenv "PATH"))))
 
 (defun my-pwd ()

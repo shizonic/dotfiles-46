@@ -26,7 +26,7 @@
 (global-set-key (kbd "C-c p") 'projectile-command-map)
 (global-set-key (kbd "C-c f") 'flycheck-mode)
 
-(global-set-key (kbd "C-c C-;") 'comment-line)
+(global-set-key (kbd "C-;") 'comment-line)
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 
@@ -42,7 +42,6 @@
 
 (defhydra menu-hydra (:exit t)
   "<Menu>"
-  ("w" (call-interactively 'windows-hydra/body) "win")
   ("b" (call-interactively 'eww) "eww")
   ("B" (call-interactively 'eww-browse-with-external-browser) "ext. browse")
   ("g" (call-interactively 'gnus) "gnus")
@@ -55,17 +54,11 @@
   ("<menu>" nil))
 
 (defhydra windows-hydra (:exit nil)
-  "Window"
+  "Window resize"
   ("h" (call-interactively 'shrink-window-horizontally))
   ("j" (call-interactively 'shrink-window))
   ("k" (call-interactively 'enlarge-window))
   ("l" (call-interactively 'enlarge-window-horizontally))
-  ("r" (rotate-frame-anticlockwise))
-  ("o" (call-interactively 'other-window))
-  ("1" (call-interactively 'delete-other-windows))
-  ("2" (call-interactively 'split-window-below))
-  ("3" (call-interactively 'split-window-right))
-  ("0" (call-interactively 'delete-window))
   ("<menu>" nil))
 
 (exwm-input-set-key
@@ -85,8 +78,15 @@
 (exwm-input-set-key (kbd "<f12>") (lambda()
                                     (interactive)
                                     (my-tramp-root-switcher)))
-(exwm-input-set-key (kbd "<menu>") 'menu-hydra/body)
 
+(exwm-input-set-key (kbd "s-1") 'delete-other-windows)
+(exwm-input-set-key (kbd "s-2") 'split-window-below)
+(exwm-input-set-key (kbd "s-3") 'split-window-right)
+(exwm-input-set-key (kbd "s-0") 'delete-window)
+(exwm-input-set-key (kbd "<s-backspace>") 'kill-buffer-and-window)
+(exwm-input-set-key (kbd "s-u") 'winner-undo)
+(exwm-input-set-key (kbd "s-r") 'rotate-frame-anticlockwise)
+(exwm-input-set-key (kbd "s-o") 'other-window)
 
 (exwm-input-set-key (kbd "<s-right>")
                     (lambda()

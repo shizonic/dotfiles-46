@@ -33,7 +33,6 @@
   (use-package auto-package-update)
   (use-package crux)
   (use-package use-package)
-  (use-package hydra)
   (use-package browse-kill-ring)
   (use-package exwm)
   (use-package desktop-environment)

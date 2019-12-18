@@ -15,7 +15,11 @@
          (propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
          (propertize "]\n" 'face `(:foreground "green4"))
          (propertize "└─>" 'face `(:foreground "green4"))
-         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green4")))))
+         (propertize (if (or (string-match "@" (pwd)) ;; detect root via tramp
+                             (= (user-uid) 0))        ;; or the uid
+                         " # "
+                       " λ ")
+                     'face `(:foreground "green4")))))
 
 ;; environment variables
 
@@ -109,6 +113,8 @@ directory to make multiple eshell windows easier."
                    default-directory))
          (name (car (last (split-string parent "/" t)))))
     (eshell "new")
+    (insert "ls")
+    (eshell-send-input)
     (rename-buffer (concat "*eshell: " name "*"))))
 
 ;; make scripts executeable automatically

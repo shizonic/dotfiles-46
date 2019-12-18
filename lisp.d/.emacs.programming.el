@@ -52,6 +52,8 @@
 (indent-guide-global-mode 1)
 (setq indent-guide-recursive t)
 (aggressive-indent-global-mode 1)
+(require 'smartparens-config)
+(add-hook 'eshell-mode-hook 'smartparens-strict-mode)
 (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
 (add-hook 'lisp-mode-hook 'smartparens-strict-mode)
 (add-hook 'common-lisp-mode-hook 'smartparens-strict-mode)

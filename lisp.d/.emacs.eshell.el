@@ -109,10 +109,7 @@ directory to make multiple eshell windows easier."
                    default-directory))
          (name (car (last (split-string parent "/" t)))))
     (eshell "new")
-    (insert "(eshell-smart-initialize)")
-    (eshell-send-input)
     (rename-buffer (concat "*eshell: " name "*"))))
-
 
 ;; make scripts executeable automatically
 (add-hook 'after-save-hook

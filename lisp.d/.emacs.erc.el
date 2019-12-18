@@ -11,10 +11,11 @@
       erc-nick "adamantium"
       erc-autojoin-channels-alist '(("freenode.net"
                                      "#kisslinux"
-                                     "#emacs"
-                                     "#commanduser"
+                                     "#oasislinux"
+                                     "#phrackaged2"
                                      "#liguros"
-                                     "#phrackaged2")))
+                                     "#commanduser"
+                                     "#emacs")))
 
   (defun my-erc-multi-line-disable (string)
     "disable sending of multi-line messages entirely to avoid accidental flooding"

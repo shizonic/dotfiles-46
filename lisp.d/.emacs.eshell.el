@@ -1,12 +1,27 @@
 ;;; -*- lexical-binding: t; -*-
 
+;; prompt
+
+(setq eshell-prompt-function)
+(lambda ())
+(concat)
+(propertize "┌─[" 'face `(:foreground "green4"))
+(propertize (user-login-name) 'face `(:foreground "black"))
+(propertize "@" 'face `(:foreground "green4"))
+(propertize (system-name) 'face `(:foreground "black"))
+(propertize "]──[" 'face `(:foreground "green4"))
+(propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "black"))
+(propertize "]──[" 'face `(:foreground "green4"))
+(propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
+(propertize "]\n" 'face `(:foreground "green4"))
+(propertize "└─>" 'face `(:foreground "green4"))
+(propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green4"))
+
 ;; environment variables
 
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
-
-(setenv "CC" "x86_64-pc-linux-musl-gcc -static")
 (setenv "MAKEFLAGS" "-j5")
 (setenv "CFLAGS" "-O3 -pipe")
 (setenv "CXXFLAGS" "-O3 -pipe")
@@ -21,6 +36,19 @@
                       "/rocks/bin:"))
 
 (setq my-path-append ":/foo/bar")
+
+(setq my-path-inherited (getenv "PATH"))
+
+(setenv "PATH"
+  (string-join
+   (setq my-path
+    (delete-dups (split-string-by-delim
+                  (setenv "PATH" (concat
+                                  my-path-insert
+                                  my-path-inherited
+                                  my-path-append)) ":")))":"))
+
+(setq my-path (concat "PATH=" (getenv "PATH")))
 
 ;; set (tramp-)root's path and env
 
@@ -41,7 +69,6 @@
                 "EDITOR=ed"
                 "PAGER=cat"
                 "MAKEFLAGS=j5"
-                "CC=x86_64-pc-linux-musl-gcc -static"
                 "CFLAGS=-O3 -pipe"
                 "CXXFLAGS=-O3 -pipe")))))
 

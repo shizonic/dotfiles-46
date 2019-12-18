@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; handy functions I have adopted unto myself and/or conjured up into being . . .
+;; handy functions
 
 (defun split-file-by-delim (FILE delim)
   ;; e.g. (split-file-by-delim "~/.bashrc" "\n")
@@ -232,9 +232,58 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (defun kiss ()
   (interactive)
   (root)
-  (setq-local my-read (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg]" ""))
+  (setq-local
+   my-read
+   (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))
   (async-shell-command (concat "kiss " my-read))
   (delete-other-windows)
   (switch-to-buffer "*Async Shell Command*"))
+
+;; a home brewed menu
+
+(defun my-interactive-menu ()
+  (interactive)
+  (setq-local options '((a . abook)
+                        (b . eww)
+                        (B . eww-browse-with-external-browser)
+                        (g . gnus)
+                        (k . kiss)
+                        (e . erc)
+                        (r . emms-streams)
+                        (mm . emms-play-file)
+                        (p . emms-playlist-mode-go)))
+
+  (setq-local
+   my-read
+   (read-string
+    "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[mm]edia " ""))
+
+  (setq-local option-keys (cl-loop for (key . value) in options
+                                     collect key))
+
+  (funcall (cdr (assq (intern my-read) options))))
+
+
+(defun my-interactive-menu ()
+  (interactive)
+  (setq-local options '((a . abook)
+                        (b . eww)
+                        (B . eww-browse-with-external-browser)
+                        (g . gnus)
+                        (k . kiss)
+                        (e . erc)
+                        (r . emms-streams)
+                        (mm . emms-play-file)
+                        (p . emms-playlist-mode-go)))
+
+  (setq-local
+   my-read
+   (read-string
+    "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[mm]edia " ""))
+
+  (setq-local option-keys (cl-loop for (key . value) in options
+                                     collect key))
+
+  (funcall (cdr (assq (intern my-read) options))))
 
 (provide 'my-libs)

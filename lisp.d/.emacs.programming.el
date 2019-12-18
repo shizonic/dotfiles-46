@@ -59,7 +59,6 @@
 (add-hook 'slime-repl-mode-hook 'parinfer-mode)
 (setq parinfer-extensions
       '(defaults
-         lispy
          smart-tab
          smart-yank))
 (global-set-key (kbd "C-c ,") 'parinfer-toggle-mode)

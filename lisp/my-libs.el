@@ -213,34 +213,10 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (defun my-interactive-menu ()
   (interactive)
   (setq-local options '((a . abook)
-                        (b . eww)
-                        (B . eww-browse-with-external-browser)
+                        (e . (lambda ()(interactive)(call-interactively 'eww)))
                         (g . gnus)
                         (k . kiss)
-                        (e . erc)
-                        (r . emms-streams)
-                        (mm . emms-play-file)
-                        (p . emms-playlist-mode-go)))
-
-  (setq-local
-   my-read
-   (read-string
-    "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[mm]edia " ""))
-
-  (setq-local option-keys (cl-loop for (key . value) in options
-                                     collect key))
-
-  (funcall (cdr (assq (intern my-read) options))))
-
-
-(defun my-interactive-menu ()
-  (interactive)
-  (setq-local options '((a . abook)
-                        (B . eww-browse-with-external-browser)
-                        (b . (lambda ()(interactive)(call-interactively 'eww)))
-                        (g . gnus)
-                        (k . kiss)
-                        (e . erc)
+                        (i . erc)
                         (r . emms-streams)
                         (m . (lambda ()(interactive)(call-interactively 'emms-play-file)))
                         (p . emms-playlist-mode-go)))
@@ -248,7 +224,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (setq-local
    my-read
    (read-string
-    "Menu [e]ww|[g]nus|[a]book|[k]iss|[e]rc|[r]adio|[p]laylist|[m]edia " ""))
+    "Menu [e]ww|[g]nus|[a]book|[k]iss|[i]rc|[r]adio|[p]laylist|[m]edia " ""))
 
   (setq-local option-keys (cl-loop for (key . value) in options
                                    collect key))

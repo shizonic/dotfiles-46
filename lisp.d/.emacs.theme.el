@@ -11,7 +11,7 @@
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
-(load-theme 'nofrils-sepia)
+(load-theme 'nofrils-sepia t)
 
 ;; font
 

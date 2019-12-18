@@ -46,26 +46,23 @@
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (parinfer-mode) (equal (substring str -1) ")"))
+  (if (and (paredit-mode) (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
 (setq indent-guide-recursive t)
 
 (indent-guide-global-mode 1)
+(aggressive-indent-global-mode 1)
 
-(add-hook 'emacs-lisp-mode-hook 'parinfer-mode)
-(add-hook 'lisp-mode-hook 'parinfer-mode)
-(add-hook 'common-lisp-mode-hook 'parinfer-mode)
-(add-hook 'slime-repl-mode-hook 'parinfer-mode)
-(setq parinfer-extensions
-      '(defaults
-         smart-tab
-         smart-yank))
-(global-set-key (kbd "C-c ,") 'parinfer-toggle-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'lisp-mode-hook 'paredit-mode)
+(add-hook 'common-lisp-mode-hook 'paredit-mode)
+(add-hook 'slime-repl-mode-hook 'paredit-mode)
 
 (defun my-ielm ()
   (interactive)
   (crux-start-or-switch-to 'ielm "*ielm*"))
+
 (add-hook 'emacs-lisp-mode-hook 'eldoc-mode)
 
 (define-key emacs-lisp-mode-map (kbd "C-c C-z") 'my-ielm)

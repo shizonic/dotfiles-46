@@ -43,7 +43,6 @@
   (use-package flycheck)
   (use-package indent-guide)
   (use-package parinfer)
-  (use-package lispy)
   (use-package elisp-slime-nav)
   (use-package slime)
   (use-package emms))

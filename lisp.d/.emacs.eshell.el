@@ -35,11 +35,10 @@
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
                       "/home/" user-login-name "/.local/bin:"
-                      "/sucks/coreutils/bin:"
-                      "/sucks/misc/bin:"
+                      "/sucks/bin:"
                       "/rocks/bin:"))
 
-(setq my-path-append ":/foo/bar")
+(setq my-path-append ":/rocks/more/bin")
 
 (setq my-path-inherited (getenv "PATH"))
 

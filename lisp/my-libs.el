@@ -158,7 +158,11 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; tramp stuff
 (defun my-pwd ()
-  (string-trim (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)"))
+  (interactive)
+  (if (string-match "@" (pwd))
+      (string-trim
+       (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)")
+    (string-trim default-directory)))
 
 (defun toor ()
   (if (string-match "@" (pwd))
@@ -193,10 +197,11 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (tooroot))))
 
 (defun my-su-edit ()
-  "because crux-sudo-edit is broken without sudo installed"
+  "WE DON'T NEED SUDO, we have su!"
   (interactive)
-  (find-file
-   (concat "/su:root@"system-name":"(buffer-file-name))))
+  (if (buffer-file-name)
+      (find-file (concat "/su:root@"system-name":"(buffer-file-name)))
+    (find-file (concat "/su:root@"system-name":"(expand-file-name ".")))))
 
 ;; a front-end to getkiss.org package manager
 

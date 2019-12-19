@@ -192,6 +192,12 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (my-path-env-to-root)
       (tooroot))))
 
+(defun my-su-edit ()
+  "because crux-sudo-edit is broken without sudo installed"
+  (interactive)
+  (find-file
+   (concat "/su:root@"system-name":"(buffer-file-name))))
+
 ;; a front-end to getkiss.org package manager
 
 (defun kiss ()

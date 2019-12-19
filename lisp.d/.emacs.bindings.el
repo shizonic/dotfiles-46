@@ -44,6 +44,7 @@
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 
 (global-set-key (kbd "C-c I") 'crux-find-user-init-file)
+(global-set-key (kbd "C-c S") 'my-su-edit)
 (global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
 (global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
 (global-set-key (kbd "<C-backspace>") 'crux-kill-line-backwards)
@@ -108,6 +109,23 @@
                     (lambda()
                       (interactive)
                       (desktop-environment-brightness-decrement)))
+
+;; dmenu
+(exwm-input-set-key (kbd "s-d")
+                    (lambda()
+                      (interactive)
+                      (call-process-shell-command "dmenu_run")))
+
+;; slock
+(exwm-input-set-key (kbd "<s-escape>")
+                    (lambda()
+                      (interactive)
+                      (start-process-shell-command "slock" nil "slock")))
+
+(exwm-input-set-key (kbd "s-T")
+                    (lambda()
+                      (interactive)
+                      (start-process-shell-command "st" nil "st")))
 
 ;; font resize
 (global-set-key (kbd "<C-kp-add>")

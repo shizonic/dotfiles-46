@@ -1,4 +1,4 @@
-#!/bin/mksh
+#!/rocks/bin/mksh
 set -o pipefail
 echo OK
 while read cmd rest

@@ -44,7 +44,8 @@
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 
 (global-set-key (kbd "C-c I") 'crux-find-user-init-file)
-(global-set-key (kbd "C-c S") 'my-su-edit)
+(global-set-key (kbd "C-c s") 'my-su-edit)
+(global-set-key (kbd "<f12>") 'my-su-edit)
 (global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
 (global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
 (global-set-key (kbd "<C-backspace>") 'crux-kill-line-backwards)

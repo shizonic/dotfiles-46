@@ -51,9 +51,6 @@ current frame."
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
 
-(defvar yt-dl-player "mpv"
-  "Video player used by `eww-open-yt-dl'")
-
 (defun eww-open-yt-dl ()
   "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
 Specify the video player to use by setting the value of `yt-dl-player'"
@@ -67,9 +64,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
       (with-output-to-temp-buffer xbuff
         (print "Ensure youtube-dl is installed on the system and try again...")))))
-
-(with-eval-after-load 'eww
-  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
 
 ;; abook
 
@@ -131,6 +125,8 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (if (> redshift 25000)
       (setq redshift '25000))
   (my-set-redshift redshift))
+
+;; dir loader
 
 (defun load-directory (directory)
   "Load recursively all `.el' files in DIRECTORY."

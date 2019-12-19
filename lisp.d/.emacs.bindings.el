@@ -108,20 +108,9 @@
 
 ;; dmenu
 (exwm-input-set-key (kbd "s-d")
-                    (lambda()
-                      (interactive)
-                      (call-process-shell-command "dmenu_run")))
-
-;; slock
-(exwm-input-set-key (kbd "<s-escape>")
-                    (lambda()
-                      (interactive)
-                      (start-process-shell-command "slock" nil "slock")))
-
-(exwm-input-set-key (kbd "s-T")
-                    (lambda()
-                      (interactive)
-                      (start-process-shell-command "st" nil "st")))
+                    (lambda (command)
+                      (interactive (list (read-shell-command "$ ")))
+                      (start-process-shell-command command nil command)))
 
 ;; font resize
 (global-set-key (kbd "<C-kp-add>")

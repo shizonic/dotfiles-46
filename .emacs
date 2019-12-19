@@ -42,7 +42,7 @@
   (use-package flycheck)
   (use-package indent-guide)
   (use-package aggressive-indent)
-  (use-package smartparens)
+  (use-package lispy)
   (use-package elisp-slime-nav)
   (use-package slime)
   (use-package emms)

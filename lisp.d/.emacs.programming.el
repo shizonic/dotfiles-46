@@ -46,18 +46,16 @@
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (smartparens-strict-mode) (equal (substring str -1) ")"))
+  (if (and (lispy-mode) (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
 (indent-guide-global-mode 1)
 (setq indent-guide-recursive t)
 (aggressive-indent-global-mode 1)
-(require 'smartparens-config)
-(add-hook 'eshell-mode-hook 'smartparens-strict-mode)
-(add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
-(add-hook 'lisp-mode-hook 'smartparens-strict-mode)
-(add-hook 'common-lisp-mode-hook 'smartparens-strict-mode)
-(add-hook 'slime-repl-mode-hook 'smartparens-strict-mode)
+(add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+(add-hook 'lisp-mode-hook 'lispy-mode)
+(add-hook 'common-lisp-mode-hook 'lispy-mode)
+(add-hook 'slime-repl-mode-hook 'lispy-mode)
 
 (defun my-ielm ()
   (interactive)

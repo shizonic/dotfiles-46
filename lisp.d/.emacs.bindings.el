@@ -114,3 +114,6 @@
                 (lambda()(interactive)(my-font-resizer 1)))
 (global-set-key (kbd "<C-kp-subtract>")
                 (lambda()(interactive)(my-font-resizer -1)))
+
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))

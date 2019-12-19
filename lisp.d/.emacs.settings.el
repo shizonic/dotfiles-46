@@ -96,6 +96,9 @@
       shr-external-browser 'my-external-browser
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
+(defvar yt-dl-player "mpv"
+  "Video player used by `eww-open-yt-dl'")
+
 (emms-standard)
 (emms-default-players)
 (when (file-directory-p "~/Downloads")

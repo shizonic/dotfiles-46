@@ -33,7 +33,6 @@
   (use-package ht)    ;; The missing hash table library
   (use-package auto-package-update)
   (use-package crux)
-  (use-package use-package)
   (use-package browse-kill-ring)
   (use-package exwm)
   (use-package desktop-environment)

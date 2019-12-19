@@ -68,10 +68,6 @@
 
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 
-(exwm-input-set-key (kbd "<f12>") (lambda()
-                                    (interactive)
-                                    (my-tramp-root-switcher)))
-
 (exwm-input-set-key (kbd "s-1") 'delete-other-windows)
 (exwm-input-set-key (kbd "s-2") 'split-window-below)
 (exwm-input-set-key (kbd "s-3") 'split-window-right)

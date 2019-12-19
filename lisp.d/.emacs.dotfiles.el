@@ -3,7 +3,7 @@
 (defun sucks-to-bin ()
   "Keep Emacs happy by using static gnu coreutils binaries instead of busybox"
   (interactive)
-  (root)
+  (suroot)
   (start-process-shell-command "ln" nil
                                "ln -sf /sucks/coreutils/bin* /usr/bin")
   (start-process-shell-command "ln" nil

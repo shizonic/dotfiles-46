@@ -63,7 +63,7 @@
 (exwm-input-set-key (kbd "<XF86PowerOff>")
                     (lambda()
                       (interactive)
-                      (root)
+                      (suroot)
                       (async-shell-command "poweroff")))
 
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)

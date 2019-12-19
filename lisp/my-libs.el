@@ -170,7 +170,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (if (string-match "@" (pwd))
       (cd (my-pwd))))
 
-(defun root ()
+(defun suroot ()
   "change Emacs internal directory to root using su"
   (if (not (string-match "@" (pwd)))
       (cd (concat "/su:root@"system-name":"default-directory))))
@@ -179,7 +179,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   "toggle Emacs internal directory using su"
   (if (string-match "@" (pwd))
       (toor)
-    (root))
+    (suroot))
   (pwd))
 
 (defun eshell-tramp-su ()
@@ -216,7 +216,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 (defun kiss ()
   (interactive)
-  (root)
+  (suroot)
   (setq-local
    my-read
    (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))

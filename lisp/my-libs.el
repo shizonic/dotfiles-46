@@ -158,6 +158,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 ;; tramp stuff
 (defun my-pwd ()
+  "Show the real pwd whether we are tramp-root or regular user"
   (interactive)
   (if (string-match "@" (pwd))
       (string-trim
@@ -165,21 +166,24 @@ Specify the video player to use by setting the value of `yt-dl-player'"
     (string-trim default-directory)))
 
 (defun toor ()
+  "change Emacs internal directory to user (away from tramp root)"
   (if (string-match "@" (pwd))
       (cd (my-pwd))))
 
 (defun root ()
+  "change Emacs internal directory to root using su"
   (if (not (string-match "@" (pwd)))
-   (cd (concat "/su:root@"system-name":"default-directory))))
+      (cd (concat "/su:root@"system-name":"default-directory))))
 
 (defun tooroot ()
+  "toggle Emacs internal directory using su"
   (if (string-match "@" (pwd))
       (toor)
     (root))
   (pwd))
 
-(defun my-tramp-root-switcher ()
-  "tramp back and forth between root and regular user."
+(defun eshell-tramp-su ()
+  "tramp su back and forth in the Eshell."
   (interactive)
   (if (string-match "*eshell" (format "%s" (current-buffer)))
       (progn
@@ -191,17 +195,22 @@ Specify the video player to use by setting the value of `yt-dl-player'"
           (progn
             (my-path-env-to-root)
             (insert (concat "cd /su:root@"system-name":"default-directory))
-            (eshell-send-input))))
-    (progn
-      (my-path-env-to-root)
-      (tooroot))))
+            (eshell-send-input))))))
 
 (defun my-su-edit ()
   "WE DON'T NEED SUDO, we have su!"
   (interactive)
-  (if (buffer-file-name)
-      (find-file (concat "/su:root@"system-name":"(buffer-file-name)))
-    (find-file (concat "/su:root@"system-name":"(expand-file-name ".")))))
+  ;; eshell
+  (when (string= "eshell-mode" major-mode)
+    (eshell-tramp-su))
+
+  ;; dired
+  (when (string= "dired-mode" major-mode)
+    (find-file (concat "/su:root@"system-name":"(expand-file-name "."))))
+
+  ;; file
+  (when (buffer-file-name)
+    (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
 ;; a front-end to getkiss.org package manager
 

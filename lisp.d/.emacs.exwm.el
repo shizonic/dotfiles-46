@@ -52,7 +52,7 @@
 
 ;; desktop-environment
 (desktop-environment-mode 1)
-(setq desktop-environment-brightness-set-command "lux.sh %s"
-       desktop-environment-brightness-normal-increment "-a 5%"
-       desktop-environment-brightness-normal-decrement "-s 5%"
-       desktop-environment-brightness-get-command "lux.sh -G")
+(setq desktop-environment-brightness-set-command "lux %s"
+      desktop-environment-brightness-normal-increment "-a 5%"
+      desktop-environment-brightness-normal-decrement "-s 5%"
+      desktop-environment-brightness-get-command "lux -G")

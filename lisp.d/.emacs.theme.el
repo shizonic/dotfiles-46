@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;; misc
-
+(global-prettify-symbols-mode 1)
 (fringe-mode -1)
 
 ;; theme

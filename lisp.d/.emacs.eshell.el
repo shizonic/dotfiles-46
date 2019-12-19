@@ -18,7 +18,7 @@
          (propertize (if (or (string-match "@" (pwd)) ;; detect root via tramp
                              (= (user-uid) 0))        ;; or the uid
                          " # "
-                       " λ ")
+                       " $ ")
                      'face `(:foreground "green4")))))
 
 ;; environment variables

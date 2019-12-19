@@ -1,5 +1,15 @@
 ;;; -*- lexical-binding: t; -*-
 
+(defun sucks-to-bin ()
+  "Keep Emacs happy by using static gnu coreutils binaries instead of busybox"
+  (interactive)
+  (root)
+  (start-process-shell-command "ln" nil
+                               "ln -sf /sucks/coreutils/bin* /usr/bin")
+  (start-process-shell-command "ln" nil
+                               "ln -sf /sucks/misc/bin/* /usr/bin")
+  (toor))
+
 (defun dotfiles-install ()
   (interactive)
 
@@ -34,12 +44,6 @@ echo \"start X?\"
 read -r && \[ -z \"$DISPLAY\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.profile")
-
-  (setq dotfiles-xserverrc "#!/bin/sh
-
-exec /usr/bin/Xorg -nolisten tcp \"$@\" vt$XDG_VTNR")
-
-  (f-write-text dotfiles-xserverrc 'utf-8 "~/.xserverrc")
 
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com
@@ -100,7 +104,10 @@ export _JAVA_AWT_WM_NONREPARENTING=\"1\";
 
 exec emacs --fullscreen")
 
-  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
+  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")
+
+  (when (file-directory-p "/sucks/bin")
+    (sucks-to-bin)))
 
 (when (not (file-exists-p "~/.emacs.d/.dotfiles"))
   (dotfiles-install))

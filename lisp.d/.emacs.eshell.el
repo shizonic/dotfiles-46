@@ -36,8 +36,12 @@
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
                       "/home/" user-login-name "/.local/bin:"
-                      "/sucks/bin:"
-                      "/rocks/bin:"))
+                      "/opt/awk/awk/bin:"
+                      "/opt/gnu/coreutils/bin:"
+                      "/opt/gnu/findutils/bin:"
+                      "/opt/gnu/diffutils/bin:"
+                      "/opt/gnu/gawk/bin:"
+                      "/opt/gnu/patch/bin:"))
 
 (setq my-path-append ":/rocks/more/bin")
 
@@ -74,7 +78,8 @@
                 "PAGER=cat"
                 "MAKEFLAGS=j5"
                 "CFLAGS=-O3 -pipe"
-                "CXXFLAGS=-O3 -pipe")))))
+                "CXXFLAGS=-O3 -pipe"
+                "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")))))
 
 ;; eshell hooks
 

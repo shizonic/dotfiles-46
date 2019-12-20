@@ -168,16 +168,19 @@ Specify the video player to use by setting the value of `yt-dl-player'"
     (string-trim default-directory)))
 
 (defun toor ()
+  (interactive)
   "change Emacs internal directory to user (away from tramp root)"
   (if (string-match "@" (pwd))
       (cd (my-pwd))))
 
 (defun suroot ()
+  (interactive)
   "change Emacs internal directory to root using su"
   (if (not (string-match "@" (pwd)))
       (cd (concat "/su:root@"system-name":"default-directory))))
 
 (defun tooroot ()
+  (interactive)
   "toggle Emacs internal directory using su"
   (if (string-match "@" (pwd))
       (toor)
@@ -214,27 +217,25 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (when (buffer-file-name)
     (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
-;; a front-end to getkiss.org package manager
-
+;; a home brewed menu
 (defun kiss ()
   (interactive)
-  (suroot)
-  (setq-local
-   my-read
-   (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))
-  (async-shell-command (concat "kiss " my-read))
-  (delete-other-windows)
-  (switch-to-buffer "*Async Shell Command*"))
-
-;; a home brewed menu
+  (with-temp-buffer
+    (suroot)
+    (setq-local
+     my-read
+     (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))
+    (async-shell-command (concat "kiss " my-read))
+    (delete-other-windows)
+    (switch-to-buffer "*Async Shell Command*")))
 
 (defun my-interactive-menu ()
   (interactive)
   (setq-local options '((a . abook)
                         (e . (lambda ()(interactive)(call-interactively 'eww)))
                         (g . gnus)
-                        (k . kiss)
                         (i . erc)
+                        (k . kiss)
                         (r . emms-streams)
                         (m . (lambda ()(interactive)(call-interactively 'emms-play-file)))
                         (p . emms-playlist-mode-go)))
@@ -242,7 +243,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (setq-local
    my-read
    (read-string
-    "Menu [e]ww|[g]nus|[a]book|[k]iss|[i]rc|[r]adio|[p]laylist|[m]edia " ""))
+    "Menu [e]ww [g]nus [a]book [i]rc [k]iss  [r]adio [p]laylist [m]edia " ""))
 
   (setq-local option-keys (cl-loop for (key . value) in options
                                    collect key))

@@ -21,14 +21,8 @@
                      'face `(:foreground "green4"))
          (if (> eshell-last-command-status 0) ;; echo return codes
              (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "black"))))))
-
-(setq eshell-prompt-function
-      (lambda ()
-        (format "[%s][%s] "
-                (abbreviate-file-name (eshell/pwd))
-                eshell-last-command-status)))
-
-;; environment variables
+                                        ;
+                                        ; environment variables
 
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
@@ -36,6 +30,7 @@
 (setenv "MAKEFLAGS" "-j5")
 (setenv "CFLAGS" "-O3 -pipe")
 (setenv "CXXFLAGS" "-O3 -pipe")
+(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")
 
 ;; PATH
 

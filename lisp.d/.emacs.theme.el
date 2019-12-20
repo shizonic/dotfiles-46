@@ -2,11 +2,11 @@
 
 ;; misc
 (global-prettify-symbols-mode 1)
-(fringe-mode 1)
-(menu-bar-mode 1)
-(tool-bar-mode 1)
-(scroll-bar-mode 1)
-(set-window-scroll-bars (minibuffer-window) nil nil)
+(fringe-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
 ;; theme
 

@@ -102,6 +102,14 @@
 
 ;; MISC
 
+(defun eshell-main ()
+  (interactive)
+  (if (get-buffer "*eshell*")
+      (progn
+        (switch-to-buffer "*eshell*")
+        (delete-other-windows))
+    (eshell)))
+
 (defun eshell-here ()
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
@@ -127,3 +135,13 @@ directory to make multiple eshell windows easier."
                   (save-buffer)
                   (async-shell-command (buffer-file-name))))))
 (add-hook 'sh-mode-hook 'my-shell-mode-hook)
+
+;; ;;; TODO eshell history
+;; (defun me/bash-history ()
+;;   (interactive)
+;;   (let ((command (with-temp-buffer
+;;                    (insert-file-contents-literally "~/.bash_history")
+;;                    (let ((history-list (split-string (buffer-string) "\n" t)))
+;;                      (helm-comp-read "Command: " history-list :fuzzy t)))))
+;;     (when command
+;;       (insert command))))

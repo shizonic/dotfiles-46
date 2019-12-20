@@ -16,21 +16,21 @@
 ;; startup to eshell *only*
 (add-hook 'after-init-hook '(lambda()
                               (kill-buffer "*scratch*")
-                              (eshell)))
+                              (eshell-main)))
 
 ;; defer nothing
 (with-eval-after-load 'use-package
   (setq use-package-always-ensure t use-package-always-demand t)
-  (require 'cl-lib)   ;; Common Lisp extensions
-  (require 'seq)      ;; Sequence manipulation functions
-  (require 'subr-x)   ;; Extra Lisp functions
-  (use-package async  ;; Asynchronous processing library
+  (require 'cl-lib)  ;; Common Lisp extensions
+  (require 'seq)     ;; Sequence manipulation functions
+  (require 'subr-x)  ;; Extra Lisp functions
+  (use-package async ;; Asynchronous processing library
     :config (async-bytecomp-package-mode 1))
-  (use-package dash)  ;; A modern list library
-  (use-package a)     ;; Associative data structure functions
-  (use-package s)     ;; String manipulation library
-  (use-package f)     ;; Modern API for working with files and directories
-  (use-package ht)    ;; The missing hash table library
+  (use-package dash) ;; A modern list library
+  (use-package a)    ;; Associative data structure functions
+  (use-package s)    ;; String manipulation library
+  (use-package f)    ;; Modern API for working with files and directories
+  (use-package ht)   ;; The missing hash table library
   (use-package auto-package-update)
   (use-package crux)
   (use-package browse-kill-ring)
@@ -42,7 +42,6 @@
   (use-package flycheck)
   (use-package indent-guide)
   (use-package aggressive-indent)
-  (use-package company)
   (use-package lispy)
   (use-package elisp-slime-nav)
   (use-package slime)

@@ -18,9 +18,8 @@
 
 (with-eval-after-load 'desktop-environment
   (setf ;; https://github.com/DamienCassou/desktop-environment/issues/1
-
-         (alist-get (elt (kbd "s-l") 0) desktop-environment-mode-map nil t)
-         nil)
+   (alist-get (elt (kbd "s-l") 0) desktop-environment-mode-map nil t)
+   nil)
   (exwm-input-set-key (kbd "s-l") 'enlarge-window-horizontally))
 
 (exwm-input-set-key (kbd "s-h") 'shrink-window-horizontally)
@@ -46,8 +45,8 @@
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 
+(global-set-key (kbd "C-t") 'eshell-here)
 (global-set-key (kbd "C-c I") 'crux-find-user-init-file)
-(global-set-key (kbd "C-c s") 'my-su-edit)
 (global-set-key (kbd "<f12>") 'my-su-edit)
 (global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
 (global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
@@ -70,13 +69,13 @@
                       (suroot)
                       (async-shell-command "poweroff")))
 
+(exwm-input-set-key (kbd "s-m") 'my-interactive-menu)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-
 (exwm-input-set-key (kbd "s-1") 'delete-other-windows)
 (exwm-input-set-key (kbd "s-2") 'split-window-below)
 (exwm-input-set-key (kbd "s-3") 'split-window-right)
 (exwm-input-set-key (kbd "s-0") 'delete-window)
-(exwm-input-set-key (kbd "s-x") '(lambda ()
+(exwm-input-set-key (kbd "<s-backspace>") '(lambda ()
                                    (interactive)
                                    (kill-buffer (current-buffer))))
 (exwm-input-set-key (kbd "s-u") 'winner-undo)
@@ -85,10 +84,6 @@
 (exwm-input-set-key (kbd "s-o") 'other-window)
 (exwm-input-set-key (kbd "s-O") 'spacemacs/alternate-window)
 (exwm-input-set-key (kbd "<s-tab>") 'spacemacs/alternate-buffer)
-
-(exwm-input-set-key (kbd "s-t") 'eshell-here)
-(exwm-input-set-key (kbd "s-s") 'crux-create-scratch-buffer)
-(exwm-input-set-key (kbd "s-m") 'my-interactive-menu)
 
 ;; redshift
 (exwm-input-set-key (kbd "<s-right>")

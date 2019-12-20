@@ -25,6 +25,18 @@
 
 (projectile-mode 1)
 
+(use-package company)
+(global-company-mode)
+(setq company-idle-delay 0.0)
+(setq company-show-numbers t)
+(setq company-tooltip-limit 10)
+(setq company-minimum-prefix-length 2)
+(setq company-tooltip-align-annotations t)
+
+(indent-guide-global-mode 1)
+(setq indent-guide-recursive t)
+(aggressive-indent-global-mode 1)
+
 ;;; LANGS
 
 ;; C
@@ -49,9 +61,6 @@
   (if (and (lispy-mode) (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
-(indent-guide-global-mode 1)
-(setq indent-guide-recursive t)
-(aggressive-indent-global-mode 1)
 (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
 (add-hook 'lisp-mode-hook 'lispy-mode)
 (add-hook 'common-lisp-mode-hook 'lispy-mode)

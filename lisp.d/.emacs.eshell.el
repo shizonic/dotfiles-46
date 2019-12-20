@@ -102,7 +102,7 @@
 
 ;; MISC
 
-(defun eshell-here (&optional P)
+(defun eshell-here (UARG)
   "Opens eshell.
 
 Optionally when called by a universal-prefix argument:
@@ -111,17 +111,16 @@ Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
   (interactive "P")
-  (if P
-      (progn
-        (let* ((parent (if (buffer-file-name)
-                           (file-name-directory (buffer-file-name))
-                         default-directory))
-               (name (car (last (split-string parent "/" t)))))
-          (eshell "new")
-          (insert "ls")
-          (eshell-send-input)
-          (rename-buffer (concat "*eshell: " name "*"))))
-    (eshell)))
+  (when UARG
+    (let* ((parent (if (buffer-file-name)
+                       (file-name-directory (buffer-file-name))
+                     default-directory))
+           (name (car (last (split-string parent "/" t)))))
+      (eshell "new")
+      (insert "ls")
+      (eshell-send-input)
+      (rename-buffer (concat "*eshell: " name "*"))))
+  (eshell))
 
 ;; make scripts executeable automatically
 (add-hook 'after-save-hook

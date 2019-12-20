@@ -102,6 +102,8 @@ xrdb -merge ~/.Xresources
 export XDG_CURRENT_DESKTOP=\"Exwm\";
 export _JAVA_AWT_WM_NONREPARENTING=\"1\";
 
+compton --backend glx &
+
 exec emacs --fullscreen")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")

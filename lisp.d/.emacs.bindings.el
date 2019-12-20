@@ -70,6 +70,7 @@
                       (async-shell-command "poweroff")))
 
 (exwm-input-set-key (kbd "s-m") 'my-interactive-menu)
+(exwm-input-set-key (kbd "<s-return>") 'eshell-here)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 (exwm-input-set-key (kbd "s-1") 'delete-other-windows)
 (exwm-input-set-key (kbd "s-2") 'split-window-below)

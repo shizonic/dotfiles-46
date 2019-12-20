@@ -25,57 +25,34 @@
 
 (projectile-mode 1)
 
-(global-company-mode)
-(use-package company)
-(setq company-idle-delay 0.0)
-(setq company-show-numbers t)
-(setq company-tooltip-limit 10)
-(setq company-minimum-prefix-length 2)
-(setq company-tooltip-align-annotations t)
-
-;;; Can I just say here Radon Rosborough for President? Thank you.
-;; https://emacs.stackexchange.com/questions/13286/how-can-i-stop-the-enter-key-from-triggering-a-completion-in-company-mode
-;;; Prevent suggestions from being triggered automatically. In particular,
-;;; this makes it so that:
-;;; - TAB will always complete the current selection.
-;;; - RET will only complete the current selection if the user has explicitly
-;;;   interacted with Company.
-;;; - SPC will never complete the current selection.
-;;;
-;;; Based on:
-;;; - https://github.com/company-mode/company-mode/issues/530#issuecomment-226566961
-;;; - https://emacs.stackexchange.com/a/13290/12534
-;;; - http://stackoverflow.com/a/22863701/3538165
-;;;
-;;; See also:
-;;; - https://emacs.stackexchange.com/a/24800/12534
-;;; - https://emacs.stackexchange.com/q/27459/12534
-
-;; <return> is for windowed Emacs; RET is for terminal Emacs
-(dolist (key '("<return>" "RET"))
-  ;; Here we are using an advanced feature of define-key that lets
-  ;; us pass an "extended menu item" instead of an interactive
-  ;; function. Doing this allows RET to regain its usual
-  ;; functionality when the user has not explicitly interacted with
-  ;; Company.
-  (define-key company-active-map (kbd key)
-    `(menu-item nil company-complete
-                :filter ,(lambda (cmd)
-                           (when (company-explicit-action-p)
-                             cmd)))))
-(define-key company-active-map (kbd "TAB") #'company-complete-selection)
-(define-key company-active-map (kbd "SPC") nil)
-
-;; Company appears to override the above keymap based on company-auto-complete-chars.
-;; Turning it off ensures we have full control.
-(setq company-auto-complete-chars nil)
-
-;;; NOTE: tab selects first option
-;;; M-0/9 selects specfic, or M-n/p to cycle, C-s to isearch
-
 (indent-guide-global-mode 1)
 (setq indent-guide-recursive t)
 (aggressive-indent-global-mode 1)
+
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
+
+;; use hippie-expand instead of dabbrev
+(global-set-key (kbd "M-/") 'hippie-expand)
+(global-set-key (kbd "<M-tab>") 'hippie-expand)
+(global-set-key (kbd "<C-tab>") 'hippie-expand)
+(add-hook 'eshell-mode-hook '(lambda ()
+                               (interactive) ;; hippie-expand breaks eshell!!@#$
+                               (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
+
+(defadvice he-substitute-string (after he-paredit-fix)
+  "remove extra paren when hippie expanding in a lisp editing mode"
+  (if (and (lispy-mode)
+           (equal (substring str -1) ")"))
+      (progn (backward-delete-char 1) (forward-char))))
 
 ;;; LANGS
 
@@ -96,14 +73,9 @@
 
 ;; lisp
 
-(defadvice he-substitute-string (after he-paredit-fix)
-  "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (lispy-mode) (equal (substring str -1) ")"))
-      (progn (backward-delete-char 1) (forward-char))))
-
 (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+(add-hook 'ielm-mode-hook 'lispy-mode)
 (add-hook 'lisp-mode-hook 'lispy-mode)
-(add-hook 'common-lisp-mode-hook 'lispy-mode)
 (add-hook 'slime-repl-mode-hook 'lispy-mode)
 
 (defun my-ielm ()

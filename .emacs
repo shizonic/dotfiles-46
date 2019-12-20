@@ -16,7 +16,7 @@
 ;; startup to eshell *only*
 (add-hook 'after-init-hook '(lambda()
                               (kill-buffer "*scratch*")
-                              (eshell-main)))
+                              (eshell)))
 
 ;; defer nothing
 (with-eval-after-load 'use-package

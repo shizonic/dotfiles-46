@@ -29,7 +29,7 @@
 (setenv "MAKEFLAGS" "-j5")
 (setenv "CFLAGS" "-O3 -pipe")
 (setenv "CXXFLAGS" "-O3 -pipe")
-(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")
+(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")
 
 ;; PATH
 
@@ -79,7 +79,7 @@
                 "MAKEFLAGS=j5"
                 "CFLAGS=-O3 -pipe"
                 "CXXFLAGS=-O3 -pipe"
-                "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")))))
+                "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")))))
 
 ;; eshell hooks
 

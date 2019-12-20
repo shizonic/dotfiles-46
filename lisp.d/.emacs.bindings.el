@@ -45,8 +45,8 @@
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 
-(global-set-key (kbd "C-t") 'eshell-here)
 (global-set-key (kbd "C-c I") 'crux-find-user-init-file)
+(global-set-key (kbd "C-c s") 'eshell-here)
 (global-set-key (kbd "C-c S") 'my-su-edit)
 (global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
 (global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)

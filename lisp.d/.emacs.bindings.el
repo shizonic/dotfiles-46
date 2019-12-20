@@ -27,6 +27,9 @@
 (exwm-input-set-key (kbd "s-j") 'enlarge-window)
 (exwm-input-set-key (kbd "s-k") 'shrink-window)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "<home>") (lambda()(interactive)(toor)(keychain-unlock)))
 (global-set-key (kbd "<end>") (lambda()(interactive)(toor)(keychain-lock)))
 (global-set-key (kbd "C-x C-b") 'ibuffer)

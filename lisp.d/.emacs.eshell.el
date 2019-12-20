@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;; prompt
-
 (setq eshell-prompt-function
       (lambda ()
         (concat
@@ -15,11 +14,19 @@
          (propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
          (propertize "]\n" 'face `(:foreground "green4"))
          (propertize "└─>" 'face `(:foreground "green4"))
-         (propertize (if (or (string-match "@" (pwd)) ;; detect root via tramp
-                             (= (user-uid) 0))        ;; or the uid
+         (propertize (if (or (string-match "root" (pwd)) ;; detect root via tramp
+                             (= (user-uid) 0))           ;; or the uid
                          " # "
-                       " $ ")
-                     'face `(:foreground "green4")))))
+                       " $ " )
+                     'face `(:foreground "green4"))
+         (if (> eshell-last-command-status 0) ;; echo return codes
+             (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "black"))))))
+
+(setq eshell-prompt-function
+      (lambda ()
+        (format "[%s][%s] "
+                (abbreviate-file-name (eshell/pwd))
+                eshell-last-command-status)))
 
 ;; environment variables
 

@@ -21,9 +21,8 @@
                      'face `(:foreground "green4"))
          (if (> eshell-last-command-status 0) ;; echo return codes
              (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "black"))))))
-                                        ;
-                                        ; environment variables
 
+;; environment variables
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))

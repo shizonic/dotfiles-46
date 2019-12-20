@@ -103,9 +103,9 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (setq-local n '1)
     (setq-local n -1))
   (when (< my-font-size 11)
-      (setq my-font-size 11))
+    (setq my-font-size 11))
   (when (> my-font-size 24)
-      (setq my-font-size 24))
+    (setq my-font-size 24))
   (setq my-font-size (+ n my-font-size))
   (my-set-font my-font my-font-size)
   (message (concat "Font Size: " (number-to-string my-font-size))))
@@ -124,7 +124,9 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (setq redshift '1000))
   (if (> redshift 25000)
       (setq redshift '25000))
-  (my-set-redshift redshift))
+  (my-set-redshift redshift)
+  (message (concat "Redshift: " (number-to-string redshift))))
+
 
 ;; dir loader
 

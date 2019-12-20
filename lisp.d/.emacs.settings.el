@@ -1,9 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-(setq mouse-wheel-progressive-speed t)
-(setq mouse-wheel-follow-mouse 't)
-(setq scroll-step 1)
 (show-paren-mode 1)
 
 (setq-default indent-tabs-mode nil

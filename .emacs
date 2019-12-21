@@ -36,9 +36,8 @@
 ;;; install/require libs and pkgs
 (require 'org)
 (require 'erc)
-(require 'ielm)
-(require 'dired-x)
 (require 'tramp)
+(require 'dired-x)
 (require 'subr-x)                               ;Extra Lisp functions
 (straight-use-package 'seq)                     ;Sequence manipulation functions
 (straight-use-package 'cl-lib)                  ;Common Lisp extensions

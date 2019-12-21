@@ -227,7 +227,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
 
-(defun interactive-menu ()
+(defun menu ()
   (interactive)
   (setq-local options '((a . abook)
                         (e . (lambda ()(interactive)(call-interactively 'eww)))

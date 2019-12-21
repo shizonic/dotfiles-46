@@ -52,3 +52,18 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (winner-mode 1)
+
+(defun my-external-browser (url)
+  (start-process-shell-command "chromium" nil (concat "chromium " url)))
+
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'my-external-browser
+      eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(defvar yt-dl-player "mpv"
+  "Video player used by `eww-open-yt-dl'")
+
+(emms-standard)
+(emms-default-players)
+(when (file-directory-p "~/Downloads")
+  (setq emms-source-file-default-directory "~/Downloads"))

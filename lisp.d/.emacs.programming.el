@@ -25,33 +25,31 @@
 
 (projectile-mode 1)
 
-(indent-guide-global-mode 1)
-(setq indent-guide-recursive t)
 (aggressive-indent-global-mode 1)
 
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
-                                         try-expand-dabbrev-all-buffers
-                                         try-expand-dabbrev-from-kill
-                                         try-complete-file-name-partially
-                                         try-complete-file-name
-                                         try-expand-all-abbrevs
-                                         try-expand-list
-                                         try-expand-line
-                                         try-complete-lisp-symbol-partially
-                                         try-complete-lisp-symbol))
+					 try-expand-dabbrev-all-buffers
+					 try-expand-dabbrev-from-kill
+					 try-complete-file-name-partially
+					 try-complete-file-name
+					 try-expand-all-abbrevs
+					 try-expand-list
+					 try-expand-line
+					 try-complete-lisp-symbol-partially
+					 try-complete-lisp-symbol))
 
 ;; use hippie-expand instead of dabbrev
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "<M-tab>") 'hippie-expand)
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
 (add-hook 'eshell-mode-hook '(lambda ()
-                               (interactive) ;; hippie-expand breaks eshell!!@#$
-                               (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
+			       (interactive) ;; hippie-expand breaks eshell!!@#$
+			       (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
   (if (and (lispy-mode)
-           (equal (substring str -1) ")"))
+	   (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
 ;;; LANGS
@@ -60,7 +58,7 @@
 
 (defun c-mode-common-defaults ()
   (setq c-default-style "k&r"
-        c-basic-offset 4)
+	c-basic-offset 4)
   (c-set-offset 'substatement-open 0))
 
 (add-hook 'c-mode-common-hook 'c-mode-common-defaults)
@@ -104,4 +102,5 @@
       slime-enable-evaluate-in-emacs t
       slime-autodoc-use-multiline-p t)
 
-(define-key slime-mode-map (kbd "C-c C-s") 'slime-selector)
+(with-eval-after-load 'slime
+  (define-key slime-mode-map (kbd "C-c C-s") 'slime-selector))

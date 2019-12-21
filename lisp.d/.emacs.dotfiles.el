@@ -2,7 +2,6 @@
 
 (defun dotfiles-install ()
   (interactive)
-
   (progn
     ;; Keep magit happy by using gnu diffutils instead of busybox
     (suroot)
@@ -91,6 +90,3 @@ xrdb -merge ~/.Xresources
 exec dwm")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
-
-(when (not (file-exists-p "~/.emacs.d/.dotfiles"))
-  (dotfiles-install))

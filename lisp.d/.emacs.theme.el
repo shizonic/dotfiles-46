@@ -2,11 +2,6 @@
 
 ;; misc
 (global-prettify-symbols-mode 1)
-(fringe-mode -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-;; (set-window-scroll-bars (minibuffer-window) nil nil)
 
 ;; theme
 
@@ -14,20 +9,6 @@
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
-
-(load-theme 'nofrils-sepia t)
-
-;; font
-
-(setq my-font "Liberation Mono")
-(setq my-font-size '15)
-
-(my-set-font my-font my-font-size)
-
-;; redshift
-
-(setq redshift '3000)
-(my-set-redshift redshift)
 
 ;; modeline
 

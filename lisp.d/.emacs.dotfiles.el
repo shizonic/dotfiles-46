@@ -3,6 +3,12 @@
 (defun dotfiles-install ()
   (interactive)
 
+  (progn
+    ;; Keep magit happy by using gnu diffutils instead of busybox
+    (suroot)
+    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
+    (toor))
+
   (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
 
   (make-directory "~/bin" t)

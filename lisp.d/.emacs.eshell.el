@@ -20,8 +20,7 @@
                              (= (user-uid) 0))           ;; or the uid
                          "# "
                        "$ " )
-                     'face `(:foreground "cyan"))
-         )))
+                     'face `(:foreground "cyan")))))
 
 ;; environment variables
 (setenv "PAGER" "cat")

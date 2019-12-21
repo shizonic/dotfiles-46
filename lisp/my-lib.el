@@ -159,6 +159,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
 ;; tramp stuff
+
 (defun my-pwd ()
   "Show the real pwd whether we are tramp-root or regular user"
   (interactive)
@@ -215,30 +216,17 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (when (buffer-file-name)
     (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
-;; a home brewed menu
 (defun kiss ()
+  "front-end for getkiss.org linux package manager"
   (interactive)
   (with-temp-buffer
-    (suroot)
+    (if (not (string-match "root@" (pwd)))
+        (cd (concat "/su:root@"system-name":"default-directory)))
     (setq-local
      my-read
      (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))
-    (async-shell-command (concat "kiss " my-read))
+    (async-shell-command (concat "kiss " my-read "|| echo err $?"))
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
-
-(defun menu ()
-  (interactive)
-  (setq-local options '((a . abook)
-                        (g . gnus)
-                        (i . erc)
-                        (k . kiss)))
-
-  (setq-local
-   my-read
-   (read-string
-    "Menu [g]nus [a]book [i]rc [k]iss " ""))
-
-  (funcall (cdr (assq (intern my-read) options))))
 
 (provide 'my-lib)

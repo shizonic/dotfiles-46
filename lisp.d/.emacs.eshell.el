@@ -4,23 +4,23 @@
 (setq eshell-prompt-function
       (lambda ()
         (concat
-         (propertize "┌─[" 'face `(:foreground "green4"))
-         (propertize (user-login-name) 'face `(:foreground "black"))
-         (propertize "@" 'face `(:foreground "green4"))
-         (propertize (system-name) 'face `(:foreground "black"))
-         (propertize "]──[" 'face `(:foreground "green4"))
-         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "black"))
-         (propertize "]──[" 'face `(:foreground "green4"))
-         (propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
-         (propertize "]\n" 'face `(:foreground "green4"))
-         (propertize "└─>" 'face `(:foreground "green4"))
+         (propertize "┌─[" 'face `(:foreground "cyan"))
+         (propertize (user-login-name) 'face `(:foreground "red"))
+         (propertize "@" 'face `(:foreground "cyan"))
+         (propertize (system-name) 'face `(:foreground "red"))
+         (propertize "]──[" 'face `(:foreground "cyan"))
+         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "red"))
+         (propertize "]──[" 'face `(:foreground "cyan"))
+         (propertize (concat (eshell/pwd)) 'face `(:foreground "cyan"))
+         (propertize "]\n" 'face `(:foreground "cyan"))
+         (propertize "└─>" 'face `(:foreground "cyan"))
          (if (> eshell-last-command-status 0) ;; echo return codes
-             (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "black")))
+             (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "red")))
          (propertize (if (or (string-match "root" (pwd)) ;; detect root via tramp
                              (= (user-uid) 0))           ;; or the uid
                          "# "
                        "$ " )
-                     'face `(:foreground "green4"))
+                     'face `(:foreground "cyan"))
          )))
 
 ;; environment variables
@@ -107,25 +107,19 @@
 
 ;; MISC
 
-(defun eshell-here (UARG)
-  "Opens eshell.
-
-Optionally when called by a universal-prefix argument:
-
-Opens up a new shell in the directory associated with the
+(defun eshell-here ()
+  "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
-  (interactive "P")
-  (when UARG
-    (let* ((parent (if (buffer-file-name)
-                       (file-name-directory (buffer-file-name))
-                     default-directory))
-           (name (car (last (split-string parent "/" t)))))
-      (eshell "new")
-      (insert "ls")
-      (eshell-send-input)
-      (rename-buffer (concat "*eshell: " name "*"))))
-  (eshell))
+  (interactive)
+  (let* ((parent (if (buffer-file-name)
+                     (file-name-directory (buffer-file-name))
+                   default-directory))
+         (name (car (last (split-string parent "/" t)))))
+    (eshell "new")
+    (insert "ls")
+    (eshell-send-input)
+    (rename-buffer (concat "*eshell: " name "*"))))
 
 ;; make scripts executeable automatically
 (add-hook 'after-save-hook

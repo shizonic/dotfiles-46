@@ -47,10 +47,8 @@
   (use-package lispy)
   (use-package elisp-slime-nav)
   (use-package slime)
-  (use-package emms)
-  (use-package nofrils-acme-theme)
+  ;; (use-package nofrils-acme-theme)
 ;;; misc built-ins
-  (require 'eww)
   (require 'org)
   (require 'erc)
   (require 'ielm)

@@ -1,15 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(defun sucks-to-bin ()
-  "Keep Emacs happy by using static gnu coreutils binaries instead of busybox"
-  (interactive)
-  (suroot)
-  (start-process-shell-command "ln" nil
-                               "ln -sf /sucks/coreutils/bin* /usr/bin")
-  (start-process-shell-command "ln" nil
-                               "ln -sf /sucks/misc/bin/* /usr/bin")
-  (toor))
-
 (defun dotfiles-install ()
   (interactive)
 
@@ -54,13 +44,6 @@ signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 
   (f-write-text dotfiles-gitconfig 'utf-8 "~/.gitconfig")
 
-  (setq dotfiles-mailcap "application/pdf; emacsclient %s
-image/png; emacsclient %s
-image/jpeg; emacsclient %s
-image/gif; emacsclient %s")
-
-  (f-write-text dotfiles-mailcap 'utf-8 "~/.mailcap")
-
   (setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
 max-cache-ttl 84000
 allow-emacs-pinentry
@@ -99,17 +82,9 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 xsetroot -solid black -cursor_name left_ptr
 xrdb -merge ~/.Xresources
 
-export XDG_CURRENT_DESKTOP=\"Exwm\";
-export _JAVA_AWT_WM_NONREPARENTING=\"1\";
+exec dwm")
 
-compton --backend glx &
-
-exec emacs --fullscreen")
-
-  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")
-
-  (when (file-directory-p "/sucks/bin")
-    (sucks-to-bin)))
+  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
 
 (when (not (file-exists-p "~/.emacs.d/.dotfiles"))
   (dotfiles-install))

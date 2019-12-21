@@ -230,18 +230,14 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (defun menu ()
   (interactive)
   (setq-local options '((a . abook)
-                        (e . (lambda ()(interactive)(call-interactively 'eww)))
                         (g . gnus)
                         (i . erc)
-                        (k . kiss)
-                        (r . emms-streams)
-                        (m . (lambda ()(interactive)(call-interactively 'emms-play-file)))
-                        (p . emms-playlist-mode-go)))
+                        (k . kiss)))
 
   (setq-local
    my-read
    (read-string
-    "Menu [e]ww [g]nus [a]book [i]rc [k]iss  [r]adio [p]laylist [m]edia " ""))
+    "Menu [g]nus [a]book [i]rc [k]iss " ""))
 
   (funcall (cdr (assq (intern my-read) options))))
 

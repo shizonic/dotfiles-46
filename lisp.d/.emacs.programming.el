@@ -23,7 +23,14 @@
 (setq magit-diff-refine-hunk t)
 (setq magit-repository-directories '(("~/repos" . 1)))
 
-(projectile-mode 1)
+(progn
+  ;; Keep magit happy by using gnu diffutils instead of busybox
+  (suroot)
+  (start-process-shell-command "ln" nil
+                               "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
+  (toor)
+
+  (projectile-mode 1))
 
 (indent-guide-global-mode 1)
 (setq indent-guide-recursive t)

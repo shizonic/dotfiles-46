@@ -162,7 +162,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (defun my-pwd ()
   "Show the real pwd whether we are tramp-root or regular user"
   (interactive)
-  (if (string-match "@" (pwd))
+  (if (string-match "root@" (pwd))
       (string-trim
        (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)")
     (string-trim default-directory)))
@@ -170,19 +170,19 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 (defun toor ()
   (interactive)
   "change Emacs internal directory to user (away from tramp root)"
-  (if (string-match "@" (pwd))
+  (if (string-match "root@" (pwd))
       (cd (my-pwd))))
 
 (defun suroot ()
   (interactive)
   "change Emacs internal directory to root using su"
-  (if (not (string-match "@" (pwd)))
+  (if (not (string-match "root@" (pwd)))
       (cd (concat "/su:root@"system-name":"default-directory))))
 
 (defun tooroot ()
   (interactive)
   "toggle Emacs internal directory using su"
-  (if (string-match "@" (pwd))
+  (if (string-match "root@" (pwd))
       (toor)
     (suroot))
   (pwd))
@@ -192,13 +192,11 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (if (string-match "*eshell" (format "%s" (current-buffer)))
       (progn
-        (if (string-match "@" (pwd))
+        (if (string-match "root@" (pwd))
             (progn
-              (my-path-env-to-root)
               (insert (concat "cd" " " (my-pwd)))
               (eshell-send-input))
           (progn
-            (my-path-env-to-root)
             (insert (concat "cd /su:root@"system-name":"default-directory))
             (eshell-send-input))))))
 
@@ -244,9 +242,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
    my-read
    (read-string
     "Menu [e]ww [g]nus [a]book [i]rc [k]iss  [r]adio [p]laylist [m]edia " ""))
-
-  (setq-local option-keys (cl-loop for (key . value) in options
-                                   collect key))
 
   (funcall (cdr (assq (intern my-read) options))))
 

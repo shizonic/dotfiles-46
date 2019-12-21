@@ -61,25 +61,23 @@
 ;; set (tramp-)root's path and env
 
 (defvar my-sync-root-path t
-  "Keep root's (tramp-)PATH in sync with user/Emacs?")
+  "Keep root's (tramp-)PATH in sync with Emacs environment")
 
-(defun my-path-env-to-root ()
-  "Why would you want to do this!!!"
-  (if (bound-and-true-p my-sync-root-path)
-      (progn
-        ;; add local user's path to roots path
-        (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-        ;; define roots env
-        (setq tramp-remote-process-environment
-              '("ENV=''"
-                "TMOUT=0"
-                "LC_CTYPE=''"
-                "EDITOR=ed"
-                "PAGER=cat"
-                "MAKEFLAGS=j5"
-                "CFLAGS=-O3 -pipe"
-                "CXXFLAGS=-O3 -pipe"
-                "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")))))
+(if (bound-and-true-p my-sync-root-path)
+    (progn
+      ;; add local user's path to roots path
+      (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+      ;; define roots env
+      (setq tramp-remote-process-environment
+            '("ENV=''"
+              "TMOUT=0"
+              "LC_CTYPE=''"
+              "EDITOR=ed"
+              "PAGER=cat"
+              "MAKEFLAGS=j5"
+              "CFLAGS=-O3 -pipe"
+              "CXXFLAGS=-O3 -pipe"
+              "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community"))))
 
 ;; eshell hooks
 

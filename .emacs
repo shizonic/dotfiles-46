@@ -318,15 +318,18 @@ current frame."
 (global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "C-x w") 'spacemacs/alternate-window)
 
-;; Yes, I know this is not sane, but please just let me be
-
 (defun dotfiles-install ()
+  "Yes, I know this is not sane, but please just let me be"
   (interactive)
   (progn
     ;; Keep magit happy by using gnu diffutils instead of busybox
     (suroot)
     (start-process-shell-command "ln" nil "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
     (toor))
+
+  (start-process-shell-command
+   "ln" nil
+   "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dotfiles/versions $DIR")
 
   (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
 

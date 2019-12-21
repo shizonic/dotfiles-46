@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; first things
+;;; FIRST THINGS
+
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com"
       my-contacts-file "~/contacts.el"
@@ -33,14 +34,19 @@
   (load bootstrap-file nil 'nomessage))
 
 ;;; install/require libs and pkgs
-(require 'cl-lib)                               ;Common Lisp extensions
-(require 'seq)                                  ;Sequence manipulation functions
+(require 'org)
+(require 'erc)
+(require 'ielm)
+(require 'dired-x)
+(require 'tramp)
 (require 'subr-x)                               ;Extra Lisp functions
+(straight-use-package 'seq)                     ;Sequence manipulation functions
+(straight-use-package 'cl-lib)                  ;Common Lisp extensions
 (straight-use-package 'dash)                    ;A modern list library
 (straight-use-package 'a)                       ;Associative data structure functions
 (straight-use-package 's)                       ;String manipulation library
 (straight-use-package 'f)                       ;Modern API for working with files and directories
-(require 'f)
+(require 'f) ;; this shouldn't be needed!
 (straight-use-package 'ht)                      ;The missing h ash table library
 (straight-use-package 'crux)
 (straight-use-package 'browse-kill-ring)
@@ -52,11 +58,8 @@
 (straight-use-package 'lispy)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
-(require 'org)
-(require 'erc)
-(require 'ielm)
-(require 'dired-x)
-(require 'tramp)
+
+;;; THEME
 
 ;; misc
 (global-prettify-symbols-mode 1)
@@ -82,6 +85,8 @@
                         ;; right
                         (format-mode-line (concat
                                            (format-time-string " %I:%M%p")))))))
+
+;;; SETTINGS
 
 (show-paren-mode 1)
 
@@ -141,7 +146,7 @@
 
 (setq browse-url-browser-function 'my-external-browser)
 
-;; handy functions
+;;; FUNCTIONS
 
 (defun split-file-by-delim (FILE delim)
   ;; e.g. (split-file-by-delim "~/.bashrc" "\n")
@@ -280,7 +285,7 @@ current frame."
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
 
-;; nearly all of my binds are here
+;;; BINDS
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
@@ -317,6 +322,9 @@ current frame."
 (global-set-key (kbd "C-c C-t") 'eshell-here)
 (global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "C-x w") 'spacemacs/alternate-window)
+
+
+;;; DOTFILES
 
 (defun dotfiles-install ()
   "Yes, I know this is not sane, but please just let me be"
@@ -414,7 +422,8 @@ exec dwm")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
 
-;; environment variables
+;;; ENVIRONMENT AND PATH
+
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
@@ -422,8 +431,6 @@ exec dwm")
 (setenv "CFLAGS" "-O2 -pipe")
 (setenv "CXXFLAGS" "-O2 -pipe")
 (setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")
-
-;; PATH
 
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
@@ -450,8 +457,6 @@ exec dwm")
 
 (setq my-path (concat "PATH=" (getenv "PATH")))
 
-;; set (tramp-)root's path and env
-
 (defvar my-sync-root-path t
   "Keep root's (tramp-)PATH in sync with Emacs environment")
 
@@ -471,7 +476,7 @@ exec dwm")
               "CXXFLAGS=-O2 -pipe"
               "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community"))))
 
-;; eshell hooks
+;;; ESHELL
 
 ;; auto ls
 (add-hook 'eshell-directory-change-hook 'eshell/ls)
@@ -496,8 +501,6 @@ exec dwm")
         (setq counter (1- counter)))
     (up)))
 
-;; MISC
-
 (defun eshell-here ()
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
@@ -511,6 +514,8 @@ directory to make multiple eshell windows easier."
     (insert "ls")
     (eshell-send-input)
     (rename-buffer (concat "*eshell: " name "*"))))
+
+;;; PROGRAMMING & TOOLS
 
 ;; make scripts executeable automatically
 (add-hook 'after-save-hook
@@ -566,9 +571,9 @@ directory to make multiple eshell windows easier."
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "<M-tab>") 'hippie-expand)
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
-(add-hook 'eshell-mode-hook '(lambda ()
-                               (interactive) ;; hippie-expand breaks eshell!!@#$
-                               (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
+;; (add-hook 'eshell-mode-hook '(lambda ()
+;;                                (interactive) ;; hippie-expand breaks eshell!!@#$
+;;                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
@@ -576,7 +581,7 @@ directory to make multiple eshell windows easier."
            (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
-;;; LANGS
+;;; PROGRAMMING LANGS
 
 ;; C
 
@@ -629,6 +634,7 @@ directory to make multiple eshell windows easier."
 (with-eval-after-load 'slime
   (define-key slime-mode-map (kbd "C-c C-s") 'slime-selector))
 
+;;; IRC
 
 (defun my-erc ()
   (interactive)
@@ -652,6 +658,8 @@ directory to make multiple eshell windows easier."
     (if (string-match-p "\n+" string)
         (setq str nil)))
   (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable))
+
+;;; EMAIL
 
 (setq gnus-use-full-window nil)
 (setq gnus-site-init-file "~/.emacs")

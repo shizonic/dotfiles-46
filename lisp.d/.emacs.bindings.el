@@ -2,9 +2,6 @@
 
 ;; nearly all of my binds are here
 
-(global-set-key (kbd "<menu>") 'compile)
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
@@ -34,7 +31,6 @@
 (global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
 (global-set-key "%" 'match-paren)
 (global-set-key (kbd "M-y") 'browse-kill-ring)
-(global-set-key (kbd "C-c m") 'menu)
 (global-set-key (kbd "C-t") 'eshell)
 (define-key dired-mode-map (kbd "C-t") 'eshell)
 (define-key org-mode-map (kbd "C-t") 'eshell)

@@ -19,8 +19,8 @@ Xft.lcdfilter: lcddefault")
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
   (setq root-dot-profile (concat my-path "
-export CFLAGS=\"-O3 -pipe\"
-export CXXFLAGS=\"-O3 -pipe\"
+export CFLAGS=\"-O2 -pipe\"
+export CXXFLAGS=\"-O2 -pipe\"
 export MAKEFLAGS=\"-j$(nproc)\""))
   (f-write-text root-dot-profile 'utf-8
                 (concat "/su:root@"system-name":/root/.profile"))

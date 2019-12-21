@@ -14,13 +14,14 @@
          (propertize (concat (eshell/pwd)) 'face `(:foreground "black"))
          (propertize "]\n" 'face `(:foreground "green4"))
          (propertize "└─>" 'face `(:foreground "green4"))
+         (if (> eshell-last-command-status 0) ;; echo return codes
+             (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "black")))
          (propertize (if (or (string-match "root" (pwd)) ;; detect root via tramp
                              (= (user-uid) 0))           ;; or the uid
-                         " # "
-                       " $ " )
+                         "# "
+                       "$ " )
                      'face `(:foreground "green4"))
-         (if (> eshell-last-command-status 0) ;; echo return codes
-             (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "black"))))))
+         )))
 
 ;; environment variables
 (setenv "PAGER" "cat")
@@ -29,7 +30,7 @@
 (setenv "MAKEFLAGS" "-j5")
 (setenv "CFLAGS" "-O3 -pipe")
 (setenv "CXXFLAGS" "-O3 -pipe")
-(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")
+(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")
 
 ;; PATH
 
@@ -77,7 +78,7 @@
               "MAKEFLAGS=j5"
               "CFLAGS=-O3 -pipe"
               "CXXFLAGS=-O3 -pipe"
-              "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community"))))
+              "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community"))))
 
 ;; eshell hooks
 

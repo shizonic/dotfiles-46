@@ -10,7 +10,7 @@
       my-dotfiles-dir "~/repos/dotfiles"
       my-lisp-files "lisp.d"
       gc-cons-threshold 100000000
-      debug-on-error nil)
+      debug-on-error t)
 
 ;; startup to eshell *only*
 (add-hook 'after-init-hook '(lambda()
@@ -410,28 +410,6 @@ xrdb -merge ~/.Xresources
 exec dwm")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
-
-;; prompt
-(setq eshell-prompt-function
-      (lambda ()
-        (concat
-         (propertize "┌─[" 'face `(:foreground "cyan"))
-         (propertize (user-login-name) 'face `(:foreground "red"))
-         (propertize "@" 'face `(:foreground "cyan"))
-         (propertize (system-name) 'face `(:foreground "red"))
-         (propertize "]──[" 'face `(:foreground "cyan"))
-         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "red"))
-         (propertize "]──[" 'face `(:foreground "cyan"))
-         (propertize (concat (eshell/pwd)) 'face `(:foreground "cyan"))
-         (propertize "]\n" 'face `(:foreground "cyan"))
-         (propertize "└─>" 'face `(:foreground "cyan"))
-         (if (> eshell-last-command-status 0) ;; echo return codes
-             (propertize (format "%s " eshell-last-command-status) 'face `(:foreground "red")))
-         (propertize (if (or (string-match "root" (pwd)) ;; detect root via tramp
-                             (= (user-uid) 0))           ;; or the uid
-                         "# "
-                       "$ " )
-                     'face `(:foreground "cyan")))))
 
 ;; environment variables
 (setenv "PAGER" "cat")

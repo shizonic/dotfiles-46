@@ -33,7 +33,6 @@
       dired-auto-revert-buffer t
       max-mini-window-height nil)
 
-(require 'dired-x)
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
 

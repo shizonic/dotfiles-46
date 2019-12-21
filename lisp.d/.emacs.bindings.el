@@ -16,16 +16,6 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 
-(with-eval-after-load 'desktop-environment
-  (setf ;; https://github.com/DamienCassou/desktop-environment/issues/1
-   (alist-get (elt (kbd "s-l") 0) desktop-environment-mode-map nil t)
-   nil)
-  (exwm-input-set-key (kbd "s-l") 'enlarge-window-horizontally))
-
-(exwm-input-set-key (kbd "s-h") 'shrink-window-horizontally)
-(exwm-input-set-key (kbd "s-j") 'enlarge-window)
-(exwm-input-set-key (kbd "s-k") 'shrink-window)
-
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
@@ -58,59 +48,23 @@
 (global-set-key "%" 'match-paren)
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 
-(exwm-input-set-key
- (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
-(exwm-input-set-key
- (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
+(global-set-key (kbd "C-c m") 'menu)
 
-(exwm-input-set-key (kbd "<XF86PowerOff>")
-                    (lambda()
-                      (interactive)
-                      (suroot)
-                      (async-shell-command "poweroff")))
-
-(exwm-input-set-key (kbd "s-m") 'my-interactive-menu)
-(exwm-input-set-key (kbd "<s-return>") 'eshell-here)
-(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-(exwm-input-set-key (kbd "s-1") 'delete-other-windows)
-(exwm-input-set-key (kbd "s-2") 'split-window-below)
-(exwm-input-set-key (kbd "s-3") 'split-window-right)
-(exwm-input-set-key (kbd "s-0") 'delete-window)
-(exwm-input-set-key (kbd "<s-backspace>") '(lambda ()
-                                   (interactive)
-                                   (kill-buffer (current-buffer))))
-(exwm-input-set-key (kbd "s-u") 'winner-undo)
-(exwm-input-set-key (kbd "s-U") 'winner-redo)
-(exwm-input-set-key (kbd "s-r") 'rotate-frame-anticlockwise)
-(exwm-input-set-key (kbd "s-o") 'other-window)
-(exwm-input-set-key (kbd "s-O") 'spacemacs/alternate-window)
-(exwm-input-set-key (kbd "<s-tab>") 'spacemacs/alternate-buffer)
+(global-set-key (kbd "C-t") 'eshell-here)
+(define-key dired-mode-map (kbd "C-t") 'eshell-here)
+(define-key org-mode-map (kbd "C-t") 'eshell-here)
+(global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
+(global-set-key (kbd "C-x w") 'spacemacs/alternate-window)
 
 ;; redshift
-(exwm-input-set-key (kbd "<s-right>")
-                    (lambda()
-                      (interactive)
-                      (my-redshift-setter 1)))
-(exwm-input-set-key (kbd "<s-left>")
-                    (lambda()
-                      (interactive)
-                      (my-redshift-setter -1)))
-
-;; brightness
-(exwm-input-set-key (kbd "<s-up>")
-                    (lambda()
-                      (interactive)
-                      (desktop-environment-brightness-increment)))
-(exwm-input-set-key (kbd "<s-down>")
-                    (lambda()
-                      (interactive)
-                      (desktop-environment-brightness-decrement)))
-
-;; dmenu
-(exwm-input-set-key (kbd "s-d")
-                    (lambda (command)
-                      (interactive (list (read-shell-command "$ ")))
-                      (start-process-shell-command command nil command)))
+(global-set-key (kbd "<s-right>")
+                (lambda()
+                  (interactive)
+                  (my-redshift-setter 1)))
+(global-set-key (kbd "<s-left>")
+                (lambda()
+                  (interactive)
+                  (my-redshift-setter -1)))
 
 ;; font resize
 (global-set-key (kbd "<C-kp-add>")

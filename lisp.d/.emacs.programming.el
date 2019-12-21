@@ -90,7 +90,6 @@
 (add-hook 'lisp-interaction-mode-hook 'eldoc-mode)
 (add-hook 'eval-expression-minibuffer-setup-hook 'eldoc-mode)
 
-(require 'ielm)
 (add-hook 'ielm-mode-hook 'eldoc-mode)
 
 (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))

@@ -18,24 +18,26 @@
                               (kill-buffer "*scratch*")
                               (eshell)))
 
-;; defer nothing
+;; at the cost of load-time, for the sake of convenience-- load EVERYTHING!
 (with-eval-after-load 'use-package
   (setq use-package-always-ensure t use-package-always-demand t)
-  (require 'cl-lib)  ;; Common Lisp extensions
-  (require 'seq)     ;; Sequence manipulation functions
-  (require 'subr-x)  ;; Extra Lisp functions
-  (use-package async ;; Asynchronous processing library
+;;; libs
+  (add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
+  (require 'my-lib :ensure nil)         ;libs from my lisp/ directory
+  (require 'cl-lib)                     ;Common Lisp extensions
+  (require 'seq)                        ;Sequence manipulation functions
+  (require 'subr-x :ensure nil)         ;Extra Lisp functions
+  (use-package async                    ;Asynchronous processing library
     :config (async-bytecomp-package-mode 1))
-  (use-package dash) ;; A modern list library
-  (use-package a)    ;; Associative data structure functions
-  (use-package s)    ;; String manipulation library
-  (use-package f)    ;; Modern API for working with files and directories
-  (use-package ht)   ;; The missing hash table library
+  (use-package dash)                    ;A modern list library
+  (use-package a)                       ;Associative data structure functions
+  (use-package s)                       ;String manipulation library
+  (use-package f)                       ;Modern API for working with files and directories
+  (use-package ht)                      ;The missing h ash table library
+;;; misc packages
   (use-package auto-package-update)
   (use-package crux)
   (use-package browse-kill-ring)
-  (use-package exwm)
-  (use-package desktop-environment)
   (use-package keychain-environment)
   (use-package magit)
   (use-package projectile)
@@ -46,7 +48,13 @@
   (use-package elisp-slime-nav)
   (use-package slime)
   (use-package emms)
-  (use-package nofrils-acme-theme))
+  (use-package nofrils-acme-theme)
+;;; misc built-ins
+  (require 'eww)
+  (require 'org)
+  (require 'erc)
+  (require 'ielm)
+  (require 'dired-x))
 
 ;; ensure tls
 (if (and (and (executable-find "gnutls-cli")
@@ -79,13 +87,13 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (setq package-archives
-      '(("melpa"        . "https://melpa.org/packages/")
+      '(("melpa" . "https://melpa.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
-        ("gnu-elpa"     . "https://elpa.gnu.org/packages/"))
+        ("gnu-elpa" . "https://elpa.gnu.org/packages/"))
       package-narchive-priorities
       '(("melpa" . 10)
-        ("melpa-stable" . 5)    ;; fallback to melpa-stable
-        ("gnu-elpa"     . 1)))  ;; or gnu-elpa
+        ("melpa-stable" . 5)            ;fallback to melpa-stable
+        ("gnu-elpa" . 1)))              ;or gnu-elpa
 (package-initialize)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -94,16 +102,11 @@
   (require 'use-package))
 
 ;; update packages
+(auto-package-update-maybe)
 (setq auto-package-update-delete-old-versions t
       auto-package-update-hide-results t
-      auto-package-update-interval 1 ;; bleeding edge melpa
+      auto-package-update-interval 1    ;bleeding edge melpa
       auto-package-update-prompt-before-update nil)
-(auto-package-update-maybe)
-
-;; require lisp/ libs
-(add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
-(require 'my-libs)
-(require 'transpose-frame)
 
 ;; load lisp.d/ files
 (when (file-directory-p (concat my-dotfiles-dir "/" my-lisp-files))

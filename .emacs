@@ -23,10 +23,10 @@
   (setq use-package-always-ensure t use-package-always-demand t)
 ;;; libs
   (add-to-list 'load-path (concat my-dotfiles-dir "/" my-lisp-libs))
-  (require 'my-lib :ensure nil)         ;libs from my lisp/ directory
+  (require 'my-lib)         ;libs from my lisp/ directory
   (require 'cl-lib)                     ;Common Lisp extensions
   (require 'seq)                        ;Sequence manipulation functions
-  (require 'subr-x :ensure nil)         ;Extra Lisp functions
+  (require 'subr-x)         ;Extra Lisp functions
   (use-package async                    ;Asynchronous processing library
     :config (async-bytecomp-package-mode 1))
   (use-package dash)                    ;A modern list library

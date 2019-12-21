@@ -654,7 +654,7 @@ directory to make multiple eshell windows easier."
   (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable))
 
 (setq gnus-use-full-window nil)
-(setq gnus-site-init-file (concat my-dotfiles-dir "/" my-lisp-files "/.emacs.gnus.el"))
+(setq gnus-site-init-file "~/.emacs")
 (setq gnus-save-newsrc-file nil)
 (setq gnus-startup-file "~/.emacs.d/.newsrc")
 (setq message-directory "~/.emacs.d/mail/")

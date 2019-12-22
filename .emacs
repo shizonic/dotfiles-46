@@ -92,7 +92,7 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(global-font-lock-mode -1) ; syntax coloring is a scam
+(global-font-lock-mode 1)
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -734,7 +734,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 xsetroot -solid black -cursor_name left_ptr
 xrdb -merge ~/.Xresources
 
-feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux.png
+wal -i ~/repos/dotfiles/wallpaper/linux.png
 
 compton --backend glx &
 

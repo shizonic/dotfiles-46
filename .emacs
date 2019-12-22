@@ -570,9 +570,9 @@ directory to make multiple eshell windows easier."
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "<M-tab>") 'hippie-expand)
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
-;; (add-hook 'eshell-mode-hook '(lambda ()
-;;                                (interactive) ;; hippie-expand breaks eshell!!@#$
-;;                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
+(add-hook 'eshell-mode-hook '(lambda ()
+                               (interactive) ;; hippie-expand breaks eshell!!@#$
+                               (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"

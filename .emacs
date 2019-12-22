@@ -23,10 +23,7 @@
                               (server-start)))
 
 ;;;;lib
-(require 'org)
-(require 'erc)
-(require 'tramp)
-(require 'dired-x)
+
 (require 'subr-x)            ;Extra Lisp functions
 (require 'seq)               ;Sequence manipulation functions
 (require 'cl-lib)            ;Common Lisp extensions
@@ -47,10 +44,15 @@
 (straight-use-package 'slime)
 
 ;;;;manual-installed pkgs
+
 (add-to-list 'load-path "~/repos/dotfiles/site-lisp")
 (require 'keychain-environment)
 (require 'browse-kill-ring)
 (require 'crux)
+
+;;;;other
+
+(require 'tramp)
 
 ;;;;binds
 
@@ -83,8 +85,10 @@
 (global-set-key "%" 'match-paren)
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 (global-set-key (kbd "C-t") 'eshell)
-(define-key dired-mode-map (kbd "C-t") 'eshell)
-(define-key org-mode-map (kbd "C-t") 'eshell)
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-t") 'eshell))
+(with-eval-after-load 'org
+  (define-key org-mode-map (kbd "C-t") 'eshell))
 (global-set-key (kbd "C-c C-t") 'eshell-here)
 (global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
 (global-set-key (kbd "C-x w") 'spacemacs/alternate-window)

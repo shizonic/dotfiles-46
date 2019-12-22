@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t; -*-
+;; ; -*- lexical-binding: t; -*-
 
 ;;; FIRST THINGS
 
@@ -287,6 +287,9 @@ current frame."
 ;;; BINDS
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-c i") 'my-erc)
+(global-set-key (kbd "C-c m") 'gnus)
+(global-set-key (kbd "C-c a") 'abook)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-c ku") (lambda()(interactive)(toor)(keychain-unlock)))
@@ -299,11 +302,6 @@ current frame."
 (global-set-key (kbd "C-c p") 'projectile-command-map)
 (global-set-key (kbd "C-c f") 'flycheck-mode)
 (global-set-key (kbd "C-;") 'comment-line)
-(global-set-key (kbd "C-x ;") 'comment-line)
-(global-set-key (kbd "C-c ;") 'comment-line)
-(global-set-key (kbd "C-c C-;") 'comment-line)
-(global-set-key (kbd "C-c C-p") 'backward-paragraph)
-(global-set-key (kbd "C-c C-n") 'forward-paragraph)
 (global-set-key (kbd "C-c t r") 'region-to-termbin)
 (global-set-key (kbd "C-c t b") 'buffer-to-termbin)
 (global-set-key (kbd "C-c I") 'crux-find-user-init-file)
@@ -330,8 +328,10 @@ current frame."
   (interactive)
   (progn
     ;; Keep magit happy by using gnu diffutils instead of busybox
+    ;; Seems magit/git is not respecting my PATH and hardcoded to use /bin/diff ...
     (suroot)
     (start-process-shell-command "ln" nil "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
+    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/patch/bin/* /usr/bin")
     (toor))
 
   (start-process-shell-command
@@ -369,6 +369,13 @@ echo \"start X?\"
 read -r && \[ -z \"$DISPLAY\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.profile")
+
+  (straight-use-package 'seq)                     ;Sequence manipulation functions
+  (straight-use-package 'cl-lib)                  ;Common Lisp extensions
+  (straight-use-package 'dash)                    ;A modern list library
+  (straight-use-package 'a)                       ;Associative data structure functions
+  (straight-use-package 's)                       ;String manipulation library
+
 
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com
@@ -416,6 +423,10 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xsetroot -solid black -cursor_name left_ptr
 xrdb -merge ~/.Xresources
+
+feh --bg-max --no-fehbg ~/repos/dotfiles/.wallpaper
+
+compton --backend glx &
 
 exec dwm")
 

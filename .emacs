@@ -319,7 +319,7 @@ current frame."
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
                       "/home/" user-login-name "/.local/bin:"
-                      "/opt/awk/awk/bin:"
+                      "/opt/awk/bin:"
                       "/opt/gnu/coreutils/bin:"
                       "/opt/gnu/findutils/bin:"
                       "/opt/gnu/diffutils/bin:"

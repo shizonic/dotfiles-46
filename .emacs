@@ -22,26 +22,22 @@
                               (eshell)
                               (server-start)))
 
-;;;;libs
-
+;;;;lib
 (require 'org)
 (require 'erc)
 (require 'tramp)
 (require 'dired-x)
-(require 'subr-x)                               ;Extra Lisp functions
-(straight-use-package 'seq)                     ;Sequence manipulation functions
-(straight-use-package 'cl-lib)                  ;Common Lisp extensions
-(straight-use-package 'dash)                    ;A modern list library
-(straight-use-package 'a)                       ;Associative data structure functions
-(straight-use-package 's)                       ;String manipulation library
-(straight-use-package 'f)                       ;Modern API for working with files and directories
-(straight-use-package 'ht)                      ;The missing h ash table library
+(require 'subr-x)            ;Extra Lisp functions
+(require 'seq)               ;Sequence manipulation functions
+(require 'cl-lib)            ;Common Lisp extensions
+(straight-use-package 'dash) ;A modern list library
+(straight-use-package 'a)    ;Associative data structure functions
+(straight-use-package 's)    ;String manipulation library
+(straight-use-package 'f)    ;Modern API for working with files and directories
+(straight-use-package 'ht)   ;The missing hash table library
 
 ;;;;pkgs
 
-(straight-use-package 'crux)
-(straight-use-package 'browse-kill-ring)
-(straight-use-package 'keychain-environment)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
@@ -49,6 +45,12 @@
 (straight-use-package 'paredit)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
+
+;;;;manual-installed pkgs
+(add-to-list 'load-path "~/repos/dotfiles/site-lisp")
+(require 'keychain-environment)
+(require 'browse-kill-ring)
+(require 'crux)
 
 ;;;;binds
 
@@ -146,6 +148,7 @@
 
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
+(add-hook 'dired-mode-hook 'font-lock-mode)
 
 (autoload 'dired-async-mode "dired-async.el" nil t)
 (dired-async-mode 1)

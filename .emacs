@@ -1,25 +1,7 @@
-;; ; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
-;;; FIRST THINGS
+;;;;bootstrap
 
-(setq user-full-name "Adam Schaefers"
-      user-mail-address "paxchristi888@gmail.com"
-      my-contacts-file "~/contacts.el"
-      initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
-      custom-file "/dev/null"
-      my-dotfiles-dir "~/repos/dotfiles"
-      my-lisp-files "lisp.d"
-      gc-cons-threshold 100000000
-      debug-on-error t)
-
-;; startup to eshell *only*
-(add-hook 'after-init-hook '(lambda()
-                              (kill-buffer "*scratch*")
-                              (eshell)
-                              (server-start)))
-
-;; straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -33,7 +15,15 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;;; install/require libs and pkgs
+;;;;startup
+
+(add-hook 'after-init-hook '(lambda()
+                              (kill-buffer "*scratch*")
+                              (eshell)
+                              (server-start)))
+
+;;;;libs
+
 (require 'org)
 (require 'erc)
 (require 'tramp)
@@ -45,8 +35,10 @@
 (straight-use-package 'a)                       ;Associative data structure functions
 (straight-use-package 's)                       ;String manipulation library
 (straight-use-package 'f)                       ;Modern API for working with files and directories
-(require 'f) ;; this shouldn't be needed!
 (straight-use-package 'ht)                      ;The missing h ash table library
+
+;;;;pkgs
+
 (straight-use-package 'crux)
 (straight-use-package 'browse-kill-ring)
 (straight-use-package 'keychain-environment)
@@ -54,22 +46,51 @@
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
 (straight-use-package 'aggressive-indent)
-(straight-use-package 'lispy)
+(straight-use-package 'paredit)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
 
-;;; THEME
+;;;;binds
 
-;; misc
-(global-prettify-symbols-mode 1)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-c kk") 'kiss)
+(global-set-key (kbd "C-c i") 'my-erc)
+(global-set-key (kbd "C-c m") 'gnus)
+(global-set-key (kbd "C-c a") 'abook)
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-c ku") (lambda()(interactive)(toor)(keychain-unlock)))
+(global-set-key (kbd "C-c kl") (lambda()(interactive)(toor)(keychain-lock)))
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
+(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
+(global-set-key (kbd "<f5>") 'compile)
+(global-set-key (kbd "C-c g") 'magit-status)
+(global-set-key (kbd "C-c p") 'projectile-command-map)
+(global-set-key (kbd "C-c f") 'flycheck-mode)
+(global-set-key (kbd "C-x ;") 'comment-line)
+(global-set-key (kbd "C-c t r") 'region-to-termbin)
+(global-set-key (kbd "C-c t b") 'buffer-to-termbin)
+(global-set-key (kbd "C-c I") 'crux-find-user-init-file)
+(global-set-key (kbd "C-c S") 'my-su-edit)
+(global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
+(global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
+(global-set-key (kbd "C-o") 'crux-smart-open-line)
+(global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
+(global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
+(global-set-key "%" 'match-paren)
+(global-set-key (kbd "M-y") 'browse-kill-ring)
+(global-set-key (kbd "C-t") 'eshell)
+(define-key dired-mode-map (kbd "C-t") 'eshell)
+(define-key org-mode-map (kbd "C-t") 'eshell)
+(global-set-key (kbd "C-c C-t") 'eshell-here)
+(global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
+(global-set-key (kbd "C-x w") 'spacemacs/alternate-window)
+
+;;;;theme
+
 (menu-bar-mode -1)
-
-;; disable old theme before enabling a new theme
-(defadvice load-theme (before disable-themes-first activate)
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
-
-;; modeline
+(global-font-lock-mode -1) ; syntax coloring is a scam
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -85,28 +106,23 @@
                         (format-mode-line (concat
                                            (format-time-string " %I:%M%p")))))))
 
-;;; SETTINGS
+;;;;settings
 
-(show-paren-mode 1)
-
-(setq-default indent-tabs-mode nil
-              tab-width 8
-              fill-column 80)
-
-(setq save-interprogram-paste-before-kill t
+(setq user-full-name "Adam Schaefers"
+      user-mail-address "paxchristi888@gmail.com"
+      my-contacts-file "~/contacts.el"
+      initial-major-mode 'emacs-lisp-mode
+      inhibit-startup-screen t
+      custom-file "/dev/null"
+      gc-cons-threshold 100000000
+      debug-on-error nil
       apropos-do-all t
-      mouse-yank-at-point t
       require-final-newline t
       visible-bell t
       load-prefer-newer t
       ediff-window-setup-function 'ediff-setup-windows-plain
-      save-place-file (concat user-emacs-directory "places")
-      backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                               "backups"))))
-
-(ido-mode t)
-
-(setq ido-everywhere t
+      backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
+      ido-everywhere t
       ido-enable-flex-matching t
       ido-use-filename-at-point 'guess
       ido-create-new-buffer 'always
@@ -119,6 +135,14 @@
       save-interprogram-paste-before-kill t
       dired-auto-revert-buffer t
       max-mini-window-height nil)
+
+(ido-mode t)
+
+(show-paren-mode 1)
+
+(setq-default indent-tabs-mode nil
+              tab-width 8
+              fill-column 80)
 
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
@@ -140,12 +164,9 @@
 
 (winner-mode 1)
 
-(defun my-external-browser (url)
-  (start-process-shell-command "chromium" nil (concat "chromium " url)))
+(setq browse-url-browser-function 'browse-url-chromium)
 
-(setq browse-url-browser-function 'my-external-browser)
-
-;;; FUNCTIONS
+;;;;functions
 
 (defun split-file-by-delim (FILE delim)
   ;; e.g. (split-file-by-delim "~/.bashrc" "\n")
@@ -196,22 +217,18 @@ current frame."
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
 
-;; keychain
-
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
     str))
 
 (defun keychain-unlock ()
-    (interactive)
-    (async-shell-command
-     "eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906); emacsclient -e '(keychain-refresh-environment)'"))
+  (interactive)
+  (async-shell-command
+   "eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906); emacsclient -e '(keychain-refresh-environment)'"))
 
 (defun keychain-lock ()
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
-
-;; tramp stuff
 
 (defun my-pwd ()
   "Show the real pwd whether we are tramp-root or regular user"
@@ -269,8 +286,6 @@ current frame."
   (when (buffer-file-name)
     (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
-;; operating system
-
 (defun kiss ()
   "front-end for getkiss.org linux package manager"
   (interactive)
@@ -284,155 +299,7 @@ current frame."
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
 
-;;; BINDS
-
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c i") 'my-erc)
-(global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c a") 'abook)
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-c ku") (lambda()(interactive)(toor)(keychain-unlock)))
-(global-set-key (kbd "C-c kl") (lambda()(interactive)(toor)(keychain-lock)))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
-(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
-(global-set-key (kbd "<f5>") 'compile)
-(global-set-key (kbd "C-c g") 'magit-status)
-(global-set-key (kbd "C-c p") 'projectile-command-map)
-(global-set-key (kbd "C-c f") 'flycheck-mode)
-(global-set-key (kbd "C-;") 'comment-line)
-(global-set-key (kbd "C-c t r") 'region-to-termbin)
-(global-set-key (kbd "C-c t b") 'buffer-to-termbin)
-(global-set-key (kbd "C-c I") 'crux-find-user-init-file)
-(global-set-key (kbd "C-c S") 'my-su-edit)
-(global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
-(global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
-(global-set-key (kbd "C-o") 'crux-smart-open-line)
-(global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
-(global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
-(global-set-key "%" 'match-paren)
-(global-set-key (kbd "M-y") 'browse-kill-ring)
-(global-set-key (kbd "C-t") 'eshell)
-(define-key dired-mode-map (kbd "C-t") 'eshell)
-(define-key org-mode-map (kbd "C-t") 'eshell)
-(global-set-key (kbd "C-c C-t") 'eshell-here)
-(global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
-(global-set-key (kbd "C-x w") 'spacemacs/alternate-window)
-
-
-;;; DOTFILES
-
-(defun dotfiles-install ()
-  "Yes, I know this is not sane, but please just let me be"
-  (interactive)
-  (progn
-    ;; Keep magit happy by using gnu diffutils instead of busybox
-    ;; Seems magit/git is not respecting my PATH and hardcoded to use /bin/diff ...
-    (suroot)
-    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
-    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/patch/bin/* /usr/bin")
-    (toor))
-
-  (start-process-shell-command
-   "ln" nil
-   "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dotfiles/versions $DIR")
-
-  (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
-
-  (make-directory "~/bin" t)
-  (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
-
-  (setq dotfiles-xresources "Xft.dpi: 96
-Xft.autohint: 0
-Xft.antialias: 1
-Xft.hinting: true
-Xft.hintstyle: hintslight
-Xft.rgba: rgb
-Xft.lcdfilter: lcddefault")
-
-  (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
-
-  (setq root-dot-profile (concat my-path "
-export CFLAGS=\"-O2 -pipe\"
-export CXXFLAGS=\"-O2 -pipe\"
-export MAKEFLAGS=\"-j$(nproc)\""))
-  (f-write-text root-dot-profile 'utf-8
-                (concat "/su:root@"system-name":/root/.profile"))
-
-  (setq dotfiles-profile "PATH=~/bin:$PATH
-
-. \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
-export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
-
-echo \"start X?\"
-read -r && \[ -z \"$DISPLAY\" ] && sx")
-
-  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
-
-  (straight-use-package 'seq)                     ;Sequence manipulation functions
-  (straight-use-package 'cl-lib)                  ;Common Lisp extensions
-  (straight-use-package 'dash)                    ;A modern list library
-  (straight-use-package 'a)                       ;Associative data structure functions
-  (straight-use-package 's)                       ;String manipulation library
-
-
-  (setq dotfiles-gitconfig "\[user]
-email = paxchristi888@gmail.com
-name = Adam Schaefers
-signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
-\[commit]
-        gpgsign = true")
-
-  (f-write-text dotfiles-gitconfig 'utf-8 "~/.gitconfig")
-
-  (setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
-max-cache-ttl 84000
-allow-emacs-pinentry
-allow-loopback-pinentry
-pinentry-program /home/adam/bin/pinentry-emacs")
-
-  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
-
-  (setq dotfiles-config-mpv "profile=gpu-hq
-scale=ewa_lanczossharp
-cscale=ewa_lanczossharp
-video-sync=display-resample
-interpolation
-tscale=oversample")
-
-  (make-directory "~/.config/mpv" t)
-  (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")
-
-  (setq dotfiles-xinitrc "#!/bin/sh
-
-while ! xprop -root | grep -q Free; do sleep 1; done
-internal=LVDS1
-external=VGA1
-if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
-xset +dpms
-xset s 1800
-xset b off
-xset dpms 0 0 1860
-
-xset r rate 200 60
-
-touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
-xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
-xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
-
-xsetroot -solid black -cursor_name left_ptr
-xrdb -merge ~/.Xresources
-
-feh --bg-max --no-fehbg ~/repos/dotfiles/.wallpaper
-
-compton --backend glx &
-
-exec dwm")
-
-  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
-
-;;; ENVIRONMENT AND PATH
+;;;;ENV/PATH
 
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
@@ -486,12 +353,9 @@ exec dwm")
               "CXXFLAGS=-O2 -pipe"
               "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community"))))
 
-;;; ESHELL
+;;;;eshell
 
-;; auto ls
 (add-hook 'eshell-directory-change-hook 'eshell/ls)
-
-;; eshell alias / functions
 
 (defun eshell/emacs (file)
   "Intercept the accidental execution of emacs"
@@ -525,13 +389,11 @@ directory to make multiple eshell windows easier."
     (eshell-send-input)
     (rename-buffer (concat "*eshell: " name "*"))))
 
-;;; PROGRAMMING & TOOLS
+;;;;programming
 
-;; make scripts executeable automatically
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
 
-;; a shell-mode hook
 (defun my-shell-mode-hook()
   (setq-local compile-command
               '((lambda()
@@ -577,21 +439,20 @@ directory to make multiple eshell windows easier."
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-;; use hippie-expand instead of dabbrev
 (global-set-key (kbd "M-/") 'hippie-expand)
 (global-set-key (kbd "<M-tab>") 'hippie-expand)
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
 (add-hook 'eshell-mode-hook '(lambda ()
-                               (interactive) ;; hippie-expand breaks eshell!!@#$
+                               (interactive) ;; hippie-expand breaks eshell
                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
-(defadvice he-substitute-string (after he-paredit-fix)
+(defadvice he-substitute-string (after he-paredit-fix) ;; hippie-expand also breaks paredit
   "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (lispy-mode)
+  (if (and (paredit-mode)
            (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
-;;; PROGRAMMING LANGS
+;;;;langs
 
 ;; C
 
@@ -610,10 +471,10 @@ directory to make multiple eshell windows easier."
 
 ;; lisp
 
-(add-hook 'emacs-lisp-mode-hook 'lispy-mode)
-(add-hook 'ielm-mode-hook 'lispy-mode)
-(add-hook 'lisp-mode-hook 'lispy-mode)
-(add-hook 'slime-repl-mode-hook 'lispy-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'ielm-mode-hook 'paredit-mode)
+(add-hook 'lisp-mode-hook 'paredit-mode)
+(add-hook 'slime-repl-mode-hook 'paredit-mode)
 
 (defun my-ielm ()
   (interactive)
@@ -644,7 +505,7 @@ directory to make multiple eshell windows easier."
 (with-eval-after-load 'slime
   (define-key slime-mode-map (kbd "C-c C-s") 'slime-selector))
 
-;;; IRC
+;;;;irc
 
 (defun my-erc ()
   (interactive)
@@ -669,7 +530,7 @@ directory to make multiple eshell windows easier."
         (setq str nil)))
   (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable))
 
-;;; EMAIL
+;;;;email
 
 (setq gnus-use-full-window nil)
 (setq gnus-site-init-file "~/.emacs")
@@ -761,3 +622,121 @@ directory to make multiple eshell windows easier."
 
         ;; output email address to buffer
         (princ email (current-buffer))))))
+
+;;;;dotfiles
+
+(defun dotfiles-install ()
+  "Yes, I know this is not sane, but please just let me be"
+  (interactive)
+  (require 'f)
+  (progn
+    ;; Keep magit happy by using gnu diffutils instead of busybox
+    ;; Seems magit/git is not respecting my PATH and hardcoded to use /bin/diff ...
+    (suroot)
+    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
+    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/patch/bin/* /usr/bin")
+    (toor))
+
+  (start-process-shell-command
+   "ln" nil
+   "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dotfiles/versions $DIR")
+
+  (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
+
+  (make-directory "~/bin" t)
+  (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
+
+  (setq dotfiles-xresources "Xft.dpi: 96
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault")
+
+  (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
+
+  (setq root-dot-profile (concat my-path "
+export CFLAGS=\"-O2 -pipe\"
+export CXXFLAGS=\"-O2 -pipe\"
+export MAKEFLAGS=\"-j$(nproc)\""))
+  (f-write-text root-dot-profile 'utf-8
+                (concat "/su:root@"system-name":/root/.profile"))
+
+  (setq dotfiles-profile "PATH=~/bin:$PATH
+
+. \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
+
+echo \"start X?\"
+read -r && \[ -z \"$DISPLAY\" ] && sx
+
+\[ \"$TERM\" = \"st-256color\" ] && emacs")
+
+  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
+
+  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacs")
+  (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc")
+
+  (straight-use-package 'seq)                     ;Sequence manipulation functions
+  (straight-use-package 'cl-lib)                  ;Common Lisp extensions
+  (straight-use-package 'dash)                    ;A modern list library
+  (straight-use-package 'a)                       ;Associative data structure functions
+  (straight-use-package 's)                       ;String manipulation library
+
+  (setq dotfiles-gitconfig "\[user]
+email = paxchristi888@gmail.com
+name = Adam Schaefers
+signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
+\[commit]
+        gpgsign = true")
+
+  (f-write-text dotfiles-gitconfig 'utf-8 "~/.gitconfig")
+
+  (setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
+max-cache-ttl 84000
+allow-emacs-pinentry
+allow-loopback-pinentry
+pinentry-program /home/adam/bin/pinentry-emacs")
+
+  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
+
+  (setq dotfiles-config-mpv "profile=gpu-hq
+scale=ewa_lanczossharp
+cscale=ewa_lanczossharp
+video-sync=display-resample
+interpolation
+tscale=oversample")
+
+  (make-directory "~/.config/mpv" t)
+  (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")
+
+  (setq dotfiles-xinitrc "#!/bin/sh
+
+while ! xprop -root | grep -q Free; do sleep 1; done
+internal=LVDS1
+external=VGA1
+if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
+xset +dpms
+xset s 1800
+xset b off
+xset dpms 0 0 1860
+
+xset r rate 200 60
+
+touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
+xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
+xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
+
+xsetroot -solid black -cursor_name left_ptr
+xrdb -merge ~/.Xresources
+
+feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux.png
+
+compton --backend glx &
+
+st &
+
+exec dwm")
+
+  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))

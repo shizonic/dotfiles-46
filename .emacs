@@ -90,7 +90,7 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(global-font-lock-mode 1)
+(global-font-lock-mode -1)
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -146,7 +146,6 @@
 
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
-(add-hook 'dired-mode-hook 'font-lock-mode)
 
 (autoload 'dired-async-mode "dired-async.el" nil t)
 (dired-async-mode 1)

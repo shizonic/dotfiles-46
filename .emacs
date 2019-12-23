@@ -20,7 +20,9 @@
 (add-hook 'after-init-hook '(lambda()
                               (kill-buffer "*scratch*")
                               (eshell)
-                              (server-start)))
+                              (require 'server)
+                              (when (not (server-running-p))
+                                (server-start))))
 
 ;;;;lib
 
@@ -32,7 +34,6 @@
 (straight-use-package 's)    ;String manipulation library
 (straight-use-package 'f)    ;Modern API for working with files and directories
 (straight-use-package 'ht)   ;The missing hash table library
-(straight-use-package 'epg)
 
 ;;;;pkgs
 
@@ -158,9 +159,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-(setq password-cache-expiry nil
-      epa-pinentry-mode 'loopback)
-
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (winner-mode 1)
@@ -219,10 +217,9 @@ current frame."
     (select-window prev-window)))
 
 ;;;;gpg/ssh agents
-
-(require 'epa-file)
+(setq password-cache-expiry nil
+      epa-pinentry-mode 'loopback)
 (custom-set-variables '(epg-gpg-program  "/bin/gpg2"))
-(epa-file-enable)
 
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))

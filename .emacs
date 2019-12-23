@@ -432,7 +432,7 @@ directory to make multiple eshell windows easier."
 
 (projectile-mode 1)
 
-(aggressive-indent-global-mode 1)
+(aggressive-indent-global-mode -1)
 
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
@@ -735,7 +735,7 @@ xrdb -merge ~/.Xresources
 
 wal -i ~/repos/dotfiles/wallpaper/linux.png
 
-xcompmgr &
+compton --backend glx &
 
 emacs --daemon
 

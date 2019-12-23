@@ -306,7 +306,7 @@ current frame."
 ;;;;ENV/PATH
 
 (setenv "PAGER" "cat")
-(setenv "EDITOR" "emacsclient")
+(setenv "EDITOR" "emacsclient -c")
 (setenv "VISUAL" (getenv "EDITOR"))
 (setenv "MAKEFLAGS" "-j5")
 (setenv "CFLAGS" "-O2 -pipe")
@@ -673,13 +673,11 @@ export MAKEFLAGS=\"-j$(nproc)\"")
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
 
 echo \"start X?\"
-read -r && \[ -z \"$DISPLAY\" ] && sx
-
-\[ \"$TERM\" = \"st-256color\" ] && emacs")
+read -r && \[ -z \"$DISPLAY\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
-  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacs")
+  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacsclient -t -e '\(eshell\)' && exit")
   (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc")
 
   (straight-use-package 'seq)                     ;Sequence manipulation functions
@@ -737,7 +735,9 @@ xrdb -merge ~/.Xresources
 
 wal -i ~/repos/dotfiles/wallpaper/linux.png
 
-compton --backend glx &
+xcompmgr &
+
+emacs --daemon
 
 st &
 

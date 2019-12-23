@@ -32,7 +32,7 @@
 (straight-use-package 's)    ;String manipulation library
 (straight-use-package 'f)    ;Modern API for working with files and directories
 (straight-use-package 'ht)   ;The missing hash table library
-
+(straight-use-package 'epg)
 ;;;;pkgs
 
 (straight-use-package 'magit)
@@ -216,6 +216,12 @@ current frame."
     ;; Check window was not found successfully
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
+
+;;;;gpg/ssh agents
+
+(require 'epa-file)
+(custom-set-variables '(epg-gpg-program  "/bin/gpg2"))
+(epa-file-enable)
 
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))

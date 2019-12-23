@@ -33,6 +33,7 @@
 (straight-use-package 'f)    ;Modern API for working with files and directories
 (straight-use-package 'ht)   ;The missing hash table library
 (straight-use-package 'epg)
+
 ;;;;pkgs
 
 (straight-use-package 'magit)

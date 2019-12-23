@@ -657,7 +657,41 @@ Xft.antialias: 1
 Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
-Xft.lcdfilter: lcddefault")
+Xft.lcdfilter: lcddefault
+
+*color0: #09171B
+*.color0: #09171B
+*color1: #003340
+*.color1: #003340
+*color2: #003F50
+*.color2: #003F50
+*color3: #00404F
+*.color3: #00404F
+*color4: #004353
+*.color4: #004353
+*color5: #004455
+*.color5: #004455
+*color6: #004455
+*.color6: #004455
+*color7:
+*.color7:
+*color8: #666666
+*.color8: #666666
+*color9: #003340
+*.color9: #003340
+*color10: #003F50
+*.color10: #003F50
+*color11: #00404F
+*.color11: #00404F
+*color12: #004353
+*.color12: #004353
+*color13: #004455
+*.color13: #004455
+*color14: #004455
+*.color14: #004455
+*color15:
+*.color15:
+*color66: #09171B")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
@@ -733,7 +767,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 xsetroot -solid black -cursor_name left_ptr
 xrdb -merge ~/.Xresources
 
-wal -i ~/repos/dotfiles/wallpaper/linux.png
+feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
 
 compton --backend glx &
 

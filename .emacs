@@ -92,7 +92,8 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(global-font-lock-mode -1)
+(cl-loop for face in (face-list) do
+              (set-face-attribute face nil :foreground nil :background nil))
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT

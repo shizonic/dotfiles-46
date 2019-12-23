@@ -50,10 +50,6 @@
 (require 'browse-kill-ring)
 (require 'crux)
 
-;;;;other
-
-(require 'tramp)
-
 ;;;;binds
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -324,9 +320,10 @@ current frame."
                       "/opt/gnu/findutils/bin:"
                       "/opt/gnu/diffutils/bin:"
                       "/opt/gnu/gawk/bin:"
+                      "/opt/gnu/grep/bin:"
                       "/opt/gnu/patch/bin:"))
 
-(setq my-path-append ":/rocks/more/bin")
+(setq my-path-append ":/foo/bar")
 
 (setq my-path-inherited (getenv "PATH"))
 
@@ -341,24 +338,25 @@ current frame."
 
 (setq my-path (concat "PATH=" (getenv "PATH")))
 
-(defvar my-sync-root-path t
+(defvar my-sync-root-path nil
   "Keep root's (tramp-)PATH in sync with Emacs environment")
 
-(if (bound-and-true-p my-sync-root-path)
-    (progn
-      ;; add local user's path to roots path
-      (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-      ;; define roots env
-      (setq tramp-remote-process-environment
-            '("ENV=''"
-              "TMOUT=0"
-              "LC_CTYPE=''"
-              "EDITOR=ed"
-              "PAGER=cat"
-              "MAKEFLAGS=j5"
-              "CFLAGS=-O2 -pipe"
-              "CXXFLAGS=-O2 -pipe"
-              "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community"))))
+(with-eval-after-load 'tramp
+  (if (bound-and-true-p my-sync-root-path)
+      (progn
+        ;; add local user's path to roots path
+        (add-to-list 'tramp-remote-path 'tramp-own-remote-path)))
+  ;; define roots env
+  (setq tramp-remote-process-environment
+        '("ENV=''"
+          "TMOUT=0"
+          "LC_CTYPE=''"
+          "EDITOR=ed"
+          "PAGER=cat"
+          "MAKEFLAGS=j5"
+          "CFLAGS=-O2 -pipe"
+          "CXXFLAGS=-O2 -pipe"
+          "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")))
 
 ;;;;eshell
 
@@ -663,10 +661,9 @@ Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
-  (setq root-dot-profile (concat my-path "
-export CFLAGS=\"-O2 -pipe\"
+  (setq root-dot-profile "export CFLAGS=\"-O2 -pipe\"
 export CXXFLAGS=\"-O2 -pipe\"
-export MAKEFLAGS=\"-j$(nproc)\""))
+export MAKEFLAGS=\"-j$(nproc)\"")
   (f-write-text root-dot-profile 'utf-8
                 (concat "/su:root@"system-name":/root/.profile"))
 

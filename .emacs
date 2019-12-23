@@ -62,8 +62,6 @@
 (global-set-key (kbd "C-c ku") (lambda()(interactive)(toor)(keychain-unlock)))
 (global-set-key (kbd "C-c kl") (lambda()(interactive)(toor)(keychain-lock)))
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "<C-kp-add>") (lambda()(interactive)(my-font-resizer 1)))
-(global-set-key (kbd "<C-kp-subtract>") (lambda()(interactive)(my-font-resizer -1)))
 (global-set-key (kbd "<f5>") 'compile)
 (global-set-key (kbd "C-c g") 'magit-status)
 (global-set-key (kbd "C-c p") 'projectile-command-map)
@@ -448,7 +446,6 @@ directory to make multiple eshell windows easier."
 (global-set-key (kbd "<M-tab>") 'hippie-expand)
 (global-set-key (kbd "<C-tab>") 'hippie-expand)
 (add-hook 'eshell-mode-hook '(lambda ()
-                               (interactive) ;; hippie-expand breaks eshell
                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
 (defadvice he-substitute-string (after he-paredit-fix) ;; hippie-expand also breaks paredit

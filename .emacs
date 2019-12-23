@@ -22,7 +22,8 @@
                               (eshell)
                               (require 'server)
                               (when (not (server-running-p))
-                                (server-start))))
+                                (server-start))
+                              (my-theme)))
 
 ;;;;lib
 
@@ -92,8 +93,9 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(cl-loop for face in (face-list) do
-              (set-face-attribute face nil :foreground nil :background nil))
+(defun my-theme ()
+  (cl-loop for face in (face-list) do
+           (set-face-attribute face nil :foreground nil :background nil)))
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -712,7 +714,7 @@ read -r && \[ -z \"$DISPLAY\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
-  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacsclient -t -e '\(eshell\)' && exit")
+  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacsclient -t -e '\(eshell\)' -e '\(my-theme\)' && exit")
   (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc")
 
   (straight-use-package 'seq)                     ;Sequence manipulation functions

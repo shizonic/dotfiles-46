@@ -676,8 +676,6 @@ Xft.lcdfilter: lcddefault
 *.color5: #004455
 *color6: #004455
 *.color6: #004455
-*color7:
-*.color7:
 *color8: #666666
 *.color8: #666666
 *color9: #003340
@@ -692,8 +690,6 @@ Xft.lcdfilter: lcddefault
 *.color13: #004455
 *color14: #004455
 *.color14: #004455
-*color15:
-*.color15:
 *color66: #09171B")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")

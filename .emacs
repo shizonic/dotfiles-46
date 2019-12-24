@@ -90,13 +90,17 @@
 
 ;;;;theme
 
+
+(add-hook 'prog-mode-hook (lambda ()
+                            (font-lock-mode -1)))
+
 (menu-bar-mode -1)
 
 (defun new-frame-theme ()
   "use M-x list-faces-display"
   (interactive)
   (cl-loop for face in
-           '(mode-line-inactive mode-line) do
+           '(mode-line-inactive mode-line default) do
            (set-face-attribute face nil :foreground nil :background nil)))
 
 (defun simple-mode-line-render (left right)
@@ -656,45 +660,18 @@ Xft.antialias: 1
 Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
-Xft.lcdfilter: lcddefault
-*color0: #0094b9
-*.color0: #0094b9
-*color1: #0094b9
-*.color1: #0094b9
-*color2: #0094b9
-*.color2: #0094b9
-*color3: #0094b9
-*.color3: #0094b9
-*color4: #0094b9
-*.color4: #0094b9
-*color5: #0094b9
-*.color5: #0094b9
-*color6: #0094b9
-*.color6: #0094b9
-*color9: #0094b9
-*.color9: #0094b9
-*color10: #0094b9
-*.color10: #0094b9
-*color11: #0094b9
-*.color11: #0094b9
-*color12: #0094b9
-*.color12: #0094b9
-*color13: #0094b9
-*.color13: #0094b9
-*color14: #0094b9
-*.color14: #0094b9
-*color66: #0094b9
-*color8: #FFFFFF
-*.color8: #FFFFFF")
+Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
+  ;; minimal .profile for /root ... though i mostly control the env using Emacs
   (setq root-dot-profile "export CFLAGS=\"-O2 -pipe\"
 export CXXFLAGS=\"-O2 -pipe\"
 export MAKEFLAGS=\"-j$(nproc)\"")
   (f-write-text root-dot-profile 'utf-8
                 (concat "/su:root@"system-name":/root/.profile"))
 
+  ;; minimal .profile for ~/ ... though i mostly control the env using Emacs
   (setq dotfiles-profile "PATH=~/bin:$PATH
 
 . \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
@@ -753,7 +730,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xsetroot -solid black -cursor_name left_ptr
-xrdb -merge ~/.Xresources
+xrdb ~/.Xresources
 
 feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
 

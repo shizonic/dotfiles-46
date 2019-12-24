@@ -710,14 +710,8 @@ read -r && \[ -z \"$DISPLAY\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
-  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacsclient -t -e '\(eshell\)' -e '\(my-theme\)' && exit")
+  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacsclient -t -e '\(eshell\)' -e '\(new-frame-theme\)' && exit")
   (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc")
-
-  (straight-use-package 'seq)                     ;Sequence manipulation functions
-  (straight-use-package 'cl-lib)                  ;Common Lisp extensions
-  (straight-use-package 'dash)                    ;A modern list library
-  (straight-use-package 'a)                       ;Associative data structure functions
-  (straight-use-package 's)                       ;String manipulation library
 
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com

@@ -19,17 +19,16 @@
 
 (add-hook 'after-init-hook '(lambda()
                               (kill-buffer "*scratch*")
-                              (eshell)
-                              (require 'server)
-                              (when (not (server-running-p))
-                                (server-start))
-                              (my-theme)))
+                              (eshell)))
 
 ;;;;lib
 
 (require 'subr-x)            ;Extra Lisp functions
 (require 'seq)               ;Sequence manipulation functions
 (require 'cl-lib)            ;Common Lisp extensions
+
+;;;;lib+
+
 (straight-use-package 'dash) ;A modern list library
 (straight-use-package 'a)    ;Associative data structure functions
 (straight-use-package 's)    ;String manipulation library
@@ -79,7 +78,6 @@
 (global-set-key (kbd "C-o") 'crux-smart-open-line)
 (global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
 (global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
-(global-set-key "%" 'match-paren)
 (global-set-key (kbd "M-y") 'browse-kill-ring)
 (global-set-key (kbd "C-t") 'eshell)
 (with-eval-after-load 'dired
@@ -93,8 +91,12 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(defun my-theme ()
-  (cl-loop for face in (face-list) do
+
+(defun new-frame-theme ()
+  "use M-x list-faces-display"
+  (interactive)
+  (cl-loop for face in
+           '(mode-line-inactive mode-line) do
            (set-face-attribute face nil :foreground nil :background nil)))
 
 (defun simple-mode-line-render (left right)
@@ -184,13 +186,6 @@
     (princ STRING (current-buffer))
     (split-string (buffer-string) delim t)))
 
-(defun match-paren (arg)
-  "Go to the matching paren if on a paren; otherwise insert %."
-  (interactive "p")
-  (cond ((looking-at "\\s(") (forward-list 1) (backward-char 1))
-        ((looking-at "\\s)") (forward-char 1) (backward-list 1))
-        (t (self-insert-command (or arg 1)))))
-
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
 current window."
@@ -220,6 +215,7 @@ current frame."
     (select-window prev-window)))
 
 ;;;;gpg/ssh agents
+
 (setq password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 (custom-set-variables '(epg-gpg-program  "/bin/gpg2"))
@@ -275,7 +271,7 @@ current frame."
               (insert (concat "cd" " " (my-pwd)))
               (eshell-send-input))
           (progn
-            (insert (concat "cd /su:root@"system-name":"default-directory))
+            (insert (concat "cd /su::"default-directory))
             (eshell-send-input))))))
 
 (defun my-su-edit ()
@@ -661,36 +657,35 @@ Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
-
-*color0: #09171B
-*.color0: #09171B
-*color1: #003340
-*.color1: #003340
-*color2: #003F50
-*.color2: #003F50
-*color3: #00404F
-*.color3: #00404F
-*color4: #004353
-*.color4: #004353
-*color5: #004455
-*.color5: #004455
-*color6: #004455
-*.color6: #004455
-*color8: #666666
-*.color8: #666666
-*color9: #003340
-*.color9: #003340
-*color10: #003F50
-*.color10: #003F50
-*color11: #00404F
-*.color11: #00404F
-*color12: #004353
-*.color12: #004353
-*color13: #004455
-*.color13: #004455
-*color14: #004455
-*.color14: #004455
-*color66: #09171B")
+*color0: #0094b9
+*.color0: #0094b9
+*color1: #0094b9
+*.color1: #0094b9
+*color2: #0094b9
+*.color2: #0094b9
+*color3: #0094b9
+*.color3: #0094b9
+*color4: #0094b9
+*.color4: #0094b9
+*color5: #0094b9
+*.color5: #0094b9
+*color6: #0094b9
+*.color6: #0094b9
+*color9: #0094b9
+*.color9: #0094b9
+*color10: #0094b9
+*.color10: #0094b9
+*color11: #0094b9
+*.color11: #0094b9
+*color12: #0094b9
+*.color12: #0094b9
+*color13: #0094b9
+*.color13: #0094b9
+*color14: #0094b9
+*.color14: #0094b9
+*color66: #0094b9
+*color8: #FFFFFF
+*.color8: #FFFFFF")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
@@ -764,10 +759,10 @@ feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
 
 compton --backend glx &
 
-emacs --daemon
+pgrep emacs || emacs --daemon
 
 st &
 
-exec dwm")
+while true; do dwm; done")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))

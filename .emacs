@@ -540,6 +540,7 @@ directory to make multiple eshell windows easier."
 
 ;;;;email
 
+(setq read-mail-command 'gnus)
 (setq gnus-use-full-window nil)
 (setq gnus-site-init-file "~/.emacs")
 (setq gnus-save-newsrc-file nil)

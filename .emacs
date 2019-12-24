@@ -559,9 +559,10 @@ directory to make multiple eshell windows easier."
                                   (nnmail-expiry-wait immediate)))
 
 (setq smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
+      smtpmail-smtp-service 465
       send-mail-function 'smtpmail-send-it
       message-send-mail-function 'smtpmail-send-it
+      smtpmail-stream-type  'ssl
       smtpmail-debug-info t smtpmail-debug-verb t
       gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]"
       gnus-message-archive-method '(nnimap "gmail")

@@ -299,62 +299,6 @@ current frame."
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
 
-;;;;ENV/PATH
-
-(setenv "PAGER" "cat")
-(setenv "EDITOR" "emacsclient -c")
-(setenv "VISUAL" (getenv "EDITOR"))
-(setenv "MAKEFLAGS" "-j5")
-(setenv "CFLAGS" "-O2 -pipe")
-(setenv "CXXFLAGS" "-O2 -pipe")
-(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")
-
-(setq my-path-insert (concat
-                      "/home/" user-login-name "/bin:"
-                      "/home/" user-login-name "/.local/bin:"
-                      "/opt/awk/bin:"
-                      "/opt/gnu/coreutils/bin:"
-                      "/opt/gnu/findutils/bin:"
-                      "/opt/gnu/diffutils/bin:"
-                      "/opt/gnu/gawk/bin:"
-                      "/opt/gnu/grep/bin:"
-                      "/opt/gnu/patch/bin:"))
-
-(setq my-path-append ":/foo/bar")
-
-(setq my-path-inherited (getenv "PATH"))
-
-(setenv "PATH"
-        (string-join
-         (setq my-path
-               (delete-dups (split-string
-                             (setenv "PATH" (concat
-                                             my-path-insert
-                                             my-path-inherited
-                                             my-path-append)) ":")))":"))
-
-(setq my-path (concat "PATH=" (getenv "PATH")))
-
-(defvar my-sync-root-path nil
-  "Keep root's (tramp-)PATH in sync with Emacs environment")
-
-(with-eval-after-load 'tramp
-  (if (bound-and-true-p my-sync-root-path)
-      (progn
-        ;; add local user's path to roots path
-        (add-to-list 'tramp-remote-path 'tramp-own-remote-path)))
-  ;; define roots env
-  (setq tramp-remote-process-environment
-        '("ENV=''"
-          "TMOUT=0"
-          "LC_CTYPE=''"
-          "EDITOR=ed"
-          "PAGER=cat"
-          "MAKEFLAGS=j5"
-          "CFLAGS=-O2 -pipe"
-          "CXXFLAGS=-O2 -pipe"
-          "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")))
-
 ;;;;eshell
 
 (add-hook 'eshell-directory-change-hook 'eshell/ls)
@@ -666,8 +610,12 @@ export MAKEFLAGS=\"-j$(nproc)\"")
   (f-write-text root-dot-profile 'utf-8
                 (concat "/su:root@"system-name":/root/.profile"))
 
-  ;; minimal .profile for ~/ ... though i mostly control the env using Emacs
-  (setq dotfiles-profile "PATH=~/bin:$PATH
+  ;; .profile for ~/
+  (setq dotfiles-profile "PATH=/opt/gnu/coreutils/bin:/opt/gnu/findutils/bin:/opt/gnu/diffutils/bin:/opt/gnu/gawk/bin:/opt/gnu/grep/bin:/opt/gnu/patch/bin:/opt/awk/bin:/home/adam/bin:/bin:/usr/bin:$PATH
+
+EDITOR=\"emacsclient -t\"
+VISUAL=$EDITOR
+PAGER=cat
 
 . \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
 export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033

@@ -291,7 +291,7 @@ current frame."
   (interactive)
   (with-temp-buffer
     (if (not (string-match "root@" (pwd)))
-        (cd (concat "/su:root@"system-name":"default-directory)))
+        (cd "/su::"))
     (setq-local
      my-read
      (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))
@@ -625,9 +625,6 @@ read -r && \[ -z \"$DISPLAY\" ] && sx")
 
   (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
-  (setq dotfiles-mkshrc "\[ \"$TERM\" = \"st-256color\" ] && emacsclient -t -e '\(eshell\)' -e '\(new-frame-theme\)' && exit")
-  (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc")
-
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com
 name = Adam Schaefers
@@ -677,11 +674,12 @@ xrdb ~/.Xresources
 
 feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
 
-compton --backend glx &
+#compton --backend glx &
+xcompmgr &
 
-pgrep emacs || emacs --daemon
+while true; do emacs --fg-daemon;done &
 
-st &
+#st -e emacsclient -t -e '\(eshell\)' -e '\(new-frame-theme\)' &
 
 while true; do dwm; done")
 

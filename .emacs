@@ -176,18 +176,11 @@
 
 ;;;;functions
 
-(defun split-file-by-delim (FILE delim)
+(defun split-file (FILE delim)
   ;; e.g. (split-file-by-delim "~/.bashrc" "\n")
   ;; note: useful when used also with subr-x's join-string...
   (with-temp-buffer
     (insert-file-contents FILE)
-    (split-string (buffer-string) delim t)))
-
-(defun split-string-by-delim (STRING delim)
-  ;; e.g. (split-string-by-delim "23:25:35" ":")
-  ;; note: useful when used also with subr-x's join-string...
-  (with-temp-buffer
-    (princ STRING (current-buffer))
     (split-string (buffer-string) delim t)))
 
 (defun spacemacs/alternate-buffer (&optional window)
@@ -242,7 +235,7 @@ current frame."
   (interactive)
   (if (string-match "root@" (pwd))
       (string-trim
-       (format "%s" (cddr (split-string-by-delim default-directory ":"))) "\(" "\)")
+       (format "%s" (cddr (split-string default-directory ":"))) "\(" "\)")
     (string-trim default-directory)))
 
 (defun toor ()
@@ -334,7 +327,7 @@ current frame."
 (setenv "PATH"
         (string-join
          (setq my-path
-               (delete-dups (split-string-by-delim
+               (delete-dups (split-string
                              (setenv "PATH" (concat
                                              my-path-insert
                                              my-path-inherited

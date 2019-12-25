@@ -655,6 +655,7 @@ tscale=oversample")
   (setq dotfiles-xinitrc "#!/bin/sh
 
 while ! xprop -root | grep -q Free; do sleep 1; done
+
 internal=LVDS1
 external=VGA1
 if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
@@ -663,23 +664,17 @@ xset s 1800
 xset b off
 xset dpms 0 0 1860
 
-xset r rate 200 60
+xsetroot -solid black -cursor_name left_ptr
+xrdb ~/.Xresources
+feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
+xcompmgr &
 
+xset r rate 200 60
 touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
 xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
-xsetroot -solid black -cursor_name left_ptr
-xrdb ~/.Xresources
-
-feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
-
-#compton --backend glx &
-xcompmgr &
-
-while true; do emacs --fg-daemon;done &
-
-#st -e emacsclient -t -e '\(eshell\)' -e '\(new-frame-theme\)' &
+while true; do pgrep emacs || emacs --fg-daemon; wait; done' &
 
 while true; do dwm; done")
 

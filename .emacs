@@ -314,7 +314,7 @@ current frame."
 (setenv "MAKEFLAGS" "-j5")
 (setenv "CFLAGS" "-O2 -pipe")
 (setenv "CXXFLAGS" "-O2 -pipe")
-(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")
+(setenv "KISS_PATH" "/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")
 
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
@@ -360,7 +360,7 @@ current frame."
           "MAKEFLAGS=j5"
           "CFLAGS=-O2 -pipe"
           "CXXFLAGS=-O2 -pipe"
-          "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community:/home/adam/repos/community/community")))
+          "KISS_PATH=/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/home/adam/repos/community/community:/root/community/community")))
 
 ;;;;eshell
 

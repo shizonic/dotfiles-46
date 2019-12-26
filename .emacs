@@ -148,8 +148,6 @@
 
 (ido-mode t)
 
-(icomplete-mode 1)
-
 (show-paren-mode 1)
 
 (setq-default indent-tabs-mode nil
@@ -663,8 +661,6 @@ tscale=oversample")
 
   (setq dotfiles-xinitrc "#!/bin/sh
 
-while ! xprop -root | grep -q Free; do sleep 1; done
-
 internal=LVDS1
 external=VGA1
 if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
@@ -672,11 +668,10 @@ xset +dpms
 xset s 1800
 xset b off
 xset dpms 0 0 1860
-
 xsetroot -solid black -cursor_name left_ptr
 xrdb ~/.Xresources
 feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
-xcompmgr &
+compton -f --backend glx
 
 xset r rate 200 60
 touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"

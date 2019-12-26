@@ -676,7 +676,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xrdb ~/.Xresources
 Esetroot -fit  ~/repos/dotfiles/wallpaper/linux2.png
-compton -f --backend glx
+compton -b --backend glx
 
 pgrep emacs || emacs --daemon
 while true; do dwm; done")

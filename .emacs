@@ -43,9 +43,6 @@
 (straight-use-package 'paredit)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
-(straight-use-package 'evil  :config
-                      (setq evil-default-state 'emacs) ;; toggle using C-z
-                      (evil-mode 1))
 
 ;;;;manual-installed pkgs
 

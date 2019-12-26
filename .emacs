@@ -298,6 +298,12 @@ current frame."
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
 
+(defun suckless-recompile (x)
+  (with-temp-buffer
+    (cd "/su::")
+    (async-shell-command
+     (concat "kiss c " x "&& kiss b " x "&& kiss i " x))))
+
 ;;;;eshell
 
 (add-hook 'eshell-directory-change-hook 'eshell/ls)
@@ -679,6 +685,13 @@ Esetroot -fit  ~/repos/dotfiles/wallpaper/linux2.png
 compton -b --backend glx
 
 pgrep emacs || emacs --daemon
+
+while true # status bar
+do
+xsetroot -name "$(/opt/gnu/coreutils/bin/date +"%F %R")"
+sleep 60
+done &
+
 while true; do dwm; done")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))

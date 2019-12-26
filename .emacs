@@ -1,4 +1,4 @@
- ;;; -*- lexical-binding: t; -*-
+;;; -*- lexical-binding: t; -*-
 
 ;;;;bootstrap
 
@@ -43,6 +43,7 @@
 (straight-use-package 'paredit)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
+(straight-use-package 'rainbow-mode)
 
 ;;;;manual-installed pkgs
 
@@ -55,7 +56,7 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c kk") 'kiss)
-(global-set-key (kbd "C-c i") 'my-erc)
+(global-set-key (kbd "C-c i") 'erc-freenode-connect)
 (global-set-key (kbd "C-c m") 'gnus)
 (global-set-key (kbd "C-c a") 'abook)
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
@@ -90,8 +91,8 @@
 ;;;;theme
 
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (font-lock-mode -1)))
+;; (add-hook 'prog-mode-hook (lambda ()
+;; (font-lock-mode 1)))
 
 (menu-bar-mode -1)
 
@@ -612,7 +613,14 @@ Xft.antialias: 1
 Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
-Xft.lcdfilter: lcddefault")
+Xft.lcdfilter: lcddefault
+
+!dwm.normbordercolor:
+!dwm.normbgcolor:
+!dwm.normfgcolor:
+!dwm.selbordercolor:
+!dwm.selbgcolor:
+!dwm.selfgcolor:")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
@@ -681,16 +689,19 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xrdb ~/.Xresources
-Esetroot -fit  ~/repos/dotfiles/wallpaper/linux2.png
+#Esetroot -fit  ~/repos/dotfiles/wallpaper/linux.png
+wal -i ~/repos/dotfiles/wallpaper/081801225.jpg
 compton -b --backend glx
 
 pgrep emacs || emacs --daemon
 
 while true # status bar
 do
-xsetroot -name "$(/opt/gnu/coreutils/bin/date +"%F %R")"
+xsetroot -name \"$\(/opt/gnu/coreutils/bin/date +\"%F %R\"\)\"
 sleep 60
 done &
+
+st -e emacsclient -t -e \\(eshell\\) -e \\(new-frame-theme\\) &
 
 while true; do dwm; done")
 

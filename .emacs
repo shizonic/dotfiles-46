@@ -668,18 +668,17 @@ xset +dpms
 xset s 1800
 xset b off
 xset dpms 0 0 1860
-xsetroot -solid black -cursor_name left_ptr
-xrdb ~/.Xresources
-feh --bg-max --no-fehbg ~/repos/dotfiles/wallpaper/linux2.png
-compton -f --backend glx
-
 xset r rate 200 60
+
 touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
 xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
-while true; do emacs --fg-daemon; done &
+xrdb ~/.Xresources
+Esetroot -fit  ~/repos/dotfiles/wallpaper/linux2.png
+compton -f --backend glx
 
+pgrep emacs || emacs --daemon
 while true; do dwm; done")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))

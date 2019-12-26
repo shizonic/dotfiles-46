@@ -676,7 +676,7 @@ touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
 xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
-while true; do pgrep emacs || emacs --fg-daemon; wait; done &
+while true; do emacs --fg-daemon; done &
 
 while true; do dwm; done")
 

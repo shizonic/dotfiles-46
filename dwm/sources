@@ -1,0 +1,6 @@
+https://dl.suckless.org/dwm/dwm-6.2.tar.gz
+patches/dwm-xrdb-6.2.diff
+patches/dwm-ewmhtags-6.2.diff
+patches/dwm-fullgaps-6.2.diff
+patches/dwm-fakefullscreen-20170508-ceac8c9.diff
+savedconfig/mine.config.def.h

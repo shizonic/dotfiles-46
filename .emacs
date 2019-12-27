@@ -19,6 +19,7 @@
 (require 'seq)               ;Sequence manipulation functions
 (require 'cl-lib)            ;Common Lisp extensions
 (require 'tramp)
+(require 'eww)
 
 ;;;;lib+
 

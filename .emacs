@@ -2,24 +2,16 @@
 
 ;;;;bootstrap straight.el
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(setq use-straight-package t)
+(straight-bootstrap)
 
 ;;;;startup
 
 (add-hook 'after-init-hook '(lambda()
                               (kill-buffer "*scratch*")
                               (eshell)))
+
+;; TODO - replace xinitrc
 
 ;;;;lib
 
@@ -106,7 +98,7 @@
         "CXXFLAGS=-O2 -pipe"
         "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
 
-;;;;binds
+;;;;bind-key
 
 ;; unbind annoyances
 (global-unset-key (kbd "C-z"))
@@ -125,9 +117,6 @@
 (bind-key* "<f5>" 'compile)
 (bind-key* "C-t" 'eshell)
 (bind-key* "C-o" 'crux-smart-open-line)
-(bind-key* "C-c ku" (lambda()(interactive)(toor)(keychain-unlock)))
-(bind-key* "C-c kl" (lambda()(interactive)(toor)(keychain-lock)))
-(bind-key* "C-c kk" 'kiss)
 (bind-key* "C-c g" 'magit-status)
 (bind-key* "C-c p" 'projectile-command-map)
 (bind-key* "C-c f" 'flycheck-mode)
@@ -138,17 +127,13 @@
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-x ;" 'comment-line)
+(bind-key* "C-x ;" 'comment-line)
 
 ;;;;theme
 
 (menu-bar-mode -1)
 
-(global-font-lock-mode 1)
-
-(defun new-frame-theme ()
-  (cl-loop for face in
-           '(mode-line-inactive mode-line)
-           do (set-face-attribute face nil :foreground nil :background nil)))
+(global-font-lock-mode -1) ;; ++ launch emacs --daemon --color=never
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -227,44 +212,16 @@
     (insert-file-contents FILE)
     (split-string (buffer-string) delim t)))
 
-(defun spacemacs/alternate-buffer (&optional window)
-  "Switch back and forth between current and last buffer in the
-current window."
-  (interactive)
-  (let ((current-buffer (window-buffer window))
-        (buffer-predicate
-         (frame-parameter (window-frame window) 'buffer-predicate)))
-    ;; switch to first buffer previously shown in this window that matches
-    ;; frame-parameter `buffer-predicate'
-    (switch-to-buffer
-     (or (cl-find-if (lambda (buffer)
-                       (and (not (eq buffer current-buffer))
-                            (or (null buffer-predicate)
-                                (funcall buffer-predicate buffer))))
-                     (mapcar #'car (window-prev-buffers window)))
-         ;; `other-buffer' honors `buffer-predicate' so no need to filter
-         (other-buffer current-buffer t)))))
-
-(defun spacemacs/alternate-window ()
-  "Switch back and forth between current and last window in the
-current frame."
-  (interactive)
-  (let (;; switch to first window previously shown in this frame
-        (prev-window (get-mru-window nil t t)))
-    ;; Check window was not found successfully
-    (unless prev-window (user-error "Last window not found."))
-    (select-window prev-window)))
-
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
     str))
 
-(defun keychain-unlock ()
+(defun unlock ()
   (interactive)
   (async-shell-command
    "eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906); emacsclient -e '(keychain-refresh-environment)'"))
 
-(defun keychain-lock ()
+(defun lock ()
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
@@ -686,10 +643,10 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xrdb ~/.Xresources
-Esetroot ~/repos/dotfiles/wallpaper/linux2.png
+Esetroot -fit ~/repos/dotfiles/wallpaper/linux2.png
 compton -b --backend glx
 
-pgrep emacs || emacs --daemon
+pgrep emacs || emacs --daemon --color=never
 
 while true # status bar
 do
@@ -697,7 +654,7 @@ xsetroot -name \"$\(/opt/gnu/coreutils/bin/date +\"%F %R\"\)\"
 sleep 60
 done &
 
-st -e emacsclient -t -e \\(eshell\\) -e \\(new-frame-theme\\) &
+st -e emacsclient -t -e \\(eshell\\) &
 
 while true; do dwm; done")
 

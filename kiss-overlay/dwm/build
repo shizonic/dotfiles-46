@@ -1,9 +1,6 @@
 #!/bin/sh -e
 
-for patch in *.diff
-do
-    /opt/gnu/patch/bin/patch -p1 < "$patch"
-done
+#for patch in *.diff; do /opt/gnu/patch/bin/patch -p1 < "$patch"; done
 
 # install POST-patching defconfig to /etc/ incase mine.config.def.h causes build fail
 mkdir -p "$1/etc/kiss/defconfig/dwm"

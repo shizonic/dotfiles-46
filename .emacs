@@ -124,6 +124,7 @@
 (bind-key* "C-c t b" 'buffer-to-termbin)
 (bind-key* "C-c #" 'my-su-edit)
 (bind-key* "C-c $" 'my-switch-to-home)
+(bind-key* "C-c I" 'crux-find-user-init-file)
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-x ;" 'comment-line)
@@ -132,8 +133,8 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-
 (global-font-lock-mode -1) ;; ++ launch emacs --daemon --color=never
+(transient-mark-mode -1)
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -174,7 +175,7 @@
       vc-follow-symlinks t
       tramp-copy-size-limit nil
       dired-auto-revert-buffer t
-      browse-url-browser-function 'browse-url-chromium
+      browse-url-browser-function 'eww-browse-url
       password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 
@@ -659,3 +660,31 @@ st -e emacsclient -t -e \\(eshell\\) &
 while true; do dwm; done")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
+
+;;;;goodies
+
+(defun my-external-browser (url)
+  (start-process-shell-command "chromium" nil (concat "netsurf " url)))
+
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'my-external-browser
+      eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(defvar yt-dl-player "mpv"
+  "Video player used by `eww-open-yt-dl'")
+
+(defun eww-open-yt-dl ()
+  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
+Specify the video player to use by setting the value of `yt-dl-player'"
+  (interactive)
+  (if (executable-find "youtube-dl")
+      (progn
+        (eww-copy-page-url)
+        (start-process-shell-command "youtube-dl" nil
+                                     (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))
+    (progn
+      (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
+      (with-output-to-temp-buffer xbuff
+        (print "Ensure youtube-dl is installed on the system and try again...")))))
+
+(define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)

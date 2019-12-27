@@ -658,7 +658,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xrdb ~/.Xresources
-wal -i ~/repos/dotfiles/wallpaper/256540.jpg
+wal -i ~/repos/dotfiles/wallpaper/pablo.jpg
 compton -b --backend glx
 
 pgrep emacs || emacs --daemon

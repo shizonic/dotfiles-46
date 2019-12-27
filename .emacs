@@ -75,8 +75,7 @@
                                              my-path-inherited
                                              my-path-append)) ":")))":"))
 
-(setq my-path (concat "PATH=" (getenv "PATH")))
-(setq exec-path (split-string (string-trim my-path "PATH=" )  ":"))
+(setq exec-path (split-string (getenv "PATH")  ":"))
 
 (defvar my-sync-root-path nil
   "Keep root's (tramp-)PATH in sync with Emacs environment")

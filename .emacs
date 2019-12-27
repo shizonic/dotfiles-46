@@ -18,7 +18,8 @@
 ;;;;startup
 
 (add-hook 'after-init-hook '(lambda()
-                              (kill-buffer "*scratch*")))
+                              (kill-buffer "*scratch*")
+                              (eshell)))
 
 ;;;;lib
 
@@ -36,6 +37,7 @@
 
 ;;;;pkgs
 
+(straight-use-package 'bind-key)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
@@ -43,7 +45,6 @@
 (straight-use-package 'paredit)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
-(straight-use-package 'rainbow-mode)
 
 ;;;;manual-installed pkgs
 
@@ -54,54 +55,48 @@
 
 ;;;;binds
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c kk") 'kiss)
-(global-set-key (kbd "C-c i") 'erc-freenode-connect)
-(global-set-key (kbd "C-c m") 'gnus)
-(global-set-key (kbd "C-c a") 'abook)
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-c ku") (lambda()(interactive)(toor)(keychain-unlock)))
-(global-set-key (kbd "C-c kl") (lambda()(interactive)(toor)(keychain-lock)))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "<f5>") 'compile)
-(global-set-key (kbd "C-c g") 'magit-status)
-(global-set-key (kbd "C-c p") 'projectile-command-map)
-(global-set-key (kbd "C-c f") 'flycheck-mode)
-(global-set-key (kbd "C-x ;") 'comment-line)
-(global-set-key (kbd "C-c t r") 'region-to-termbin)
-(global-set-key (kbd "C-c t b") 'buffer-to-termbin)
-(global-set-key (kbd "C-c I") 'crux-find-user-init-file)
-(global-set-key (kbd "C-c S") 'my-su-edit)
-(global-set-key (kbd "C-a") 'crux-move-beginning-of-line)
-(global-set-key (kbd "C-c C-k") 'crux-kill-whole-line)
-(global-set-key (kbd "C-o") 'crux-smart-open-line)
-(global-set-key (kbd "C-c C-l") 'crux-duplicate-current-line-or-region)
-(global-set-key (kbd "C-c C-;") 'crux-duplicate-and-comment-current-line-or-region)
-(global-set-key (kbd "M-y") 'browse-kill-ring)
-(global-set-key (kbd "C-t") 'eshell)
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "C-t") 'eshell))
-(with-eval-after-load 'org
-  (define-key org-mode-map (kbd "C-t") 'eshell))
-(global-set-key (kbd "C-c C-t") 'eshell-here)
-(global-set-key (kbd "C-x TAB") 'spacemacs/alternate-buffer)
-(global-set-key (kbd "C-x w") 'spacemacs/alternate-window)
+;; unbind annoyances
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+
+;; minor modes may override:
+(bind-key "C-s" 'isearch-forward-regexp)
+(bind-key "C-r" 'isearch-backward-regexp)
+(bind-key "M-y" 'browse-kill-ring)
+(bind-key "M-/" 'hippie-expand)
+(bind-key "C-a" 'crux-move-beginning-of-line)
+(bind-key "C-x C-b" 'ibuffer)
+
+;; minor modes may not override:
+(bind-key* "<f5>" 'compile)
+(bind-key* "C-t" 'eshell)
+(bind-key* "C-o" 'crux-smart-open-line)
+(bind-key* "C-c ku" (lambda()(interactive)(toor)(keychain-unlock)))
+(bind-key* "C-c kl" (lambda()(interactive)(toor)(keychain-lock)))
+(bind-key* "C-c kk" 'kiss)
+(bind-key* "C-c g" 'magit-status)
+(bind-key* "C-c p" 'projectile-command-map)
+(bind-key* "C-c f" 'flycheck-mode)
+(bind-key* "C-c t r" 'region-to-termbin)
+(bind-key* "C-c t b" 'buffer-to-termbin)
+(bind-key* "C-c s" 'my-su-edit)
+(bind-key* "C-c C-k" 'crux-kill-whole-line)
+(bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
+(bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
+(bind-key* "C-c i" 'erc-freenode-connect)
+(bind-key* "C-c m" 'gnus)
+(bind-key* "C-c a" 'abook)
 
 ;;;;theme
 
-
-;; (add-hook 'prog-mode-hook (lambda ()
-;; (font-lock-mode 1)))
-
 (menu-bar-mode -1)
 
+(global-font-lock-mode 1)
+
 (defun new-frame-theme ()
-  "use M-x list-faces-display"
-  (interactive)
   (cl-loop for face in
-           '(mode-line-inactive mode-line default) do
-           (set-face-attribute face nil :foreground nil :background nil)))
+           '(mode-line-inactive mode-line)
+           do (set-face-attribute face nil :foreground nil :background nil)))
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -129,7 +124,6 @@
       debug-on-error nil
       apropos-do-all t
       require-final-newline t
-      visible-bell t
       load-prefer-newer t
       ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
@@ -138,22 +132,26 @@
       ido-use-filename-at-point 'guess
       ido-create-new-buffer 'always
       ido-auto-merge-work-directories-length -1
-      visible-bell nil
       tab-always-indent 'complete
       tramp-default-method "ssh"
       vc-follow-symlinks t
       tramp-copy-size-limit nil
-      save-interprogram-paste-before-kill t
       dired-auto-revert-buffer t
-      max-mini-window-height nil)
+      browse-url-browser-function 'browse-url-chromium
+      password-cache-expiry nil
+      epa-pinentry-mode 'loopback)
 
-(ido-mode t)
+(custom-set-variables '(epg-gpg-program  "/bin/gpg2"))
 
-(show-paren-mode 1)
+(fset 'yes-or-no-p 'y-or-n-p)
 
 (setq-default indent-tabs-mode nil
               tab-width 8
               fill-column 80)
+
+(ido-mode t)
+
+(show-paren-mode 1)
 
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
@@ -168,17 +166,11 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
-(fset 'yes-or-no-p 'y-or-n-p)
-
 (winner-mode 1)
-
-(setq browse-url-browser-function 'browse-url-chromium)
 
 ;;;;functions
 
 (defun split-file (FILE delim)
-  ;; e.g. (split-file-by-delim "~/.bashrc" "\n")
-  ;; note: useful when used also with subr-x's join-string...
   (with-temp-buffer
     (insert-file-contents FILE)
     (split-string (buffer-string) delim t)))
@@ -210,12 +202,6 @@ current frame."
     ;; Check window was not found successfully
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
-
-;;;;gpg/ssh agents
-
-(setq password-cache-expiry nil
-      epa-pinentry-mode 'loopback)
-(custom-set-variables '(epg-gpg-program  "/bin/gpg2"))
 
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
@@ -318,28 +304,14 @@ current frame."
   (eshell-send-input))
 
 (defun eshell/.. (&optional counter)
-  (defun up ()
-    (insert "cd ..")
-    (eshell-send-input))
   (if (numberp counter)
       (while (> counter 0)
-        (up)
+        (insert "cd ..")
+        (eshell-send-input)
         (setq counter (1- counter)))
-    (up)))
-
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
-current buffer's file. The eshell is renamed to match that
-directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (name (car (last (split-string parent "/" t)))))
-    (eshell "new")
-    (insert "ls")
-    (eshell-send-input)
-    (rename-buffer (concat "*eshell: " name "*"))))
+    (progn
+      (insert "cd ..")
+      (eshell-send-input))))
 
 ;;;;programming
 
@@ -391,9 +363,6 @@ directory to make multiple eshell windows easier."
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-(global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "<M-tab>") 'hippie-expand)
-(global-set-key (kbd "<C-tab>") 'hippie-expand)
 (add-hook 'eshell-mode-hook '(lambda ()
                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
@@ -689,8 +658,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xrdb ~/.Xresources
-#Esetroot -fit  ~/repos/dotfiles/wallpaper/linux.png
-wal -i ~/repos/dotfiles/wallpaper/081801225.jpg
+wal -i ~/repos/dotfiles/wallpaper/256540.jpg
 compton -b --backend glx
 
 pgrep emacs || emacs --daemon

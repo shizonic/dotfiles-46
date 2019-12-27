@@ -585,12 +585,45 @@ Xft.hintstyle: hintslight
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-!dwm.normbordercolor:
-!dwm.normbgcolor:
-!dwm.normfgcolor:
-!dwm.selbordercolor:
-!dwm.selbgcolor:
-!dwm.selfgcolor:")
+*color0: #2C301E
+*.color0: #2C301E
+*color1: #616E48
+*.color1: #616E48
+*color2: #8B734D
+*.color2: #8B734D
+*color3: #70863A
+*.color3: #70863A
+*color4: #758B4E
+*.color4: #758B4E
+*color5: #A4A34B
+*.color5: #A4A34B
+*color6: #92A264
+*.color6: #92A264
+*color7: #B5BE9F
+*.color7: #B5BE9F
+*color8: #757575
+*.color8: #757575
+*color9: #616E48
+*.color9: #616E48
+*color10: #8B734D
+*.color10: #8B734D
+*color11: #70863A
+*.color11: #70863A
+*color12: #758B4E
+*.color12: #758B4E
+*color13: #A4A34B
+*.color13: #A4A34B
+*color14: #92A264
+*.color14: #92A264
+*color15: #B5BE9F
+*.color15: #B5BE9F
+*color66: #2C301E
+dwm.normbgcolor: #616E48
+dwm.normbordercolor: #616E48
+dwm.selbgcolor: #4a6741
+dwm.selbordercolor: #4a6741
+dwm.normfgcolor: #FFFFFF
+dwm.selfgcolor: #FFFFFF")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 

@@ -11,8 +11,6 @@
                               (kill-buffer "*scratch*")
                               (eshell)))
 
-;; TODO - replace xinitrc
-
 ;;;;lib
 
 (require 'subr-x)            ;Extra Lisp functions
@@ -83,7 +81,6 @@
 (defvar my-sync-root-path nil
   "Keep root's (tramp-)PATH in sync with Emacs environment")
 
-;; use local regular user's path for root's path?
 (when (bound-and-true-p my-sync-root-path)
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
@@ -134,8 +131,7 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(global-font-lock-mode -1) ;; ++ launch emacs --daemon --color=never
-(transient-mark-mode -1)
+(add-hook 'prog-mode-hook (lambda () (font-lock-mode -1)))
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT

@@ -66,6 +66,7 @@
 (bind-key "M-/" 'hippie-expand)
 (bind-key "C-a" 'crux-move-beginning-of-line)
 (bind-key "C-x C-b" 'ibuffer)
+(bind-key "C-c C-k" 'crux-kill-whole-line)
 
 ;; minor modes may not override:
 (bind-key* "<f5>" 'compile)
@@ -80,9 +81,9 @@
 (bind-key* "C-c t r" 'region-to-termbin)
 (bind-key* "C-c t b" 'buffer-to-termbin)
 (bind-key* "C-c s" 'my-su-edit)
-(bind-key* "C-c C-k" 'crux-kill-whole-line)
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
+(bind-key* "C-x ;" 'comment-line)
 (bind-key* "C-c i" 'erc-freenode-connect)
 (bind-key* "C-c m" 'gnus)
 (bind-key* "C-c a" 'abook)

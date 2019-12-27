@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;;;bootstrap
+;;;;bootstrap straight.el
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -26,6 +26,7 @@
 (require 'subr-x)            ;Extra Lisp functions
 (require 'seq)               ;Sequence manipulation functions
 (require 'cl-lib)            ;Common Lisp extensions
+(require 'tramp)
 
 ;;;;lib+
 
@@ -52,6 +53,58 @@
 (require 'keychain-environment)
 (require 'browse-kill-ring)
 (require 'crux)
+
+;;;;ENV/PATH
+
+(setenv "PAGER" "cat")
+(setenv "EDITOR" "emacsclient -c")
+(setenv "VISUAL" (getenv "EDITOR"))
+
+(setq my-path-insert (concat
+                      "/home/" user-login-name "/bin:"
+                      "/home/" user-login-name "/.local/bin:"
+                      "/opt/awk/bin:"
+                      "/opt/gnu/coreutils/bin:"
+                      "/opt/gnu/findutils/bin:"
+                      "/opt/gnu/diffutils/bin:"
+                      "/opt/gnu/gawk/bin:"
+                      "/opt/gnu/grep/bin:"
+                      "/opt/gnu/patch/bin:"))
+
+(setq my-path-append (concat ":/usr/lib/emacs/" emacs-version "/x86_64-pc-linux-gnu"))
+
+(setq my-path-inherited (getenv "PATH"))
+
+(setenv "PATH"
+        (string-join
+         (setq my-path
+               (delete-dups (split-string
+                             (setenv "PATH" (concat
+                                             my-path-insert
+                                             my-path-inherited
+                                             my-path-append)) ":")))":"))
+
+(setq my-path (concat "PATH=" (getenv "PATH")))
+(setq exec-path (split-string (string-trim my-path "PATH=" )  ":"))
+
+(defvar my-sync-root-path nil
+  "Keep root's (tramp-)PATH in sync with Emacs environment")
+
+;; use local regular user's path for root's path?
+(when (bound-and-true-p my-sync-root-path)
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
+;; define root's env
+(setq tramp-remote-process-environment
+      '("ENV=''"
+        "TMOUT=0"
+        "LC_CTYPE=''"
+        "EDITOR=ed"
+        "PAGER=cat"
+        "MAKEFLAGS=j5"
+        "CFLAGS=-O2 -pipe"
+        "CXXFLAGS=-O2 -pipe"
+        "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
 
 ;;;;binds
 
@@ -80,13 +133,11 @@
 (bind-key* "C-c f" 'flycheck-mode)
 (bind-key* "C-c t r" 'region-to-termbin)
 (bind-key* "C-c t b" 'buffer-to-termbin)
-(bind-key* "C-c s" 'my-su-edit)
+(bind-key* "C-c #" 'my-su-edit)
+(bind-key* "C-c $" 'my-switch-to-home)
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-x ;" 'comment-line)
-(bind-key* "C-c i" 'erc-freenode-connect)
-(bind-key* "C-c m" 'gnus)
-(bind-key* "C-c a" 'abook)
 
 ;;;;theme
 
@@ -257,6 +308,11 @@ current frame."
           (progn
             (insert (concat "cd /su::"default-directory))
             (eshell-send-input))))))
+
+(defun my-switch-to-home ()
+  (interactive)
+  (cd "~/")
+  (dired "."))
 
 (defun my-su-edit ()
   "WE DON'T NEED SUDO, we have su!"
@@ -583,71 +639,9 @@ Xft.antialias: 1
 Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
-Xft.lcdfilter: lcddefault
-
-*color0: #2C301E
-*.color0: #2C301E
-*color1: #616E48
-*.color1: #616E48
-*color2: #8B734D
-*.color2: #8B734D
-*color3: #70863A
-*.color3: #70863A
-*color4: #758B4E
-*.color4: #758B4E
-*color5: #A4A34B
-*.color5: #A4A34B
-*color6: #92A264
-*.color6: #92A264
-*color7: #B5BE9F
-*.color7: #B5BE9F
-*color8: #757575
-*.color8: #757575
-*color9: #616E48
-*.color9: #616E48
-*color10: #8B734D
-*.color10: #8B734D
-*color11: #70863A
-*.color11: #70863A
-*color12: #758B4E
-*.color12: #758B4E
-*color13: #A4A34B
-*.color13: #A4A34B
-*color14: #92A264
-*.color14: #92A264
-*color15: #B5BE9F
-*.color15: #B5BE9F
-*color66: #2C301E
-dwm.normbgcolor: #616E48
-dwm.normbordercolor: #616E48
-dwm.selbgcolor: #4a6741
-dwm.selbordercolor: #4a6741
-dwm.normfgcolor: #FFFFFF
-dwm.selfgcolor: #FFFFFF")
+Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
-
-  ;; minimal .profile for /root ... though i mostly control the env using Emacs
-  (setq root-dot-profile "export CFLAGS=\"-O2 -pipe\"
-export CXXFLAGS=\"-O2 -pipe\"
-export MAKEFLAGS=\"-j$(nproc)\"")
-  (f-write-text root-dot-profile 'utf-8
-                (concat "/su:root@"system-name":/root/.profile"))
-
-  ;; .profile for ~/
-  (setq dotfiles-profile "PATH=/opt/gnu/coreutils/bin:/opt/gnu/findutils/bin:/opt/gnu/diffutils/bin:/opt/gnu/gawk/bin:/opt/gnu/grep/bin:/opt/gnu/patch/bin:/opt/awk/bin:/home/adam/bin:/bin:/usr/bin:$PATH
-
-EDITOR=\"emacsclient -t\"
-VISUAL=$EDITOR
-PAGER=cat
-
-. \"$HOME/.nix-profile/etc/profile.d/nix.sh\"
-export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH # https://github.com/NixOS/nix/issues/2033
-
-echo \"start X?\"
-read -r && \[ -z \"$DISPLAY\" ] && sx")
-
-  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
 
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com
@@ -692,7 +686,7 @@ xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
 
 xrdb ~/.Xresources
-wal -i ~/repos/dotfiles/wallpaper/pablo.jpg
+Esetroot ~/repos/dotfiles/wallpaper/linux2.png
 compton -b --backend glx
 
 pgrep emacs || emacs --daemon

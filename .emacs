@@ -158,8 +158,9 @@
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-x ;" 'comment-line)
-(bind-key* "M-p" 'spacemacs/alternate-buffer)
-(bind-key* "C-M-w" 'spacemacs/alternate-window)
+(bind-key* "M-o" 'spacemacs/alternate-buffer)
+(bind-key* "C-M-o" 'spacemacs/alternate-window)
+(bind-key* "M-RET" 'other-window)
 (bind-key* "M-1" 'delete-other-windows)
 (bind-key* "M-2" 'split-window-below)
 (bind-key* "M-3" 'split-window-right)
@@ -167,7 +168,6 @@
 (bind-key* "M--" 'bury-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "M-/" 'hippie-expand)
-
 
 ;;;;theme
 
@@ -359,7 +359,7 @@ current frame."
   (when (buffer-file-name)
     (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
-(defun kiss ()
+(defun ekiss ()
   "front-end for getkiss.org linux package manager"
   (interactive)
   (with-temp-buffer

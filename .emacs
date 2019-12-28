@@ -28,33 +28,20 @@
 (defun eshell/startx ()
   (start-process "startx" nil "startx"))
 
-;; echo ls | TERM=smart emacsclient -e \(\)
-
 (defun eshell/xinitrc ()
   (while (not (getenv "DISPLAY"))
     (sleep-for 1))
   (start-process "xset" nil "xset" "+dpms")
   (start-process "xset" nil "xset" "b" "off")
   (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
-  (start-process "xset" nil "xset" "r" "rate" "200" "60")
+  (start-process "xset" nil "xset" "r" "rate" "175" "50")
   (start-process "xrdb" nil "xrdb" "~/.Xresources")
   (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
-  (start-process "compton" nil "compton" "--backend" "glx" "-b"))
+  (start-process "compton" nil "compton" "--backend" "glx"))
 
 (defun eshell/sx ()
   (insert "startx && xinitrc")
   (eshell-send-input))
-
-(setq internal-screen "LVDS1"
-      external-screen "VGA1")
-
-;; if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
-;; touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
-;; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
-;; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
-
-;; [ -d "$HOME/Pictures/screenshots" ] || mkdir -p ~/Pictures/screenshots
-;; import -window root "$HOME/Pictures/screenshots/scrot-$(date +%N).png"
 
 ;;;;lib
 
@@ -713,24 +700,9 @@ tscale=oversample")
   (make-directory "~/.config/mpv" t)
   (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")
 
-  (setq dotfiles-xinitrc "#!/bin/sh
-
-internal=LVDS1
-external=VGA1
-if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
-
-touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
-xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
-xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
-
-while true # status bar
-do
-xsetroot -name \"$\(/opt/gnu/coreutils/bin/date +\"%F %R\"\)\"
-sleep 60
-done &
-
+  (setq dotfiles-xinitrc "
 st -e emacsclient -t -e \\(eshell\\) &
-while true; do dwm; done")
+exec dwm")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
 

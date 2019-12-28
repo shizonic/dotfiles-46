@@ -114,7 +114,7 @@
 
 (defun eshell/startx ()
   (setenv "DISPLAY" ":0")
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt7"))
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1"))
 
 (defun eshell/xinitrc ()
   (start-process "xset" nil "xset" "+dpms")

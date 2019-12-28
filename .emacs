@@ -54,15 +54,6 @@
 
 ;;;;$ chsh -s /bin/emacs
 
-(defun make-process-sync (&rest args)
-  (let ((proc (apply 'make-process args)))
-    (when proc
-      (while (not (memq (process-status proc) '(exit failed signal)))
-        (sleep-for 0.1))
-      (process-exit-status proc))))
-
-
-
 (add-hook 'after-init-hook '(lambda()
                               (when (not (server-running-p))
                                 (progn

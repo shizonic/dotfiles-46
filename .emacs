@@ -56,9 +56,11 @@
 
 (add-hook 'after-init-hook '(lambda()
                               (when (not (server-running-p))
-                                (server-start))
-                              (kill-buffer "*scratch*")
-                              (eshell)))
+                                (progn
+                                  (server-start)
+                                  (eshell)
+                                  (insert "startx && xinitrc")
+                                  (eshell-send-input)))))
 
 (defun eshell/startx ()
   (setenv "DISPLAY" ":0")
@@ -72,8 +74,8 @@
   (start-process "xrdb" nil "xrdb" "~/.Xresources")
   (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
   ;; (start-process "emacsclient" nil "emacsclient" "-c" "-e" "\(eshell\)") ;; if Exwm
-  (start-process "dwm" nil "dwm")
-  (start-process "compton" nil "compton" "--backend" "glx"))
+  (start-process "compton" nil "compton" "--backend" "glx")
+  (start-process "dwm" nil "dwm"))
 
 (defun eshell/sx ()
   (insert "startx && xinitrc")

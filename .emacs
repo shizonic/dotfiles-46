@@ -71,8 +71,9 @@
   (start-process "xset" nil "xset" "r" "rate" "175" "50")
   (start-process "xrdb" nil "xrdb" "~/.Xresources")
   (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
-  (start-process "compton" nil "compton" "--backend" "glx")
-  (start-process "dwm" nil "dwm"))
+  ;; (start-process "emacsclient" nil "emacsclient" "-c" "-e" "\(eshell\)") ;; if Exwm
+  (start-process "dwm" nil "dwm")
+  (start-process "compton" nil "compton" "--backend" "glx"))
 
 (defun eshell/sx ()
   (insert "startx && xinitrc")

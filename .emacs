@@ -8,6 +8,8 @@
 ;;;;startup
 
 (add-hook 'after-init-hook '(lambda()
+                              (when (not (server-running-p))
+                                (server-start))
                               (kill-buffer "*scratch*")
                               (eshell)))
 
@@ -63,7 +65,7 @@
                       "/opt/gnu/grep/bin:"
                       "/opt/gnu/patch/bin:"))
 
-(setq my-path-append (concat ":/usr/lib/emacs/" emacs-version "/x86_64-pc-linux-gnu"))
+(setq my-path-append (concat ":/usr/lib/emacs/" exec-directory))
 
 (setq my-path-inherited (getenv "PATH"))
 

@@ -54,30 +54,40 @@
 
 ;;;;$ chsh -s /bin/emacs
 
+(defun make-process-sync (&rest args)
+  (let ((proc (apply 'make-process args)))
+    (when proc
+      (while (not (memq (process-status proc) '(exit failed signal)))
+        (sleep-for 0.1))
+      (process-exit-status proc))))
+
+
+
 (add-hook 'after-init-hook '(lambda()
                               (when (not (server-running-p))
                                 (progn
                                   (server-start)
-                                  (eshell)
-                                  (insert "startx && xinitrc")
-                                  (eshell-send-input)))))
+                                  (sx)))))
 
 (defun eshell/startx ()
   (setenv "DISPLAY" ":0")
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1"))
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1")
+  (sleep-for 1))
 
 (defun eshell/xinitrc ()
-  (start-process "xset" nil "xset" "+dpms")
-  (start-process "xset" nil "xset" "b" "off")
-  (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
-  (start-process "xset" nil "xset" "r" "rate" "175" "50")
-  (start-process "xrdb" nil "xrdb" "~/.Xresources")
-  (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
-  ;; (start-process "emacsclient" nil "emacsclient" "-c" "-e" "\(eshell\)") ;; if Exwm
+  (start-process-shell-command
+   "xset" nil "xset +dpms && xset b off && xset dpms 0 0 1860 && xset r rate 175 50")
+  (start-process-shell-command
+   "xrdb" nil (concat "xrdb" " " (getenv "HOME") "/.Xresources"))
+  (start-process-shell-command
+   "Esetroot" nil (concat "Esetroot -fit" " " (getenv "HOME") "/.wallpaper"))
+
   (start-process "compton" nil "compton" "--backend" "glx")
   (start-process "dwm" nil "dwm"))
 
-(defun eshell/sx ()
+(defun sx ()
+  (interactive)
+  (eshell)
   (insert "startx && xinitrc")
   (eshell-send-input))
 
@@ -176,8 +186,16 @@
 
 ;;;;theme
 
-(menu-bar-mode -1)
-(add-hook 'prog-mode-hook (lambda () (font-lock-mode -1)))
+(defun theme-new-frame ()
+  (if (display-graphic-p)
+      (progn                                ;; gui emacsclient -c
+        (menu-bar-mode -1)
+        (tool-bar-mode -1)
+        (scroll-bar-mode -1)
+        (horizontal-scroll-bar-mode -1)
+        (set-frame-font "unifont-12" nil t))
+    (progn                                  ;; terminal emacsclient -t
+      (menu-bar-mode -1))))
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT

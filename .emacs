@@ -4,8 +4,18 @@
 
 ;;;;bootstrap straight.el
 
-(setq use-straight-package t)
-(straight-bootstrap)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;;;;startup
 
@@ -15,17 +25,24 @@
                               (kill-buffer "*scratch*")
                               (eshell)))
 
-(defun eshell/xorg-startup-programs ()
-  (start-process "xset" nil "xset" "+dpms")
-  (start-process "xset" nil "xset" "b" "off")
-  (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
-  (start-process "xset" nil "xset" "r" "rate" "200" "60")
-  (start-process "xrdb" nil "xrdb" "~/.Xresources")
-  (start-process "compton" nil "compton" "--backend" "glx" "-b")
-  (start-process "Esetroot" nil "Esetroot" "-fit" "/home/adam/repos/dotfiles/wallpaper/linux2.png"))
+(defun eshell/startx ()
+  (start-process "startx" nil "startx"))
+
+(defun eshell/xinitrc ()
+  "Run commands synchronously after X has initialized."
+  (while (not (getenv "DISPLAY"))
+    (sleep-for 1))
+  (call-process "xset" nil "xset" "+dpms")
+  (call-process "xset" nil "xset" "b" "off")
+  (call-process "xset" nil "xset" "dpms" "0" "0" "1860")
+  (call-process "xset" nil "xset" "r" "rate" "200" "60")
+  (call-process "xrdb" nil "xrdb" "~/.Xresources")
+  (call-process "compton" nil "compton" "--backend" "glx" "-b")
+  (call-process "Esetroot" nil "Esetroot" "-fit" "~/.wallpaper"))
 
 (defun eshell/sx ()
-  (start-process "startx" nil "startx"))
+  (insert "startx && xinitrc")
+  (eshell-send-input))
 
 (setq internal-screen "LVDS1"
       external-screen "VGA1")
@@ -76,13 +93,7 @@
 ;;;;ENV/PATH
 
 (setq shell-file-name "/bin/sh")
-(setenv "INSIDE_EMACS" emacs-version)
-(setenv "LOGNAME" (user-login-name))
-(setenv "HOME" (concat "/home/" (user-login-name)))
 (setenv "SHELL" "/bin/sh")
-(setenv "TERM" "DUMB")
-(setenv "TERMINFO" "/usr/share/emacs/26.3/etc/")
-(setenv "DISPLAY" ":0")
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "ed")
 (setenv "VISUAL" (getenv "EDITOR"))
@@ -105,12 +116,11 @@
 
 (setenv "PATH"
         (string-join
-         (setq my-path
-               (delete-dups (split-string
-                             (setenv "PATH" (concat
-                                             my-path-insert
-                                             my-path-inherited
-                                             my-path-append)) ":")))":"))
+         (delete-dups (split-string
+                       (setenv "PATH" (concat
+                                       my-path-insert
+                                       my-path-inherited
+                                       my-path-append)) ":"))":"))
 
 (setq exec-path (split-string (getenv "PATH")  ":"))
 
@@ -138,18 +148,16 @@
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 
-;; minor modes may override:
+;; minor modes may override
 (bind-key "C-s" 'isearch-forward-regexp)
 (bind-key "C-r" 'isearch-backward-regexp)
-(bind-key "M-y" 'browse-kill-ring)
-(bind-key "M-/" 'hippie-expand)
 (bind-key "C-a" 'crux-move-beginning-of-line)
-(bind-key "C-x C-b" 'ibuffer)
 (bind-key "C-c C-k" 'crux-kill-whole-line)
 
-;; minor modes may not override:
+;; minor modes may not override (global)
 (bind-key* "<f5>" 'compile)
 (bind-key* "C-t" 'eshell)
+(bind-key* "C-x C-b" 'ibuffer)
 (bind-key* "C-o" 'crux-smart-open-line)
 (bind-key* "C-c g" 'magit-status)
 (bind-key* "C-c p" 'projectile-command-map)
@@ -163,7 +171,15 @@
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-x ;" 'comment-line)
 (bind-key* "M-p" 'spacemacs/alternate-buffer)
-(bind-key* "M-o" 'spacemacs/alternate-window)
+(bind-key* "C-M-w" 'spacemacs/alternate-window)
+(bind-key* "M-1" 'delete-other-windows)
+(bind-key* "M-2" 'split-window-below)
+(bind-key* "M-3" 'split-window-right)
+(bind-key* "M-0" 'delete-window)
+(bind-key* "M--" 'bury-buffer)
+(bind-key* "M-y" 'browse-kill-ring)
+(bind-key* "M-/" 'hippie-expand)
+
 
 ;;;;theme
 

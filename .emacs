@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
+;;;; EMACS OPERATING SYSTEM
+
 ;;;;bootstrap straight.el
 
 (setq use-straight-package t)
@@ -12,6 +14,29 @@
                                 (server-start))
                               (kill-buffer "*scratch*")
                               (eshell)))
+
+(defun eshell/xorg-startup-programs ()
+  (start-process "xset" nil "xset" "+dpms")
+  (start-process "xset" nil "xset" "b" "off")
+  (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
+  (start-process "xset" nil "xset" "r" "rate" "200" "60")
+  (start-process "xrdb" nil "xrdb" "~/.Xresources")
+  (start-process "compton" nil "compton" "--backend" "glx" "-b")
+  (start-process "Esetroot" nil "Esetroot" "-fit" "/home/adam/repos/dotfiles/wallpaper/linux2.png"))
+
+(defun eshell/sx ()
+  (start-process "startx" nil "startx"))
+
+(setq internal-screen "LVDS1"
+      external-screen "VGA1")
+
+;; if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
+;; touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
+;; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
+;; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
+
+;; [ -d "$HOME/Pictures/screenshots" ] || mkdir -p ~/Pictures/screenshots
+;; import -window root "$HOME/Pictures/screenshots/scrot-$(date +%N).png"
 
 ;;;;lib
 
@@ -50,9 +75,19 @@
 
 ;;;;ENV/PATH
 
+(setq shell-file-name "/bin/sh")
+(setenv "INSIDE_EMACS" emacs-version)
+(setenv "LOGNAME" (user-login-name))
+(setenv "HOME" (concat "/home/" (user-login-name)))
+(setenv "SHELL" "/bin/sh")
+(setenv "TERM" "DUMB")
+(setenv "TERMINFO" "/usr/share/emacs/26.3/etc/")
+(setenv "DISPLAY" ":0")
 (setenv "PAGER" "cat")
-(setenv "EDITOR" "emacsclient -c")
+(setenv "EDITOR" "ed")
 (setenv "VISUAL" (getenv "EDITOR"))
+
+(setq my-path-inherited (getenv "PATH")) ;; todo just /etc/profile
 
 (setq my-path-insert (concat
                       "/home/" user-login-name "/bin:"
@@ -63,11 +98,10 @@
                       "/opt/gnu/diffutils/bin:"
                       "/opt/gnu/gawk/bin:"
                       "/opt/gnu/grep/bin:"
-                      "/opt/gnu/patch/bin:"))
+                      "/opt/gnu/patch/bin:"
+                      "/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin"))
 
-(setq my-path-append (concat ":/usr/lib/emacs/" exec-directory))
-
-(setq my-path-inherited (getenv "PATH"))
+(setq my-path-append (concat ":" exec-directory))
 
 (setenv "PATH"
         (string-join
@@ -94,7 +128,7 @@
         "EDITOR=ed"
         "PAGER=cat"
         "MAKEFLAGS=j5"
-        "CFLAGS=-O2 -pipe"
+        "CFLOAGS=-O2 -pipe"
         "CXXFLAGS=-O2 -pipe"
         "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
 
@@ -134,7 +168,7 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(add-hook 'prog-mode-hook (lambda () (font-lock-mode -1)))
+(global-font-lock-mode -1) ;; ++ emacs --color=never
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT
@@ -661,21 +695,10 @@ tscale=oversample")
 internal=LVDS1
 external=VGA1
 if xrandr | grep -q \"$external connected\" ; then  xrandr --output $internal --off --output $external --auto ; fi
-xset +dpms
-xset s 1800
-xset b off
-xset dpms 0 0 1860
-xset r rate 200 60
 
 touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\"
 xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1
 xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4
-
-xrdb ~/.Xresources
-Esetroot -fit ~/repos/dotfiles/wallpaper/linux2.png
-compton -b --backend glx
-
-pgrep emacs || emacs --daemon --color=never
 
 while true # status bar
 do
@@ -684,7 +707,6 @@ sleep 60
 done &
 
 st -e emacsclient -t -e \\(eshell\\) &
-
 while true; do dwm; done")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))

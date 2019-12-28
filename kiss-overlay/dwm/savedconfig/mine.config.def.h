@@ -65,14 +65,15 @@ static const char *emacscmd[]  = { "st", "-e", "emacsclient", "-t", "-e", "(eshe
 static const char *upvol[] = { "amixer", "set", "Master", "5%+",  NULL };
 static const char *downvol[] = { "amixer", "set", "Master", "5%-",  NULL };
 static const char *mutevol[] = { "amixer", "set", "Master", "toggle",  NULL };
-
-static const char *downbright[] = { "/usr/bin/lux", "-s", "5%",  NULL };
-static const char *upbright[] = { "/usr/bin/lux", "-a", "5%", NULL };
+static const char *downbright[] = { "lux", "-s", "5%",  NULL };
+static const char *upbright[] = { "lux", "-a", "5%", NULL };
+static const char *slock[] = { "slock", NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_e, spawn,          {.v = emacscmd } },
+    { MODKEY,                       XK_s, spawn,          {.v = slock } },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

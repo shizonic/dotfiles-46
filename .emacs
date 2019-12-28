@@ -17,32 +17,6 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;;;;startup
-
-(add-hook 'after-init-hook '(lambda()
-                              (when (not (server-running-p))
-                                (server-start))
-                              (kill-buffer "*scratch*")
-                              (eshell)))
-
-(defun eshell/startx ()
-  (start-process "startx" nil "startx"))
-
-(defun eshell/xinitrc ()
-  (while (not (getenv "DISPLAY"))
-    (sleep-for 1))
-  (start-process "xset" nil "xset" "+dpms")
-  (start-process "xset" nil "xset" "b" "off")
-  (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
-  (start-process "xset" nil "xset" "r" "rate" "175" "50")
-  (start-process "xrdb" nil "xrdb" "~/.Xresources")
-  (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
-  (start-process "compton" nil "compton" "--backend" "glx"))
-
-(defun eshell/sx ()
-  (insert "startx && xinitrc")
-  (eshell-send-input))
-
 ;;;;lib
 
 (require 'server)
@@ -112,13 +86,13 @@
 
 (setq exec-path (split-string (getenv "PATH")  ":"))
 
-(defvar my-sync-root-path nil
+(defvar my-sync-root-path nil ;; probably not a good idea
   "Keep root's (tramp-)PATH in sync with Emacs environment")
 
 (when (bound-and-true-p my-sync-root-path)
   (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
 
-;; define root's env
+;; define remote tramp env
 (setq tramp-remote-process-environment
       '("ENV=''"
         "TMOUT=0"
@@ -129,6 +103,32 @@
         "CFLOAGS=-O2 -pipe"
         "CXXFLAGS=-O2 -pipe"
         "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
+
+;;;;$ chsh -s /bin/emacs
+
+(add-hook 'after-init-hook '(lambda()
+                              (when (not (server-running-p))
+                                (server-start))
+                              (kill-buffer "*scratch*")
+                              (eshell)))
+
+(defun eshell/startx ()
+  (setenv "DISPLAY" ":0")
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt7"))
+
+(defun eshell/xinitrc ()
+  (start-process "xset" nil "xset" "+dpms")
+  (start-process "xset" nil "xset" "b" "off")
+  (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
+  (start-process "xset" nil "xset" "r" "rate" "175" "50")
+  (start-process "xrdb" nil "xrdb" "~/.Xresources")
+  (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
+  (start-process "compton" nil "compton" "--backend" "glx")
+  (start-process "dwm" nil "dwm"))
+
+(defun eshell/sx ()
+  (insert "startx && xinitrc")
+  (eshell-send-input))
 
 ;;;;bind-key
 
@@ -172,7 +172,7 @@
 ;;;;theme
 
 (menu-bar-mode -1)
-(global-font-lock-mode -1) ;; ++ emacs --color=never
+(add-hook 'prog-mode-hook (lambda () (font-lock-mode -1)))
 
 (defun simple-mode-line-render (left right)
   "Return a string of `window-width' length containing LEFT, and RIGHT

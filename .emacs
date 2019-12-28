@@ -28,17 +28,18 @@
 (defun eshell/startx ()
   (start-process "startx" nil "startx"))
 
+;; echo ls | TERM=smart emacsclient -e \(\)
+
 (defun eshell/xinitrc ()
-  "Run commands synchronously after X has initialized."
   (while (not (getenv "DISPLAY"))
     (sleep-for 1))
-  (call-process "xset" nil "xset" "+dpms")
-  (call-process "xset" nil "xset" "b" "off")
-  (call-process "xset" nil "xset" "dpms" "0" "0" "1860")
-  (call-process "xset" nil "xset" "r" "rate" "200" "60")
-  (call-process "xrdb" nil "xrdb" "~/.Xresources")
-  (call-process "compton" nil "compton" "--backend" "glx" "-b")
-  (call-process "Esetroot" nil "Esetroot" "-fit" "~/.wallpaper"))
+  (start-process "xset" nil "xset" "+dpms")
+  (start-process "xset" nil "xset" "b" "off")
+  (start-process "xset" nil "xset" "dpms" "0" "0" "1860")
+  (start-process "xset" nil "xset" "r" "rate" "200" "60")
+  (start-process "xrdb" nil "xrdb" "~/.Xresources")
+  (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
+  (start-process "compton" nil "compton" "--backend" "glx" "-b"))
 
 (defun eshell/sx ()
   (insert "startx && xinitrc")
@@ -257,6 +258,12 @@
 (winner-mode 1)
 
 ;;;;functions
+
+(defun scrot ()
+  (interactive)
+  (random t)
+  (start-process "import" nil "import" "-window" "root"
+                 (concat (getenv "HOME") "/scrot" (format "%s" (random)) ".png")))
 
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the

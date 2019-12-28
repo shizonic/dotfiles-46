@@ -1,3 +1,0 @@
-#!/bin/sh
-vt=$(tty) ; vt=${vt#/dev/tty}
-xinit ~/.xinitrc -- /usr/bin/X ":$vt" -nolisten tcp -nolisten local "$@" "vt$vt" -keeptty

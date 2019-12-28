@@ -52,58 +52,6 @@
 (require 'browse-kill-ring)
 (require 'crux)
 
-;;;;ENV/PATH
-
-(setq shell-file-name "/bin/sh")
-(setenv "SHELL" "/bin/sh")
-(setenv "PAGER" "cat")
-(setenv "EDITOR" "ed")
-(setenv "VISUAL" (getenv "EDITOR"))
-
-(setq my-path-inherited (getenv "PATH")) ;; todo just /etc/profile
-
-(setq my-path-insert (concat
-                      "/home/" user-login-name "/bin:"
-                      "/home/" user-login-name "/.local/bin:"
-                      "/opt/awk/bin:"
-                      "/opt/gnu/coreutils/bin:"
-                      "/opt/gnu/findutils/bin:"
-                      "/opt/gnu/diffutils/bin:"
-                      "/opt/gnu/gawk/bin:"
-                      "/opt/gnu/grep/bin:"
-                      "/opt/gnu/patch/bin:"
-                      "/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin:/sbin:/bin"))
-
-(setq my-path-append (concat ":" exec-directory))
-
-(setenv "PATH"
-        (string-join
-         (delete-dups (split-string
-                       (setenv "PATH" (concat
-                                       my-path-insert
-                                       my-path-inherited
-                                       my-path-append)) ":"))":"))
-
-(setq exec-path (split-string (getenv "PATH")  ":"))
-
-(defvar my-sync-root-path nil ;; probably not a good idea
-  "Keep root's (tramp-)PATH in sync with Emacs environment")
-
-(when (bound-and-true-p my-sync-root-path)
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
-
-;; define remote tramp env
-(setq tramp-remote-process-environment
-      '("ENV=''"
-        "TMOUT=0"
-        "LC_CTYPE=''"
-        "EDITOR=ed"
-        "PAGER=cat"
-        "MAKEFLAGS=j5"
-        "CFLOAGS=-O2 -pipe"
-        "CXXFLAGS=-O2 -pipe"
-        "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
-
 ;;;;$ chsh -s /bin/emacs
 
 (add-hook 'after-init-hook '(lambda()
@@ -129,6 +77,60 @@
 (defun eshell/sx ()
   (insert "startx && xinitrc")
   (eshell-send-input))
+
+;;;;ENV/PATH
+
+(setq shell-file-name "/bin/sh")
+(setenv "SHELL" "/bin/sh")
+(setenv "PAGER" "cat")
+(setenv "EDITOR" "ed")
+(setenv "VISUAL" (getenv "EDITOR"))
+
+(setq my-path-inherited (getenv "PATH"))
+
+(setq system-profile-path
+      (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
+
+(setq my-path-insert (concat
+                      "/home/" user-login-name "/bin:"
+                      "/home/" user-login-name "/.local/bin:"
+                      "/opt/awk/bin:"
+                      "/opt/gnu/coreutils/bin:"
+                      "/opt/gnu/findutils/bin:"
+                      "/opt/gnu/diffutils/bin:"
+                      "/opt/gnu/gawk/bin:"
+                      "/opt/gnu/grep/bin:"
+                      "/opt/gnu/patch/bin:"))
+
+(setq my-path-append (concat ":" exec-directory))
+
+(setenv "PATH"
+        (string-join
+         (delete-dups (split-string
+                       (setenv "PATH" (concat
+                                       my-path-insert
+                                       system-profile-path
+                                       my-path-append)) ":"))":"))
+
+(setq exec-path (split-string (getenv "PATH")  ":"))
+
+(defvar my-sync-tramp-path nil
+  "probably not a good idea setting this to t")
+
+(when (bound-and-true-p my-sync-tramp-path)
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
+;; define remote tramp env
+(setq tramp-remote-process-environment
+      '("ENV=''"
+        "TMOUT=0"
+        "LC_CTYPE=''"
+        "EDITOR=ed"
+        "PAGER=cat"
+        "MAKEFLAGS=j5"
+        "CFLOAGS=-O2 -pipe"
+        "CXXFLAGS=-O2 -pipe"
+        "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
 
 ;;;;bind-key
 
@@ -372,7 +374,7 @@ current frame."
     (delete-other-windows)
     (switch-to-buffer "*Async Shell Command*")))
 
-(defun suckless-recompile (x)
+(defun suckless-compile (x)
   (with-temp-buffer
     (cd "/su::")
     (async-shell-command

@@ -69,6 +69,9 @@
 
   (setenv "DISPLAY" ":0")
 
+  (add-hook 'kill-emacs-hook (lambda ()
+                               (start-process-shell-command "pkill" nil "pkill -15 Xorg")))
+
   (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
 
   (async-start

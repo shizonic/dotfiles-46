@@ -77,8 +77,9 @@
                                  (shell-command-to-string "xprop -root")))
        (sleep-for 0.5)))
    (lambda (result)
-     (start-process
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
+     (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
+     (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
+     (start-process "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
 
 ;;;;ENV/PATH
 
@@ -87,6 +88,8 @@
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
+
+(setq my-path-inherited (getenv "PATH"))
 
 (setq system-profile-path
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
@@ -109,6 +112,7 @@
          (delete-dups (split-string
                        (setenv "PATH" (concat
                                        my-path-insert
+                                       my-path-inherited
                                        system-profile-path
                                        my-path-append)) ":"))":"))
 
@@ -162,6 +166,7 @@
 (bind-key* "C-x ;" 'comment-line) ;;term emacs compat.
 
 (bind-key* "<f5>" 'compile)
+(bind-key* "<menu>" 'ido-switch-buffer)
 (bind-key* "C-t" 'eshell)
 (bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
 (bind-key* "C-`" 'spacemacs/alternate-window)
@@ -174,6 +179,7 @@
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "M-/" 'hippie-expand)
 
+(exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)
 (exwm-input-set-key (kbd "C-t") 'eshell)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
@@ -706,15 +712,24 @@ allow-emacs-pinentry
 allow-loopback-pinentry
 pinentry-program /home/adam/bin/pinentry-emacs")
 
-  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf"))
+  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
+
+  (setq dotfiles-xresources "Xft.dpi: 96
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault")
+
+  (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources"))
 
 ;;;;goodies
 
-(defun my-external-browser (url)
-  (start-process-shell-command "chromium" nil (concat "netsurf " url)))
-
 (setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'my-external-browser
+      shr-external-browser
+      (lambda (url)
+        (start-process-shell-command "chromium" nil (concat "chromium " url)))
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
 (defvar yt-dl-player "mpv"

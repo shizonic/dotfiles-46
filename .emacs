@@ -37,6 +37,9 @@
 
 ;;;;pkgs
 
+(straight-use-package 'exwm)
+(straight-use-package 'desktop-environment)
+(straight-use-package 'nofrils-acme-theme)
 (straight-use-package 'bind-key)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
@@ -76,10 +79,13 @@
    (lambda (result)
      (start-process "xset" nil "xset" "+dpms" "dpms" "0" "0" "1860" "b" "off" "r" "rate" "175" "50")
      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME")"/.Xresources"))
-     (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
-     (start-process "compton" nil "compton" "--backend" "glx")
-     (start-process "st" nil "st" "-e" "emacsclient" "-t" "-e" "(eshell)")
-     (start-process "dwm" nil "dwm"))))
+     ;; (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
+     ;; (start-process "compton" nil "compton" "--backend" "glx")
+     ;; (start-process "st" nil "st" "-e" "emacsclient" "-t" "-e" "(eshell)")
+     ;; (start-process "dwm" nil "dwm")
+     (start-process
+      "emacsclient" nil
+      "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
 
 ;;;;ENV/PATH
 
@@ -149,8 +155,6 @@
 (bind-key "C-c C-k" 'crux-kill-whole-line)
 
 ;; minor modes may not override (global)
-(bind-key* "<f5>" 'compile)
-(bind-key* "C-t" 'eshell)
 (bind-key* "C-x C-b" 'ibuffer)
 (bind-key* "C-o" 'crux-smart-open-line)
 (bind-key* "C-c g" 'magit-status)
@@ -162,18 +166,33 @@
 (bind-key* "C-c $" 'my-switch-to-home)
 (bind-key* "C-c I" 'crux-find-user-init-file)
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
-(bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
-(bind-key* "C-x ;" 'comment-line)
-(bind-key* "M-o" 'spacemacs/alternate-buffer)
-(bind-key* "C-M-o" 'spacemacs/alternate-window)
-(bind-key* "M-RET" 'other-window)
-(bind-key* "M-1" 'delete-other-windows)
-(bind-key* "M-2" 'split-window-below)
-(bind-key* "M-3" 'split-window-right)
-(bind-key* "M-0" 'delete-window)
-(bind-key* "M--" 'bury-buffer)
+(bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
+(bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region) ;;term emacs compat.
+(bind-key* "C-x ;" 'comment-line) ;;term emacs compat.
+
+(bind-key* "<f5>" 'compile)
+(bind-key* "C-t" 'eshell)
+(bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
+(bind-key* "C-`" 'spacemacs/alternate-window)
+(bind-key* "<C-return>" 'other-window)
+(bind-key* "C-1" 'delete-other-windows)
+(bind-key* "C-2" 'split-window-below)
+(bind-key* "C-3" 'split-window-right)
+(bind-key* "C-0" 'delete-window)
+(bind-key* "C--" 'bury-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "M-/" 'hippie-expand)
+
+(exwm-input-set-key (kbd "C-t") 'eshell)
+(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
+(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
+(exwm-input-set-key (kbd "C-`") 'spacemacs/alternate-window)
+(exwm-input-set-key (kbd "C-1") 'delete-other-windows)
+(exwm-input-set-key (kbd "C-2") 'split-window-below)
+(exwm-input-set-key (kbd "C-3") 'split-window-right)
+(exwm-input-set-key (kbd "C-0") 'delete-window)
+(exwm-input-set-key (kbd "C--") 'bury-buffer)
+(define-key key-translation-map (kbd "M-!") (kbd "s-&"))
 
 ;;;;theme
 
@@ -185,13 +204,12 @@
   (interactive)
   (if (display-graphic-p)
       (progn                                ;; gui emacsclient -c
-        (straight-use-package 'sexy-monochrome-theme)
-        (load-theme 'sexy-monochrome t)
+        (load-theme 'nofrils-sepia t)
         (menu-bar-mode -1)
         (tool-bar-mode -1)
         (scroll-bar-mode -1)
         (horizontal-scroll-bar-mode -1)
-        (set-frame-font "unifont-12" nil t))
+        (set-frame-font "Monospace-24" nil t))
     (progn                                  ;; terminal emacsclient -t
       (menu-bar-mode -1))))
 
@@ -754,3 +772,62 @@ Specify the video player to use by setting the value of `yt-dl-player'"
         (print "Ensure youtube-dl is installed on the system and try again...")))))
 
 (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)
+
+;;;;anti-desktop environment
+
+(require 'exwm-config)
+
+;; overwrite default configuration
+(defun exwm-config-default ()
+  (setq exwm-input-global-keys
+        `(([?\s-w] . exwm-workspace-switch)
+          ,@(mapcar (lambda (i)
+                      `(,(kbd (format "<s-f%d>" (1+ i))) .
+                        (lambda ()
+                          (interactive)
+                          (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9))
+          ([?\s-&] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))))
+
+  (unless (get 'exwm-input-simulation-keys 'saved-value)
+    (setq exwm-input-simulation-keys
+          '(
+            ([?\C-b] . [left])
+            ([?\M-b] . [C-left])
+            ([?\C-f] . [right])
+            ([?\M-f] . [C-right])
+            ([?\C-p] . [up])
+            ([?\C-n] . [down])
+            ([?\C-a] . [home])
+            ([?\C-e] . [end])
+            ([?\M-v] . [prior])
+            ([?\C-v] . [next])
+            ([?\C-d] . [delete])
+            ([?\C-k] . [S-end delete])
+            ([?\C-w] . [?\C-x])
+            ([?\M-w] . [?\C-c])
+            ([?\C-y] . [?\C-v])
+            ([?\C-s] . [?\C-f])))))
+
+;; Set the initial workspace number.
+(unless (get 'exwm-workspace-number 'saved-value)
+  (setq exwm-workspace-number 1))
+
+;; Make class name the buffer name
+(add-hook 'exwm-update-class-hook
+          (lambda ()
+            (exwm-workspace-rename-buffer exwm-class-name)))
+
+;; do it!
+(exwm-config-default)
+(exwm-enable)
+(exwm-config-ido)
+
+;; desktop-environment
+(desktop-environment-mode 1)
+(setq desktop-environment-brightness-set-command "lux %s"
+      desktop-environment-brightness-normal-increment "-a 5%"
+      desktop-environment-brightness-normal-decrement "-s 5%"
+      desktop-environment-brightness-get-command "lux -G")

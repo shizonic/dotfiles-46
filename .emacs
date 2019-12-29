@@ -78,8 +78,7 @@
        (sleep-for 0.5)))
    (lambda (result)
      (start-process
-      "emacsclient" nil
-      "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
+      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
 
 ;;;;ENV/PATH
 
@@ -679,16 +678,9 @@ current frame."
 ;;;;dotfiles
 
 (defun dotfiles-install ()
-  "Yes, I know this is not sane, but please just let me be"
   (interactive)
+
   (require 'f)
-  (progn
-    ;; Keep magit happy by using gnu diffutils instead of busybox
-    ;; Seems magit/git is not respecting my PATH and hardcoded to use /bin/diff ...
-    (suroot)
-    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/diffutils/bin/* /usr/bin")
-    (start-process-shell-command "ln" nil "ln -sf /opt/gnu/patch/bin/* /usr/bin")
-    (toor))
 
   (start-process-shell-command
    "ln" nil
@@ -698,16 +690,6 @@ current frame."
 
   (make-directory "~/bin" t)
   (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
-
-  (setq dotfiles-xresources "Xft.dpi: 96
-Xft.autohint: 0
-Xft.antialias: 1
-Xft.hinting: true
-Xft.hintstyle: hintslight
-Xft.rgba: rgb
-Xft.lcdfilter: lcddefault")
-
-  (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com
@@ -724,23 +706,7 @@ allow-emacs-pinentry
 allow-loopback-pinentry
 pinentry-program /home/adam/bin/pinentry-emacs")
 
-  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
-
-  (setq dotfiles-config-mpv "profile=gpu-hq
-scale=ewa_lanczossharp
-cscale=ewa_lanczossharp
-video-sync=display-resample
-interpolation
-tscale=oversample")
-
-  (make-directory "~/.config/mpv" t)
-  (f-write-text dotfiles-config-mpv 'utf-8 "~/.config/mpv/mpv.conf")
-
-  (setq dotfiles-xinitrc "
-st -e emacsclient -t -e \\(eshell\\) &
-exec dwm")
-
-  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc"))
+  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf"))
 
 ;;;;goodies
 

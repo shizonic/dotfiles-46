@@ -33,6 +33,7 @@
 (straight-use-package 's)    ;String manipulation library
 (straight-use-package 'f)    ;Modern API for working with files and directories
 (straight-use-package 'ht)   ;The missing hash table library
+(straight-use-package 'async);Simple library for asynchronous processing in Emacs
 
 ;;;;pkgs
 
@@ -58,7 +59,8 @@
                               (when (not (server-running-p))
                                 (progn
                                   (server-start)
-                                  (sx)))))
+                                  (sx)))
+                              (eshell)))
 
 (defun eshell/startx ()
   (setenv "DISPLAY" ":0")
@@ -79,7 +81,7 @@
 (defun sx ()
   (interactive)
   (eshell)
-  (insert "startx && xinitrc")
+  (insert "(eshell/startx) && (eshell/xinitrc)")
   (eshell-send-input))
 
 ;;;;ENV/PATH
@@ -177,9 +179,16 @@
 
 ;;;;theme
 
+(defadvice load-theme (before disable-themes-first activate)
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
+
 (defun theme-new-frame ()
+  (interactive)
   (if (display-graphic-p)
       (progn                                ;; gui emacsclient -c
+        (straight-use-package 'sexy-monochrome-theme)
+        (load-theme 'sexy-monochrome t)
         (menu-bar-mode -1)
         (tool-bar-mode -1)
         (scroll-bar-mode -1)

@@ -192,8 +192,10 @@
 (exwm-input-set-key (kbd "C--") 'bury-buffer)
 (define-key key-translation-map (kbd "M-!") (kbd "s-&"))
 
-;(exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-up)
-;(exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-down)
+(exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-increment)
+(exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-decrement)
+(exwm-input-set-key (kbd "<s-right>") 'desktop-environment-brightness-increment)
+(exwm-input-set-key (kbd "<s-left>") 'desktop-environment-brightness-decrement)
 
 ;;;;theme
 

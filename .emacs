@@ -61,7 +61,7 @@
                                (sx))))
 
 (defun sx ()
-  "A simple elisp replacement for startx/xinit scripts"
+  "A simple elisp replacement for startx/xinit scripts. Requires subr-x and async."
   (interactive)
 
   (setenv "DISPLAY" ":0")
@@ -78,7 +78,7 @@
      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME")"/.Xresources"))
      (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
      (start-process "compton" nil "compton" "--backend" "glx")
-     (start-process "emacsclient" nil "emacsclient" "-c")
+     (start-process "st" nil "st" "-e" "emacsclient" "-t" "-e" "(eshell)")
      (start-process "dwm" nil "dwm"))))
 
 ;;;;ENV/PATH
@@ -86,7 +86,7 @@
 (setq shell-file-name "/bin/sh")
 (setenv "SHELL" "/bin/sh")
 (setenv "PAGER" "cat")
-(setenv "EDITOR" "ed")
+(setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
 
 (setq my-path-inherited (getenv "PATH"))
@@ -125,6 +125,7 @@
 
 ;; define remote tramp env
 (setq tramp-remote-process-environment
+      ;; TODO :: set this on a per-tramp connection/machine basis
       '("ENV=''"
         "TMOUT=0"
         "LC_CTYPE=''"

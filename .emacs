@@ -69,7 +69,7 @@
 
   (setenv "DISPLAY" ":0")
 
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1")
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
 
   (async-start
    (lambda ()
@@ -77,12 +77,6 @@
                                  (shell-command-to-string "xprop -root")))
        (sleep-for 0.5)))
    (lambda (result)
-     (start-process "xset" nil "xset" "+dpms" "dpms" "0" "0" "1860" "b" "off" "r" "rate" "175" "50")
-     (start-process "xrdb" nil "xrdb" (concat (getenv "HOME")"/.Xresources"))
-     ;; (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
-     ;; (start-process "compton" nil "compton" "--backend" "glx")
-     ;; (start-process "st" nil "st" "-e" "emacsclient" "-t" "-e" "(eshell)")
-     ;; (start-process "dwm" nil "dwm")
      (start-process
       "emacsclient" nil
       "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
@@ -162,7 +156,7 @@
 (bind-key* "C-c t b" 'buffer-to-termbin)
 (bind-key* "C-c #" 'my-su-edit)
 (bind-key* "C-c $" 'my-switch-to-home)
-(bind-key* "C-c I" 'crux-find-user-init-file)
+(bind-key* "C-c I" (lambda () (interactive) (crux-find-user-init-file) (delete-other-windows)))
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region) ;;term emacs compat.
@@ -785,7 +779,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (setq exwm-input-global-keys
         `(([?\s-w] . exwm-workspace-switch)
           ,@(mapcar (lambda (i)
-                      `(,(kbd (format "<s-f%d>" (1+ i))) .
+                      `(,(kbd (format "s-%d" i)) .
                         (lambda ()
                           (interactive)
                           (exwm-workspace-switch-create ,i))))

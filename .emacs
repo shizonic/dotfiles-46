@@ -55,34 +55,31 @@
 
 ;;;;$ chsh -s /bin/emacs
 
-(add-hook 'after-init-hook '(lambda()
-                              (when (not (server-running-p))
-                                (progn
-                                  (server-start)
-                                  (sx)))
-                              (eshell)))
-
-(defun eshell/startx ()
-  (setenv "DISPLAY" ":0")
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1")
-  (sleep-for 1))
-
-(defun eshell/xinitrc ()
-  (start-process-shell-command
-   "xset" nil "xset +dpms && xset b off && xset dpms 0 0 1860 && xset r rate 175 50")
-  (start-process-shell-command
-   "xrdb" nil (concat "xrdb" " " (getenv "HOME") "/.Xresources"))
-  (start-process-shell-command
-   "Esetroot" nil (concat "Esetroot -fit" " " (getenv "HOME") "/.wallpaper"))
-
-  (start-process "compton" nil "compton" "--backend" "glx")
-  (start-process "dwm" nil "dwm"))
+(add-hook 'after-init-hook (lambda()
+                             (when (not (server-running-p))
+                               (server-start)
+                               (sx))))
 
 (defun sx ()
+  "A simple elisp replacement for startx/xinit scripts"
   (interactive)
-  (eshell)
-  (insert "(eshell/startx) && (eshell/xinitrc)")
-  (eshell-send-input))
+
+  (setenv "DISPLAY" ":0")
+
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1")
+
+  (async-start
+   (lambda ()
+     (while (not (string-match-p "XFree86_has_VT"
+                                 (shell-command-to-string "xprop -root")))
+       (sleep-for 0.5)))
+   (lambda (result)
+     (start-process "xset" nil "xset" "+dpms" "dpms" "0" "0" "1860" "b" "off" "r" "rate" "175" "50")
+     (start-process "xrdb" nil "xrdb" (concat (getenv "HOME")"/.Xresources"))
+     (start-process "Esetroot" nil "Esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
+     (start-process "compton" nil "compton" "--backend" "glx")
+     (start-process "emacsclient" nil "emacsclient" "-c")
+     (start-process "dwm" nil "dwm"))))
 
 ;;;;ENV/PATH
 

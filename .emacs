@@ -95,8 +95,6 @@
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
 
-(setq my-path-inherited (getenv "PATH"))
-
 (setq system-profile-path
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
@@ -193,6 +191,9 @@
 (exwm-input-set-key (kbd "C-0") 'delete-window)
 (exwm-input-set-key (kbd "C--") 'bury-buffer)
 (define-key key-translation-map (kbd "M-!") (kbd "s-&"))
+
+;(exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-up)
+;(exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-down)
 
 ;;;;theme
 

@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;;; EMACS OPERATING SYSTEM
+;;;; THE ANTI DESKTOP EMACS OPERATING SYSTEM + Linux
 
 ;;;;bootstrap straight.el
 
@@ -189,12 +189,15 @@
 (exwm-input-set-key (kbd "C-3") 'split-window-right)
 (exwm-input-set-key (kbd "C-0") 'delete-window)
 (exwm-input-set-key (kbd "C--") 'bury-buffer)
-(define-key key-translation-map (kbd "M-!") (kbd "s-&"))
 
 (exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-increment)
 (exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-decrement)
 (exwm-input-set-key (kbd "<s-right>") 'desktop-environment-brightness-increment)
 (exwm-input-set-key (kbd "<s-left>") 'desktop-environment-brightness-decrement)
+
+(exwm-input-set-key (kbd "M-!") (lambda ()
+                                  (interactive)
+                                  (call-interactively 'dmenu)))
 
 ;;;;theme
 
@@ -724,38 +727,10 @@ Xft.lcdfilter: lcddefault")
 
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources"))
 
-;;;;goodies
-
-(setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser
-      (lambda (url)
-        (start-process-shell-command "chromium" nil (concat "chromium " url)))
-      eww-search-prefix "https://www.google.com/search?hl=en&q=")
-
-(defvar yt-dl-player "mpv"
-  "Video player used by `eww-open-yt-dl'")
-
-(defun eww-open-yt-dl ()
-  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
-Specify the video player to use by setting the value of `yt-dl-player'"
-  (interactive)
-  (if (executable-find "youtube-dl")
-      (progn
-        (eww-copy-page-url)
-        (start-process-shell-command "youtube-dl" nil
-                                     (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))
-    (progn
-      (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
-      (with-output-to-temp-buffer xbuff
-        (print "Ensure youtube-dl is installed on the system and try again...")))))
-
-(define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)
-
-;;;;anti-desktop environment
+;;;;the anti-desktop
 
 (require 'exwm-config)
 
-;; overwrite default configuration
 (defun exwm-config-default ()
   (setq exwm-input-global-keys
         `(([?\s-w] . exwm-workspace-switch)
@@ -789,23 +764,49 @@ Specify the video player to use by setting the value of `yt-dl-player'"
             ([?\C-y] . [?\C-v])
             ([?\C-s] . [?\C-f])))))
 
-;; Set the initial workspace number.
 (unless (get 'exwm-workspace-number 'saved-value)
   (setq exwm-workspace-number 1))
 
-;; Make class name the buffer name
 (add-hook 'exwm-update-class-hook
           (lambda ()
             (exwm-workspace-rename-buffer exwm-class-name)))
 
-;; do it!
 (exwm-config-default)
 (exwm-enable)
 (exwm-config-ido)
 
-;; desktop-environment
 (desktop-environment-mode 1)
 (setq desktop-environment-brightness-set-command "lux %s"
       desktop-environment-brightness-normal-increment "-a 5%"
       desktop-environment-brightness-normal-decrement "-s 5%"
       desktop-environment-brightness-get-command "lux -G")
+
+(defun dmenu (command)
+  (interactive (list (read-shell-command "$ ")))
+  (start-process-shell-command command nil command))
+
+(defun netsurf (url)
+  (start-process-shell-command "chromium" nil (concat "chromium " url)))
+
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'netsurf
+      eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(defvar yt-dl-player "mpv"
+  "Video player used by `eww-open-yt-dl'")
+
+(defun eww-open-yt-dl ()
+  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
+Specify the video player to use by setting the value of `yt-dl-player'"
+  (interactive)
+  (if (executable-find "youtube-dl")
+      (progn
+        (eww-copy-page-url)
+        (start-process-shell-command "youtube-dl" nil
+                                     (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))
+    (progn
+      (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
+      (with-output-to-temp-buffer xbuff
+        (print "Ensure youtube-dl is installed on the system and try again...")))))
+
+(define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)

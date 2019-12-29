@@ -112,14 +112,13 @@
 
 (setenv "PATH"
         (string-join
-         (delete-dups (split-string
-                       (setenv "PATH" (concat
-                                       my-path-insert
-                                       my-path-inherited
-                                       system-profile-path
-                                       my-path-append)) ":"))":"))
-
-(setq exec-path (split-string (getenv "PATH")  ":"))
+         (setq exec-path
+               (delete-dups (split-string
+                             (concat
+                              my-path-insert
+                              my-path-inherited
+                              system-profile-path
+                              my-path-append) ":"))) ":"))
 
 (defvar my-sync-tramp-path nil
   "probably not a good idea setting this to t")

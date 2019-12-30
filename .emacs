@@ -12,64 +12,73 @@
       gc-cons-threshold 100000000
       debug-on-error nil)
 
-;;;;bootstrap straight.el
+;;;;ENV/PATH
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(require 'subr-x)
 
-;;;;lib
+(setq shell-file-name "/bin/sh")
+(setenv "SHELL" "/bin/sh")
+(setenv "PAGER" "cat")
+(setenv "EDITOR" "emacsclient")
+(setenv "VISUAL" (getenv "EDITOR"))
+(setenv "NIX_PROFILES" (concat (getenv "HOME") "/nix/var/nix/profiles/default " (getenv "$HOME") "/home/adam/.nix-profile"))
+(setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
+(setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt"))
 
-(require 'server)
-(require 'tramp)
-(require 'eww)
-(require 'subr-x)            ;Extra Lisp functions
-(require 'seq)               ;Sequence manipulation functions
-(require 'cl-lib)            ;Common Lisp extensions
-(straight-use-package 'dash) ;A modern list library
-(straight-use-package 'a)    ;Associative data structure functions
-(straight-use-package 's)    ;String manipulation library
-(straight-use-package 'f)    ;Modern API for working with files and directories
-(straight-use-package 'ht)   ;The missing hash table library
-(straight-use-package 'async);Simple library for asynchronous processing in Emacs
+(setq my-path-inherited (getenv "PATH"))
 
-;;;;pkg
+(setq system-profile-path
+      (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
-(straight-use-package 'exwm)
-(straight-use-package 'shackle)
-(straight-use-package 'desktop-environment)
-(straight-use-package 'bind-key)
-(straight-use-package 'magit)
-(straight-use-package 'projectile)
-(straight-use-package 'flycheck)
-(straight-use-package 'aggressive-indent)
-(straight-use-package 'paredit)
-(straight-use-package 'elisp-slime-nav)
-(straight-use-package 'slime)
+(setq my-path-insert (concat
+                      (getenv "HOME")"/bin:"
+                      (getenv "HOME")"/.local/bin:"
+                      "/opt/gnu/coreutils/bin:"
+                      "/opt/gnu/findutils/bin:"
+                      "/opt/gnu/diffutils/bin:"
+                      "/opt/gnu/gawk/bin:"
+                      "/opt/gnu/grep/bin:"
+                      "/opt/gnu/patch/bin:"
+                      "/home/adam/.nix-profile/bin:"))
 
-;;;;manual install pkg
+(setq my-path-append (concat ":" exec-directory))
 
-(add-to-list 'load-path "~/repos/dotfiles/site-lisp")
-(require 'keychain-environment)
-(require 'browse-kill-ring)
-(require 'crux)
-(require 'transpose-frame)
+(setenv "PATH"
+        (string-join
+         (setq exec-path
+               (delete-dups (split-string
+                             (concat
+                              my-path-insert
+                              ;; my-path-inherited
+                              system-profile-path
+                              my-path-append) ":"))) ":"))
+
+(with-eval-after-load 'tramp
+  (defvar my-sync-tramp-path nil
+    "probably not a good idea setting this to t")
+
+  (when (bound-and-true-p my-sync-tramp-path)
+    (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
+  ;; define remote tramp env
+  (setq tramp-remote-process-environment
+        ;; TODO :: set this on a per-tramp connection/machine basis
+        '("ENV=''"
+          "TMOUT=0"
+          "LC_CTYPE=''"
+          "EDITOR=ed"
+          "PAGER=cat"
+          "MAKEFLAGS=j5"
+          "CFLOAGS=-O2 -pipe"
+          "CXXFLAGS=-O2 -pipe"
+          "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community")))
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
 
 (add-hook 'after-init-hook (lambda()
+                             (require 'server)
                              (when (not (server-running-p))
                                (server-start)
-                               (kill-buffer "*scratch*")
                                (sx))))
 
 (global-set-key (kbd "C-x C-c") 'kill-xsession)
@@ -125,62 +134,54 @@
      (start-process
       "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"Monospace-12\" nil t)"))))
 
-;;;;ENV/PATH
+;;;;bootstrap straight.el
 
-(setq shell-file-name "/bin/sh")
-(setenv "SHELL" "/bin/sh")
-(setenv "PAGER" "cat")
-(setenv "EDITOR" "emacsclient")
-(setenv "VISUAL" (getenv "EDITOR"))
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(setq my-path-inherited (getenv "PATH"))
+;;;;libs
 
-(setq system-profile-path
-      (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
+(require 'seq)               ;Sequence manipulation functions
+(require 'cl-lib)            ;Common Lisp extensions
+(straight-use-package 'dash) ;A modern list library
+(straight-use-package 'a)    ;Associative data structure functions
+(straight-use-package 's)    ;String manipulation library
+(straight-use-package 'f)    ;Modern API for working with files and directories
+(straight-use-package 'ht)   ;The missing hash table library
+(straight-use-package 'async);Simple library for asynchronous processing in Emacs
 
-(setq my-path-insert (concat
-                      "/home/" user-login-name "/bin:"
-                      "/home/" user-login-name "/.local/bin:"
-                      "/opt/awk/bin:"
-                      "/opt/gnu/coreutils/bin:"
-                      "/opt/gnu/findutils/bin:"
-                      "/opt/gnu/diffutils/bin:"
-                      "/opt/gnu/gawk/bin:"
-                      "/opt/gnu/grep/bin:"
-                      "/opt/gnu/patch/bin:"))
+;;;;pkgs
 
-(setq my-path-append (concat ":" exec-directory))
+(straight-use-package 'exwm)
+(straight-use-package 'desktop-environment)
+(straight-use-package 'bind-key)
+(straight-use-package 'magit)
+(straight-use-package 'projectile)
+(straight-use-package 'flycheck)
+(straight-use-package 'aggressive-indent)
+(straight-use-package 'paredit)
+(straight-use-package 'elisp-slime-nav)
+(straight-use-package 'slime)
 
-(setenv "PATH"
-        (string-join
-         (setq exec-path
-               (delete-dups (split-string
-                             (concat
-                              my-path-insert
-                              my-path-inherited
-                              system-profile-path
-                              my-path-append) ":"))) ":"))
+;;;;manually install pkgs
 
-(defvar my-sync-tramp-path nil
-  "probably not a good idea setting this to t")
+(add-to-list 'load-path "~/repos/dotfiles/site-lisp")
+(require 'keychain-environment)
+(require 'browse-kill-ring)
+(require 'crux)
+(require 'transpose-frame)
 
-(when (bound-and-true-p my-sync-tramp-path)
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
-
-;; define remote tramp env
-(setq tramp-remote-process-environment
-      ;; TODO :: set this on a per-tramp connection/machine basis
-      '("ENV=''"
-        "TMOUT=0"
-        "LC_CTYPE=''"
-        "EDITOR=ed"
-        "PAGER=cat"
-        "MAKEFLAGS=j5"
-        "CFLOAGS=-O2 -pipe"
-        "CXXFLAGS=-O2 -pipe"
-        "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community"))
-
-;;;;bind-key
+;;;;bindings
 
 ;; unbind
 (global-unset-key (kbd "C-z"))
@@ -202,7 +203,7 @@
 (bind-key* "C-c t b" 'buffer-to-termbin)
 (bind-key* "C-c #" 'my-su-edit)
 (bind-key* "C-c $" 'my-switch-to-home)
-(bind-key* "C-c I" (lambda () (interactive) (crux-find-user-init-file) (delete-other-windows)))
+(bind-key* "C-c I" (lambda () (interactive) (find-file user-init-file)))
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "<f5>" 'compile)
@@ -212,6 +213,7 @@
 (bind-key* "C--" 'bury-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "M-/" 'hippie-expand)
+(bind-key* "<home>" 'my-switch-to-home)
 
 ;; window-related binds, doubly reinforced
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
@@ -225,6 +227,8 @@
 (exwm-input-set-key (kbd "C-0") 'delete-window)(bind-key* "C-0" 'delete-window)
 (exwm-input-set-key (kbd "C--") 'bury-buffer)(bind-key* "C--" 'bury-buffer)
 (exwm-input-set-key (kbd "s-r") 'rotate-frame-clockwise)
+(exwm-input-set-key (kbd "s-u") 'winner-undo)
+(exwm-input-set-key (kbd "s-U") 'winner-redo)
 (exwm-input-set-key (kbd "<s-up>") 'enlarge-window)(bind-key* "<s-up>" 'enlarge-window)
 (exwm-input-set-key (kbd "<s-down>") 'shrink-window)(bind-key* "<s-down>" 'shrink-window)
 (exwm-input-set-key (kbd "<s-right>") 'enlarge-window-horizontally)(bind-key* "<s-right>" 'enlarge-window-horizontally)
@@ -242,7 +246,8 @@
 
 ;;;;theme
 
-;; disable old theme before loading new theme
+(display-time-mode 1)
+
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
@@ -297,19 +302,6 @@
 (winner-mode 1)
 
 ;;;;functions
-
-(defvar saved-window-configuration nil)
-(defun jwiegley/push-window-configuration ()
-  (interactive)
-  (push (current-window-configuration) saved-window-configuration))
-(defun jwiegley/pop-window-configuration ()
-  (interactive)
-  (let ((config (pop saved-window-configuration)))
-    (if config
-        (set-window-configuration config)
-      (if (> (length (window-list)) 1)
-          (delete-window)
-        (bury-buffer)))))
 
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
@@ -744,9 +736,6 @@ Xft.lcdfilter: lcddefault")
 
 ;;;;the anti-desktop
 
-(setq shackle-default-rule '(:same t))
-(shackle-mode 1)
-
 (require 'exwm-config)
 
 (defun exwm-config-default ()
@@ -825,7 +814,8 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (with-output-to-temp-buffer xbuff
         (print "Ensure youtube-dl is installed on the system and try again...")))))
 
-(define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
 
 (defun scrot ()
   (interactive)

@@ -18,6 +18,7 @@
 
 (setq shell-file-name "/bin/sh")
 (setenv "SHELL" "/bin/sh")
+(setenv "HOME" (concat "/home/" user-login-name))
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
@@ -31,8 +32,8 @@
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
 (setq my-path-insert (concat
-                      (getenv "HOME")"/bin:"
-                      (getenv "HOME")"/.local/bin:"
+                      (getenv "HOME") "/bin:"
+                      (getenv "HOME") "/.local/bin:"
                       "/opt/gnu/coreutils/bin:"
                       "/opt/gnu/findutils/bin:"
                       "/opt/gnu/diffutils/bin:"

@@ -45,6 +45,7 @@
 ;;;;pkg
 
 (straight-use-package 'exwm)
+(straight-use-package 'shackle)
 (straight-use-package 'desktop-environment)
 (straight-use-package 'bind-key)
 (straight-use-package 'magit)
@@ -743,6 +744,9 @@ Xft.lcdfilter: lcddefault")
 
 ;;;;the anti-desktop
 
+(setq shackle-default-rule '(:same t))
+(shackle-mode 1)
+
 (require 'exwm-config)
 
 (defun exwm-config-default ()
@@ -750,7 +754,7 @@ Xft.lcdfilter: lcddefault")
   (setq exwm-input-global-keys
         `(([?\s-w] . exwm-workspace-switch)
           ,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
+                      `(,(kbd (format "<s-f%d>" (1+ i))) .
                         (lambda ()
                           (interactive)
                           (exwm-workspace-switch-create ,i))))

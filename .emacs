@@ -2,6 +2,16 @@
 
 ;;;; THE ANTI DESKTOP EMACS OPERATING SYSTEM + Linux
 
+(setq user-full-name "Adam Schaefers"
+      user-mail-address "paxchristi888@gmail.com"
+      initial-major-mode 'emacs-lisp-mode
+      inhibit-startup-screen t
+      load-prefer-newer t
+      custom-file "/dev/null"
+      package-enable-at-startup nil
+      gc-cons-threshold 100000000
+      debug-on-error nil)
+
 ;;;;bootstrap straight.el
 
 (defvar bootstrap-version)
@@ -25,9 +35,6 @@
 (require 'subr-x)            ;Extra Lisp functions
 (require 'seq)               ;Sequence manipulation functions
 (require 'cl-lib)            ;Common Lisp extensions
-
-;;;;lib+
-
 (straight-use-package 'dash) ;A modern list library
 (straight-use-package 'a)    ;Associative data structure functions
 (straight-use-package 's)    ;String manipulation library
@@ -35,11 +42,10 @@
 (straight-use-package 'ht)   ;The missing hash table library
 (straight-use-package 'async);Simple library for asynchronous processing in Emacs
 
-;;;;pkgs
+;;;;pkg
 
 (straight-use-package 'exwm)
 (straight-use-package 'desktop-environment)
-(straight-use-package 'nofrils-acme-theme)
 (straight-use-package 'bind-key)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
@@ -49,18 +55,20 @@
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
 
-;;;;manual-installed pkgs
+;;;;manual install pkg
 
 (add-to-list 'load-path "~/repos/dotfiles/site-lisp")
 (require 'keychain-environment)
 (require 'browse-kill-ring)
 (require 'crux)
+(require 'transpose-frame)
 
-;;;;$ chsh -s /bin/emacs
+;;;;$ chsh -s #!/bin/emacs --fg-daemon
 
 (add-hook 'after-init-hook (lambda()
                              (when (not (server-running-p))
                                (server-start)
+                               (kill-buffer "*scratch*")
                                (sx))))
 
 (global-set-key (kbd "C-x C-c") 'kill-xsession)
@@ -90,27 +98,31 @@
      (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
 
-     ;; xrandr
-     (defun xrandr ()
+
+     ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
+     (with-eval-after-load 'exwm
        (setq external "VGA-1"
              internal "LVDS-1")
-       (if (string-match (concat external " connected")
-                         (shell-command-to-string "xrandr"))
-           (start-process-shell-command
-            "xrandr" nil
-            (concat "xrandr --output " internal " --off --output " external " --auto"))
-         (start-process-shell-command
-          "xrandr" nil
-          (concat "xrandr --output " external " --off --output " internal " --auto"))))
 
-     (with-eval-after-load 'exwm
+       (defun xrandr ()
+         (if (string-match (concat external " connected")
+                           (shell-command-to-string "xrandr"))
+             (start-process
+              "xrandr" nil
+              "xrandr" "--output" internal "--off" "--output" external "--auto")
+           (start-process
+            "xrandr" nil
+            "xrandr" "--output" external "--off" "--output" internal "--auto")))
+
        (require 'exwm-randr)
        (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-       (exwm-randr-enable))
+       (exwm-randr-enable)
+
+       (exwm-enable))
 
      ;; Exwm
      (start-process
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
+      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"Monospace-12\" nil t)"))))
 
 ;;;;ENV/PATH
 
@@ -192,94 +204,59 @@
 (bind-key* "C-c I" (lambda () (interactive) (crux-find-user-init-file) (delete-other-windows)))
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
-(bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region) ;;term emacs compat.
-(bind-key* "C-x ;" 'comment-line) ;;term emacs compat.
-
 (bind-key* "<f5>" 'compile)
-(bind-key* "<menu>" 'ido-switch-buffer)
 (bind-key* "C-t" 'eshell)
 (bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
 (bind-key* "C-`" 'spacemacs/alternate-window)
-(bind-key* "<C-return>" 'other-window)
-(bind-key* "C-1" 'delete-other-windows)
-(bind-key* "C-2" 'split-window-below)
-(bind-key* "C-3" 'split-window-right)
-(bind-key* "C-0" 'delete-window)
 (bind-key* "C--" 'bury-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "M-/" 'hippie-expand)
 
-(exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)
-(exwm-input-set-key (kbd "C-t") 'eshell)
-(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-(exwm-input-set-key (kbd "C-`") 'spacemacs/alternate-window)
-(exwm-input-set-key (kbd "C-1") 'delete-other-windows)
-(exwm-input-set-key (kbd "C-2") 'split-window-below)
-(exwm-input-set-key (kbd "C-3") 'split-window-right)
-(exwm-input-set-key (kbd "C-0") 'delete-window)
-(exwm-input-set-key (kbd "C--") 'bury-buffer)
+;; window-related binds, doubly reinforced
+(exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
+(exwm-input-set-key (kbd "C-t") 'eshell)(bind-key* "C-t" 'eshell)
+(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)(bind-key* "<f9>" 'exwm-input-toggle-keyboard)
+(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)(bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
+(exwm-input-set-key (kbd "C-`") 'spacemacs/alternate-window)(bind-key* "C-`" 'spacemacs/alternate-window)
+(exwm-input-set-key (kbd "C-1") 'delete-other-windows)(bind-key* "C-1" 'delete-other-windows)
+(exwm-input-set-key (kbd "C-2") 'split-window-below)(bind-key* "C-2" 'split-window-below)
+(exwm-input-set-key (kbd "C-3") 'split-window-right)(bind-key* "C-3" 'split-window-right)
+(exwm-input-set-key (kbd "C-0") 'delete-window)(bind-key* "C-0" 'delete-window)
+(exwm-input-set-key (kbd "C--") 'bury-buffer)(bind-key* "C--" 'bury-buffer)
+(exwm-input-set-key (kbd "s-r") 'rotate-frame-clockwise)
+(exwm-input-set-key (kbd "<s-up>") 'enlarge-window)(bind-key* "<s-up>" 'enlarge-window)
+(exwm-input-set-key (kbd "<s-down>") 'shrink-window)(bind-key* "<s-down>" 'shrink-window)
+(exwm-input-set-key (kbd "<s-right>") 'enlarge-window-horizontally)(bind-key* "<s-right>" 'enlarge-window-horizontally)
+(exwm-input-set-key (kbd "<s-left>") 'shrink-window-horizontally)(bind-key* "<s-left>" 'shrink-window-horizontally)
+(exwm-input-set-key (kbd "<C-return>") 'other-window)(bind-key* "<C-return>" 'other-window)
+(exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
+(exwm-input-set-key (kbd "M-!") (lambda ()(interactive) (call-interactively 'dmenu)))(bind-key* "M-!" 'dmenu)
 
-(exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-increment)
-(exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-decrement)
-(exwm-input-set-key (kbd "<s-right>") 'desktop-environment-brightness-increment)
-(exwm-input-set-key (kbd "<s-left>") 'desktop-environment-brightness-decrement)
-
-(exwm-input-set-key (kbd "M-!") (lambda ()
-                                  (interactive)
-                                  (call-interactively 'dmenu)))
+(bind-key* (kbd "<C-kp-add>") (lambda () (interactive) (text-scale-adjust 1)))
+(bind-key* (kbd "<C-kp-subtract>") (lambda () (interactive) (text-scale-adjust -1)))
+(exwm-input-set-key (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
+(exwm-input-set-key (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
+(exwm-input-set-key (kbd "<S-s-kp-add>") 'desktop-environment-brightness-increment)
+(exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
 
 ;;;;theme
 
+;; disable old theme before loading new theme
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
-(defun theme-new-frame ()
-  (interactive)
-  (if (display-graphic-p)
-      (progn                                ;; gui emacsclient -c
-        (load-theme 'nofrils-sepia t)
-        (menu-bar-mode -1)
-        (tool-bar-mode -1)
-        (scroll-bar-mode -1)
-        (horizontal-scroll-bar-mode -1)
-        (set-frame-font "Monospace-24" nil t))
-    (progn                                  ;; terminal emacsclient -t
-      (menu-bar-mode -1))))
-
-(defun simple-mode-line-render (left right)
-  "Return a string of `window-width' length containing LEFT, and RIGHT
- aligned respectively."
-  (let* ((available-width (- (window-width) (length left) 2)))
-    (format (format " %%s %%%ds " available-width) left right)))
-
-(setq-default mode-line-format
-              '((:eval (simple-mode-line-render
-                        ;; left
-                        (format-mode-line "%* %b %l:%c %m")
-                        ;; right
-                        (format-mode-line (concat
-                                           (format-time-string " %I:%M%p")))))))
-
 ;;;;settings
 
-(setq user-full-name "Adam Schaefers"
-      user-mail-address "paxchristi888@gmail.com"
-      my-contacts-file "~/contacts.el"
-      initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
-      custom-file "/dev/null"
-      gc-cons-threshold 100000000
-      debug-on-error nil
+(setq my-contacts-file "~/contacts.el"
       apropos-do-all t
       require-final-newline t
-      load-prefer-newer t
       ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
       ido-everywhere t
       ido-enable-flex-matching t
       ido-use-filename-at-point 'guess
+      save-interprogram-paste-before-kill t
       ido-create-new-buffer 'always
       ido-auto-merge-work-directories-length -1
       tab-always-indent 'complete
@@ -319,6 +296,19 @@
 (winner-mode 1)
 
 ;;;;functions
+
+(defvar saved-window-configuration nil)
+(defun jwiegley/push-window-configuration ()
+  (interactive)
+  (push (current-window-configuration) saved-window-configuration))
+(defun jwiegley/pop-window-configuration ()
+  (interactive)
+  (let ((config (pop saved-window-configuration)))
+    (if config
+        (set-window-configuration config)
+      (if (> (length (window-list)) 1)
+          (delete-window)
+        (bury-buffer)))))
 
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
@@ -769,27 +759,25 @@ Xft.lcdfilter: lcddefault")
                        (interactive (list (read-shell-command "$ ")))
                        (start-process-shell-command command nil command)))))
 
-  (unless (get 'exwm-input-simulation-keys 'saved-value)
-    (setq exwm-input-simulation-keys
-          '(
-            ([?\C-b] . [left])
-            ([?\M-b] . [C-left])
-            ([?\C-f] . [right])
-            ([?\M-f] . [C-right])
-            ([?\C-p] . [up])
-            ([?\C-n] . [down])
-            ([?\C-a] . [home])
-            ([?\C-e] . [end])
-            ([?\M-v] . [prior])
-            ([?\C-v] . [next])
-            ([?\C-d] . [delete])
-            ([?\C-k] . [S-end delete])
-            ([?\C-w] . [?\C-x])
-            ([?\M-w] . [?\C-c])
-            ([?\C-y] . [?\C-v])
-            ([?\C-s] . [?\C-f])))))
+  (setq exwm-input-simulation-keys
+        '(
+          ([?\C-b] . [left])
+          ([?\M-b] . [C-left])
+          ([?\C-f] . [right])
+          ([?\M-f] . [C-right])
+          ([?\C-p] . [up])
+          ([?\C-n] . [down])
+          ([?\C-a] . [home])
+          ([?\C-e] . [end])
+          ([?\M-v] . [prior])
+          ([?\C-v] . [next])
+          ([?\C-d] . [delete])
+          ([?\C-k] . [S-end delete])
+          ([?\C-w] . [?\C-x])
+          ([?\M-w] . [?\C-c])
+          ([?\C-y] . [?\C-v])
+          ([?\C-s] . [?\C-f])))
 
-(unless (get 'exwm-workspace-number 'saved-value)
   (setq exwm-workspace-number 1))
 
 (add-hook 'exwm-update-class-hook
@@ -797,8 +785,7 @@ Xft.lcdfilter: lcddefault")
             (exwm-workspace-rename-buffer exwm-class-name)))
 
 (exwm-config-default)
-(exwm-enable)
-(exwm-config-ido)
+(add-hook 'exwm-init-hook #'exwm-config--fix/ido-buffer-window-other-frame)
 
 (desktop-environment-mode 1)
 (setq desktop-environment-brightness-set-command "lux %s"

@@ -82,16 +82,6 @@
        (sleep-for 0.5)))
    (lambda (result)
 
-     ;; xrandr
-     (setq external "VGA-1"
-           internal "LVDS-1")
-
-     (when (string-match (concat external " connected")
-                         (shell-command-to-string "xrandr"))
-       (shell-command-to-string
-        "xrandr" nil
-        (concat "xrandr --output" " " internal " " "--off" " " external " " " --auto")))
-
      ;; touchpad
      (start-process-shell-command
       "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
@@ -100,10 +90,27 @@
      (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
 
+     ;; xrandr
+     (defun xrandr ()
+       (setq external "VGA-1"
+             internal "LVDS-1")
+       (if (string-match (concat external " connected")
+                         (shell-command-to-string "xrandr"))
+           (start-process-shell-command
+            "xrandr" nil
+            (concat "xrandr --output " internal " --off --output " external " --auto"))
+         (start-process-shell-command
+          "xrandr" nil
+          (concat "xrandr --output " external " --off --output " internal " --auto"))))
+
+     (with-eval-after-load 'exwm
+       (require 'exwm-randr)
+       (add-hook 'exwm-randr-screen-change-hook 'xrandr)
+       (exwm-randr-enable))
+
      ;; Exwm
      (start-process
       "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(theme-new-frame)"))))
-
 
 ;;;;ENV/PATH
 
@@ -749,6 +756,7 @@ Xft.lcdfilter: lcddefault")
 (require 'exwm-config)
 
 (defun exwm-config-default ()
+  (toggle-frame-fullscreen)
   (setq exwm-input-global-keys
         `(([?\s-w] . exwm-workspace-switch)
           ,@(mapcar (lambda (i)

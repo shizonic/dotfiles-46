@@ -32,7 +32,7 @@
 (setq system-profile-path
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
-(setq my-path-insert (concat (getenv "HOME") "/gnubin:"
+(setq my-path-insert (concat (getenv "HOME") "/gnubin/bin:"
                              (getenv "HOME") "/bin:"
                              (when (file-directory-p "/nix") (concat ":" (getenv "HOME") "/.nix-profile/bin"))))
 

@@ -414,16 +414,6 @@ current frame."
   (when (buffer-file-name)
     (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
-(defun kiss (x)
-  (with-temp-buffer
-    (cd "/su::")
-    (async-shell-command (concat "kiss " x))))
-
-(defun kiss-cbi (x)
-  (with-temp-buffer
-    (cd "/su::")
-    (async-shell-command (concat "kiss c " x "&& kiss b " x "&& kiss i " x))))
-
 ;;;;eshell
 
 (add-hook 'eshell-directory-change-hook 'eshell/ls)
@@ -445,6 +435,12 @@ current frame."
     (progn
       (insert "cd ..")
       (eshell-send-input))))
+
+(defun eshell/k (&optional x y)
+  "simple kiss pkg manager front-end"
+  (with-temp-buffer
+    (cd "/su::")
+    (async-shell-command (concat "kiss " x " " y))))
 
 ;;;;programming
 
@@ -818,6 +814,3 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (random t)
   (start-process "import" nil "import" "-window" "root"
                  (concat (getenv "HOME") "/scrot" (format "%s" (random)) ".png")))
-
-
-;; (kiss-cbi "coreutils diffutils findutils gawk gnugrep gtar patch")

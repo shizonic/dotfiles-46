@@ -34,7 +34,7 @@
 
 (setq my-path-insert (concat (getenv "HOME") "/gnubin/bin:"
                              (getenv "HOME") "/bin:"
-                             (when (file-directory-p "/nix") (concat ":" (getenv "HOME") "/.nix-profile/bin"))))
+                             (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))))
 
 (setq my-path-append (concat ":" exec-directory))
 
@@ -48,7 +48,7 @@
                               my-path-append) ":"))) ":"))
 
 (with-eval-after-load 'tramp
-  (defvar my-sync-tramp-path t
+  (defvar my-sync-tramp-path nil
     "probably not a good idea setting this to t")
 
   (when (bound-and-true-p my-sync-tramp-path)

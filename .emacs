@@ -18,25 +18,25 @@
 
 (setq shell-file-name "/bin/sh")
 (setenv "SHELL" "/bin/sh")
+
 (setenv "HOME" (concat "/home/" user-login-name))
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
+
 (when (file-directory-p "/nix")
   (setenv "NIX_PROFILES" (concat (getenv "HOME") "/nix/var/nix/profiles/default " (getenv "$HOME") "/.nix-profile"))
   (setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
   (setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt")))
 
-
 (setq system-profile-path
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
-(setq my-path-insert (concat
-                      (getenv "HOME") "/bin:"))
+(setq my-path-insert (concat (getenv "HOME") "/gnubin:"
+                             (getenv "HOME") "/bin:"
+                             (when (file-directory-p "/nix") (concat ":" (getenv "HOME") "/.nix-profile/bin"))))
 
-(setq my-path-append (concat (when (file-directory-p "/nix")
-                               (concat ":" (getenv "HOME") "/.nix-profile/bin"))
-                             ":" exec-directory))
+(setq my-path-append (concat ":" exec-directory))
 
 (setenv "PATH"
         (string-join
@@ -48,7 +48,7 @@
                               my-path-append) ":"))) ":"))
 
 (with-eval-after-load 'tramp
-  (defvar my-sync-tramp-path nil
+  (defvar my-sync-tramp-path t
     "probably not a good idea setting this to t")
 
   (when (bound-and-true-p my-sync-tramp-path)
@@ -56,7 +56,7 @@
 
   ;; define remote tramp env
   (setq tramp-remote-process-environment
-        ;; TODO :: set this on a per-tramp connection/machine basis
+        ;; TODO :: find a way to set this on a per-tramp connection/machine basis
         '("ENV=''"
           "TMOUT=0"
           "LC_CTYPE=''"
@@ -65,7 +65,7 @@
           "MAKEFLAGS=j5"
           "CFLOAGS=-O2 -pipe"
           "CXXFLAGS=-O2 -pipe"
-          "KISS_PATH=/home/adam/repos/dotfiles/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community")))
+          "KISS_PATH=/home/adam/repos/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community")))
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
 
@@ -808,3 +808,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (random t)
   (start-process "import" nil "import" "-window" "root"
                  (concat (getenv "HOME") "/scrot" (format "%s" (random)) ".png")))
+
+
+;; (kiss-cbi "coreutils diffutils findutils gawk gnugrep gtar patch")

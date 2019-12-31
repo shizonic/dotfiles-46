@@ -112,7 +112,6 @@
      (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
 
-
      ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
      (with-eval-after-load 'exwm
        (setq external "VGA-1"
@@ -217,7 +216,6 @@
 (bind-key* "C--" 'bury-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "M-/" 'hippie-expand)
-(bind-key* "<home>" 'my-switch-to-home)
 
 ;; window-related binds, doubly reinforced
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
@@ -230,9 +228,9 @@
 (exwm-input-set-key (kbd "C-3") 'split-window-right)(bind-key* "C-3" 'split-window-right)
 (exwm-input-set-key (kbd "C-0") 'delete-window)(bind-key* "C-0" 'delete-window)
 (exwm-input-set-key (kbd "C--") 'bury-buffer)(bind-key* "C--" 'bury-buffer)
-(exwm-input-set-key (kbd "s-r") 'rotate-frame-clockwise)
-(exwm-input-set-key (kbd "s-u") 'winner-undo)
-(exwm-input-set-key (kbd "s-U") 'winner-redo)
+(exwm-input-set-key (kbd "s-r") 'rotate-frame-clockwise)(bind-key* "s-r" 'rotate-frame-clockwise)
+(exwm-input-set-key (kbd "s-u") 'winner-undo)(bind-key* "s-u" 'winner-undo)
+(exwm-input-set-key (kbd "s-U") 'winner-redo)(bind-key* "s-U" 'winner-redo)
 (exwm-input-set-key (kbd "<s-up>") 'enlarge-window)(bind-key* "<s-up>" 'enlarge-window)
 (exwm-input-set-key (kbd "<s-down>") 'shrink-window)(bind-key* "<s-down>" 'shrink-window)
 (exwm-input-set-key (kbd "<s-right>") 'enlarge-window-horizontally)(bind-key* "<s-right>" 'enlarge-window-horizontally)
@@ -258,7 +256,7 @@
 
 ;;;;settings
 
-(setq my-contacts-file "~/contacts.el"
+(setq my-abook "~/contacts.el"
       apropos-do-all t
       require-final-newline t
       ediff-window-setup-function 'ediff-setup-windows-plain
@@ -278,7 +276,7 @@
       password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 
-(custom-set-variables '(epg-gpg-program  "/bin/gpg2"))
+(custom-set-variables '(epg-gpg-program  "/bin/gpg2")) ; why this breaks with setq the world may never know.
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -495,7 +493,7 @@ current frame."
 (add-hook 'eshell-mode-hook '(lambda ()
                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
-(defadvice he-substitute-string (after he-paredit-fix) ;; hippie-expand also breaks paredit
+(defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
   (if (and (paredit-mode)
            (equal (substring str -1) ")"))
@@ -568,8 +566,6 @@ current frame."
         erc-nick "adamantium"
         erc-autojoin-channels-alist '(("freenode.net"
                                        "#kisslinux"
-                                       "#oasislinux"
-                                       "#phrackaged2"
                                        "#liguros"
                                        "#commanduser"
                                        "#emacs")))
@@ -657,11 +653,11 @@ current frame."
 
 ;; abook
 
-(when (file-exists-p my-contacts-file)
+(when (file-exists-p my-abook)
   (progn
-    (load-file my-contacts-file)
+    (load-file my-abook)
 
-    ;; e.g. dummy address book (key . value) list
+    ;; e.g. dummy address book
     ;; (setq my-contact-list '((name . foo@bar.email)
     ;;                         (nick . nick@nick.com)
     ;;                         (john . john@doe.com)))
@@ -808,9 +804,3 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
-
-(defun scrot ()
-  (interactive)
-  (random t)
-  (start-process "import" nil "import" "-window" "root"
-                 (concat (getenv "HOME") "/scrot" (format "%s" (random)) ".png")))

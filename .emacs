@@ -57,15 +57,25 @@
   ;; define remote tramp env
   (setq tramp-remote-process-environment
         ;; TODO :: find a way to set this on a per-tramp connection/machine basis
-        '("ENV=''"
+        '(;; original values
+          "ENV=''"
           "TMOUT=0"
           "LC_CTYPE=''"
+          "CDPATH="
+          "HISTORY="
+          "MAIL="
+          "MAILCHECK="
+          "MAILPATH="
+          "autocorrect="
+          "correct="
+
+          ;; my values
           "EDITOR=ed"
           "PAGER=cat"
           "MAKEFLAGS=j5"
           "CFLOAGS=-O2 -pipe"
           "CXXFLAGS=-O2 -pipe"
-          "KISS_PATH=/home/adam/repos/kiss-overlay:/home/adam/repos/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg:/root/community/community")))
+          "KISS_PATH=/home/adam/repos/kiss-overlay:/home/adam/repos/community/community:/root/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg")))
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
 

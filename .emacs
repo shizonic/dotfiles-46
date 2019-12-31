@@ -22,27 +22,21 @@
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
-(setenv "NIX_PROFILES" (concat (getenv "HOME") "/nix/var/nix/profiles/default " (getenv "$HOME") "/home/adam/.nix-profile"))
-(setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
-(setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt"))
+(when (file-directory-p "/nix")
+  (setenv "NIX_PROFILES" (concat (getenv "HOME") "/nix/var/nix/profiles/default " (getenv "$HOME") "/.nix-profile"))
+  (setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
+  (setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt")))
 
-(setq my-path-inherited (getenv "PATH"))
 
 (setq system-profile-path
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
 (setq my-path-insert (concat
-                      (getenv "HOME") "/bin:"
-                      (getenv "HOME") "/.local/bin:"
-                      "/opt/gnu/coreutils/bin:"
-                      "/opt/gnu/findutils/bin:"
-                      "/opt/gnu/diffutils/bin:"
-                      "/opt/gnu/gawk/bin:"
-                      "/opt/gnu/grep/bin:"
-                      "/opt/gnu/patch/bin:"
-                      "/home/adam/.nix-profile/bin:"))
+                      (getenv "HOME") "/bin:"))
 
-(setq my-path-append (concat ":" exec-directory))
+(setq my-path-append (concat (when (file-directory-p "/nix")
+                               (concat ":" (getenv "HOME") "/.nix-profile/bin"))
+                             ":" exec-directory))
 
 (setenv "PATH"
         (string-join
@@ -50,7 +44,6 @@
                (delete-dups (split-string
                              (concat
                               my-path-insert
-                              ;; my-path-inherited
                               system-profile-path
                               my-path-append) ":"))) ":"))
 
@@ -411,24 +404,15 @@ current frame."
   (when (buffer-file-name)
     (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
 
-(defun ekiss ()
-  "front-end for getkiss.org linux package manager"
-  (interactive)
-  (with-temp-buffer
-    (if (not (string-match "root@" (pwd)))
-        (cd "/su::"))
-    (setq-local
-     my-read
-     (read-string "kiss [b|c|i|l|r|s|u] [pkg] [pkg] [pkg] " ""))
-    (async-shell-command (concat "kiss " my-read "|| echo err $?"))
-    (delete-other-windows)
-    (switch-to-buffer "*Async Shell Command*")))
-
-(defun suckless-compile (x)
+(defun kiss (x)
   (with-temp-buffer
     (cd "/su::")
-    (async-shell-command
-     (concat "kiss c " x "&& kiss b " x "&& kiss i " x))))
+    (async-shell-command (concat "kiss " x))))
+
+(defun kiss-cbi (x)
+  (with-temp-buffer
+    (cd "/su::")
+    (async-shell-command (concat "kiss c " x "&& kiss b " x "&& kiss i " x))))
 
 ;;;;eshell
 
@@ -571,6 +555,7 @@ current frame."
   (erc-tls :server "chat.freenode.net" :port "6697"))
 
 (with-eval-after-load 'erc
+  (erc-track-mode -1)
   (setq erc-hide-list '("JOIN" "PART" "QUIT")
         erc-autojoin-timing "ident"
         erc-prompt-for-password nil

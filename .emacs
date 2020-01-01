@@ -250,7 +250,7 @@
 (exwm-input-set-key (kbd "<s-left>") 'shrink-window-horizontally)(bind-key* "<s-left>" 'shrink-window-horizontally)
 (exwm-input-set-key (kbd "<C-return>") 'other-window)(bind-key* "<C-return>" 'other-window)
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
-(exwm-input-set-key (kbd "M-!") (lambda ()(interactive) (call-interactively 'dmenu)))(bind-key* "M-!" 'dmenu)
+(exwm-input-set-key (kbd "s-!") (lambda ()(interactive) (call-interactively 'dmenu)))(bind-key* "s-!" 'dmenu)
 (exwm-input-set-key (kbd "s-&") (lambda ()(interactive) (call-interactively 'open-yt-dl)))(bind-key* "s-&" 'open-yt-dl)
 (bind-key* (kbd "<C-kp-add>") (lambda () (interactive) (text-scale-adjust 1)))
 (bind-key* (kbd "<C-kp-subtract>") (lambda () (interactive) (text-scale-adjust -1)))

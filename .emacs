@@ -230,6 +230,7 @@
 (bind-key* "M-/" 'hippie-expand)
 
 ;; window-related binds, doubly reinforced
+(exwm-input-set-key (kbd "s-w") 'just-use-chrome)(bind-key* "s-w" 'just-use-chrome)
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
 (exwm-input-set-key (kbd "C-t") 'eshell)(bind-key* "C-t" 'eshell)
 (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)(bind-key* "<f9>" 'exwm-input-toggle-keyboard)
@@ -257,6 +258,8 @@
 (exwm-input-set-key (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
 (exwm-input-set-key (kbd "<S-s-kp-add>") 'desktop-environment-brightness-increment)
 (exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
+(exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
+
 
 ;;;;theme
 
@@ -791,7 +794,12 @@ Xft.lcdfilter: lcddefault")
   (start-process-shell-command command nil command))
 
 (defun netsurf (url)
-  (start-process-shell-command "netsurf-gtk" nil (concat "netsurf-gtk " url)))
+  (start-process-shell-command "netsurf-gtk3" nil (concat "netsurf-gtk3 " url)))
+
+(defun just-use-chrome ()
+  (interactive)
+  (with-temp-buffer (yank))
+  (start-process-shell-command "chromium" nil (concat "chromium " (nth 0 kill-ring))))
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'netsurf

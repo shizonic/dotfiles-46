@@ -32,7 +32,7 @@
 (setq system-profile-path
       (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
 
-(setq my-path-insert (concat (getenv "HOME") "/gnubin/bin:"
+(setq my-path-insert (concat "/usr/local/bin:"
                              (getenv "HOME") "/bin:"
                              (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))))
 
@@ -693,7 +693,6 @@ current frame."
 
   (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
 
-  (make-directory "~/bin" t)
   (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
 
   (setq dotfiles-gitconfig "\[user]
@@ -805,3 +804,5 @@ Specify the video player to use by setting the value of `yt-dl-player'"
 
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
+
+(setq-default shr-blocked-images ".*\.svg$")

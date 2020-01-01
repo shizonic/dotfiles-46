@@ -554,7 +554,7 @@ current frame."
 
 ;;;;irc
 
-(defun erc-freenode-connect ()
+(defun freenode ()
   (interactive)
   (erc-tls :server "chat.freenode.net" :port "6697"))
 

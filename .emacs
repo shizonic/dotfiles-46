@@ -288,6 +288,7 @@
 
 (show-paren-mode 1)
 
+(require 'dired-x)
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
 

@@ -117,15 +117,27 @@
        (setq external "VGA-1"
              internal "LVDS-1")
 
+       (defun switch-to-external-monitor ()
+         (start-process
+          "xrandr" nil
+          "xrandr" "--output" internal "--off" "--output" external "--auto"))
+
+       (defun  switch-to-internal-monitor ()
+         (start-process
+          "xrandr" nil
+          "xrandr" "--output" external "--off" "--output" internal "--auto"))
+
        (defun xrandr ()
+         ;; when external is already plugged in on startup, fire extra
+         (when (and (string-match (concat external " connected")
+                                  (shell-command-to-string "xrandr"))
+                    (< (string-to-number (emacs-uptime "%s")) 5))
+           (switch-to-internal-monitor))
+
          (if (string-match (concat external " connected")
                            (shell-command-to-string "xrandr"))
-             (start-process
-              "xrandr" nil
-              "xrandr" "--output" internal "--off" "--output" external "--auto")
-           (start-process
-            "xrandr" nil
-            "xrandr" "--output" external "--off" "--output" internal "--auto")))
+             (switch-to-external-monitor)
+           (switch-to-internal-monitor)))
 
        (require 'exwm-randr)
        (add-hook 'exwm-randr-screen-change-hook 'xrandr)
@@ -238,7 +250,7 @@
 (exwm-input-set-key (kbd "<C-return>") 'other-window)(bind-key* "<C-return>" 'other-window)
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
 (exwm-input-set-key (kbd "M-!") (lambda ()(interactive) (call-interactively 'dmenu)))(bind-key* "M-!" 'dmenu)
-
+(exwm-input-set-key (kbd "s-&") (lambda ()(interactive) (call-interactively 'open-yt-dl)))(bind-key* "s-&" 'open-yt-dl)
 (bind-key* (kbd "<C-kp-add>") (lambda () (interactive) (text-scale-adjust 1)))
 (bind-key* (kbd "<C-kp-subtract>") (lambda () (interactive) (text-scale-adjust -1)))
 (exwm-input-set-key (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
@@ -779,7 +791,7 @@ Xft.lcdfilter: lcddefault")
   (start-process-shell-command command nil command))
 
 (defun netsurf (url)
-  (start-process-shell-command "chromium" nil (concat "chromium " url)))
+  (start-process-shell-command "netsurf-gtk" nil (concat "netsurf-gtk " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'netsurf
@@ -788,21 +800,14 @@ Xft.lcdfilter: lcddefault")
 (defvar yt-dl-player "mpv"
   "Video player used by `eww-open-yt-dl'")
 
-(defun eww-open-yt-dl ()
+(defun open-yt-dl ()
   "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
 Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
-  (if (executable-find "youtube-dl")
-      (progn
-        (eww-copy-page-url)
-        (start-process-shell-command "youtube-dl" nil
-                                     (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))
+  (when (executable-find "youtube-dl")
     (progn
-      (setq xbuff (generate-new-buffer "*youtube-dl not found*"))
-      (with-output-to-temp-buffer xbuff
-        (print "Ensure youtube-dl is installed on the system and try again...")))))
-
-(with-eval-after-load 'eww
-  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl))
-
-(setq-default shr-blocked-images ".*\.svg$")
+      (if (get-buffer "*eww*")
+          (eww-copy-page-url)
+        (with-temp-buffer (yank)))
+      (start-process-shell-command "youtube-dl" nil
+                                   (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))

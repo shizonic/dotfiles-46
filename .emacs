@@ -260,8 +260,9 @@
 (exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
 (exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
 
-
 ;;;;theme
+
+(blink-cursor-mode 1)
 
 (display-time-mode 1)
 
@@ -814,7 +815,7 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
   (when (executable-find "youtube-dl")
     (progn
-      (if (get-buffer "*eww*")
+      (if (string-match  "*eww*" (format "%s"(current-buffer)))
           (eww-copy-page-url)
         (with-temp-buffer (yank)))
       (start-process-shell-command "youtube-dl" nil

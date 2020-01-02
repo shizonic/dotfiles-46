@@ -98,59 +98,61 @@
   (setenv "DISPLAY" ":0")
   (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
 
-  l  (async-start
-      (lambda ()
-        (while (not (string-match-p "XFree86_has_VT"
-                                    (shell-command-to-string "xprop -root")))
-          (sleep-for 0.5)))
-      (lambda (result)
+  (async-start
+   (lambda ()
+     (while (not (string-match-p "XFree86_has_VT"
+                                 (shell-command-to-string "xprop -root")))
+       (sleep-for 0.5)))
+   (lambda (result)
 
-        ;; touchpad
-        (start-process-shell-command
-         "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
+     ;; touchpad
+     (start-process-shell-command
+      "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
 
-        ;; Xresources
-        (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
-        (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
-        (start-process "picom" nil "picom" "--backend" "glx")
-        (start-process "esetroot" nil "esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
+     ;; Xresources
+     (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
+     (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
+     (start-process "picom" nil "picom" "--backend" "glx")
+     (start-process "esetroot" nil "esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
 
-        ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
-        (with-eval-after-load 'exwm
-          (defvar external "VGA-1")
-          (defvar internal "LVDS-1")
+     ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
+     (with-eval-after-load 'exwm
+       (defvar external "VGA-1")
+       (defvar internal "LVDS-1")
 
-          (defun switch-to-external-monitor ()
-            (start-process
-             "xrandr" nil
-             "xrandr" "--output" internal "--off" "--output" external "--auto"))
+       (defun switch-to-external-monitor ()
+         (start-process
+          "xrandr" nil
+          "xrandr" "--output" internal "--off" "--output" external "--auto"))
 
-          (defun  switch-to-internal-monitor ()
-            (start-process
-             "xrandr" nil
-             "xrandr" "--output" external "--off" "--output" internal "--auto"))
+       (defun  switch-to-internal-monitor ()
+         (start-process
+          "xrandr" nil
+          "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
-          (defun xrandr ()
-            ;; when external is already plugged in on startup, fire extra
-            (when (and (string-match (concat external " connected")
-                                     (shell-command-to-string "xrandr"))
-                       (< (string-to-number (emacs-uptime "%s")) 5))
-              (switch-to-internal-monitor))
+       (defun xrandr ()
+         ;; when external is already plugged in on startup, fire extra
+         (when (and (string-match (concat external " connected")
+                                  (shell-command-to-string "xrandr"))
+                    (< (string-to-number (emacs-uptime "%s")) 5))
+           (switch-to-internal-monitor))
 
-            (if (string-match (concat external " connected")
-                              (shell-command-to-string "xrandr"))
-                (switch-to-external-monitor)
-              (switch-to-internal-monitor)))
+         (if (string-match (concat external " connected")
+                           (shell-command-to-string "xrandr"))
+             (switch-to-external-monitor)
+           (switch-to-internal-monitor)))
 
-          (require 'exwm-randr)
-          (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-          (exwm-randr-enable)
+       (require 'exwm-randr)
+       (add-hook 'exwm-randr-screen-change-hook 'xrandr)
+       (add-hook 'exwm-randr-screen-change-hook (lambda ()
+                                                  (start-process "esetroot" nil "esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))))
+       (exwm-randr-enable)
 
-          (exwm-enable))
+       (exwm-enable))
 
-        ;; Exwm
-        (start-process ;;unifont-12
-         "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-24\" nil t)"))))
+     ;; Exwm
+     (start-process ;;unifont-12
+      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-24\" nil t)"))))
 
 ;;;;bootstrap straight.el
 
@@ -228,6 +230,7 @@
 (bind-key* "C-c b" 'eww)
 (bind-key* "C-c i" 'freenode)
 (bind-key* "C-c p" 'projectile-command-map)
+(bind-key* "C-c g" 'magit-status)
 (bind-key* "C-c f" 'flycheck-mode)
 (bind-key* "C-c t r" 'region-to-termbin)
 (bind-key* "C-c t b" 'buffer-to-termbin)
@@ -327,7 +330,7 @@
       password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 
-(custom-set-variables '(epg-gpg-program  "/bin/gpg2")) ; why this breaks with setq the world may never know.
+(custom-set-variables '(epg-gpg-program  "/usr/local/bin/gpg"))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -410,8 +413,11 @@ current frame."
 
 (defun unlock ()
   (interactive)
+  ;; (async-shell-command
+  ;;  "eval $(keychain --eval --agents gpg,ssh 77CF5C5C65A8F9F44940A72CDD4795B51117D906 id_rsa); emacsclient -e '(keychain-refresh-environment)'")
   (async-shell-command
-   "eval $(keychain --eval --agents ssh,gpg id_rsa 77CF5C5C65A8F9F44940A72CDD4795B51117D906); emacsclient -e '(keychain-refresh-environment)'"))
+   "eval $(keychain --eval --agents gpg 77CF5C5C65A8F9F44940A72CDD4795B51117D906); emacsclient -e '(keychain-refresh-environment)'")
+  )
 
 (defun lock ()
   (interactive)
@@ -754,31 +760,37 @@ current frame."
 
   (require 'f)
 
+  ;; put flag
+  (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
+
+  ;; root dotfiles
+  (with-temp-buffer
+    (suroot)
+    (shell-command "ln -sf /usr/bin/gpg2 /usr/local/bin/gpg"))
+
+  ;; put straight pkg versions under vc
   (start-process-shell-command
    "ln" nil
    "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dotfiles/versions $DIR")
 
-  (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
-
-  (start-process-shell-command "ln" nil "ln -sf ~/repos/dotfiles/bin ~/")
-
+  ;; git
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com
 name = Adam Schaefers
 signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 \[commit]
         gpgsign = true")
-
   (f-write-text dotfiles-gitconfig 'utf-8 "~/.gitconfig")
 
+  ;; gpg
   (setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
 max-cache-ttl 84000
 allow-emacs-pinentry
 allow-loopback-pinentry
-pinentry-program /home/adam/bin/pinentry-emacs")
-
+pinentry-program /home/adam/repos/dotfiles/pinentry-emacs")
   (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
 
+  ;; xresources
   (setq dotfiles-xresources "Xft.dpi: 96
 Xft.autohint: 0
 Xft.antialias: 1
@@ -786,7 +798,6 @@ Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault")
-
   (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources"))
 
 ;;;;the anti-desktop
@@ -847,9 +858,9 @@ Xft.lcdfilter: lcddefault")
 (defun dmenu ()
   (interactive)
   (ivy-read "Run: "
-            (delete-dups (append (directory-files "/home/adam/.nix-profile/bin")
-                                 (directory-files "/usr/local/bin")
-                                 (directory-files "/usr/bin")))
+            (delete-dups (append (when (directory-name-p "/nix")
+                                   (directory-files "/home/adam/.nix-profile/bin"))
+                                 (directory-files "/usr/local/bin")))
             :action 'dmenu-action
             :caller 'dmenu))
 

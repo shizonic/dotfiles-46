@@ -858,7 +858,7 @@ Xft.lcdfilter: lcddefault")
 (defun dmenu ()
   (interactive)
   (ivy-read "Run: "
-            (delete-dups (append (when (directory-name-p "/nix")
+            (delete-dups (append (when (file-directory-p "/nix")
                                    (directory-files "/home/adam/.nix-profile/bin"))
                                  (directory-files "/usr/local/bin")))
             :action 'dmenu-action

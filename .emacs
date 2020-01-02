@@ -413,11 +413,8 @@ current frame."
 
 (defun unlock ()
   (interactive)
-  ;; (async-shell-command
-  ;;  "eval $(keychain --eval --agents gpg,ssh 77CF5C5C65A8F9F44940A72CDD4795B51117D906 id_rsa); emacsclient -e '(keychain-refresh-environment)'")
   (async-shell-command
-   "eval $(keychain --eval --agents gpg 77CF5C5C65A8F9F44940A72CDD4795B51117D906); emacsclient -e '(keychain-refresh-environment)'")
-  )
+   "eval $(keychain --eval --agents gpg,ssh 77CF5C5C65A8F9F44940A72CDD4795B51117D906 id_rsa); emacsclient -e '(keychain-refresh-environment)'"))
 
 (defun lock ()
   (interactive)

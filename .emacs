@@ -626,6 +626,7 @@ current frame."
                                        "#kisslinux"
                                        "#liguros"
                                        "#commanduser"
+                                       "##apoptosis"
                                        "#emacs")))
 
   (defun my-erc-multi-line-disable (string)

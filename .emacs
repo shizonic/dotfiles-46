@@ -8,6 +8,9 @@
       inhibit-startup-screen t
       load-prefer-newer t
       custom-file "/dev/null"
+      tls-checktrust t
+      gnutls-verify-error t
+      package-archives nil
       package-enable-at-startup nil
       gc-cons-threshold 100000000
       debug-on-error nil)
@@ -191,20 +194,15 @@
 (straight-use-package 'doom-themes)
 (straight-use-package 'doom-modeline)
 
-;; abo-abo I have embraced your stuff
-(straight-use-package 'ivy)
-(straight-use-package 'swiper)
-(straight-use-package 'counsel)
-(straight-use-package 'counsel-projectile)
-(straight-use-package 'lispy)
-
 ;; toolbox
-(straight-use-package 'crux)
-(straight-use-package 'keychain-environment)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
 (straight-use-package 'aggressive-indent)
+(straight-use-package 'paredit)
+(straight-use-package 'crux)
+(straight-use-package 'keychain-environment)
+(straight-use-package 'browse-kill-ring)
 
 ;; lang
 (straight-use-package 'elisp-slime-nav)
@@ -218,12 +216,12 @@
 
 ;; minor modes may override
 (bind-key "C-a" 'crux-move-beginning-of-line)
-(bind-key "C-s" 'swiper)
+(bind-key "C-s" 'isearch-forward-regexp)
+(bind-key "C-r" 'isearch-backward-regexp)
 
 ;; minor modes may not override (global)
+(bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "C-S-k" 'crux-kill-whole-line)
-(bind-key* "C-c C-r" 'ivy-resume)
-(bind-key* "C-x C-b" 'ivy-switch-buffer)
 (bind-key* "C-o" 'crux-smart-open-line)
 (bind-key* "C-c a" 'abook)
 (bind-key* "C-c m" 'gnus)
@@ -278,8 +276,6 @@
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)
 (bind-key* "<menu>" 'ido-switch-buffer)
 
-(exwm-input-set-key (kbd "s-!") (lambda ()(interactive) (call-interactively 'dmenu)))
-(bind-key* "s-!" 'dmenu)
 (exwm-input-set-key (kbd "s-^") (lambda ()(interactive) (call-interactively 'open-yt-dl)))
 (bind-key* "s-^" 'open-yt-dl)
 
@@ -326,7 +322,6 @@
       vc-follow-symlinks t
       tramp-copy-size-limit nil
       dired-auto-revert-buffer t
-      browse-url-browser-function 'eww-browse-url
       password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 
@@ -339,18 +334,12 @@
               fill-column 80)
 
 ;; old girl
-;; (ido-mode 1)
-;; (ido-everywhere 1)
-;; (setq ido-create-new-buffer 'always
-;;       ido-auto-merge-work-directories-length -1
-;;       ido-enable-flex-matching t
-;;       ido-use-filename-at-point 'guess)
-
-(ivy-mode 1)
-(counsel-mode 1)
-(counsel-projectile-mode 1)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
+(ido-mode 1)
+(ido-everywhere 1)
+(setq ido-create-new-buffer 'always
+      ido-auto-merge-work-directories-length -1
+      ido-enable-flex-matching t
+      ido-use-filename-at-point 'guess)
 
 (show-paren-mode 1)
 
@@ -562,9 +551,9 @@ current frame."
 (add-hook 'eshell-mode-hook '(lambda ()
                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
-(defadvice he-substitute-string (after he-lispy-fix)
+(defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (lispy-mode)
+  (if (and (paredit-mode)
            (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
@@ -587,10 +576,10 @@ current frame."
 
 ;; lisp
 
-(add-hook 'emacs-lisp-mode-hook 'lispy-mode)
-(add-hook 'ielm-mode-hook 'lispy-mode)
-(add-hook 'lisp-mode-hook 'lispy-mode)
-(add-hook 'slime-repl-mode-hook 'lispy-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(add-hook 'ielm-mode-hook 'paredit-mode)
+(add-hook 'lisp-mode-hook 'paredit-mode)
+(add-hook 'slime-repl-mode-hook 'paredit-mode)
 
 (defun my-ielm ()
   (interactive)
@@ -849,24 +838,15 @@ Xft.lcdfilter: lcddefault")
       desktop-environment-brightness-normal-decrement "-s 5%"
       desktop-environment-brightness-get-command "lux -G")
 
-(defun dmenu-action (x)
-  (start-process x nil x))
-
-(defun dmenu ()
-  (interactive)
-  (ivy-read "Run: "
-            (delete-dups (append (when (file-directory-p "/nix")
-                                   (directory-files "/home/adam/.nix-profile/bin"))
-                                 (directory-files "/usr/local/bin")))
-            :action 'dmenu-action
-            :caller 'dmenu))
-
 (defun external-browser (url)
   (start-process-shell-command "chromium" nil (concat "chromium " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'external-browser
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "W") 'shr-copy-url))
 
 (defvar yt-dl-player "mpv"
   "Video player used by `eww-open-yt-dl'")

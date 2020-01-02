@@ -84,11 +84,7 @@
                              (require 'server)
                              (when (not (server-running-p))
                                (server-start)
-                               (sx))
-                             (when (get-buffer "*scratch*")
-                               (kill-buffer "*scratch*"))
-                             (when (get-buffer "emacsfgdaemon")
-                               (kill-buffer "emacsfgdaemon"))))
+                               (sx))))
 
 (global-set-key (kbd "C-x C-c") 'kill-xsession)
 (defun kill-xsession ()
@@ -102,57 +98,59 @@
   (setenv "DISPLAY" ":0")
   (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
 
-  (async-start
-   (lambda ()
-     (while (not (string-match-p "XFree86_has_VT"
-                                 (shell-command-to-string "xprop -root")))
-       (sleep-for 0.5)))
-   (lambda (result)
+  l  (async-start
+      (lambda ()
+        (while (not (string-match-p "XFree86_has_VT"
+                                    (shell-command-to-string "xprop -root")))
+          (sleep-for 0.5)))
+      (lambda (result)
 
-     ;; touchpad
-     (start-process-shell-command
-      "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
+        ;; touchpad
+        (start-process-shell-command
+         "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
 
-     ;; Xresources
-     (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
-     (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
+        ;; Xresources
+        (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
+        (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
+        (start-process "picom" nil "picom" "--backend" "glx")
+        (start-process "esetroot" nil "esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
 
-     ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
-     (with-eval-after-load 'exwm
-       (defvar external "VGA-1")
-       (defvar internal "LVDS-1")
+        ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
+        (with-eval-after-load 'exwm
+          (defvar external "VGA-1")
+          (defvar internal "LVDS-1")
 
-       (defun switch-to-external-monitor ()
-         (start-process
-          "xrandr" nil
-          "xrandr" "--output" internal "--off" "--output" external "--auto"))
+          (defun switch-to-external-monitor ()
+            (start-process
+             "xrandr" nil
+             "xrandr" "--output" internal "--off" "--output" external "--auto"))
 
-       (defun  switch-to-internal-monitor ()
-         (start-process
-          "xrandr" nil
-          "xrandr" "--output" external "--off" "--output" internal "--auto"))
+          (defun  switch-to-internal-monitor ()
+            (start-process
+             "xrandr" nil
+             "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
-       (defun xrandr ()
-         ;; when external is already plugged in on startup, fire extra
-         (when (and (string-match (concat external " connected")
-                                  (shell-command-to-string "xrandr"))
-                    (< (string-to-number (emacs-uptime "%s")) 5))
-           (switch-to-internal-monitor))
+          (defun xrandr ()
+            ;; when external is already plugged in on startup, fire extra
+            (when (and (string-match (concat external " connected")
+                                     (shell-command-to-string "xrandr"))
+                       (< (string-to-number (emacs-uptime "%s")) 5))
+              (switch-to-internal-monitor))
 
-         (if (string-match (concat external " connected")
-                           (shell-command-to-string "xrandr"))
-             (switch-to-external-monitor)
-           (switch-to-internal-monitor)))
+            (if (string-match (concat external " connected")
+                              (shell-command-to-string "xrandr"))
+                (switch-to-external-monitor)
+              (switch-to-internal-monitor)))
 
-       (require 'exwm-randr)
-       (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-       (exwm-randr-enable)
+          (require 'exwm-randr)
+          (add-hook 'exwm-randr-screen-change-hook 'xrandr)
+          (exwm-randr-enable)
 
-       (exwm-enable))
+          (exwm-enable))
 
-     ;; Exwm
-     (start-process ;;unifont-12, Liberation Mono-13, ...
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"Liberation Mono-13\" nil t)"))))
+        ;; Exwm
+        (start-process ;;unifont-12
+         "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-24\" nil t)"))))
 
 ;;;;bootstrap straight.el
 
@@ -282,16 +280,22 @@
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
+(when (not (file-exists-p (concat (getenv "HOME") "/.local/share/fonts/all-the-icons.ttf")))
+  (all-the-icons-install-fonts t))
+
 (add-hook 'after-init-hook (lambda ()
                              ;; theme
-                             (when (not (file-exists-p (concat (getenv "HOME") "/.local/share/fonts/all-the-icons.ttf")))
-                               (all-the-icons-install-fonts t))
                              (blink-cursor-mode 1)
                              (display-time-mode 1)
-                             (load-theme 'doom-one t)
+                             (load-theme 'doom-outrun-electric t)
                              (setq doom-modeline-icon t)
                              (doom-modeline-mode 1)
+                             (exwm-transparency)
                              (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
+
+(defun exwm-transparency ()
+  (set-frame-parameter (selected-frame) 'alpha '(95)))
+(add-hook 'exwm-workspace-switch-hook 'exwm-transparency)
 
 ;;;;settings
 

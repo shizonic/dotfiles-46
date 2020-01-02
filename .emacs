@@ -29,24 +29,24 @@
   (setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
   (setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt")))
 
-(setq system-profile-path
-      (string-trim (shell-command-to-string "grep -E '^export PATH' /etc/profile") "export PATH="))
+(defvar system-profile-path
+  (string-trim (shell-command-to-string "grep -E '^export PATH' /etc/profile") "export PATH="))
 
-(setq my-path-insert
-      (concat
-       (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))
-       "/usr/local/bin:"))
+(defvar my-path-insert
+  (concat
+   (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))
+   "/usr/local/bin:"))
 
-(setq my-path-append (concat ":" exec-directory))
+(defvar my-path-append (concat ":" exec-directory))
 
 (setenv "PATH"
         (string-join
-         (setq exec-path
-               (delete-dups (split-string
-                             (concat
-                              my-path-insert
-                              system-profile-path
-                              my-path-append) ":"))) ":"))
+         (setq-default exec-path
+                       (delete-dups (split-string
+                                     (concat
+                                      my-path-insert
+                                      system-profile-path
+                                      my-path-append) ":"))) ":"))
 
 (with-eval-after-load 'tramp
   (defvar my-sync-tramp-path nil
@@ -119,8 +119,8 @@
 
      ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
      (with-eval-after-load 'exwm
-       (setq external "VGA-1"
-             internal "LVDS-1")
+       (defvar external "VGA-1")
+       (defvar internal "LVDS-1")
 
        (defun switch-to-external-monitor ()
          (start-process
@@ -295,8 +295,7 @@
 
 ;;;;settings
 
-(setq my-abook "~/contacts.el"
-      apropos-do-all t
+(setq apropos-do-all t
       require-final-newline t
       ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
@@ -672,7 +671,7 @@ current frame."
   (setq-default
    gnus-summary-line-format "%U%R%z %(%&user-date;  %-15,15f  %B (%c) %s%)\n"
    gnus-user-date-format-alist '((t . "%Y-%m-%d %H:%M"))
-   gnus-group-line-format "%M%S%p%P%5y:%B %G\n";;"%B%(%g%)"
+   gnus-group-line-format "%M%S%p%P%5y:%B %G\n" ;;"%B%(%g%)"
    gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references
    gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date)
    gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\”]\”[#’()]"
@@ -702,6 +701,8 @@ current frame."
 
 ;; abook
 
+(defvar my-abook "~/contacts.el")
+
 (when (file-exists-p my-abook)
   (progn
     (load-file my-abook)
@@ -711,8 +712,8 @@ current frame."
     ;;                         (nick . nick@nick.com)
     ;;                         (john . john@doe.com)))
 
-    (setq my-contact-keys (cl-loop for (key . value) in my-contact-list
-                                   collect key))
+    (setq-local my-contact-keys (cl-loop for (key . value) in my-contact-list
+                                         collect key))
 
     (defun abook ()
       "Insert an email address from `my-contact-list' to the current buffer."

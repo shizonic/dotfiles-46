@@ -198,6 +198,7 @@
 
 ;; toolbox
 (straight-use-package 'crux)
+(straight-use-package 'keychain-environment)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
@@ -206,11 +207,6 @@
 ;; lang
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
-
-;;;;misc. manually installed
-
-(add-to-list 'load-path "~/repos/dotfiles/site-lisp")
-(require 'keychain-environment)
 
 ;;;;bindings
 

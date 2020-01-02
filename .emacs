@@ -30,11 +30,12 @@
   (setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt")))
 
 (setq system-profile-path
-      (string-trim (shell-command-to-string "grep PATH /etc/profile") "export PATH="))
+      (string-trim (shell-command-to-string "grep -E '^export PATH' /etc/profile") "export PATH="))
 
-(setq my-path-insert (concat "/usr/local/bin:"
-                             (getenv "HOME") "/bin:"
-                             (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))))
+(setq my-path-insert
+      (concat
+       (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))
+       "/usr/local/bin:"))
 
 (setq my-path-append (concat ":" exec-directory))
 
@@ -83,7 +84,11 @@
                              (require 'server)
                              (when (not (server-running-p))
                                (server-start)
-                               (sx))))
+                               (sx))
+                             (when (get-buffer "*scratch*")
+                               (kill-buffer "*scratch*"))
+                             (when (get-buffer "emacsfgdaemon")
+                               (kill-buffer "emacsfgdaemon"))))
 
 (global-set-key (kbd "C-x C-c") 'kill-xsession)
 (defun kill-xsession ()
@@ -146,8 +151,8 @@
        (exwm-enable))
 
      ;; Exwm
-     (start-process
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"Monospace-12\" nil t)"))))
+     (start-process ;;unifont-12, Liberation Mono-13, ...
+      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"Liberation Mono-13\" nil t)"))))
 
 ;;;;bootstrap straight.el
 
@@ -177,24 +182,37 @@
 
 ;;;;pkgs
 
+;; exwm
+(straight-use-package 'bind-key)
 (straight-use-package 'exwm)
 (straight-use-package 'desktop-environment)
-(straight-use-package 'bind-key)
+(straight-use-package 'all-the-icons)
+(straight-use-package 'all-the-icons-dired)
+(straight-use-package 'doom-themes)
+(straight-use-package 'doom-modeline)
+
+;; abo-abo I have embraced your stuff
+(straight-use-package 'ivy)
+(straight-use-package 'swiper)
+(straight-use-package 'counsel)
+(straight-use-package 'counsel-projectile)
+(straight-use-package 'lispy)
+
+;; toolbox
+(straight-use-package 'crux)
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
 (straight-use-package 'aggressive-indent)
-(straight-use-package 'paredit)
+
+;; lang
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
 
-;;;;manually install pkgs
+;;;;misc. manually installed
 
 (add-to-list 'load-path "~/repos/dotfiles/site-lisp")
 (require 'keychain-environment)
-(require 'browse-kill-ring)
-(require 'crux)
-(require 'transpose-frame)
 
 ;;;;bindings
 
@@ -203,13 +221,13 @@
 (global-unset-key (kbd "C-x C-z"))
 
 ;; minor modes may override
-(bind-key "C-s" 'isearch-forward-regexp)
-(bind-key "C-r" 'isearch-backward-regexp)
 (bind-key "C-a" 'crux-move-beginning-of-line)
-(bind-key "C-c C-k" 'crux-kill-whole-line)
+(bind-key "C-s" 'swiper)
 
 ;; minor modes may not override (global)
-(bind-key* "C-x C-b" 'ibuffer)
+(bind-key* "C-S-k" 'crux-kill-whole-line)
+(bind-key* "C-c C-r" 'ivy-resume)
+(bind-key* "C-x C-b" 'ivy-switch-buffer)
 (bind-key* "C-o" 'crux-smart-open-line)
 (bind-key* "C-c g" 'magit-status)
 (bind-key* "C-c p" 'projectile-command-map)
@@ -226,8 +244,7 @@
 (bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
 (bind-key* "C-`" 'spacemacs/alternate-window)
 (bind-key* "C--" 'bury-buffer)
-(bind-key* "M-y" 'browse-kill-ring)
-(bind-key* "M-/" 'hippie-expand)
+(bind-key "M-/" 'hippie-expand)
 
 ;; window-related binds, doubly reinforced
 (exwm-input-set-key (kbd "s-w") 'just-use-chrome)(bind-key* "s-w" 'just-use-chrome)
@@ -241,7 +258,6 @@
 (exwm-input-set-key (kbd "C-3") 'split-window-right)(bind-key* "C-3" 'split-window-right)
 (exwm-input-set-key (kbd "C-0") 'delete-window)(bind-key* "C-0" 'delete-window)
 (exwm-input-set-key (kbd "C--") 'bury-buffer)(bind-key* "C--" 'bury-buffer)
-(exwm-input-set-key (kbd "s-r") 'rotate-frame-clockwise)(bind-key* "s-r" 'rotate-frame-clockwise)
 (exwm-input-set-key (kbd "s-u") 'winner-undo)(bind-key* "s-u" 'winner-undo)
 (exwm-input-set-key (kbd "s-U") 'winner-redo)(bind-key* "s-U" 'winner-redo)
 (exwm-input-set-key (kbd "<s-up>") 'enlarge-window)(bind-key* "<s-up>" 'enlarge-window)
@@ -251,7 +267,7 @@
 (exwm-input-set-key (kbd "<C-return>") 'other-window)(bind-key* "<C-return>" 'other-window)
 (exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)(bind-key* "<menu>" 'ido-switch-buffer)
 (exwm-input-set-key (kbd "s-!") (lambda ()(interactive) (call-interactively 'dmenu)))(bind-key* "s-!" 'dmenu)
-(exwm-input-set-key (kbd "s-&") (lambda ()(interactive) (call-interactively 'open-yt-dl)))(bind-key* "s-&" 'open-yt-dl)
+(exwm-input-set-key (kbd "s-^") (lambda ()(interactive) (call-interactively 'open-yt-dl)))(bind-key* "s-^" 'open-yt-dl)
 (bind-key* (kbd "<C-kp-add>") (lambda () (interactive) (text-scale-adjust 1)))
 (bind-key* (kbd "<C-kp-subtract>") (lambda () (interactive) (text-scale-adjust -1)))
 (exwm-input-set-key (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
@@ -262,13 +278,20 @@
 
 ;;;;theme
 
-(blink-cursor-mode 1)
-
-(display-time-mode 1)
-
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
+
+(add-hook 'after-init-hook (lambda ()
+                             ;; theme
+                             (when (not (file-exists-p (concat (getenv "HOME") "/.local/share/fonts/all-the-icons.ttf")))
+                               (all-the-icons-install-fonts t))
+                             (blink-cursor-mode 1)
+                             (display-time-mode 1)
+                             (load-theme 'doom-one t)
+                             (setq doom-modeline-icon t)
+                             (doom-modeline-mode 1)
+                             (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
 
 ;;;;settings
 
@@ -277,12 +300,7 @@
       require-final-newline t
       ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
-      ido-everywhere t
-      ido-enable-flex-matching t
-      ido-use-filename-at-point 'guess
       save-interprogram-paste-before-kill t
-      ido-create-new-buffer 'always
-      ido-auto-merge-work-directories-length -1
       tab-always-indent 'complete
       tramp-default-method "ssh"
       vc-follow-symlinks t
@@ -300,7 +318,19 @@
               tab-width 8
               fill-column 80)
 
-(ido-mode t)
+;; old girl
+;; (ido-mode 1)
+;; (ido-everywhere 1)
+;; (setq ido-create-new-buffer 'always
+;;       ido-auto-merge-work-directories-length -1
+;;       ido-enable-flex-matching t
+;;       ido-use-filename-at-point 'guess)
+
+(ivy-mode 1)
+(counsel-mode 1)
+(counsel-projectile-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
 
 (show-paren-mode 1)
 
@@ -319,6 +349,8 @@
 (set-keyboard-coding-system 'utf-8)
 
 (winner-mode 1)
+
+(recentf-mode 1)
 
 ;;;;functions
 
@@ -510,9 +542,9 @@ current frame."
 (add-hook 'eshell-mode-hook '(lambda ()
                                (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
-(defadvice he-substitute-string (after he-paredit-fix)
+(defadvice he-substitute-string (after he-lispy-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (paredit-mode)
+  (if (and (lispy-mode)
            (equal (substring str -1) ")"))
       (progn (backward-delete-char 1) (forward-char))))
 
@@ -535,10 +567,10 @@ current frame."
 
 ;; lisp
 
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-(add-hook 'ielm-mode-hook 'paredit-mode)
-(add-hook 'lisp-mode-hook 'paredit-mode)
-(add-hook 'slime-repl-mode-hook 'paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'lispy-mode)
+(add-hook 'ielm-mode-hook 'lispy-mode)
+(add-hook 'lisp-mode-hook 'lispy-mode)
+(add-hook 'slime-repl-mode-hook 'lispy-mode)
 
 (defun my-ielm ()
   (interactive)
@@ -790,20 +822,23 @@ Xft.lcdfilter: lcddefault")
       desktop-environment-brightness-normal-decrement "-s 5%"
       desktop-environment-brightness-get-command "lux -G")
 
-(defun dmenu (command)
-  (interactive (list (read-shell-command "$ ")))
-  (start-process-shell-command command nil command))
+(defun dmenu-action (x)
+  (start-process x nil x))
 
-(defun netsurf (url)
-  (start-process-shell-command "netsurf-gtk3" nil (concat "netsurf-gtk3 " url)))
-
-(defun just-use-chrome ()
+(defun dmenu ()
   (interactive)
-  (with-temp-buffer (yank))
-  (start-process-shell-command "chromium" nil (concat "chromium " (nth 0 kill-ring))))
+  (ivy-read "Run: "
+            (delete-dups (append (directory-files "/home/adam/.nix-profile/bin")
+                                 (directory-files "/usr/local/bin")
+                                 (directory-files "/usr/bin")))
+            :action 'dmenu-action
+            :caller 'dmenu))
+
+(defun external-browser (url)
+  (start-process-shell-command "chromium" nil (concat "chromium " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'netsurf
+      shr-external-browser 'external-browser
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
 (defvar yt-dl-player "mpv"

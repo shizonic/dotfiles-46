@@ -12,8 +12,7 @@
       gnutls-verify-error t
       package-archives nil
       package-enable-at-startup nil
-      gc-cons-threshold 100000000
-      debug-on-error nil)
+      gc-cons-threshold 100000000)
 
 ;;;;ENV/PATH
 
@@ -134,7 +133,7 @@
           "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
        (defun xrandr ()
-         ;; when external is already plugged in on startup, fire extra
+         ;; workaround when external is already plugged in on startup
          (when (and (string-match (concat external " connected")
                                   (shell-command-to-string "xrandr"))
                     (< (string-to-number (emacs-uptime "%s")) 5))
@@ -220,6 +219,7 @@
 (bind-key "C-r" 'isearch-backward-regexp)
 
 ;; minor modes may not override (global)
+(bind-key* "C-x C-b" 'ido-switch-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "C-S-k" 'crux-kill-whole-line)
 (bind-key* "C-o" 'crux-smart-open-line)

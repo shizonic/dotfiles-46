@@ -76,8 +76,8 @@
           "EDITOR=ed"
           "PAGER=cat"
           "MAKEFLAGS=j5"
-          "CFLOAGS=-O2 -pipe"
-          "CXXFLAGS=-O2 -pipe"
+          "CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
+          "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
           "KISS_PATH=/home/adam/repos/kiss-overlay:/home/adam/repos/community/community:/root/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg")))
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
@@ -723,8 +723,8 @@ current frame."
     ;;                         (nick . nick@nick.com)
     ;;                         (john . john@doe.com)))
 
-    (setq-local my-contact-keys (cl-loop for (key . value) in my-contact-list
-                                         collect key))
+    (setq my-contact-keys (cl-loop for (key . value) in my-contact-list
+                                   collect key))
 
     (defun abook ()
       "Insert an email address from `my-contact-list' to the current buffer."

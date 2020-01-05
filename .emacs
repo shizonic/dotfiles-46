@@ -48,11 +48,8 @@
                                       my-path-append) ":"))) ":"))
 
 (with-eval-after-load 'tramp
-  (defvar my-sync-tramp-path nil
-    "probably not a good idea setting this to t")
-
-  (when (bound-and-true-p my-sync-tramp-path)
-    (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+  ;; make tramp use remote machine's PATH
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
   ;; define remote tramp env
   (setq tramp-remote-process-environment
@@ -75,6 +72,7 @@
           "MAKEFLAGS=j5"
           "CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
           "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"))
+
   (add-to-list 'tramp-remote-process-environment
                (string-trim (shell-command-to-string "grep KISS_PATH /etc/profile") "export ")))
 
@@ -225,6 +223,7 @@
 (bind-key* "C-c t b" 'buffer-to-termbin)
 (bind-key* "C-c #" 'my-su-edit)
 (bind-key* "C-c $" 'my-switch-to-home)
+(bind-key* "C-c `" 'crux-create-scratch-buffer)
 (bind-key* "C-c I" (lambda () (interactive) (find-file user-init-file)))
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
@@ -286,11 +285,14 @@
 
 (add-hook 'after-init-hook (lambda ()
                              ;; theme
+                             ()
                              (display-time-mode 1)
                              (blink-cursor-mode -1)
-                             (load-theme 'nofrils-acme t)))
+                             (load-theme 'nofrils-sepia t)))
 
-(add-hook 'prog-mode-hook (lambda () (fringe-mode -1)))
+(add-hook 'prog-mode-hook (lambda ()
+                            (fringe-mode -1)
+                            (hl-line-mode 1)))
 
 ;;;;settings
 
@@ -560,6 +562,7 @@ current frame."
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
 (add-hook 'lisp-mode-hook 'paredit-mode)
+(add-hook 'scheme-mode-hook 'paredit-mode)
 (add-hook 'slime-repl-mode-hook 'paredit-mode)
 
 (defun my-ielm ()
@@ -831,13 +834,13 @@ Xft.lcdfilter: lcddefault")
   "Video player used by `eww-open-yt-dl'")
 
 (defun open-yt-dl ()
-  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
+"Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
 Specify the video player to use by setting the value of `yt-dl-player'"
-  (interactive)
-  (when (executable-find "youtube-dl")
-    (progn
-      (if (string-match  "*eww*" (format "%s"(current-buffer)))
-          (eww-copy-page-url)
-        (with-temp-buffer (yank)))
-      (start-process-shell-command "youtube-dl" nil
-                                   (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))
+(interactive)
+(when (executable-find "youtube-dl")
+  (progn
+    (if (string-match  "*eww*" (format "%s"(current-buffer)))
+        (eww-copy-page-url)
+      (with-temp-buffer (yank)))
+    (start-process-shell-command "youtube-dl" nil
+                                 (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))

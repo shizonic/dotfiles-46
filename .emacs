@@ -76,7 +76,7 @@
           "CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
           "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"))
   (add-to-list 'tramp-remote-process-environment
-             (string-trim (shell-command-to-string "grep KISS_PATH /etc/profile") "export ")))
+               (string-trim (shell-command-to-string "grep KISS_PATH /etc/profile") "export ")))
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
 
@@ -182,9 +182,7 @@
 (straight-use-package 'bind-key)
 (straight-use-package 'exwm)
 (straight-use-package 'desktop-environment)
-(straight-use-package 'plan9-theme)
-(straight-use-package 'all-the-icons)
-(straight-use-package 'all-the-icons-dired)
+(straight-use-package 'nofrils-acme-theme)
 
 ;; toolbox
 (straight-use-package 'magit)
@@ -199,9 +197,6 @@
 ;; lang
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
-
-(add-to-list 'load-path "~/repos/dotfiles/site-lisp")
-(require 'minimal)
 
 ;;;;bindings
 
@@ -284,36 +279,18 @@
 (exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
 
 ;;;;theme
-(minimal-mode 1)
 
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
-(when (not (file-exists-p (concat (getenv "HOME") "/.local/share/fonts/all-the-icons.ttf")))
-  (all-the-icons-install-fonts t))
-
 (add-hook 'after-init-hook (lambda ()
                              ;; theme
-                             (blink-cursor-mode 1)
-                             (load-theme 'plan9 t)
-                             (minimal-mode 1)))
+                             (display-time-mode 1)
+                             (blink-cursor-mode -1)
+                             (load-theme 'nofrils-acme t)))
 
-(add-hook 'first-change-hook (lambda ()
-                               (setq minimal-mode-line-background "darkred")
-                               (minimal-mode 1)))
-
-(add-hook 'after-save-hook (lambda ()
-                             (setq minimal-mode-line-background "black")
-                             (minimal-mode 1)))
-
-(defadvice undo (after hl-line-when-unmodified activate)
-  (unless (buffer-modified-p)
-    (setq minimal-mode-line-background "black")
-    (minimal-mode 1)))
-
-(setq minimal-mode-line-background "black")
-(minimal-mode 1)
+(add-hook 'prog-mode-hook (lambda () (fringe-mode -1)))
 
 ;;;;settings
 

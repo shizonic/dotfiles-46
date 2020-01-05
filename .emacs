@@ -180,7 +180,6 @@
 (straight-use-package 'bind-key)
 (straight-use-package 'exwm)
 (straight-use-package 'desktop-environment)
-(straight-use-package 'nofrils-acme-theme)
 
 ;; toolbox
 (straight-use-package 'magit)
@@ -287,12 +286,10 @@
                              ;; theme
                              ()
                              (display-time-mode 1)
-                             (blink-cursor-mode -1)
-                             (load-theme 'nofrils-sepia t)))
+                             (blink-cursor-mode 1)))
 
 (add-hook 'prog-mode-hook (lambda ()
-                            (fringe-mode -1)
-                            (hl-line-mode 1)))
+                            (fringe-mode -1)))
 
 ;;;;settings
 

@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;;; THE ANTI DESKTOP EMACS OPERATING SYSTEM + Linux
-
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com"
       initial-major-mode 'emacs-lisp-mode
@@ -11,8 +9,7 @@
       tls-checktrust t
       gnutls-verify-error t
       package-archives nil
-      package-enable-at-startup nil
-      gc-cons-threshold 100000000)
+      package-enable-at-startup nil)
 
 ;;;;ENV/PATH
 
@@ -77,8 +74,9 @@
           "PAGER=cat"
           "MAKEFLAGS=j5"
           "CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
-          "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
-          "KISS_PATH=/home/adam/repos/kiss-overlay:/home/adam/repos/community/community:/root/community/community:/var/db/kiss/repo/core:/var/db/kiss/repo/extra:/var/db/kiss/repo/xorg")))
+          "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"))
+  (add-to-list 'tramp-remote-process-environment
+             (string-trim (shell-command-to-string "grep KISS_PATH /etc/profile") "export ")))
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
 
@@ -114,10 +112,8 @@
      ;; Xresources
      (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
-     (start-process "picom" nil "picom" "--backend" "glx")
-     (start-process "esetroot" nil "esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))
 
-     ;; Exwm xrandr - auto turn off laptop display and move to external monitor display when plugged in
+     ;; Exwm xrandr - auto move display to external monitor on plug
      (with-eval-after-load 'exwm
        (defvar external "VGA-1")
        (defvar internal "LVDS-1")
@@ -133,10 +129,10 @@
           "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
        (defun xrandr ()
-         ;; workaround when external is already plugged in on startup
+         ;; HACK when external is already plugged
          (when (and (string-match (concat external " connected")
                                   (shell-command-to-string "xrandr"))
-                    (< (string-to-number (emacs-uptime "%s")) 5))
+                    (< (string-to-number (emacs-uptime "%s")) 10))
            (switch-to-internal-monitor))
 
          (if (string-match (concat external " connected")
@@ -146,15 +142,13 @@
 
        (require 'exwm-randr)
        (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-       (add-hook 'exwm-randr-screen-change-hook (lambda ()
-                                                  (start-process "esetroot" nil "esetroot" "-fit" (concat (getenv "HOME") "/.wallpaper"))))
        (exwm-randr-enable)
 
        (exwm-enable))
 
      ;; Exwm
-     (start-process ;;unifont-12
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-24\" nil t)"))))
+     (start-process
+      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-12\" nil t)"))))
 
 ;;;;bootstrap straight.el
 
@@ -188,10 +182,9 @@
 (straight-use-package 'bind-key)
 (straight-use-package 'exwm)
 (straight-use-package 'desktop-environment)
+(straight-use-package 'plan9-theme)
 (straight-use-package 'all-the-icons)
 (straight-use-package 'all-the-icons-dired)
-(straight-use-package 'doom-themes)
-(straight-use-package 'doom-modeline)
 
 ;; toolbox
 (straight-use-package 'magit)
@@ -206,6 +199,9 @@
 ;; lang
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
+
+(add-to-list 'load-path "~/repos/dotfiles/site-lisp")
+(require 'minimal)
 
 ;;;;bindings
 
@@ -288,6 +284,7 @@
 (exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
 
 ;;;;theme
+(minimal-mode 1)
 
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
@@ -299,16 +296,24 @@
 (add-hook 'after-init-hook (lambda ()
                              ;; theme
                              (blink-cursor-mode 1)
-                             (display-time-mode 1)
-                             (load-theme 'doom-outrun-electric t)
-                             (setq doom-modeline-icon t)
-                             (doom-modeline-mode 1)
-                             (exwm-transparency)
-                             (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
+                             (load-theme 'plan9 t)
+                             (minimal-mode 1)))
 
-(defun exwm-transparency ()
-  (set-frame-parameter (selected-frame) 'alpha '(95)))
-(add-hook 'exwm-workspace-switch-hook 'exwm-transparency)
+(add-hook 'first-change-hook (lambda ()
+                               (setq minimal-mode-line-background "darkred")
+                               (minimal-mode 1)))
+
+(add-hook 'after-save-hook (lambda ()
+                             (setq minimal-mode-line-background "black")
+                             (minimal-mode 1)))
+
+(defadvice undo (after hl-line-when-unmodified activate)
+  (unless (buffer-modified-p)
+    (setq minimal-mode-line-background "black")
+    (minimal-mode 1)))
+
+(setq minimal-mode-line-background "black")
+(minimal-mode 1)
 
 ;;;;settings
 
@@ -333,7 +338,6 @@
               tab-width 8
               fill-column 80)
 
-;; old girl
 (ido-mode 1)
 (ido-everywhere 1)
 (setq ido-create-new-buffer 'always
@@ -746,9 +750,6 @@ current frame."
   (interactive)
 
   (require 'f)
-
-  ;; put flag
-  (f-write-text "dotfiles" 'utf-8 "~/.emacs.d/.dotfiles")
 
   ;; root dotfiles
   (with-temp-buffer

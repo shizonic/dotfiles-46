@@ -94,7 +94,7 @@
   (interactive)
 
   (setenv "DISPLAY" ":0")
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt7" "v" "-arinterval" "30" "-ardelay" "175")
 
   (async-start
    (lambda ()
@@ -146,7 +146,7 @@
 
      ;; Exwm
      (start-process
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-12\" nil t)"))))
+      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-24\" nil t)"))))
 
 ;;;;bootstrap straight.el
 
@@ -232,6 +232,8 @@
 (bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
 (bind-key* "C-`" 'spacemacs/alternate-window)
 (bind-key* "C--" 'bury-buffer)
+(bind-key* "<home>" 'unlock)
+(bind-key* "<end>" 'lock)
 (bind-key "M-/" 'hippie-expand)
 
 ;; window-related binds, doubly reinforced
@@ -339,9 +341,13 @@
 
 (winner-mode 1)
 
-(recentf-mode 1)
-
 ;;;;functions
+
+(defun process-exit-code-and-output (program &rest args)
+  "Run PROGRAM with ARGS and return the exit code and output in a list."
+  (with-temp-buffer
+    (list (apply 'call-process program nil (current-buffer) nil args)
+          (buffer-string))))
 
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
@@ -452,6 +458,27 @@ current frame."
 
 ;;;;eshell
 
+(defun shutdown (&optional x)
+  "for use with sinit - shutdown -r|-p"
+  (if (or (string= x "-r")
+          (string= x "-p"))
+      (progn
+        (with-temp-buffer
+          (suroot)
+          ;; poweroff
+          (when (string= x "-p")
+            (async-shell-command "kill -s USR1 1"))
+          ;; reboot
+          (when (string= x "-r")
+            (async-shell-command "kill -s INT 1"))))
+    (format "%s" (prin1 "use the -p|-r switch"))))
+
+(defun eshell/k (&optional x y)
+  "simple kiss pkg manager front-end"
+  (with-temp-buffer
+    (cd "/su::")
+    (async-shell-command (concat "kiss " x " " y))))
+
 (add-hook 'eshell-directory-change-hook 'eshell/ls)
 
 (defun eshell/emacs (file)
@@ -471,12 +498,6 @@ current frame."
     (progn
       (insert "cd ..")
       (eshell-send-input))))
-
-(defun eshell/k (&optional x y)
-  "simple kiss pkg manager front-end"
-  (with-temp-buffer
-    (cd "/su::")
-    (async-shell-command (concat "kiss " x " " y))))
 
 ;;;;programming
 
@@ -511,7 +532,8 @@ current frame."
 (electric-pair-mode 1)
 
 (setq magit-diff-refine-hunk t)
-(setq magit-repository-directories '(("~/repos" . 1)))
+(setq magit-repository-directories '(("~/repos" . 1)
+                                     ("~/repos/systemE" . 1)))
 
 (projectile-mode 1)
 
@@ -555,6 +577,13 @@ current frame."
 (add-hook 'makefile-mode-hook 'makefile-mode-defaults)
 
 ;; lisp
+
+(defun my-elisp-mode-hook()
+  (setq-local compile-command
+              '((lambda()
+                  (save-buffer)
+                  (async-shell-command (buffer-file-name))))))
+(add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
 
 (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
 (add-hook 'ielm-mode-hook 'paredit-mode)
@@ -607,7 +636,6 @@ current frame."
                                        "#kisslinux"
                                        "#liguros"
                                        "#commanduser"
-                                       "##apoptosis"
                                        "#emacs")))
 
   (defun my-erc-multi-line-disable (string)

@@ -94,7 +94,7 @@
   (interactive)
 
   (setenv "DISPLAY" ":0")
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt7" "v" "-arinterval" "30" "-ardelay" "175")
+  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
 
   (async-start
    (lambda ()
@@ -295,7 +295,8 @@
 
 ;;;;settings
 
-(setq apropos-do-all t
+(setq mouse-yank-at-point t
+      apropos-do-all t
       require-final-newline t
       ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))

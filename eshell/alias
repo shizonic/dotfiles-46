@@ -1,7 +1,9 @@
-alias emacs find-file $1
-alias la ls -la $*
-alias ll ls -l $*
-alias ln *ln $*
-alias cp *cp $*
-alias mv *mv $*
+alias reboot shutdown -p
+alias poweroff shutdown -r
 alias rm *rm $*
+alias mv *mv $*
+alias cp *cp $*
+alias ln *ln $*
+alias ll ls -l $*
+alias la ls -la $*
+alias emacs find-file $1

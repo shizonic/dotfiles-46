@@ -69,7 +69,7 @@
           ;; my values
           "EDITOR=ed"
           "PAGER=cat"
-          "MAKEFLAGS=j5"
+          "MAKEFLAGS=j4"
           "CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
           "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"))
 
@@ -264,8 +264,12 @@
 (bind-key* "<C-right>" 'enlarge-window-horizontally)
 (exwm-input-set-key (kbd "<C-left>") 'shrink-window-horizontally)
 (bind-key* "<C-left>" 'shrink-window-horizontally)
-(exwm-input-set-key (kbd "<menu>") 'ido-switch-buffer)
-(bind-key* "<menu>" 'ido-switch-buffer)
+(exwm-input-set-key (kbd "<menu>") 'dmenu)
+
+(bind-key* "<menu>" 'dmenu)
+(exwm-input-set-key (kbd "<menu>") 'dmenu)
+(bind-key* "<s-backspace>" 'ido-kill-buffer)
+(exwm-input-set-key (kbd "<s-backspace>") 'ido-kill-buffer)
 
 (exwm-input-set-key (kbd "s-^") (lambda ()(interactive) (call-interactively 'open-yt-dl)))
 (bind-key* "s-^" 'open-yt-dl)
@@ -286,7 +290,6 @@
 
 (add-hook 'after-init-hook (lambda ()
                              ;; theme
-                             ()
                              (display-time-mode 1)
                              (blink-cursor-mode 1)))
 
@@ -459,20 +462,27 @@ current frame."
 
 ;;;;eshell
 
-(defun shutdown (&optional x)
-  "for use with sinit - shutdown -r|-p"
-  (if (or (string= x "-r")
-          (string= x "-p"))
-      (progn
-        (with-temp-buffer
-          (suroot)
-          ;; poweroff
-          (when (string= x "-p")
-            (async-shell-command "kill -s USR1 1"))
-          ;; reboot
-          (when (string= x "-r")
-            (async-shell-command "kill -s INT 1"))))
-    (format "%s" (prin1 "use the -p|-r switch"))))
+(defun shutdown ()
+  (interactive)
+  (let ((choices '("reboot" "poweroff")))
+    (message "%s" (setq temp-shutdown-choice (ido-completing-read "Shutdown:" choices )))
+    (with-temp-buffer
+      (suroot)
+      (if (string= temp-shutdown-choice "reboot")
+          (async-shell-command "kill -s INT 1")
+        (async-shell-command "kill -s USR1 1")))))
+
+(defun dmenu ()
+  (interactive)
+  (let ((choices (remove "."
+                         (remove ".."
+                                 (delete-dups ;; todo - iterate exec-path instead
+                                  (append
+                                   (directory-files (concat (getenv "HOME") "/.nix-profile/bin"))
+                                   (directory-files "/usr/local/bin")
+                                   (directory-files "/bin")))))))
+    (setq-local choice (message "%s" (ido-completing-read "Shutdown:" choices )))
+    (start-process choice nil choice)))
 
 (defun eshell/k (&optional x y)
   "simple kiss pkg manager front-end"
@@ -501,6 +511,8 @@ current frame."
       (eshell-send-input))))
 
 ;;;;programming
+
+(setq grep-command "grep --color -r ")
 
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
@@ -533,8 +545,7 @@ current frame."
 (electric-pair-mode 1)
 
 (setq magit-diff-refine-hunk t)
-(setq magit-repository-directories '(("~/repos" . 1)
-                                     ("~/repos/systemE" . 1)))
+(setq magit-repository-directories '(("~/repos" . 1)))
 
 (projectile-mode 1)
 
@@ -799,18 +810,13 @@ Xft.lcdfilter: lcddefault")
 (require 'exwm-config)
 
 (defun exwm-config-default ()
-  (toggle-frame-fullscreen)
   (setq exwm-input-global-keys
-        `(([?\s-w] . exwm-workspace-switch)
-          ,@(mapcar (lambda (i)
-                      `(,(kbd (format "<s-f%d>" (1+ i))) .
+        `(,@(mapcar (lambda (i)
+                      `(,(kbd (format "s-%d" i)) .
                         (lambda ()
                           (interactive)
                           (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))
-          ([?\s-&] . (lambda (command)
-                       (interactive (list (read-shell-command "$ ")))
-                       (start-process-shell-command command nil command)))))
+                    (number-sequence 0 9))))
 
   (setq exwm-input-simulation-keys
         '(

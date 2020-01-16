@@ -23,17 +23,11 @@
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
 
-(when (file-directory-p "/nix")
-  (setenv "NIX_PROFILES" (concat (getenv "HOME") "/nix/var/nix/profiles/default " (getenv "$HOME") "/.nix-profile"))
-  (setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
-  (setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt")))
-
 (defvar system-profile-path
   (string-trim (shell-command-to-string "grep -E '^export PATH' /etc/profile") "export PATH="))
 
 (defvar my-path-insert
   (concat
-   (when (file-directory-p "/nix") (concat (getenv "HOME") "/.nix-profile/bin:"))
    "/usr/local/bin:"))
 
 (defvar my-path-append (concat ":" exec-directory))
@@ -505,10 +499,8 @@ current frame."
   (interactive)
   (let ((choices (remove "."
                          (remove ".."
-                                 (delete-dups ;; todo - iterate exec-path instead
+                                 (delete-dups
                                   (append
-                                   (when (file-exists-p (concat (getenv "HOME") "/.nix-profile/bin"))
-                                     (directory-files (concat (getenv "HOME") "/.nix-profile/bin")))
                                    (directory-files "/usr/local/bin")
                                    (directory-files "/bin")))))))
     (setq-local choice (message "%s" (ido-completing-read "Shutdown:" choices )))

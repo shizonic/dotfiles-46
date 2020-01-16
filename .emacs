@@ -15,8 +15,8 @@
 
 (require 'subr-x)
 
-(setq shell-file-name "/bin/sh")
-(setenv "SHELL" "/bin/sh")
+(setq shell-file-name "/bin/dash")
+(setenv "SHELL" "/bin/dash")
 
 (setenv "HOME" (concat "/home/" user-login-name))
 (setenv "PAGER" "cat")
@@ -68,13 +68,24 @@
 
           ;; my values
           "EDITOR=ed"
-          "PAGER=cat"
-          "MAKEFLAGS=j4"
-          "CFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"
-          "CXXFLAGS=-march=x86-64 -mtune=generic -O2 -pipe"))
+          "PAGER=cat"))
 
   (add-to-list 'tramp-remote-process-environment
+               (concat "CFLAGS="(string-trim
+                                 (string-trim (shell-command-to-string "grep CFLAGS /etc/profile")
+                                              "export ") "CFLAGS=\\\""  "\\\"")))
+  (add-to-list 'tramp-remote-process-environment
+               (concat "CFLAGS="(string-trim
+                                 (string-trim (shell-command-to-string "grep CFLAGS /etc/profile")
+                                              "export ") "CXXFLAGS=\\\""  "\\\"")))
+  (add-to-list 'tramp-remote-process-environment
+               (string-trim (shell-command-to-string "grep MAKEFLAGS /etc/profile") "export "))
+  (add-to-list 'tramp-remote-process-environment
                (string-trim (shell-command-to-string "grep KISS_PATH /etc/profile") "export ")))
+
+(string-trim (shell-command-to-string "grep CFLAGS /etc/profile") "export ")
+
+
 
 ;;;;$ chsh -s #!/bin/emacs --fg-daemon
 
@@ -107,46 +118,46 @@
      (start-process-shell-command
       "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
 
-     ;; Xresources
-     (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
-     (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
+      ;; Xresources
+      (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
+      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
 
-     ;; Exwm xrandr - auto move display to external monitor on plug
-     (with-eval-after-load 'exwm
-       (defvar external "VGA-1")
-       (defvar internal "LVDS-1")
+      ;; Exwm xrandr - auto move display to external monitor on plug
+      (with-eval-after-load 'exwm
+        (defvar external "VGA-1")
+        (defvar internal "LVDS-1")
 
-       (defun switch-to-external-monitor ()
-         (start-process
-          "xrandr" nil
-          "xrandr" "--output" internal "--off" "--output" external "--auto"))
+        (defun switch-to-external-monitor ()
+          (start-process
+           "xrandr" nil
+           "xrandr" "--output" internal "--off" "--output" external "--auto"))
 
-       (defun  switch-to-internal-monitor ()
-         (start-process
-          "xrandr" nil
-          "xrandr" "--output" external "--off" "--output" internal "--auto"))
+        (defun  switch-to-internal-monitor ()
+          (start-process
+           "xrandr" nil
+           "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
-       (defun xrandr ()
-         ;; HACK when external is already plugged
-         (when (and (string-match (concat external " connected")
-                                  (shell-command-to-string "xrandr"))
-                    (< (string-to-number (emacs-uptime "%s")) 10))
-           (switch-to-internal-monitor))
+        (defun xrandr ()
+          ;; HACK when external is already plugged
+          (when (and (string-match (concat external " connected")
+                                   (shell-command-to-string "xrandr"))
+                     (< (string-to-number (emacs-uptime "%s")) 10))
+            (switch-to-internal-monitor))
 
-         (if (string-match (concat external " connected")
-                           (shell-command-to-string "xrandr"))
-             (switch-to-external-monitor)
-           (switch-to-internal-monitor)))
+          (if (string-match (concat external " connected")
+                            (shell-command-to-string "xrandr"))
+              (switch-to-external-monitor)
+            (switch-to-internal-monitor)))
 
-       (require 'exwm-randr)
-       (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-       (exwm-randr-enable)
+        (require 'exwm-randr)
+        (add-hook 'exwm-randr-screen-change-hook 'xrandr)
+        (exwm-randr-enable)
 
-       (exwm-enable))
+        (exwm-enable))
 
-     ;; Exwm
-     (start-process
-      "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-24\" nil t)"))))
+      ;; Exwm
+      (start-process
+       "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-12\" nil t)"))))
 
 ;;;;bootstrap straight.el
 
@@ -180,6 +191,7 @@
 (straight-use-package 'bind-key)
 (straight-use-package 'exwm)
 (straight-use-package 'desktop-environment)
+(straight-use-package 'nofrils-acme-theme)
 
 ;; toolbox
 (straight-use-package 'magit)
@@ -289,12 +301,43 @@
     (disable-theme i)))
 
 (add-hook 'after-init-hook (lambda ()
-                             ;; theme
-                             (display-time-mode 1)
-                             (blink-cursor-mode 1)))
+                             (load-theme 'nofrils-sepia t)))
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(blink-cursor-mode -1)
+(display-time-mode 1)
+(setq display-time-default-load-average nil)
+(set-fringe-mode '(0 . 0))
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (fringe-mode -1)))
+(straight-use-package 'all-the-icons)
+(unless (file-exists-p "~/.local/share/fonts/all-the-icons.ttf")
+  (all-the-icons-install-fonts t))
+(straight-use-package 'all-the-icons-dired)
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+(defun simple-mode-line-render (left right)
+  "Return a string of `window-width' length containing LEFT, and RIGHT
+ aligned respectively."
+  (let* ((available-width (- (window-width) (length left) 2)))
+    (format (format " %%s %%%ds " available-width) left right)))
+
+(defun random-choice (items)
+  (let* ((size (length items))
+         (index (random size)))
+    (nth index items)))
+
+(defvar random-quote
+  (random-choice
+   '("[♥][♦] Hacker's Delight [♣][♠]")))
+
+(setq-default mode-line-format '((:eval (simple-mode-line-render
+                                         ;; left
+                                         (format-mode-line "%* %b %l:%c")
+                                         ;; right
+                                         (format-mode-line (concat
+                                                            random-quote
+                                                            (format-time-string " %Y-%m-%d %I:%M%p")))))))
 
 ;;;;settings
 
@@ -407,25 +450,11 @@ current frame."
        (format "%s" (cddr (split-string default-directory ":"))) "\(" "\)")
     (string-trim default-directory)))
 
-(defun toor ()
-  (interactive)
-  "change Emacs internal directory to user (away from tramp root)"
-  (if (string-match "root@" (pwd))
-      (cd (my-pwd))))
-
 (defun suroot ()
   (interactive)
   "change Emacs internal directory to root using su"
   (if (not (string-match "root@" (pwd)))
       (cd (concat "/su:root@"system-name":"default-directory))))
-
-(defun tooroot ()
-  (interactive)
-  "toggle Emacs internal directory using su"
-  (if (string-match "root@" (pwd))
-      (toor)
-    (suroot))
-  (pwd))
 
 (defun eshell-tramp-su ()
   "tramp su back and forth in the Eshell."
@@ -478,13 +507,14 @@ current frame."
                          (remove ".."
                                  (delete-dups ;; todo - iterate exec-path instead
                                   (append
-                                   (directory-files (concat (getenv "HOME") "/.nix-profile/bin"))
+                                   (when (file-exists-p (concat (getenv "HOME") "/.nix-profile/bin"))
+                                     (directory-files (concat (getenv "HOME") "/.nix-profile/bin")))
                                    (directory-files "/usr/local/bin")
                                    (directory-files "/bin")))))))
     (setq-local choice (message "%s" (ido-completing-read "Shutdown:" choices )))
     (start-process choice nil choice)))
 
-(defun eshell/k (&optional x y)
+(defun k (&optional x y)
   "simple kiss pkg manager front-end"
   (with-temp-buffer
     (cd "/su::")
@@ -776,7 +806,7 @@ current frame."
   ;; put straight pkg versions under vc
   (start-process-shell-command
    "ln" nil
-   "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dotfiles/versions $DIR")
+   "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dot-emacs/versions $DIR")
 
   ;; git
   (setq dotfiles-gitconfig "\[user]
@@ -792,7 +822,7 @@ signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 max-cache-ttl 84000
 allow-emacs-pinentry
 allow-loopback-pinentry
-pinentry-program /home/adam/repos/dotfiles/pinentry-emacs")
+pinentry-program /home/adam/repos/dot-emacs/pinentry-emacs")
   (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
 
   ;; xresources
@@ -853,7 +883,7 @@ Xft.lcdfilter: lcddefault")
       desktop-environment-brightness-get-command "lux -G")
 
 (defun external-browser (url)
-  (start-process-shell-command "chromium" nil (concat "chromium " url)))
+  (start-process-shell-command "surf" nil (concat "surf " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'external-browser

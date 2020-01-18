@@ -545,14 +545,14 @@ Xft.lcdfilter: lcddefault")
 
   ;; xinitrc
   (setq dotfiles-xinitrc "laptop_touchpad() {
-    touchpad=$\(xinput list | awk 'TouchPad { print $7 }'\)
+    touchpad=$\(xinput list | awk '/TouchPad/ { print $7 }'\)
     xinput set-prop ${touchpad#id=} 'libinput Tapping Enabled' 1
     xinput set-prop ${touchpad#id=} 'libinput Accel Speed' 0.4
 
     # also check to see if external monitor is plugged in...
     external=VGA-1
     internal=LVDS-1
-    if xrandr | grep -q $external; then xrandr --output $internal --off --output $external --auto; fi
+    if xrandr | grep -q $external connected; then xrandr --output $internal --off --output $external --auto; fi
 }
 command -v xinput && laptop_touchpad &
 

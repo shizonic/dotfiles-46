@@ -3,155 +3,22 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com"
       initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
+      inhibit-startup-screen nil
       load-prefer-newer t
       custom-file "/dev/null"
-      tls-checktrust t
-      gnutls-verify-error t
-      package-archives nil
-      package-enable-at-startup nil)
+      package-enable-at-startup nil
+      gc-cons-threshold 50000000)
 
-;;;;ENV/PATH
-
-(require 'subr-x)
-
-(setq shell-file-name "/bin/dash")
-(setenv "SHELL" "/bin/dash")
-
-(setenv "HOME" (concat "/home/" user-login-name))
-(setenv "PAGER" "cat")
-(setenv "EDITOR" "emacsclient")
-(setenv "VISUAL" (getenv "EDITOR"))
-
-(defvar system-profile-path
-  (string-trim (shell-command-to-string "grep -E '^export PATH' /etc/profile") "export PATH="))
-
-(defvar my-path-insert
-  (concat
-   "/usr/local/bin:"))
-
-(defvar my-path-append (concat ":" exec-directory))
-
-(setenv "PATH"
-        (string-join
-         (setq-default exec-path
-                       (delete-dups (split-string
-                                     (concat
-                                      my-path-insert
-                                      system-profile-path
-                                      my-path-append) ":"))) ":"))
-
-(with-eval-after-load 'tramp
-  ;; make tramp use remote machine's PATH
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
-
-  ;; define remote tramp env
-  (setq tramp-remote-process-environment
-        ;; TODO :: find a way to set this on a per-tramp connection/machine basis
-        '(;; original values
-          "ENV=''"
-          "TMOUT=0"
-          "LC_CTYPE=''"
-          "CDPATH="
-          "HISTORY="
-          "MAIL="
-          "MAILCHECK="
-          "MAILPATH="
-          "autocorrect="
-          "correct="
-
-          ;; my values
-          "EDITOR=ed"
-          "PAGER=cat"))
-
-  (add-to-list 'tramp-remote-process-environment
-               (concat "CFLAGS="(string-trim
-                                 (string-trim (shell-command-to-string "grep CFLAGS /etc/profile")
-                                              "export ") "CFLAGS=\\\""  "\\\"")))
-  (add-to-list 'tramp-remote-process-environment
-               (concat "CFLAGS="(string-trim
-                                 (string-trim (shell-command-to-string "grep CFLAGS /etc/profile")
-                                              "export ") "CXXFLAGS=\\\""  "\\\"")))
-  (add-to-list 'tramp-remote-process-environment
-               (string-trim (shell-command-to-string "grep MAKEFLAGS /etc/profile") "export "))
-  (add-to-list 'tramp-remote-process-environment
-               (string-trim (shell-command-to-string "grep KISS_PATH /etc/profile") "export ")))
-
-(string-trim (shell-command-to-string "grep CFLAGS /etc/profile") "export ")
-
-
-
-;;;;$ chsh -s #!/bin/emacs --fg-daemon
+(with-eval-after-load 'gnutls
+  (setq
+   gnutls-verify-error t
+   gnutls-min-prime-bits 2048
+   gnutls-trustfiles '("/etc/ssl/cert.pem")))
 
 (add-hook 'after-init-hook (lambda()
                              (require 'server)
                              (when (not (server-running-p))
-                               (server-start)
-                               (sx))))
-
-(global-set-key (kbd "C-x C-c") 'kill-xsession)
-(defun kill-xsession ()
-  (interactive)
-  (start-process-shell-command "pkill" nil "pkill -15 Xorg"))
-
-(defun sx ()
-  "A simple elisp replacement for startx/xinit scripts. Requires subr-x and async."
-  (interactive)
-
-  (setenv "DISPLAY" ":0")
-  (start-process "Xorg" nil "Xorg" "-nolisten" "tcp" "-nolisten" "local" ":0" "vt1" "v" "-arinterval" "30" "-ardelay" "175")
-
-  (async-start
-   (lambda ()
-     (while (not (string-match-p "XFree86_has_VT"
-                                 (shell-command-to-string "xprop -root")))
-       (sleep-for 0.5)))
-   (lambda (result)
-
-     ;; touchpad
-     (start-process-shell-command
-      "xinput" nil "touchpad=\"$(xinput list | awk '/TouchPad/ { print $7 }')\" ; xinput set-prop \"${touchpad#id=}\" 'libinput Tapping Enabled' 1 ; xinput set-prop \"${touchpad#id=}\" 'libinput Accel Speed' 0.4")
-
-      ;; Xresources
-      (start-process "xsetroot" nil "xsetroot" "-cursor_name" "left_ptr")
-      (start-process "xrdb" nil "xrdb" (concat (getenv "HOME") "/.Xresources"))
-
-      ;; Exwm xrandr - auto move display to external monitor on plug
-      (with-eval-after-load 'exwm
-        (defvar external "VGA-1")
-        (defvar internal "LVDS-1")
-
-        (defun switch-to-external-monitor ()
-          (start-process
-           "xrandr" nil
-           "xrandr" "--output" internal "--off" "--output" external "--auto"))
-
-        (defun  switch-to-internal-monitor ()
-          (start-process
-           "xrandr" nil
-           "xrandr" "--output" external "--off" "--output" internal "--auto"))
-
-        (defun xrandr ()
-          ;; HACK when external is already plugged
-          (when (and (string-match (concat external " connected")
-                                   (shell-command-to-string "xrandr"))
-                     (< (string-to-number (emacs-uptime "%s")) 10))
-            (switch-to-internal-monitor))
-
-          (if (string-match (concat external " connected")
-                            (shell-command-to-string "xrandr"))
-              (switch-to-external-monitor)
-            (switch-to-internal-monitor)))
-
-        (require 'exwm-randr)
-        (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-        (exwm-randr-enable)
-
-        (exwm-enable))
-
-      ;; Exwm
-      (start-process
-       "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-12\" nil t)"))))
+                               (server-start))))
 
 ;;;;bootstrap straight.el
 
@@ -170,6 +37,7 @@
 
 ;;;;libs
 
+(require 'subr-x)            ;Extra Lisp Functions
 (require 'seq)               ;Sequence manipulation functions
 (require 'cl-lib)            ;Common Lisp extensions
 (straight-use-package 'dash) ;A modern list library
@@ -181,13 +49,9 @@
 
 ;;;;pkgs
 
-;; exwm
 (straight-use-package 'bind-key)
-(straight-use-package 'exwm)
-(straight-use-package 'desktop-environment)
-(straight-use-package 'nofrils-acme-theme)
-
-;; toolbox
+(straight-use-package ;; TODO
+ '(emacs-piper :type git :host gitlab :repo "howardabrams/emacs-piper"))
 (straight-use-package 'magit)
 (straight-use-package 'projectile)
 (straight-use-package 'flycheck)
@@ -196,8 +60,6 @@
 (straight-use-package 'crux)
 (straight-use-package 'keychain-environment)
 (straight-use-package 'browse-kill-ring)
-
-;; lang
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
 
@@ -215,8 +77,6 @@
 ;; minor modes may not override (global)
 (bind-key* "C-x C-b" 'ido-switch-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
-(bind-key* "C-S-k" 'crux-kill-whole-line)
-(bind-key* "C-o" 'crux-smart-open-line)
 (bind-key* "C-c a" 'abook)
 (bind-key* "C-c m" 'gnus)
 (bind-key* "C-c b" 'eww)
@@ -227,116 +87,48 @@
 (bind-key* "C-c t r" 'region-to-termbin)
 (bind-key* "C-c t b" 'buffer-to-termbin)
 (bind-key* "C-c #" 'my-su-edit)
-(bind-key* "C-c $" 'my-switch-to-home)
-(bind-key* "C-c `" 'crux-create-scratch-buffer)
 (bind-key* "C-c I" (lambda () (interactive) (find-file user-init-file)))
+(bind-key* "C-o" 'crux-smart-open-line)
+(add-hook 'prog-mode-hook (lambda () (local-set-key (kbd "C-c C-k") 'crux-kill-whole-line)))
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
-(bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
-(bind-key* "C-;" 'comment-line)
+(bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region)
+(bind-key* "C-x ;" 'comment-line)
 (bind-key* "<f5>" 'compile)
-(bind-key* "C-t" 'eshell)
-(bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
-(bind-key* "C-`" 'spacemacs/alternate-window)
-(bind-key* "C--" 'bury-buffer)
-(bind-key* "<home>" 'unlock)
-(bind-key* "<end>" 'lock)
+(bind-key* "C-t" 'shell)
+(bind-key* "C-c -" 'bury-buffer)
 (bind-key "M-/" 'hippie-expand)
-
-;; window-related binds, doubly reinforced
-(exwm-input-set-key (kbd "C-t") 'eshell)
-(bind-key* "C-t" 'eshell)
-(exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
-(bind-key* "<f9>" 'exwm-input-toggle-keyboard)
-(exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
-(bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
-(exwm-input-set-key (kbd "<C-return>") 'spacemacs/alternate-window)
-(bind-key* "<C-return>" 'spacemacs/alternate-window)
-(exwm-input-set-key (kbd "C-1") 'delete-other-windows)
-(bind-key* "C-1" 'delete-other-windows)
-(exwm-input-set-key (kbd "C-2") 'split-window-below)
-(bind-key* "C-2" 'split-window-below)
-(exwm-input-set-key (kbd "C-3") 'split-window-right)
-(bind-key* "C-3" 'split-window-right)
-(exwm-input-set-key (kbd "C-0") 'delete-window)
-(bind-key* "C-0" 'delete-window)
-(exwm-input-set-key (kbd "C--") 'bury-buffer)
-(bind-key* "C--" 'bury-buffer)
-
-(exwm-input-set-key (kbd "<C-up>") 'enlarge-window)
-(bind-key* "<C-up>" 'enlarge-window)
-(exwm-input-set-key (kbd "<C-down>") 'shrink-window)
-(bind-key* "<C-down>" 'shrink-window)
-(exwm-input-set-key (kbd "<C-right>") 'enlarge-window-horizontally)
-(bind-key* "<C-right>" 'enlarge-window-horizontally)
-(exwm-input-set-key (kbd "<C-left>") 'shrink-window-horizontally)
-(bind-key* "<C-left>" 'shrink-window-horizontally)
-(exwm-input-set-key (kbd "<menu>") 'dmenu)
-
-(bind-key* "<menu>" 'dmenu)
-(exwm-input-set-key (kbd "<menu>") 'dmenu)
-(bind-key* "<s-backspace>" 'ido-kill-buffer)
-(exwm-input-set-key (kbd "<s-backspace>") 'ido-kill-buffer)
-
-(exwm-input-set-key (kbd "s-^") (lambda ()(interactive) (call-interactively 'open-yt-dl)))
-(bind-key* "s-^" 'open-yt-dl)
-
-(bind-key* (kbd "<C-kp-add>") (lambda () (interactive) (text-scale-adjust 1)))
-(bind-key* (kbd "<C-kp-subtract>") (lambda () (interactive) (text-scale-adjust -1)))
-(exwm-input-set-key (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
-(exwm-input-set-key (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
-(exwm-input-set-key (kbd "<S-s-kp-add>") 'desktop-environment-brightness-increment)
-(exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
-(exwm-input-set-key (kbd "<S-s-kp-subtract>") 'desktop-environment-brightness-decrement)
 
 ;;;;theme
 
+;; disable an old theme before enabling a new theme
+;; (not sure why this is not an Emacs default...)
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
-(add-hook 'after-init-hook (lambda ()
-                             (load-theme 'nofrils-sepia t)))
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(blink-cursor-mode -1)
-(display-time-mode 1)
-(setq display-time-default-load-average nil)
-(set-fringe-mode '(0 . 0))
+;; disable italics completely
+(mapc
+ (lambda (face)
+   (set-face-attribute face nil :slant 'normal))
+ (face-list))
 
-(straight-use-package 'all-the-icons)
-(unless (file-exists-p "~/.local/share/fonts/all-the-icons.ttf")
-  (all-the-icons-install-fonts t))
-(straight-use-package 'all-the-icons-dired)
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; disable color completely
+(setq-default default-frame-alist '((tty-color-mode . never)))
 
-(defun simple-mode-line-render (left right)
-  "Return a string of `window-width' length containing LEFT, and RIGHT
- aligned respectively."
-  (let* ((available-width (- (window-width) (length left) 2)))
-    (format (format " %%s %%%ds " available-width) left right)))
+;; true spartans should also uncomment the next line:
+;; (global-font-lock-mode -1)
 
-(defun random-choice (items)
-  (let* ((size (length items))
-         (index (random size)))
-    (nth index items)))
+;; highlight functions using [only] bold.
+(custom-set-faces '(font-lock-function-name-face ((t (:weight bold)))))
 
-(defvar random-quote
-  (random-choice
-   '("[♥][♦] Hacker's Delight [♣][♠]")))
+;; minimalist modeline
+(setq-default mode-line-format
+              '((:eval (format-mode-line "%* %b %l:%c"))))
 
-(setq-default mode-line-format '((:eval (simple-mode-line-render
-                                         ;; left
-                                         (format-mode-line "%* %b %l:%c")
-                                         ;; right
-                                         (format-mode-line (concat
-                                                            random-quote
-                                                            (format-time-string " %Y-%m-%d %I:%M%p")))))))
 
 ;;;;settings
 
-(setq mouse-yank-at-point t
-      apropos-do-all t
+(setq apropos-do-all t
       require-final-newline t
       ediff-window-setup-function 'ediff-setup-windows-plain
       backup-directory-alist `(("." . ,(concat user-emacs-directory "backups")))
@@ -350,6 +142,40 @@
       epa-pinentry-mode 'loopback)
 
 (custom-set-variables '(epg-gpg-program  "/usr/local/bin/gpg"))
+
+(defun nox-mouse-support ()
+  (xterm-mouse-mode 1)
+  (global-set-key (kbd "<mouse-4>") '(lambda () (interactive) (scroll-down 5)))
+  (global-set-key (kbd "<mouse-5>") '(lambda () (interactive) (scroll-up 5))))
+
+(defun nox-xsel-support ()
+  (setq x-select-enable-clipboard t)
+
+  (with-eval-after-load 'tramp
+    (add-to-list 'tramp-remote-process-environment
+                 (concat "DISPLAY="xsel-saved-display)))
+
+  (defun xsel-cut-function (text &optional push)
+    (with-temp-buffer
+      (insert text)
+      (call-process-region (point-min) (point-max) "xsel" nil 0 nil "--clipboard" "--input")))
+
+  (defun xsel-paste-function()
+    (let ((xsel-output (shell-command-to-string "DISPLAY=:0 xsel --clipboard --output")))
+      (unless (string= (car kill-ring) xsel-output)
+        xsel-output)))
+
+  (setq interprogram-cut-function 'xsel-cut-function)
+  (setq interprogram-paste-function 'xsel-paste-function))
+
+(setq xsel-saved-display (getenv "DISPLAY"))
+(when (not (string-equal xsel-saved-display ""))
+  (progn
+    (nox-mouse-support)
+
+    (when (executable-find "xsel")
+      (nox-xsel-support))))
+
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -382,46 +208,31 @@
 
 (winner-mode 1)
 
+(defun external-browser (url)
+  (call-process-shell-command (concat "surf " url " &") nil nil 0))
+
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'external-browser
+      eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)
+  (define-key eww-mode-map (kbd "W") 'shr-copy-url))
+
+(defvar yt-dl-player "mpv"
+  "Video player used by `eww-open-yt-dl'")
+
 ;;;;functions
 
-(defun process-exit-code-and-output (program &rest args)
-  "Run PROGRAM with ARGS and return the exit code and output in a list."
-  (with-temp-buffer
-    (list (apply 'call-process program nil (current-buffer) nil args)
-          (buffer-string))))
-
-(defun spacemacs/alternate-buffer (&optional window)
-  "Switch back and forth between current and last buffer in the
-current window."
+(defun shutdown ()
   (interactive)
-  (let ((current-buffer (window-buffer window))
-        (buffer-predicate
-         (frame-parameter (window-frame window) 'buffer-predicate)))
-    ;; switch to first buffer previously shown in this window that matches
-    ;; frame-parameter `buffer-predicate'
-    (switch-to-buffer
-     (or (cl-find-if (lambda (buffer)
-                       (and (not (eq buffer current-buffer))
-                            (or (null buffer-predicate)
-                                (funcall buffer-predicate buffer))))
-                     (mapcar #'car (window-prev-buffers window)))
-         ;; `other-buffer' honors `buffer-predicate' so no need to filter
-         (other-buffer current-buffer t)))))
-
-(defun spacemacs/alternate-window ()
-  "Switch back and forth between current and last window in the
-current frame."
-  (interactive)
-  (let (;; switch to first window previously shown in this frame
-        (prev-window (get-mru-window nil t t)))
-    ;; Check window was not found successfully
-    (unless prev-window (user-error "Last window not found."))
-    (select-window prev-window)))
-
-(defun split-file (FILE delim)
-  (with-temp-buffer
-    (insert-file-contents FILE)
-    (split-string (buffer-string) delim t)))
+  (let ((choices '("reboot" "poweroff")))
+    (message "%s" (setq temp-shutdown-choice (ido-completing-read "Shutdown:" choices )))
+    (with-temp-buffer
+      (cd "/su::")
+      (if (string= temp-shutdown-choice "reboot")
+          (async-shell-command "kill -s INT 1")
+        (async-shell-command "kill -s USR1 1")))))
 
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
@@ -436,105 +247,21 @@ current frame."
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
-(defun my-pwd ()
-  "Show the real pwd whether we are tramp-root or regular user"
+(defun open-yt-dl ()
+  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
+Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)
-  (if (string-match "root@" (pwd))
-      (string-trim
-       (format "%s" (cddr (split-string default-directory ":"))) "\(" "\)")
-    (string-trim default-directory)))
-
-(defun suroot ()
-  (interactive)
-  "change Emacs internal directory to root using su"
-  (if (not (string-match "root@" (pwd)))
-      (cd (concat "/su:root@"system-name":"default-directory))))
-
-(defun eshell-tramp-su ()
-  "tramp su back and forth in the Eshell."
-  (interactive)
-  (if (string-match "*eshell" (format "%s" (current-buffer)))
-      (progn
-        (if (string-match "root@" (pwd))
-            (progn
-              (insert (concat "cd" " " (my-pwd)))
-              (eshell-send-input))
-          (progn
-            (insert (concat "cd /su::"default-directory))
-            (eshell-send-input))))))
-
-(defun my-switch-to-home ()
-  (interactive)
-  (cd "~/")
-  (dired "."))
-
-(defun my-su-edit ()
-  "WE DON'T NEED SUDO, we have su!"
-  (interactive)
-  ;; eshell
-  (when (string= "eshell-mode" major-mode)
-    (eshell-tramp-su))
-
-  ;; dired
-  (when (string= "dired-mode" major-mode)
-    (find-file (concat "/su:root@"system-name":"(expand-file-name "."))))
-
-  ;; file
-  (when (buffer-file-name)
-    (find-file (concat "/su:root@"system-name":"(buffer-file-name)))))
-
-;;;;eshell
-
-(defun shutdown ()
-  (interactive)
-  (let ((choices '("reboot" "poweroff")))
-    (message "%s" (setq temp-shutdown-choice (ido-completing-read "Shutdown:" choices )))
-    (with-temp-buffer
-      (suroot)
-      (if (string= temp-shutdown-choice "reboot")
-          (async-shell-command "kill -s INT 1")
-        (async-shell-command "kill -s USR1 1")))))
-
-(defun dmenu ()
-  (interactive)
-  (let ((choices (remove "."
-                         (remove ".."
-                                 (delete-dups
-                                  (append
-                                   (directory-files "/usr/local/bin")
-                                   (directory-files "/bin")))))))
-    (setq-local choice (message "%s" (ido-completing-read "Shutdown:" choices )))
-    (start-process choice nil choice)))
-
-(defun k (&optional x y)
-  "simple kiss pkg manager front-end"
-  (with-temp-buffer
-    (cd "/su::")
-    (async-shell-command (concat "kiss " x " " y))))
-
-(add-hook 'eshell-directory-change-hook 'eshell/ls)
-
-(defun eshell/emacs (file)
-  "Intercept the accidental execution of emacs"
-  (find-file file))
-
-(defun eshell/- ()
-  (insert "cd -")
-  (eshell-send-input))
-
-(defun eshell/.. (&optional counter)
-  (if (numberp counter)
-      (while (> counter 0)
-        (insert "cd ..")
-        (eshell-send-input)
-        (setq counter (1- counter)))
+  (when (executable-find "youtube-dl")
     (progn
-      (insert "cd ..")
-      (eshell-send-input))))
+      (if (string-match  "*eww*" (format "%s"(current-buffer)))
+          (eww-copy-page-url)
+        (with-temp-buffer (yank)))
+      (start-process-shell-command "youtube-dl" nil
+                                   (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))
 
 ;;;;programming
 
-(setq grep-command "grep --color -r ")
+(setq grep-command "grep -r ")
 
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
@@ -583,9 +310,6 @@ current frame."
                                          try-expand-line
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
-
-(add-hook 'eshell-mode-hook '(lambda ()
-                               (define-key eshell-mode-map (kbd "M-/") 'dabbrev-expand)))
 
 (defadvice he-substitute-string (after he-paredit-fix)
   "remove extra paren when hippie expanding in a lisp editing mode"
@@ -742,46 +466,38 @@ current frame."
    gnus-mime-display-multipart-related-as-mixed t
    gnus-auto-select-first nil
    smiley-style 'medium
-   gnus-keep-backlog '0)
-
-  (setq gnus-no-groups-message "")
-  (defadvice gnus-demon-scan-news (around gnus-demon-timeout activate)
-    (with-timeout
-        (3 (message "Gnus timed out."))
-      ad-do-it))
-
-  (gnus-demon-add-handler 'gnus-demon-scan-news 1 t)
-  (gnus-demon-add-scanmail))
+   gnus-keep-backlog '0))
 
 ;; abook
 
-(defvar my-abook "~/contacts.el")
+(defvar my-abook "~/contacts.el") ;; TODO .gpg
 
-(when (file-exists-p my-abook)
-  (progn
-    (load-file my-abook)
+(with-eval-after-load 'gnus
+  (when (file-exists-p my-abook)
+    (progn
+      (load-file my-abook)
 
-    ;; e.g. dummy address book
-    ;; (setq my-contact-list '((name . foo@bar.email)
-    ;;                         (nick . nick@nick.com)
-    ;;                         (john . john@doe.com)))
+      ;; e.g. dummy address book
+      ;; (setq my-contact-list '((name . foo@bar.email)
+      ;;                         (nick . nick@nick.com)
+      ;;                         (john . john@doe.com)))
 
-    (setq my-contact-keys (cl-loop for (key . value) in my-contact-list
-                                   collect key))
+      (setq my-contact-keys (cl-loop for (key . value) in my-contact-list
+                                     collect key))
 
-    (defun abook ()
-      "Insert an email address from `my-contact-list' to the current buffer."
-      (interactive)
-      (let ((item my-contact-keys))
-        (fset 'my-read 'completing-read)
+      (defun abook ()
+        "Insert an email address from `my-contact-list' to the current buffer."
+        (interactive)
+        (let ((item my-contact-keys))
+          (fset 'my-read 'completing-read)
 
-        ;; interactive menu + convert chosen item (key) from string to data
-        (setq-local interactive-chosen-key (intern (my-read "Contact Name:" item)))
-        ;; match key to list and get associated email (value), convert back to string
-        (setq-local email (format "%s" (cdr (assq interactive-chosen-key my-contact-list))))
+          ;; interactive menu + convert chosen item (key) from string to data
+          (setq-local interactive-chosen-key (intern (my-read "Contact Name:" item)))
+          ;; match key to list and get associated email (value), convert back to string
+          (setq-local email (format "%s" (cdr (assq interactive-chosen-key my-contact-list))))
 
-        ;; output email address to buffer
-        (princ email (current-buffer))))))
+          ;; output email address to buffer
+          (princ email (current-buffer)))))))
 
 ;;;;dotfiles
 
@@ -792,7 +508,7 @@ current frame."
 
   ;; root dotfiles
   (with-temp-buffer
-    (suroot)
+    (cd "/su::")
     (shell-command "ln -sf /usr/bin/gpg2 /usr/local/bin/gpg"))
 
   ;; put straight pkg versions under vc
@@ -825,76 +541,52 @@ Xft.hinting: true
 Xft.hintstyle: hintslight
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault")
-  (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources"))
+  (f-write-text dotfiles-xresources 'utf-8 "~/.Xresources")
 
-;;;;the anti-desktop
+  ;; xinitrc
+  (setq dotfiles-xinitrc "laptop_touchpad() {
+    touchpad=$\(xinput list | awk 'TouchPad { print $7 }'\)
+    xinput set-prop ${touchpad#id=} 'libinput Tapping Enabled' 1
+    xinput set-prop ${touchpad#id=} 'libinput Accel Speed' 0.4
 
-(require 'exwm-config)
+    # also check to see if external monitor is plugged in...
+    external=VGA-1
+    internal=LVDS-1
+    if xrandr | grep -q $external; then xrandr --output $internal --off --output $external --auto; fi
+}
+command -v xinput && laptop_touchpad &
 
-(defun exwm-config-default ()
-  (setq exwm-input-global-keys
-        `(,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
-                        (lambda ()
-                          (interactive)
-                          (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))))
+xsetroot -cursor_name left_ptr &
+xrdb ~/.Xresources &
+picom --backend glx &
+feh --no-fehbg --bg-max ~/.wallpaper &
+while pgrep X; do xsetroot -name \"$\(date\)\"; sleep 60; done &
 
-  (setq exwm-input-simulation-keys
-        '(
-          ([?\C-b] . [left])
-          ([?\M-b] . [C-left])
-          ([?\C-f] . [right])
-          ([?\M-f] . [C-right])
-          ([?\C-p] . [up])
-          ([?\C-n] . [down])
-          ([?\C-a] . [home])
-          ([?\C-e] . [end])
-          ([?\M-v] . [prior])
-          ([?\C-v] . [next])
-          ([?\C-d] . [delete])
-          ([?\C-k] . [S-end delete])
-          ([?\C-w] . [?\C-x])
-          ([?\M-w] . [?\C-c])
-          ([?\C-y] . [?\C-v])
-          ([?\C-s] . [?\C-f])))
+st -e emacs &
 
-  (setq exwm-workspace-number 1))
+exec dwm")
 
-(add-hook 'exwm-update-class-hook
-          (lambda ()
-            (exwm-workspace-rename-buffer exwm-class-name)))
+  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")
 
-(exwm-config-default)
-(add-hook 'exwm-init-hook #'exwm-config--fix/ido-buffer-window-other-frame)
+  (setq dotfiles-xinit "trap 'DISPLAY=:0 ~/.xinitrc' USR1
+{
+    trap '' USR1
+    exec X -nolisten tcp -nolisten local :0 vt1 v -arinterval 30 -ardelay 175 > .xserver.log 2>&1
+} &
+wait")
 
-(desktop-environment-mode 1)
-(setq desktop-environment-brightness-set-command "lux %s"
-      desktop-environment-brightness-normal-increment "-a 5%"
-      desktop-environment-brightness-normal-decrement "-s 5%"
-      desktop-environment-brightness-get-command "lux -G")
+  (f-write-text dotfiles-xinit 'utf-8 "~/xinit")
 
-(defun external-browser (url)
-  (start-process-shell-command "surf" nil (concat "surf " url)))
+  (setq dotfiles-profile "export PATH=/usr/local/bin:/bin")
+  (f-write-text dotfiles-profile 'utf-8 "~/.profile")
+  (set-file-modes "~/.xinitrc" #o755)
+  (set-file-modes "~/xinit" #o755)
 
-(setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'external-browser
-      eww-search-prefix "https://www.google.com/search?hl=en&q=")
+  (setq dotfiles-mkshrc "if ! test \"$\(id -u\)\" -eq 0; then
+    PS1='$ '
+else
+    PS1='# '
+fi
 
-(with-eval-after-load 'eww
-  (define-key eww-mode-map (kbd "W") 'shr-copy-url))
-
-(defvar yt-dl-player "mpv"
-  "Video player used by `eww-open-yt-dl'")
-
-(defun open-yt-dl ()
-"Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
-Specify the video player to use by setting the value of `yt-dl-player'"
-(interactive)
-(when (executable-find "youtube-dl")
-  (progn
-    (if (string-match  "*eww*" (format "%s"(current-buffer)))
-        (eww-copy-page-url)
-      (with-temp-buffer (yank)))
-    (start-process-shell-command "youtube-dl" nil
-                                 (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))
+\[ -z \"$DISPLAY\" ] && \[ \"$\(tty\)\" = \"/dev/tty1\" ] && ./xinit")
+  (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc"))

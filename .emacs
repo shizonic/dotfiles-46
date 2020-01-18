@@ -588,5 +588,7 @@ else
     PS1='# '
 fi
 
+kiss() { PATH=/bin /bin/kiss \"$@\"; }
+
 \[ -z \"$DISPLAY\" ] && \[ \"$\(tty\)\" = \"/dev/tty1\" ] && ./xinit")
   (f-write-text dotfiles-mkshrc 'utf-8 "~/.mkshrc"))

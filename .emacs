@@ -80,6 +80,9 @@
 (bind-key* "C-c a" 'abook)
 (bind-key* "C-c m" 'gnus)
 (bind-key* "C-c b" 'eww)
+(bind-key* "C-c B" (lambda ()
+                     (interactive)
+                     (call-process-shell-command "surf google.com &" nil nil 0)))
 (bind-key* "C-c i" 'freenode)
 (bind-key* "C-c p" 'projectile-command-map)
 (bind-key* "C-c g" 'magit-status)
@@ -247,7 +250,7 @@
   (interactive)
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
-(defun open-yt-dl ()
+(defun eww-open-yt-dl ()
   "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
 Specify the video player to use by setting the value of `yt-dl-player'"
   (interactive)

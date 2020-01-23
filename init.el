@@ -6,8 +6,6 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com")
 
-;;;;`much-better-defaults'
-
 (add-hook 'after-init-hook (lambda()
                              (require 'server)
                              (when (not (server-running-p))
@@ -40,7 +38,7 @@
 ;; DEFER NOTHING, LOAD EVERYTHING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; My rule of thumb: if Emacs is slow to start, then Emacs is bloated...
+;; rule of thumb: if Emacs is slow to start, then Emacs is bloated...
 
 ;;;;libs
 

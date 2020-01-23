@@ -6,4 +6,3 @@ alias cp *cp $*
 alias ln *ln $*
 alias ll ls -l $*
 alias la ls -la $*
-alias emacs find-file $1

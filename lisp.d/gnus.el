@@ -1,7 +1,7 @@
 (with-eval-after-load 'gnus
   (setq read-mail-command 'gnus)
   (setq gnus-use-full-window nil)
-  (setq gnus-site-init-file "~/.emacs")
+  (setq gnus-site-init-file buffer-file-name)
   (setq gnus-save-newsrc-file nil)
   (setq gnus-startup-file "~/.emacs.d/.newsrc")
   (setq message-directory "~/.emacs.d/mail/")

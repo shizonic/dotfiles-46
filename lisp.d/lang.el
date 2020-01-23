@@ -15,13 +15,6 @@
 
 ;; lisp
 
-(defun my-elisp-mode-hook()
-  (setq-local compile-command
-              '((lambda()
-                  (save-buffer)
-                  (async-shell-command (buffer-file-name))))))
-(add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
-
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'ielm-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)

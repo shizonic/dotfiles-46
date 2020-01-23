@@ -24,7 +24,7 @@ signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 max-cache-ttl 84000
 allow-emacs-pinentry
 allow-loopback-pinentry
-pinentry-program /home/adam/repos/dot-emacs/pinentry-emacs")
+pinentry-program /home/adam/repos/dot-emacs/extra/pinentry-emacs")
   (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
 
   ;; xinitrc

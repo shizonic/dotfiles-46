@@ -46,5 +46,5 @@
           "correct="
 
           ;; my values
-          "EDITOR=ed"
+          "EDITOR=cat"
           "PAGER=cat")))

@@ -14,8 +14,8 @@
 (scroll-bar-mode -1)
 (fringe-mode -1)
 
-(setq my-font "Source Code Pro")
-(setq my-font-size '12)
+(setq my-font "Noto Sans Mono")
+(setq my-font-size '10)
 
 (defun my-font-resizer (x)
   (when (> x 0)

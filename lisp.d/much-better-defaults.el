@@ -1,7 +1,5 @@
-(with-eval-after-load 'gnutls
-  (setq
-   gnutls-verify-error t
-   gnutls-min-prime-bits 2048))
+(setq gnutls-verify-error t
+      gnutls-min-prime-bits 2048)
 
 (setq mouse-yank-at-point t
       apropos-do-all t
@@ -17,7 +15,7 @@
       password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 
-(custom-set-variables '(epg-gpg-program  "gpg"))
+(setq-default epg-gpg-program "gpg")
 
 (fset 'yes-or-no-p 'y-or-n-p)
 

@@ -46,15 +46,58 @@
 ;; highlight matching parens
 (show-paren-mode 1)
 
-;; better dired
+;; better dired...
 (require 'dired-x)
 (add-hook 'dired-load-hook
           (function (lambda () (load "dired-x"))))
 
-;; much better dired
+;; much better dired...
 (with-eval-after-load 'async
   (autoload 'dired-async-mode "dired-async.el" nil t)
   (dired-async-mode 1))
+
+;; and now, give dired super powers...
+
+(defun dired-xdg-open-file ()
+  "from https://www.emacswiki.org/emacs/OperatingOnFilesInDired"
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (call-process "xdg-open" nil 0 nil file)))
+
+;; hit C-c ! to use xdg-open when opening files from dired
+;; tip, install perlfile-mimeinfo, which xdg-open falls back to using when not in a full desktop-environment!
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c !") 'dired-xdg-open-file))
+
+;; default browser is `eww', perfect for viewing good websites and documentation...
+(setq browse-url-browser-function 'eww-browse-url
+      shr-external-browser 'external-browser ;; inside `eww', press the "&" key to launch page in external browser...
+      my-external-browser "surf"             ;; external browser is "surf", could be chromium/firefox/netsurf, etc.
+      eww-search-prefix "https://www.google.com/search?hl=en&q=") ;; default search engine
+
+(defun external-browser (url)
+  "helper function"
+  (start-process-shell-command my-external-browser nil (concat my-external-browser " " url)))
+
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl) ;; inside `eww' press ^ to open the url with youtube-dl
+  (define-key eww-mode-map (kbd "W") 'shr-copy-url)) ;; "w" by default copies current page URL, while "W" now will copy url at point.
+
+;; default video player to use with youtube-dl, could be e.g. vlc or mpv
+(defvar yt-dl-player "mpv"
+  "Video player used by `eww-open-yt-dl'")
+
+(defun open-yt-dl ()
+  "Browse youtube videos using the Emacs `eww' browser and \"youtube-dl.\"
+Specify the video player to use by setting the value of `yt-dl-player'"
+  (interactive)
+  (when (executable-find "youtube-dl")
+    (progn
+      (if (string-match  "*eww*" (format "%s"(current-buffer)))
+          (eww-copy-page-url)
+        (with-temp-buffer (yank)))
+      (start-process-shell-command "youtube-dl" nil
+                                   (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))
 
 ;; backspace over blocks of highlighted text like you would expect to be able to do...
 (delete-selection-mode 1)

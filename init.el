@@ -10,7 +10,7 @@
 ;; Over-commented for new users to explore...
 ;; However, Emacs is self documented. C-h v on variables and C-h f on functions will show docs.
 
-;; This hook loads last. Good place to put the first function you want to run on startup.
+;; This hook loads last. Good place to put the first function(s) to run on startup.
 ;; Note: (setq set inhibit-startup-screen t) to disable the default startup page.
 (add-hook 'after-init-hook (lambda()
                              (require 'server)
@@ -99,3 +99,55 @@
         (load (file-name-sans-extension fullpath)))))))
 
 (load-directory "~/repos/dot-emacs/lisp.d")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; experimental section
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; exwm dwm style
+(straight-use-package 'edwina)
+(setq display-buffer-base-action '(display-buffer-below-selected))
+(edwina-mode 1)
+(edwina-setup-dwm-keys 'super)
+
+(exwm-input-set-key (kbd "<s-return>") 'edwina-zoom)
+(exwm-input-set-key (kbd "<S-s-return>") 'edwina-clone-window)
+(exwm-input-set-key (kbd "s-h") 'edwina-dec-mfact)
+(exwm-input-set-key (kbd "s-j") 'edwina-select-next-window)
+(exwm-input-set-key (kbd "s-k") 'edwina-select-previous-window)
+(exwm-input-set-key (kbd "s-l") 'edwina-inc-mfact)
+(exwm-input-set-key (kbd "<s-backspace>") 'edwina-delete-window)
+(exwm-input-set-key (kbd "s-u") 'winner-undo)
+(exwm-input-set-key (kbd "s-U") 'winner-redo)
+
+;; i've avoided company for a long time, giving it a second chance...
+(straight-use-package 'company)
+(setq tab-always-indent t)
+(setq company-dabbrev-downcase nil
+      company-selection-wrap-around t
+      company-dabbrev-ignore-case nil
+      company-show-numbers t
+      company-idle-delay 0.0
+      company-require-match nil
+      company-tooltip-align-annotations t
+      company-auto-complete nil)
+(setq company-global-modes
+      '(not
+        eshell-mode comint-mode erc-mode
+        minibuffer-inactive-mode))
+
+(global-company-mode 1)

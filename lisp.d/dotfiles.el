@@ -6,10 +6,6 @@
    "ln" nil
    "DIR=~/.emacs.d/straight/versions ; \[ -d \"$DIR\" ] && rm -rf $DIR && ln -sf ~/repos/dot-emacs/versions $DIR")
 
-  ;; setup eshell aliases
-  (start-process-shell-command "ln" nil
-                               "ln -sf ~/repos/dot-emacs/eshell/alias ~/.emacs.d/eshell/")
-
   ;; git
   (setq dotfiles-gitconfig "\[user]
 email = paxchristi888@gmail.com

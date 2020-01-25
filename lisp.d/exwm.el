@@ -56,12 +56,12 @@
 (defvar yt-dl-player "mpv"
   "Video player used by `eww-open-yt-dl'")
 
-
 (defun external-browser (url)
-  (start-process-shell-command "chromium" nil (concat "chromium " url)))
+  (start-process-shell-command my-external-browser nil (concat my-external-browser " " url)))
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'external-browser
+      my-external-browser "surf"
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
 (defun open-yt-dl ()
@@ -96,12 +96,6 @@ Specify the video player to use by setting the value of `yt-dl-player'"
    "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
 (defun xrandr ()
-  ;; HACK [for when external is already plugged]
-  (when (and (string-match (concat external " connected")
-                           (shell-command-to-string "xrandr"))
-             (< (string-to-number (emacs-uptime "%s")) 5))
-    (switch-to-internal-monitor))
-
   (if (string-match (concat external " connected")
                     (shell-command-to-string "xrandr"))
       (switch-to-external-monitor)

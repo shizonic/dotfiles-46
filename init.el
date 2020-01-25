@@ -1,4 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
+;; lexical is faster than dynamic...
 
 ;; This software is considered complete and no further development is expected to happen.
 ;; Just kidding, it's Emacs!
@@ -6,20 +7,25 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com")
 
+;; Over-commented for new users to explore...
+;; However, Emacs is self documented. C-h v on variables and C-h f on functions will show docs.
+
+;; This hook loads last. Good place to put the first function you want to run on startup.
+;; Note: (setq set inhibit-startup-screen t) to disable the default startup page.
 (add-hook 'after-init-hook (lambda()
                              (require 'server)
                              (when (not (server-running-p))
-                               (server-start)
-                               (eshell))))
+                               (server-start))))
 
-(setq initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
-      load-prefer-newer t
-      custom-file "/dev/null"
-      package-enable-at-startup nil
-      gc-cons-threshold 50000000)
+(setq initial-major-mode 'emacs-lisp-mode ;; Default major mode of the *scratch* buffer
+      inhibit-startup-screen nil          ;; I like the default startup. It makes me happy :)
+      load-prefer-newer t                 ;; should be a default...
+      custom-file "/dev/null"             ;; M-x customize is against my principles...
+      package-enable-at-startup nil       ;; faster load
+      gc-cons-threshold 50000000)         ;; faster load
 
-;;;;pkg manager
+;;;;Do not use melpa it is both a wild west and a ghetto.
+;;;;We can have reproduceable packages by using straight.el instead.
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -38,9 +44,12 @@
 ;; DEFER NOTHING, LOAD EVERYTHING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; rule of thumb: if Emacs is slow to start, then Emacs is bloated...
+;; `use-package' may be overrated. If Emacs is slow to start, then Emacs is bloated...
+;; Instead, by loading everything up-front, we may reduce the number of config bugs.
 
 ;;;;libs
+
+;; We can `require' built-in libs, and `straight-use-package' non built-ins
 
 (require 'subr-x)            ;Extra Lisp Functions
 (require 'seq)               ;Sequence manipulation functions
@@ -49,7 +58,7 @@
 (straight-use-package 'a)    ;Associative data structure functions
 (straight-use-package 's)    ;String manipulation library
 (straight-use-package 'f)    ;Modern API for working with files and directories
-(require 'f) ;; annoying that this is needed...
+(require 'f) ;; annoying that this is needed... I  believe `f' may have an autoload issue.
 (straight-use-package 'ht)   ;The missing hash table library
 (straight-use-package 'async);Simple library for asynchronous processing in Emacs
 
@@ -67,12 +76,14 @@
 (straight-use-package 'aggressive-indent)
 (straight-use-package 'paredit)
 (straight-use-package 'crux)
-(straight-use-package 'keychain-environment)
 (straight-use-package 'browse-kill-ring)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'slime)
 
 ;;;;config
+
+;; Emacs best practice is modular configuration.
+;; https://www.emacswiki.org/emacs/DotEmacsModular
 
 (defun load-directory (directory)
   "Load recursively all `.el' files in DIRECTORY."

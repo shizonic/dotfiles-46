@@ -1,7 +1,9 @@
 (defun dotfiles-install ()
   (interactive)
 
-  ;;symlink bin
+  ;; CREATE FILES IN $HOME
+
+  ;;symlink ~/bin
   (start-process-shell-command
    "ln" nil
    "ln -sf ~/repos/dot-emacs/bin ~/")
@@ -37,4 +39,16 @@ xsetroot -cursor_name left_ptr
 exec emacs")
 
   (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")
-  (set-file-modes "~/.config/sx/sxrc" #o755))
+  (set-file-modes "~/.xinitrc" #o755)
+
+  ;; CREATE FILES IN /etc
+
+  (setq dotfiles-xorg-conf-d "Section \"InputClass\"
+        Identifier \"system-keyboard\"
+        MatchIsKeyboard \"on\"
+        Option \"XkbLayout\" \"us\"
+        Option \"XkbModel\" \"pc104\"
+        Option \"XkbOptions\" \"ctrl:swap_lalt_lctl\"
+EndSection
+")
+  (f-write-text dotfiles-xorg-conf-d 'utf-8 "/su::/etc/X11/xorg.conf.d/00-keyboard.conf"))

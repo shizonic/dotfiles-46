@@ -1,7 +1,15 @@
 #!/bin/sh --
+
 # This fantastic script is originally from https://raw.githubusercontent.com/Earnestly/sx/master/sx
-# I have modified it with a few small changes for myself...
-# Thanks Earnestly!
+
+# This version makes the following changes:
+
+# Use ~/.xinitrc instead of ~/.config/sx/sxrc
+# add -quiet
+# add -nolisten tcp
+# add -nolisten local
+# remove -keeptty
+# set a faster default keyboard repeat/rate interval.
 
 # sx - start an xserver
 
@@ -26,10 +34,9 @@ stty=$(stty -g)
 tty=$(ps -o tty= -p $$)
 tty=${tty#tty}
 
-cfgdir=${XDG_CONFIG_HOME:-$HOME}/.xinitrc
 datadir=${XDG_DATA_HOME:-$HOME/.local/share}/sx
 
-mkdir -p "$cfgdir" "$datadir"
+mkdir -p "$datadir"
 
 export XAUTHORITY=${XAUTHORITY:-$datadir/xauthority}
 touch "$XAUTHORITY"
@@ -42,6 +49,6 @@ xauth add :"$tty" MIT-MAGIC-COOKIE-1 "$(od -An -N16 -tx /dev/urandom | tr -d ' '
 # ready to accept connections.
 # Taking advantage of this feature allows us to launch our client directly
 # from a SIGUSR1 handler and avoid the need to poll for server readiness.
-trap 'DISPLAY=:$tty "${@:-$cfgdir/sxrc}"' USR1
-(trap '' USR1 && exec Xorg -nolisten tcp -nolisten local :"$tty" -keeptty vt"$tty" -noreset -auth "$XAUTHORITY" -arinterval "30" -ardelay "175") & pid=$!
+trap 'DISPLAY=:$tty ~/.xinitrc' USR1
+(trap '' USR1 && exec Xorg -nolisten tcp -nolisten local :"$tty" -quiet vt"$tty" -noreset -auth "$XAUTHORITY" -arinterval "30" -ardelay "175") & pid=$!
 wait "$pid"

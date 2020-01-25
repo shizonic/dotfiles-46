@@ -15,13 +15,8 @@ signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
         gpgsign = true")
   (f-write-text dotfiles-gitconfig 'utf-8 "~/.gitconfig")
 
-  ;; gpg
-  (setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
-max-cache-ttl 84000
-allow-emacs-pinentry
-allow-loopback-pinentry
-pinentry-program /home/adam/repos/dot-emacs/extra/pinentry-emacs")
-  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf")
+  ;; create ~/.gnupg/gpg-agent.conf (documented in gpg.el)
+  (gpg-dotfile-install)
 
   ;; xinitrc
   (setq dotfiles-xinitrc "touchpad=$\(xinput list | awk '/TouchPad/ { print $7 }'\)

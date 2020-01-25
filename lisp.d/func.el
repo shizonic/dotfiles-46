@@ -44,16 +44,3 @@ current frame."
     ;; Check window was not found successfully
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
-
-(defun pinentry-emacs (desc prompt ok error)
-  (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
-    str))
-
-(defun unlock ()
-  (interactive)
-  (async-shell-command
-   "eval $(keychain --eval --agents gpg,ssh 77CF5C5C65A8F9F44940A72CDD4795B51117D906 id_rsa); emacsclient -e '(keychain-refresh-environment)'"))
-
-(defun lock ()
-  (interactive)
-  (async-shell-command "keychain --agents ssh,gpg -k all"))

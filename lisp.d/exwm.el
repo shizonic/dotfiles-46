@@ -49,6 +49,17 @@
       desktop-environment-brightness-normal-decrement "-s 5%"
       desktop-environment-brightness-get-command "lux -G")
 
+;; tip, install perlfile-mimeinfo, which xdg-open falls back to using when not in a full desktop-environment!
+(defun dired-xdg-open-file ()
+  "from https://www.emacswiki.org/emacs/OperatingOnFilesInDired"
+  (interactive)
+  (let* ((file (dired-get-filename nil t)))
+    (call-process "xdg-open" nil 0 nil file)))
+
+;; hit C-c ! to use xdg-open when opening files from dired
+(with-eval-after-load 'dired
+  (define-key dired-mode-map (kbd "C-c !") 'dired-xdg-open-file))
+
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl)
   (define-key eww-mode-map (kbd "W") 'shr-copy-url))

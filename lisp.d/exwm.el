@@ -1,6 +1,7 @@
 (require 'exwm-config)
 
 (defun exwm-config-default ()
+  "Overrides the default exwm-config-default function with my preferences..."
   (setq exwm-input-global-keys
         `(([?\s-&] . (lambda (command)
                        (interactive (list (read-shell-command "$ ")))
@@ -38,9 +39,11 @@
             (exwm-workspace-rename-buffer exwm-class-name)))
 
 (exwm-config-default)
+
 (add-hook 'exwm-init-hook #'exwm-config--fix/ido-buffer-window-other-frame)
 
 (desktop-environment-mode 1)
+
 (setq desktop-environment-brightness-set-command "lux %s"
       desktop-environment-brightness-normal-increment "-a 5%"
       desktop-environment-brightness-normal-decrement "-s 5%"
@@ -73,34 +76,42 @@ Specify the video player to use by setting the value of `yt-dl-player'"
       (start-process-shell-command "youtube-dl" nil
                                    (concat "youtube-dl -o - " (nth 0 kill-ring) " - | " yt-dl-player " -")))))
 
-(with-eval-after-load 'exwm
-  (defvar external "VGA-1")
-  (defvar internal "LVDS-1")
 
-  (defun switch-to-external-monitor ()
-    (start-process
-     "xrandr" nil
-     "xrandr" "--output" internal "--off" "--output" external "--auto"))
+;; I dislike multi-monitor setups...
+;; However sometimes I plug my laptop into a larger external monitor...
+;; So I want it to autodetect and switch to the external display...
+;; This is how I accomplish this using with exwm:
 
-  (defun  switch-to-internal-monitor ()
-    (start-process
-     "xrandr" nil
-     "xrandr" "--output" external "--off" "--output" internal "--auto"))
+(defvar external "VGA-1")
+(defvar internal "LVDS-1")
 
-  (defun xrandr ()
-    ;; HACK [for when external is already plugged]
-    (when (and (string-match (concat external " connected")
-                             (shell-command-to-string "xrandr"))
-               (< (string-to-number (emacs-uptime "%s")) 10))
-      (switch-to-internal-monitor))
+(defun switch-to-external-monitor ()
+  (start-process
+   "xrandr" nil
+   "xrandr" "--output" internal "--off" "--output" external "--auto"))
 
-    (if (string-match (concat external " connected")
-                      (shell-command-to-string "xrandr"))
-        (switch-to-external-monitor)
-      (switch-to-internal-monitor)))
+(defun  switch-to-internal-monitor ()
+  (start-process
+   "xrandr" nil
+   "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
-  (require 'exwm-randr)
-  (add-hook 'exwm-randr-screen-change-hook 'xrandr)
-  (exwm-randr-enable)
+(defun xrandr ()
+  ;; HACK [for when external is already plugged]
+  (when (and (string-match (concat external " connected")
+                           (shell-command-to-string "xrandr"))
+             (< (string-to-number (emacs-uptime "%s")) 5))
+    (switch-to-internal-monitor))
 
-  (exwm-enable))
+  (if (string-match (concat external " connected")
+                    (shell-command-to-string "xrandr"))
+      (switch-to-external-monitor)
+    (switch-to-internal-monitor)))
+
+(require 'exwm-randr)
+
+(add-hook 'exwm-randr-screen-change-hook 'xrandr)
+
+(exwm-randr-enable)
+
+;;EOF
+(exwm-enable) ;; leave me here

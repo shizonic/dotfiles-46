@@ -1,10 +1,15 @@
 (defun shutdown ()
   (interactive)
   (let ((choices '("kexec" "suspend" "hibernate" "reboot" "poweroff")))
-    (message "%s" (setq shutdown-choice (ido-completing-read "Shutdown:" choices )))
-    (with-temp-buffer
-      (cd "/su::")
-      (shell-command (concat "systemctl " shutdown-choice)))))
+    (message "%s" (setq choice (ido-completing-read "Shutdown:" choices )))
+
+    (if (string-equal choice "kexec")
+        (progn
+          (with-temp-buffer
+            (cd "/su::")
+            (shell-command (concat "systemctl " choice))))
+      (progn
+        (shell-command (concat "systemctl " choice))))))
 
 (defun dmenu ()
   (interactive)

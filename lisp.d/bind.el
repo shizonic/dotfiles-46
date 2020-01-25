@@ -14,6 +14,9 @@
 (bind-key* "C-c e" 'gnus)
 (bind-key* "C-c m" 'my-emms)
 (bind-key* "C-c b" 'eww)
+(bind-key* "C-c B" (lambda ()
+                     (interactive)
+                     (start-process "surf" nil "surf" "google.com")))
 (bind-key* "C-c i" 'freenode)
 (bind-key* "C-c p" 'projectile-command-map)
 (bind-key* "C-c g" 'magit-status)
@@ -28,9 +31,9 @@
 (bind-key* "C-c C-;" 'crux-duplicate-and-comment-current-line-or-region)
 (bind-key* "C-;" 'comment-line)
 (bind-key* "<f5>" 'compile)
-(bind-key* "C-t" 'eshell)
-(bind-key* "C-c #" (lambda () (interactive) (supershell)))
 (bind-key "M-/" 'hippie-expand)
+
+;; buffer/window related binds
 (bind-key* "<C-tab>" 'spacemacs/alternate-buffer)
 (bind-key* "C-`" 'spacemacs/alternate-window)
 (bind-key* "C--" 'bury-buffer)
@@ -44,8 +47,9 @@
 (bind-key* "C-3" 'split-window-right)
 (bind-key* "C-0" 'delete-window)
 (bind-key* "<menu>" 'dmenu)
+(bind-key* "s-p" 'dmenu)
 
-;; keep everything consistent with some redundant binds needed for exwm
+;; keep everything consistent when using exwm...
 (with-eval-after-load 'exwm
   (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
   (exwm-input-set-key (kbd "<C-tab>") 'spacemacs/alternate-buffer)
@@ -56,6 +60,8 @@
   (exwm-input-set-key (kbd "C-0") 'delete-window)
   (exwm-input-set-key (kbd "C--") 'bury-buffer)
   (exwm-input-set-key (kbd "<menu>") 'dmenu)
+  (exwm-input-set-key (kbd "s-p") 'dmenu)
+
   (exwm-input-set-key (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
   (exwm-input-set-key (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
   (exwm-input-set-key (kbd "<S-s-kp-add>") 'desktop-environment-brightness-increment)

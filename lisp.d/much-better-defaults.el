@@ -48,3 +48,7 @@
 (set-keyboard-coding-system 'utf-8)
 
 (winner-mode 1)
+
+(defadvice load-theme (before disable-themes-first activate)
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))

@@ -1,3 +1,5 @@
+;; i hate gnus btw
+
 (with-eval-after-load 'gnus
   (setq read-mail-command 'gnus)
   (setq gnus-use-full-window nil)

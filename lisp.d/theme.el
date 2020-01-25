@@ -1,9 +1,5 @@
 ;; the best theme is actually the default one
 
-(defadvice load-theme (before disable-themes-first activate)
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
-
 (setq display-time-default-load-average nil
       display-time-day-and-date t)
 (display-time-mode 1)

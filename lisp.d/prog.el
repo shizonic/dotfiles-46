@@ -1,14 +1,7 @@
-(setq grep-command "grep -r ")
-
 (add-hook 'after-save-hook
           'executable-make-buffer-file-executable-if-script-p)
 
-(defun my-shell-mode-hook()
-  (setq-local compile-command
-              '((lambda()
-                  (save-buffer)
-                  (async-shell-command (buffer-file-name))))))
-(add-hook 'sh-mode-hook 'my-shell-mode-hook)
+(setq grep-command "grep -r ")
 
 (defun region-to-termbin (start end)
   "push the marked region to termbin.com via shell command"
@@ -47,9 +40,3 @@
                                          try-expand-line
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
-
-(defadvice he-substitute-string (after he-paredit-fix)
-  "remove extra paren when hippie expanding in a lisp editing mode"
-  (if (and (paredit-mode)
-           (equal (substring str -1) ")"))
-      (progn (backward-delete-char 1) (forward-char))))

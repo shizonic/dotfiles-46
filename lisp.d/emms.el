@@ -3,6 +3,9 @@
 (when (file-directory-p "~/Downloads")
   (setq emms-source-file-default-directory "~/Downloads"))
 
+(with-eval-after-load 'emms
+  (emms-mode-line-disable))
+
 (defun my-emms ()
   "EMMS has a lot of features, but these are the only ones I use."
   (interactive)

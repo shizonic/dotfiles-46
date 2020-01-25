@@ -9,7 +9,7 @@
 (setq password-cache-expiry nil
       epa-pinentry-mode 'loopback)
 
-;; This works together with the helper script located in extra/pinentry-emacs
+;; This works together with the helper script located in bin/pinentry-emacs
 (defun pinentry-emacs (desc prompt ok error)
   (let ((str (read-passwd (concat (replace-regexp-in-string "%22" "\"" (replace-regexp-in-string "%0A" "\n" desc)) prompt ": "))))
     str))
@@ -32,13 +32,13 @@
   (async-shell-command "keychain --agents ssh,gpg -k all"))
 
 ;; Here's what my ~/.gnupg/gpg-agent.conf looks like
-;; Note the extra/pinentry-emacs script is required for this all to work.
+;; Note the bin/pinentry-emacs script is required for this all to work.
 ;; And this version of the pinentry-emacs script is different than the mainstream one...
-(setq dotfiles-gnupg-gpg-agent-conf "default-cache-ttl 84000
+(setq dotfiles-gnupg-gpg-agent-conf (concat  "default-cache-ttl 84000
 max-cache-ttl 84000
 allow-emacs-pinentry
 allow-loopback-pinentry
-pinentry-program /home/adam/repos/dot-emacs/extra/pinentry-emacs")
+pinentry-program /home/"user-login-name"/bin/pinentry-emacs"))
 
 (defun gpg-dotfile-install ()
   "Create ~/.gnupg/gpg-agent.conf"

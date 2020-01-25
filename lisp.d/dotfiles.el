@@ -1,6 +1,11 @@
 (defun dotfiles-install ()
   (interactive)
 
+  ;;symlink bin
+  (start-process-shell-command
+   "ln" nil
+   "ln -sf ~/repos/dot-emacs/bin ~/")
+
   ;; put straight pkg versions under vc
   (start-process-shell-command
    "ln" nil
@@ -28,9 +33,8 @@ internal=LVDS-1
 if xrandr | grep -q \"$external connected\"; then xrandr --output \"$internal\" --off --output \"$external\" --auto; fi
 
 xsetroot -cursor_name left_ptr
-xset r rate 250 60
 
 exec emacs")
 
-  (f-write-text dotfiles-xinitrc 'utf-8 "~/.config/sx/sxrc")
+  (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")
   (set-file-modes "~/.config/sx/sxrc" #o755))

@@ -1,3 +1,5 @@
+;; When you require absolute control over your PATH and environment variables, here is how to do it the elisp way.
+
 (setq shell-file-name "/bin/bash")
 (setenv "SHELL" "/bin/bash")
 

@@ -1,41 +1,23 @@
-;; the best theme is actually the default one
-
-(setq display-time-default-load-average nil
-      display-time-day-and-date t)
-(display-time-mode 1)
-
-(blink-cursor-mode 1)
-(tool-bar-mode -1)
+;; disable emacs-nox menu bar
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
-(fringe-mode -1)
 
-(setq my-font "Noto Sans Mono")
-(setq my-font-size '10)
+;; minimalist modeline
+(setq-default mode-line-format
+              '((:eval (format-mode-line "%* %b %l:%c"))))
 
-(defun my-font-resizer (x)
-  (when (> x 0)
-    (progn
-      (setq my-font-size (+ 1 my-font-size))
-      (set-face-attribute 'default nil
-                          :font (concat my-font "-" (number-to-string my-font-size)))))
-  (when (< x 0)
-    (progn
-      (setq my-font-size (+ -1 my-font-size))
-      (set-face-attribute 'default nil
-                          :font (concat my-font "-" (number-to-string my-font-size)))))
-  (when (eq x 0)
-    (progn
-      (set-face-attribute 'default nil
-                          :font (concat my-font "-" (number-to-string my-font-size)))))
-  (message (concat my-font "-" (number-to-string my-font-size))))
+;; disable italics completely
+(mapc
+ (lambda (face)
+   (set-face-attribute face nil :slant 'normal))
+ (face-list))
 
-(my-font-resizer 0)
+;; disable color completely
+(setq-default default-frame-alist '((tty-color-mode . never)))
 
-(bind-key* "<C-kp-add>" #'(lambda ()
-                            (interactive)
-                            (my-font-resizer 1)))
+;; highlight functions using [only] bold.
+(custom-set-faces '(font-lock-function-name-face ((t (:weight bold)))))
 
-(bind-key* "<C-kp-subtract>" #'(lambda ()
-                                 (interactive)
-                                 (my-font-resizer -1)))
+(setq mode-line-format header-line-format)
+
+;; true spartans should also uncomment the next line:
+;; (global-font-lock-mode -1)

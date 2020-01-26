@@ -1,3 +1,5 @@
+;; simple address book
+
 (defvar my-abook "~/contacts.el") ;; TODO: use gpg
 
 ;; e.g., a dummy contacts.el file...

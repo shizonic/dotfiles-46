@@ -1,3 +1,9 @@
+;; C
+
+(setq c-default-style "linux")
+(add-hook 'c-mode-hook
+          (lambda () (setq indent-tabs-mode t)))
+
 ;; paredit (for all lisps)
 
 (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)

@@ -16,7 +16,7 @@
 
 ;; We want to refresh the environment of Emacs to inform it of keychain actions...
 ;; `keychain-environemnt' does the job and is used in the `unlock' and `lock' functions below...
-(straight-use-package 'keychain-environment)
+;; (straight-use-package 'keychain-environment) ;; I actually put this in my init.el file with the rest of my packages
 
 ;; The following two functions require the funtoo keychain script be on PATH. Most distros have this script installable as a package.
 ;; It will unlock or lock your gpg/ssh keyring basically. Don't forget to update to public gpg hash to use your own.
@@ -34,12 +34,15 @@
 ;; Here's what my ~/.gnupg/gpg-agent.conf looks like
 ;; Note the bin/pinentry-emacs script is required for this all to work.
 ;; And this version of the pinentry-emacs script is different than the mainstream one...
-(setq dotfiles-gnupg-gpg-agent-conf (concat  "default-cache-ttl 84000
-max-cache-ttl 84000
-allow-emacs-pinentry
-allow-loopback-pinentry
-pinentry-program /home/"user-login-name"/bin/pinentry-emacs"))
 
-(defun gpg-dotfile-install ()
-  "Create ~/.gnupg/gpg-agent.conf"
-  (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf"))
+;; (setq dotfiles-gnupg-gpg-agent-conf (concat  "default-cache-ttl 84000
+;; max-cache-ttl 84000
+;; allow-emacs-pinentry
+;; allow-loopback-pinentry
+;; pinentry-program /home/"user-login-name"/bin/pinentry-emacs"))
+
+;; (defun gpg-dotfile-install ()
+;;   "Create ~/.gnupg/gpg-agent.conf"
+;;   (f-write-text dotfiles-gnupg-gpg-agent-conf 'utf-8 "~/.gnupg/gpg-agent.conf"))
+
+;; ^^^^ Commented because I really use this in my bin/dotfiles.el install script ...

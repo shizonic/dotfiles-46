@@ -1,5 +1,3 @@
-;; When you require absolute control over your PATH and environment variables, here is how to do it the elisp way.
-
 (setq shell-file-name "/bin/bash")
 (setenv "SHELL" "/bin/bash")
 
@@ -28,25 +26,25 @@
                                       system-path-inherited
                                       my-path-append) ":"))) ":"))
 
-(with-eval-after-load 'tramp
-  ;; make tramp use remote machine's PATH
-  (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
+;; (with-eval-after-load 'tramp
+;;   ;; make tramp use remote machine's PATH
+;;   (add-to-list 'tramp-remote-path 'tramp-own-remote-path)
 
-  ;; define remote tramp env
-  (setq tramp-remote-process-environment
-        ;; TODO :: find a way to set this on a per-tramp connection/machine basis
-        '(;; original values
-          "ENV=''"
-          "TMOUT=0"
-          "LC_CTYPE=''"
-          "CDPATH="
-          "HISTORY="
-          "MAIL="
-          "MAILCHECK="
-          "MAILPATH="
-          "autocorrect="
-          "correct="
+;;   ;; define remote tramp env
+;;   (setq tramp-remote-process-environment
+;;         ;; TODO :: find a way to set this on a per-tramp connection/machine basis
+;;         '(;; original values
+;;           "ENV=''"
+;;           "TMOUT=0"
+;;           "LC_CTYPE=''"
+;;           "CDPATH="
+;;           "HISTORY="
+;;           "MAIL="
+;;           "MAILCHECK="
+;;           "MAILPATH="
+;;           "autocorrect="
+;;           "correct="
 
-          ;; my values
-          "EDITOR=cat"
-          "PAGER=cat")))
+;;           ;; my values
+;;           "EDITOR=cat"
+;;           "PAGER=cat")))

@@ -1,5 +1,4 @@
 ;;; -*- lexical-binding: t; -*-
-;; lexical is faster than dynamic...
 
 ;; This software is considered complete and no further development is expected to happen.
 ;; Just kidding, it's Emacs!
@@ -7,25 +6,19 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com")
 
-;; Over-commented for new users to explore...
-;; However, Emacs is self documented. C-h v on variables and C-h f on functions will show docs.
-
-;; This hook loads last. Good place to put the first function(s) to run on startup.
-;; Note: (setq set inhibit-startup-screen t) to disable the default startup page.
 (add-hook 'after-init-hook (lambda()
                              (require 'server)
                              (when (not (server-running-p))
                                (server-start))))
 
-(setq initial-major-mode 'emacs-lisp-mode ;; Default major mode of the *scratch* buffer
-      inhibit-startup-screen nil          ;; I like the default startup. It makes me happy :)
-      load-prefer-newer t                 ;; should be a default...
-      custom-file "/dev/null"             ;; M-x customize is against my principles...
-      package-enable-at-startup nil       ;; faster load
-      gc-cons-threshold 50000000)         ;; faster load
+(setq initial-major-mode 'emacs-lisp-mode
+      inhibit-startup-screen nil
+      load-prefer-newer t
+      custom-file "/dev/null"
+      package-enable-at-startup nil
+      gc-cons-threshold 50000000)
 
-;;;;Do not use melpa it is both a wild west and a ghetto.
-;;;;We can have reproduceable packages by using straight.el instead.
+;;;;reproduceable package management with straight.el
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -44,12 +37,9 @@
 ;; DEFER NOTHING, LOAD EVERYTHING ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; `use-package' may be overrated. If Emacs is slow to start, then Emacs is bloated...
-;; Instead, by loading everything up-front, we may reduce the number of config bugs.
+;; If Emacs is slow to start, then Emacs is bloated...
 
 ;;;;libs
-
-;; We can `require' built-in libs, and `straight-use-package' non built-ins
 
 (require 'subr-x)            ;Extra Lisp Functions
 (require 'seq)               ;Sequence manipulation functions
@@ -81,9 +71,6 @@
 (straight-use-package 'slime)
 
 ;;;;config
-
-;; Emacs best practice is modular configuration.
-;; https://www.emacswiki.org/emacs/DotEmacsModular
 
 (defun load-directory (directory)
   "Load recursively all `.el' files in DIRECTORY."
@@ -118,11 +105,37 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; exwm dwm style
 (straight-use-package 'edwina)
 (setq display-buffer-base-action '(display-buffer-below-selected))
 (edwina-mode 1)
 (edwina-setup-dwm-keys 'super)
+
+(defun jump-to-window (buffer-name)
+  "From emacswiki https://www.emacswiki.org/emacs/WindowNavigation"
+  (interactive "Enter buffer to jump to: ")
+  (let ((visible-buffers (mapcar '(lambda (window) (buffer-name (window-buffer window))) (window-list)))
+        window-of-buffer)
+    (if (not (member buffer-name visible-buffers))
+        (error "'%s' does not have visible window" buffer-name)
+      (setq window-of-buffer
+            (delq nil (mapcar '(lambda (window)
+                                 (if (equal buffer-name (buffer-name (window-buffer window)))
+                                     window nil)) (window-list))))
+      (select-window (car window-of-buffer)))))
+
+(defun edwina-zoom ()
+  "Zoom/cycle the selected window to/from master area."
+  (interactive)
+
+  (setq edwina-current-buf (buffer-name))
+
+  (if (eq (selected-window) (frame-first-window))
+      (edwina-swap-next-window)
+    (let ((pane (edwina-pane (selected-window))))
+      (edwina-delete-window)
+      (edwina-arrange (cons pane (edwina-pane-list)))))
+
+  (jump-to-window edwina-current-buf))
 
 (exwm-input-set-key (kbd "<s-return>") 'edwina-zoom)
 (exwm-input-set-key (kbd "<S-s-return>") 'edwina-clone-window)
@@ -133,21 +146,5 @@
 (exwm-input-set-key (kbd "<s-backspace>") 'edwina-delete-window)
 (exwm-input-set-key (kbd "s-u") 'winner-undo)
 (exwm-input-set-key (kbd "s-U") 'winner-redo)
-
-;; i've avoided company for a long time, giving it a second chance...
-(straight-use-package 'company)
-(setq tab-always-indent t)
-(setq company-dabbrev-downcase nil
-      company-selection-wrap-around t
-      company-dabbrev-ignore-case nil
-      company-show-numbers t
-      company-idle-delay 0.0
-      company-require-match nil
-      company-tooltip-align-annotations t
-      company-auto-complete nil)
-(setq company-global-modes
-      '(not
-        eshell-mode comint-mode erc-mode
-        minibuffer-inactive-mode))
-
-(global-company-mode 1)
+(bind-key* "C--" 'kill-buffer-and-window)
+(exwm-input-set-key (kbd "C--") 'kill-buffer-and-window)

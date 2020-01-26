@@ -40,3 +40,20 @@
                                          try-expand-line
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
+
+(straight-use-package 'company)
+(setq tab-always-indent t)
+(setq company-dabbrev-downcase nil
+      company-selection-wrap-around t
+      company-dabbrev-ignore-case nil
+      company-show-numbers t
+      company-idle-delay 0.0
+      company-require-match nil
+      company-tooltip-align-annotations t
+      company-auto-complete nil)
+(setq company-global-modes
+      '(not
+        eshell-mode comint-mode erc-mode
+        minibuffer-inactive-mode))
+
+(add-hook 'prog-mode-hook '(lambda () (company-mode 1)))

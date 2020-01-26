@@ -9,7 +9,10 @@
       erc-autojoin-channels-alist '(("freenode.net"
                                      "#archlinux"
                                      "#emacs"
-                                     "#lisp")))
+                                     "#lisp"
+                                     "#commanduser"
+                                     "#kisslinux"
+                                     "##apoptosis")))
 
 (with-eval-after-load 'erc
   (erc-track-mode -1))

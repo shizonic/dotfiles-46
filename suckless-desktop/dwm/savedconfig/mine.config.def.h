@@ -63,7 +63,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", normbgcolor, NULL };
-static const char *termcmd[]  = { "st", "-e", "emacs", "-nw",  NULL };
+static const char *termcmd[]  = { "st", "-e", "emacsclient", "-t", "-e", "(xterm-mouse-mode 1)", "-e", "(about-emacs)",  NULL };
 static const char *upvol[] = { "amixer", "set", "Master", "5%+",  NULL };
 static const char *downvol[] = { "amixer", "set", "Master", "5%-",  NULL };
 static const char *mutevol[] = { "amixer", "set", "Master", "toggle",  NULL };
@@ -109,9 +109,9 @@ static Key keys[] = {
 		     TAGKEYS(                        XK_7,                      6)
 		     TAGKEYS(                        XK_8,                      7)
 		     TAGKEYS(                        XK_9,                      8)
-		     { MODKEY,             XK_r,      quit,           {0} },
-    { MODKEY,        XK_Up, spawn,                   {.v = upbright } },
-    { MODKEY,        XK_Down, spawn,                   {.v = downbright } },
+		     { MODKEY,             XK_q,      quit,           {0} },
+		     { MODKEY,        XK_Up, spawn,                   {.v = upbright } },
+		     { MODKEY,        XK_Down, spawn,                   {.v = downbright } },
     { 0,                       XF86XK_MonBrightnessUp,   spawn, {.v = upbright } },
     { 0,                       XF86XK_MonBrightnessDown, spawn, {.v = downbright } },
     { 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },

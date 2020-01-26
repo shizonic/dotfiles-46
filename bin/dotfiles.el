@@ -70,6 +70,7 @@ feh --no-fehbg --bg-max ~/.wallpaper &
 while pgrep X; do xsetroot -name \" $\(date\) \"; sleep 60; done &
 picom --backend glx &
 dunst &
+xss-lock -- slock &
 
 exec dwm")
 
@@ -132,3 +133,19 @@ icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x1
 browser = /usr/bin/surf")
 (make-directory "~/.config/dunst" t)
 (f-write-text dotfiles-dunstrc 'utf-8 "~/.config/dunst/dunstrc")
+
+(setq dotfiles-systemd-emacs "\[Unit]
+Description=Emacs text editor
+Documentation=info:emacs man:emacs\(1\) https://gnu.org/software/emacs/
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/emacs --fg-daemon
+ExecStop=/usr/bin/emacsclient --eval \"\(kill-emacs\)\"
+Environment=SSH_AUTH_SOCK=%t/keyring/ssh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target")
+(make-directory "~/.config/systemd/user" t)
+(f-write-text dotfiles-systemd-emacs 'utf-8 "~/.config/systemd/user/emacs.service")

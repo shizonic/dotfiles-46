@@ -3,37 +3,18 @@
 (setq user-full-name "Adam Schaefers"
       user-mail-address "paxchristi888@gmail.com")
 
-(defvar file-name-handler-alist-old file-name-handler-alist)
-(defvar pre-init-p t)
-(when pre-init-p
-  (setq file-name-handler-alist nil
-        pre-init-p nil
-        gc-cons-threshold 402653184
-        gc-cons-percentage 0.6
-        load-prefer-newer t
-        package-enable-at-startup nil
-        initial-major-mode 'fundamental-mode
-        inhibit-startup-screen t
-        custom-file "/dev/null"))
+(setq package-enable-at-startup nil
+      load-prefer-newer t
+      custom-file "/dev/null"
+      initial-major-mode 'emacs-lisp-mode
+      inhibit-startup-screen nil)
 
 (add-hook 'after-init-hook #'(lambda ()
-                               (setq file-name-handler-alist file-name-handler-alist-old
-                                     gc-cons-threshold 800000
-                                     gc-cons-percentage 0.1)
-                               (garbage-collect))
-          t)
-
-(add-hook 'window-setup-hook #'(lambda ()
-                                 (when (get-buffer "*scratch*")
-                                   (kill-buffer "*scratch*"))
-                                 (shell)
-                                 (delete-other-windows)
-                                 (require 'server)
-                                 (when (not (server-running-p))
-                                   (server-start))))
+                               (require 'server)
+                               (when (not (server-running-p))
+                                 (server-start))))
 
 ;;;;reproduceable package management with straight.el
-
 
 (load "~/repos/dot-emacs/straight.el/bootstrap.el" nil 'nomessage)
 
@@ -57,6 +38,7 @@
 
 ;;;;pkgs
 
+(straight-use-package 'gnus-desktop-notify)
 (straight-use-package 'bind-key)
 (straight-use-package 'keychain-environment)
 (straight-use-package 'company)

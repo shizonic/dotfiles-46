@@ -69,8 +69,9 @@ xsetroot -cursor_name left_ptr
 feh --no-fehbg --bg-max ~/.wallpaper &
 while pgrep X; do xsetroot -name \" $\(date\) \"; sleep 60; done &
 picom --backend glx &
+dunst &
 
-while pgrep X; do dwm; done")
+exec dwm")
 
 (f-write-text dotfiles-xinitrc 'utf-8 "~/.xinitrc")
 (set-file-modes "~/.xinitrc" #o755)
@@ -85,4 +86,49 @@ while pgrep X; do dwm; done")
         Option \"XkbOptions\" \"ctrl:swap_lalt_lctl\"
 EndSection
 ")
-(f-write-text dotfiles-xorg-conf-d 'utf-8 "/su::/etc/X11/xorg.conf.d/00-keyboard.conf")
+(when (not (file-exists-p "/etc/X11/xorg.conf.d/00-keyboard.conf"))
+  (f-write-text dotfiles-xorg-conf-d 'utf-8 "/su::/etc/X11/xorg.conf.d/00-keyboard.conf"))
+
+;; dunstrc
+(setq dotfiles-dunstrc "\[global]
+frame_color = \"#586e75 \"
+separator_color = \"#586e75 \"
+
+geometry = \"300x60-20+30\"
+
+idle_threshold = 30
+show_age_threshold = 60
+
+font = Noto Sans Mono 8
+
+shrink = no
+separator_height = 0
+padding = 18
+horizontal_padding = 18
+frame_width = 1
+sort = no
+line_height = 2
+word_wrap = yes
+icon_position = off
+ignore_newline = no
+
+\[base16_low]
+    msg_urgency = low
+    background = \"#eee8d5\"
+    foreground = \"#fdf6e3\"
+
+\[base16_normal]
+    msg_urgency = normal
+    background = \"#93a1a1\"
+    foreground = \"#fdf6e3\"
+
+\[base16_critical]
+    msg_urgency = critical
+    background = \"#dc322f\"
+    foreground = \"#fdf6e3\"
+
+icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
+
+browser = /usr/bin/surf")
+(make-directory "~/.config/dunst" t)
+(f-write-text dotfiles-dunstrc 'utf-8 "~/.config/dunst/dunstrc")

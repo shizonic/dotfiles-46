@@ -8,6 +8,9 @@
       erc-nick "adamantium"
       erc-autojoin-channels-alist '(("freenode.net"
                                      "#archlinux"
+                                     "#kisslinux"
+                                     "#commanduser"
+                                     "##apoptosis"
                                      "#emacs"
                                      "#lisp")))
 
@@ -16,3 +19,6 @@
     (setq str nil)))
 
 (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable)
+
+(with-eval-after-load 'erc
+  (add-to-list 'erc-modules 'notifications))

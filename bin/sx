@@ -5,6 +5,7 @@
 # This version makes the following changes:
 
 # Use ~/.xinitrc instead of ~/.config/sx/sxrc
+# Use ~/.Xauthority instead of ~/.local/share/sx/xauthority
 # add -quiet
 # add -nolisten tcp
 # add -nolisten local
@@ -34,11 +35,7 @@ stty=$(stty -g)
 tty=$(ps -o tty= -p $$)
 tty=${tty#tty}
 
-datadir=${XDG_DATA_HOME:-$HOME/.local/share}/sx
-
-mkdir -p "$datadir"
-
-export XAUTHORITY=${XAUTHORITY:-$datadir/xauthority}
+export XAUTHORITY=${XAUTHORITY:-$HOME/.Xauthority}
 touch "$XAUTHORITY"
 
 trap 'cleanup' EXIT

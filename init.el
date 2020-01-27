@@ -37,7 +37,7 @@
 (straight-use-package 's)     ;String manipulation library
 (straight-use-package 'seq)   ;Sequence manipulation functions
 
-;;;;pkgs.main
+;;;;pkgs
 (straight-use-package 'aggressive-indent)
 (straight-use-package 'bind-key)
 (straight-use-package 'browse-kill-ring)

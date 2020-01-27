@@ -72,7 +72,7 @@
   (gnus-desktop-notify-mode)
 
   (gnus-demon-add-scanmail)
-  (gnus-demon-add-handler 'gnus-demon-scan-news 1 t)
+  (gnus-demon-add-handler 'gnus-demon-scan-news 5 t)
 
   (setq gnus-no-groups-message "")
 

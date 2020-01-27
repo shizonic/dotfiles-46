@@ -134,7 +134,7 @@ browser = /usr/bin/surf")
 (make-directory "~/.config/dunst" t)
 (f-write-text dotfiles-dunstrc 'utf-8 "~/.config/dunst/dunstrc")
 
-(setq dotfiles-systemd-emacs "\[Unit]
+(setq dotfiles-systemd-emacs (concat "\[Unit]
 Description=Emacs text editor
 Documentation=info:emacs man:emacs\(1\) https://gnu.org/software/emacs/
 
@@ -146,6 +146,15 @@ Environment=SSH_AUTH_SOCK=%t/keyring/ssh
 Restart=on-failure
 
 [Install]
-WantedBy=default.target")
+WantedBy=default.target"))
 (make-directory "~/.config/systemd/user" t)
 (f-write-text dotfiles-systemd-emacs 'utf-8 "~/.config/systemd/user/emacs.service")
+
+(setq dotfiles-systemd-emacs "profile=gpu-hq
+scale=ewa_lanczossharp
+cscale=ewa_lanczossharp
+video-sync=display-resample
+interpolation
+tscale=oversample")
+(make-directory "~/.config/mpv" t)
+(f-write-text dotfiles-systemd-emacs 'utf-8 "~/.config/mpv/mpv.conf")

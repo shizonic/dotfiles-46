@@ -30,10 +30,8 @@
   (switch-to-buffer "*Messages*"))
 
 (setq magit-diff-refine-hunk t)
-(setq magit-repository-directories '((when (directory-file-name "~/repos")
-                                       ("~/repos" . 1))
-                                     (when (directory-file-name "/mnt/kiss/home/adam/kiss")
-                                       ("/mnt/kiss/home/adam/kiss" . 1))))
+(setq magit-repository-directories '(("~/repos" . 1)
+                                     ("/mnt/kiss/home/adam/kiss" . 1)))
 
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers

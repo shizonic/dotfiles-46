@@ -20,6 +20,6 @@ hooks of `internet-connected-hook' only after internet connectivity
 
      (run-hooks 'internet-connected-hook))))
 
-(internet-detect)
+(add-hook 'after-init-hook 'internet-detect)
 
 ;; e.g. now one might (add-hook 'internet-connected-hook 'my-custom-function)

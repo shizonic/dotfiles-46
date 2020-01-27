@@ -71,6 +71,7 @@ while pgrep X; do xsetroot -name \" $\(date\) \"; sleep 60; done &
 picom --backend glx &
 dunst &
 xss-lock -- slock &
+st -e emacsclient -t -e \"\(about-emacs\)\" -e \"\(xterm-mouse-mode\)\" &
 
 exec dwm")
 

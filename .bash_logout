@@ -13,7 +13,7 @@ lock() {
 [ -z "$DISPLAY" ] && [ "$(who | grep adam | wc -l)" = 1 ] && {
     clear
     for serv in ~/.config/systemd/user/*.service; do
-        systemctl stop --user $(echo $serv | cut -d '/' -f 7 | cut -d '.' -f 1)
+        systemctl stop --user $(echo $serv | cut -d '/' -f 7)
     done
     sleep 1
     pkill -u adam -15 &>/dev/null

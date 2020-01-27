@@ -5,6 +5,7 @@
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
+(setenv "XAUTHORITY" (concat "/home/" user-login-name "/.Xauthority"))
 
 (defvar system-path-inherited
   (concat
@@ -15,7 +16,7 @@
    (getenv "HOME") "/bin:"
    (getenv "HOME") ".local/bin:"))
 
-(defvar my-path-append (concat ":" exec-directory))
+(defvar my-path-append (concat exec-directory))
 
 (setenv "PATH"
         (string-join

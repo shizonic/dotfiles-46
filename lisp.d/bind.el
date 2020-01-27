@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; remove annoyances
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))

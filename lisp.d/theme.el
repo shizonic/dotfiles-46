@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; disable emacs-nox menu bar
 (menu-bar-mode -1)
 

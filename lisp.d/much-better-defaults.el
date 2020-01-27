@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (setq gnutls-verify-error t
       gnutls-min-prime-bits 2048
 

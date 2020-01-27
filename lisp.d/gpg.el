@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; A working gpg configuration in Emacs is not trivial...
 ;; Documenting my gpg setup here.
 ;; Basically requires gpg2, Funtoo "keychain", a custom "pinentry-emacs" script, some helper functions, some emacs settings, and a ~/.gnupg/gpg-agent.conf file

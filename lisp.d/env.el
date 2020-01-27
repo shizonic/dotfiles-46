@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (setq shell-file-name "/bin/bash")
 (setenv "SHELL" "/bin/bash")
 

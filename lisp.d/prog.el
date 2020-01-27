@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (add-hook 'after-init-hook 'projectile-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 ;; (add-hook 'after-init-hook 'global-flycheck-mode) ;; prefer buffer-local, manual enablement for security reasons, I also don't like being harassed.
@@ -28,8 +30,10 @@
   (switch-to-buffer "*Messages*"))
 
 (setq magit-diff-refine-hunk t)
-(when (directory-file-name "~/repos")
-  (setq magit-repository-directories '(("~/repos" . 1))))
+(setq magit-repository-directories '((when (directory-file-name "~/repos")
+                                       ("~/repos" . 1))
+                                     (when (directory-file-name "/mnt/kiss/home/adam/kiss")
+                                       ("/mnt/kiss/home/adam/kiss" . 1))))
 
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers

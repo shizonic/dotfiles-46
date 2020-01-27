@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (require 'gnus)
 
 (setq read-mail-command 'gnus)

@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; C
 
 (setq c-default-style "linux")

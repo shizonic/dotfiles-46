@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 ;; simple address book
 
 (defvar my-abook "~/contacts.el") ;; TODO: use gpg

@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (defun freenode ()
   (interactive)
   (erc-tls :server "chat.freenode.net" :port "6697"))

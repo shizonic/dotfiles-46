@@ -27,29 +27,29 @@
 ;;;;libs
 
 (require 'subr-x)             ;Extra Lisp Functions
-(straight-use-package 'seq)   ;Sequence manipulation functions
+
+(straight-use-package 'a)     ;Associative data structure functions
+(straight-use-package 'async) ;Simple library for asynchronous processing in Emacs
 (straight-use-package 'cl-lib);Common Lisp extensions
 (straight-use-package 'dash)  ;A modern list library
-(straight-use-package 'a)     ;Associative data structure functions
-(straight-use-package 's)     ;String manipulation library
 (straight-use-package 'f)     ;Modern API for working with files and directories
 (straight-use-package 'ht)    ;The missing hash table library
-(straight-use-package 'async) ;Simple library for asynchronous processing in Emacs
+(straight-use-package 's)     ;String manipulation library
+(straight-use-package 'seq)   ;Sequence manipulation functions
 
-;;;;pkgs
-
-(straight-use-package 'gnus-desktop-notify)
-(straight-use-package 'bind-key)
-(straight-use-package 'keychain-environment)
-(straight-use-package 'company)
-(straight-use-package 'magit)
-(straight-use-package 'projectile)
-(straight-use-package 'flycheck)
+;;;;pkgs.main
 (straight-use-package 'aggressive-indent)
-(straight-use-package 'paredit)
-(straight-use-package 'crux)
+(straight-use-package 'bind-key)
 (straight-use-package 'browse-kill-ring)
+(straight-use-package 'company)
+(straight-use-package 'crux)
 (straight-use-package 'elisp-slime-nav)
+(straight-use-package 'flycheck)
+(straight-use-package 'gnus-desktop-notify)
+(straight-use-package 'keychain-environment)
+(straight-use-package 'magit)
+(straight-use-package 'paredit)
+(straight-use-package 'projectile)
 (straight-use-package 'slime)
 
 ;;;;config

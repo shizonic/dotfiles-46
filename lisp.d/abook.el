@@ -2,7 +2,7 @@
 
 ;; simple address book
 
-(defvar my-abook "~/contacts.el") ;; TODO: use gpg
+(defvar my-abook "~/.authinfo.contacts.el.gpg")
 
 ;; e.g., a dummy contacts.el file...
 

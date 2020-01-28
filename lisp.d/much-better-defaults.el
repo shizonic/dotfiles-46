@@ -3,6 +3,9 @@
 (setq gnutls-verify-error t
       gnutls-min-prime-bits 2048
 
+      epg-gpg-program "gpg2"
+      password-cache-expiry nil
+
       mouse-yank-at-point t
       save-interprogram-paste-before-kill t
 
@@ -54,8 +57,8 @@
 
 (setq browse-url-browser-function 'eww-browse-url
       shr-external-browser 'external-browser ;; inside `eww', press the "&" key to launch page in external browser...
-      my-external-browser "surf"             ;; external browser is "surf", could be chromium/firefox/netsurf, etc.
-      eww-search-prefix "https://www.google.com/search?hl=en&q=") ;; default search engine
+      my-external-browser "chromium"
+      eww-search-prefix "https://www.google.com/search?hl=en&q=")
 
 (defun external-browser (url)
   "helper function"

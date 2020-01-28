@@ -68,6 +68,3 @@
         (load (file-name-sans-extension fullpath)))))))
 
 (load-directory "~/repos/dot-emacs/lisp.d")
-
-(add-hook 'internet-connected-hook 'gnus)
-(add-hook 'internet-connected-hook 'freenode)

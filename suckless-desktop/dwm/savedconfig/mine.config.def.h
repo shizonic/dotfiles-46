@@ -63,7 +63,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbordercolor, "-sf", normbgcolor, NULL };
-static const char *termcmd[]  = { "st", "-e", "emacsclient", "-t", "-e", "(xterm-mouse-mode 1)", "-e", "(about-emacs)",  NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *upvol[] = { "amixer", "set", "Master", "5%+",  NULL };
 static const char *downvol[] = { "amixer", "set", "Master", "5%-",  NULL };
 static const char *mutevol[] = { "amixer", "set", "Master", "toggle",  NULL };
@@ -74,8 +74,8 @@ static const char *slock[] = { "slock", NULL };
 static Key keys[] = {
 		     /* modifier                     key        function        argument */
 		     { MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-		     { MODKEY,                       XK_e, spawn,          {.v = termcmd } },
-		     { MODKEY,                       XK_s, spawn,          {.v = slock } },
+		     { MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+		     { MODKEY,                       XK_s, spawn,               {.v = slock } },
 		     { MODKEY,                       XK_b,      togglebar,      {0} },
 		     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 		     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

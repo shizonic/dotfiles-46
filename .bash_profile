@@ -1,6 +1,13 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-[ -z "$DISPLAY" ] && [ "$(tty)" = /dev/tty1 ] && {
+# Setup Information #
+
+# getty1 is autologin, ~/LOCKER is ext4 encrypted with fscrypt
+# Other files (e.g. id_rsa) are protected/managed by respective passphrases/agents.
+# GPG functions as a master keyring
+
+# decrypt ~/.authinfo.gpg once manually and then unlock everything else automatically
+[ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
 
     gpg_fail() {
         exit 1
@@ -8,18 +15,13 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
     trap gpg_fail INT QUIT TERM HUP
 
-    # unlock gpg master "keyring" manually
-    gpg-connect-agent /bye
+    # prepare to unlock gpg master "keyring" manually, only once.
     GPG_TTY=$(tty)
     export GPG_TTY
 
-    echo
-    echo "ENTER GPG PASSPHRASE:"
-    read -rs ; /usr/lib/gnupg/gpg-preset-passphrase --preset 367EC054909BD58458B1D55A0542410134A10B68 <<< "$REPLY"
-
-    [ "$?" -ne 0 ] && gpg_fail
-
-    # unlock everything else now using its' own preferred agent & passwords from authinfo.gpg
+    gpg -d < "$HOME/.authinfo.gpg" || {
+        gpg_fail
+    }
 
     #ssh-agent
     eval $(ssh-agent)
@@ -35,7 +37,7 @@ send "$id_rsa_pass\r"
 expect eof
 EOF
 
-    unset id_rsa-pass
+    unset id_rsa_pass
 
     #~/LOCKER
     locker_pass="$(gpg -d < "$HOME/.authinfo.gpg" | awk '/fscrypt/ { print $6 }' )"
@@ -47,3 +49,5 @@ EOF
 
     x
 }
+
+exit 0

@@ -44,7 +44,7 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-(setq company-idle-delay nil) ;; manual trigger with TAB
+(setq company-idle-delay 0.0)
 (setq company-show-numbers t)
 (setq company-tooltip-limit 10)
 (setq company-minimum-prefix-length 2)
@@ -55,6 +55,6 @@
   (define-key company-active-map (kbd "SPC") nil))
 ;; (setq company-auto-complete-chars nil)
 
-;;; TAB to manually trigger, M-0/9 selects specfic, or M-n/p to cycle, C-s to isearch
-(bind-key "TAB" 'company-complete)
+;;; M-0/9 selects specfic, or M-n/p to cycle, C-s to isearch
+;; (bind-key "TAB" 'company-complete)
 (setq tab-always-indent t)

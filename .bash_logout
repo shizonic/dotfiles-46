@@ -7,12 +7,15 @@ clear
 
 #HACK (just encrypt important stuff in ~/LOCKER)
 [ -z "$DISPLAY" ] && [ "$(who | grep adam | wc -l)" = 1 ] && {
+    gpgconf --kill gpg-agent
+    kill "$SSH_AGENT_PID"
     emacsclient "(kill-emacs)"
-    keychain --agents ssh,gpg -k all
 
     cd /
     pkill -u adam -15
-    ps -U $USER | egrep -v "PID|bash" | awk '{print $1}' | xargs -t kill -9
+    export pid="$BASHPID"
+    ps -U $USER | egrep -v "PID|$pid" | awk '{print $1}' | xargs -t kill -15
+    ps -U $USER | egrep -v "PID|$pid" | awk '{print $1}' | xargs -t kill -9
     fscrypt lock $HOME/LOCKER || {
         echo lock failed $?
         bash

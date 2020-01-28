@@ -1,12 +1,12 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# unlock my gpg master "keyring" manually
-eval $(keychain --eval --agents gpg 77CF5C5C65A8F9F44940A72CDD4795B51117D906)
+# unlock gpg master "keyring" manually
+eval "$(keychain --eval --agents gpg 77CF5C5C65A8F9F44940A72CDD4795B51117D906)"
 
 # unlock ssh keys and encrypted directories automatically
 
 #ssh-agent
-eval $(ssh-agent)
+eval "$(ssh-agent)"
 export SSH_AUTH_SOCK SSH_AGENT_PID
 
 #~/.ssh/id_rsa

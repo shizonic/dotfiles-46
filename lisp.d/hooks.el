@@ -23,3 +23,6 @@ hooks of `internet-connected-hook' only after internet connectivity
 (add-hook 'after-init-hook 'internet-detect)
 
 ;; e.g. now one might (add-hook 'internet-connected-hook 'my-custom-function)
+
+(add-hook 'internet-connected-hook 'gnus)
+(add-hook 'internet-connected-hook 'freenode)

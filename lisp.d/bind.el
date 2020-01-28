@@ -25,7 +25,7 @@
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region) ; because -nox
 (bind-key* "C-x ;" 'comment-line)                                      ; because -nox
 (bind-key* "<f5>" 'compile)
-(bind-key "M-/" 'company-complete)
+(bind-key "M-/" 'hippie-expand)
 
 (bind-key* "C-c u" 'unlock)
 (bind-key* "C-c l" 'lock)

@@ -1,9 +1,23 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# unlock gpg master "keyring" manually
-eval "$(keychain --eval --agents gpg 77CF5C5C65A8F9F44940A72CDD4795B51117D906)"
+gpg_fail() {
+    exit 1
+}
 
-# unlock ssh keys and encrypted directories automatically
+trap gpg_fail INT QUIT TERM HUP
+
+# unlock gpg master "keyring" manually
+gpg-connect-agent /bye
+GPG_TTY=$(tty)
+export GPG_TTY
+
+echo
+echo "ENTER GPG PASSPHRASE:"
+    read -rs ; /usr/lib/gnupg/gpg-preset-passphrase --preset 367EC054909BD58458B1D55A0542410134A10B68 <<< "$REPLY"
+
+[ "$?" -ne 0 ] && gpg_fail
+
+# unlock everything else now using its' own preferred agent & passwords from authinfo.gpg
 
 #ssh-agent
 eval "$(ssh-agent)"

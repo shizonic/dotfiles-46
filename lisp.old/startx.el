@@ -1,5 +1,8 @@
 ;;;;startx.el -- kind of bonkers, but "it works" ...
 
+;; NOTE: to the reader:
+;; If you try this, launch your Exwm Emacs from tty via emacs --fg-daemon
+
 (defun sx ()
   "I don't use this currently, keeping this here.
 A simple elisp replacement for startx/xinit scripts.
@@ -60,3 +63,5 @@ Requires subr-x and async."
      ;; Exwm
      (start-process
       "emacsclient" nil "emacsclient" "-c" "-e" "(eshell)" "-e" "(set-frame-font \"unifont-12\" nil t)"))))
+
+(add-hook 'after-init-hook 'sx)

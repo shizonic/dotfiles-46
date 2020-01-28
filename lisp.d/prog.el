@@ -54,4 +54,3 @@
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "SPC") nil))
 (setq company-auto-complete-chars nil)
-(setq-default)

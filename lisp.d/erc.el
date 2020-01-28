@@ -9,12 +9,13 @@
       erc-prompt-for-password nil
       erc-nick "adamantium"
       erc-autojoin-channels-alist '(("freenode.net"
-                                     "#archlinux"
+                                        ;"#archlinux"
                                      "#kisslinux"
                                      "#commanduser"
                                      "##apoptosis"
-                                     "#emacs"
-                                     "#lisp")))
+                                        ;"#emacs"
+                                        ;"#lisp"
+                                     )))
 
 (defun my-erc-multi-line-disable (string)
   (when (string-match-p "\n+" string)

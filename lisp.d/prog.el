@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (add-hook 'after-init-hook 'projectile-mode)
-(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'prog-mode-hook 'company-mode)
 ;; (add-hook 'after-init-hook 'global-flycheck-mode) ;; prefer buffer-local, manual enablement for security reasons, I also don't like being harassed.
 (add-hook 'after-init-hook 'aggressive-indent-global-mode)
 
@@ -53,8 +53,5 @@
 
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "SPC") nil))
-;; (setq company-auto-complete-chars nil)
-
-;;; M-0/9 selects specfic, or M-n/p to cycle, C-s to isearch
-;; (bind-key "TAB" 'company-complete)
-(setq tab-always-indent t)
+(setq company-auto-complete-chars nil)
+(setq-default)

@@ -3,11 +3,9 @@
 (setq shell-file-name "/bin/bash")
 (setenv "SHELL" "/bin/bash")
 
-(setenv "HOME" (concat "/home/" user-login-name))
 (setenv "PAGER" "cat")
 (setenv "EDITOR" "emacsclient")
 (setenv "VISUAL" (getenv "EDITOR"))
-(setenv "XAUTHORITY" (concat "/home/" user-login-name "/.Xauthority"))
 
 (defvar system-path-inherited
   (concat

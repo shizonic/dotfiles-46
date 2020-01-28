@@ -29,22 +29,15 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
     export SSH_AUTH_SOCK SSH_AGENT_PID
 
     #~/.ssh/id_rsa
-    id_rsa_pass="$(gpg -d < "$HOME/.authinfo.gpg" | awk '/id_rsa/ { print $6 }' )"
-
     expect << EOF
 spawn ssh-add $HOME/.ssh/id_rsa
 expect "Enter passphrase"
-send "$id_rsa_pass\r"
+send "$(gpg -d < "$HOME/.authinfo.id_rsa.gpg")\r"
 expect eof
 EOF
 
-    unset id_rsa_pass
-
     #~/LOCKER
-    locker_pass="$(gpg -d < "$HOME/.authinfo.gpg" | awk '/fscrypt/ { print $6 }' )"
-    echo "$locker_pass" | fscrypt unlock "$HOME/LOCKER"
-
-    unset locker_pass
+    gpg -d < "$HOME/.authinfo.fscrypt.gpg" | fscrypt unlock "$HOME/LOCKER"
 
     [[ -f ~/.bashrc ]] && . ~/.bashrc
 

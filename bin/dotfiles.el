@@ -127,11 +127,7 @@ ignore_newline = no
 \[base16_critical]
     msg_urgency = critical
     background = \"#dc322f\"
-    foreground = \"#fdf6e3\"
-
-icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
-
-browser = /usr/bin/surf")
+    foreground = \"#fdf6e3\"")
 (make-directory "~/.config/dunst" t)
 (f-write-text dotfiles-dunstrc 'utf-8 "~/.config/dunst/dunstrc")
 

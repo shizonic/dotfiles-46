@@ -42,7 +42,7 @@ signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 export PATH=\"$HOME/bin:$HOME/.local/bin:$PATH\"
 
 if \[ -z \"$DISPLAY\" ] && \[ \"$\(tty\)\" = /dev/tty1 ];then
-    sx
+    x
 fi")
 (f-write-text dotfiles-bash-profile 'utf-8 "~/.bash_profile")
 

@@ -10,12 +10,13 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 [ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
 
     gpg_fail() {
-        exit 1
+        exit
     }
 
-    trap gpg_fail INT QUIT TERM HUP
+    trap gpg_fail INT QUIT
 
     # prepare to unlock gpg master "keyring" manually, only once.
+    gpg-connect-agent /bye
     GPG_TTY=$(tty)
     export GPG_TTY
 
@@ -48,6 +49,6 @@ EOF
     [[ -f ~/.bashrc ]] && . ~/.bashrc
 
     x
-}
 
-exit 0
+    exit
+}

@@ -1,11 +1,9 @@
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Setup Information #
+# GPG as master keyring #
 
-# getty1 is autologin, ~/LOCKER is ext4 encrypted with fscrypt
+# getty1 is autologin, ~/LOCKER is ext4 encrypted
 # Other files (e.g. id_rsa) are protected/managed by respective passphrases/agents.
-# GPG functions as a master keyring
-
 # decrypt ~/.authinfo.gpg once manually and then unlock everything else automatically
 [ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
 
@@ -39,9 +37,9 @@ EOF
     #~/LOCKER
     gpg -d < "$HOME/.authinfo.fscrypt.gpg" | fscrypt unlock "$HOME/LOCKER"
 
-    [[ -f ~/.bashrc ]] && . ~/.bashrc
-
     x
 
     exit
 }
+
+[ -f ~/.bashrc ] && . ~/.bashrc

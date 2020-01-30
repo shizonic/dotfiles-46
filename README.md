@@ -52,7 +52,3 @@ If PAM has a problem, (and PAM always has problems), it can lock you out of your
 ### Solution:
 
 Encrypt only files and directories that need to be encrypted.
-
-### But what about Evil Maid attacks?
-
-Not a part of my threat model...

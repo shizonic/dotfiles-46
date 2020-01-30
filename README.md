@@ -21,9 +21,9 @@ ln -s ~/LOCKER/chromium ~/.config
 git clone git@github.com:a-schaefers/dotfiles.git
 ```
 
-- 3. cp my ssh and gpg stow directories from a usb stick to dotfiles
+- 3. Copy non version controlled stow directories, (like ssh and gpg), to ~/dotfiles
 
-NOTE: This is  only safe because of .gitignore and of course these files are protected by passphrases and permissions...
+NOTE: obviously this stuff is in .gitignore...
 
 ```bash
 cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
@@ -34,3 +34,23 @@ cd ~/dotfiles
 mkdir -p ~/{bin,.emacs.d/straight/versions,.config/{mpv,spm,dunst}}
 stow bin bash config emacs gnupg misc ssh wallpaper
 ```
+
+### But why not just use full disk, or even $HOME encryption?
+
+1. Both Full disk encryption and $HOME disk encryption are less robust.
+
+Example 1 - full disk encryption
+
+If Full disk encryption has a problem, it might leave you with an unbootable system.
+
+Example 2 - $HOME encryption
+
+If PAM has a problem, (and PAM always has problems), it can lock you out of your $HOME directory.
+
+### Solution:
+
+Encrypt only files and directories that need to be encrypted.
+
+### But what about Evil Maid attacks?
+
+In most cases, for most people, a guard dog should suffice.

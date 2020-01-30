@@ -30,6 +30,8 @@ cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
 ```
 
 - 4. create symlink farm
+
+```bash
 cd ~/dotfiles
 mkdir -p ~/{bin,.emacs.d/straight/versions,.config/{mpv,spm,dunst}}
 stow bin bash config emacs gnupg misc ssh wallpaper

@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
+(require 'aweshell)
+
 (add-hook 'after-init-hook 'projectile-mode)
 (add-hook 'prog-mode-hook 'company-mode)
 ;; (add-hook 'after-init-hook 'global-flycheck-mode) ;; prefer buffer-local, manual enablement for security reasons, I also don't like being harassed.

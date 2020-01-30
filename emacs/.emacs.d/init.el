@@ -50,6 +50,10 @@
 
 ;;;;pkgs
 (straight-use-package 'aggressive-indent)
+(straight-use-package
+ '(emacs-piper :type git :host gitlab :repo "howardabrams/emacs-piper"))
+(straight-use-package
+ '(aweshell :type git :host github :repo "manateelazycat/aweshell"))
 (straight-use-package 'bind-key)
 (straight-use-package 'browse-kill-ring)
 (straight-use-package 'company)

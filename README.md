@@ -8,9 +8,10 @@
 
 - 1. encrypt ~/LOCKER directory using ext4 native encryption...
 
+Store misc. stuff that should be encrypted (like a browser that might stay logged in to your favorite websites) in here...
+
 ```bash
 fscrypt encrypt ~/LOCKER
-# Store misc. stuff that should be encrypted (like a browser that might stay logged in to your favorite websites) in here...
 mv ~/.config/chromium ~/LOCKER
 ln -s ~/LOCKER/chromium ~/.config
 ```

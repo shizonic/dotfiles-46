@@ -38,6 +38,8 @@ mkdir -p ~/{bin,.emacs.d/straight/versions,.config/{mpv,spm,dunst}}
 stow bin bash config emacs misc wallpaper ssh gnupg
 ```
 
+## FAQ
+
 ### But why not just use full disk, or even $HOME encryption?
 
 Both Full disk encryption and $HOME disk encryption are less robust.

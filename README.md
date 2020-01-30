@@ -39,7 +39,7 @@ stow bin bash config emacs gnupg misc ssh wallpaper
 
 ### But why not just use full disk, or even $HOME encryption?
 
-1. Both Full disk encryption and $HOME disk encryption are less robust.
+Both Full disk encryption and $HOME disk encryption are less robust.
 
 Example 1 - full disk encryption
 

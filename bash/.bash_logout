@@ -4,7 +4,7 @@
 # https://github.com/google/fscrypt/issues/95    <-fix in progress
 
 #HACK (just make sure we encrypt important stuff in ~/LOCKER)
-[ -z "$DISPLAY" ] && [ "$(who | grep adam | wc -l)" = 1 ] && {
+[ -z "$DISPLAY" ] && [ "$(who | grep $USER | wc -l)" = 1 ] && {
     export pid="$BASHPID"
     gpgconf --kill gpg-agent
     kill "$SSH_AGENT_PID"

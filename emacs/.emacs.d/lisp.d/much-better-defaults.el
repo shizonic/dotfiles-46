@@ -56,13 +56,8 @@
   (define-key dired-mode-map (kbd "C-c !") 'dired-xdg-open-file))
 
 (setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'external-browser ;; inside `eww', press the "&" key to launch page in external browser...
-      my-external-browser "chromium"
+      shr-external-browser 'browse-url-chromium ;; inside `eww', press the "&" key to launch page in external browser...
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
-
-(defun external-browser (url)
-  "helper function"
-  (start-process-shell-command my-external-browser nil (concat my-external-browser " " url)))
 
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl) ;; inside `eww' press ^ to open the url with youtube-dl

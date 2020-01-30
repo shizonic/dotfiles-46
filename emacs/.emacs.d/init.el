@@ -16,7 +16,18 @@
 
 ;;;;reproduceable package management with straight.el
 
-(load "~/repos/dot-emacs/straight.el/bootstrap.el" nil 'nomessage)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; "Note that installing a package will activate all of its autoloads, but it
 ;; will not actually require the features provided by the package. This
@@ -43,6 +54,7 @@
 (straight-use-package 'browse-kill-ring)
 (straight-use-package 'company)
 (straight-use-package 'crux)
+(straight-use-package 'edit-server)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'flycheck)
 (straight-use-package 'gnus-desktop-notify)
@@ -67,4 +79,4 @@
        ((and (eq isdir nil) (string= (substring path -3) ".el"))
         (load (file-name-sans-extension fullpath)))))))
 
-(load-directory "~/repos/dot-emacs/lisp.d")
+(load-directory (expand-file-name "lisp.d" user-emacs-directory))

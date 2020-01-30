@@ -1,0 +1,58 @@
+# power threshholds
+set -- 99 80 40 20 10 5
+
+# battery polling frequency
+sleep 10
+
+# desktop notification command
+notifycmd() { notify-send "Battery: $batt_status ${batt_percent}%"; }
+
+# backlight command
+# backlightcmd="xbacklight -set"                                #uncomment for xbacklight
+# backlightcmd="light -S"                                       #uncomment for light
+# backlightcmd="brightnessctl s" ; pct="%"                      #uncomment for brightnessctl
+backlightcmd="lux -S"            ; pct="%"                      #uncomment for lux
+
+discharging_hook() {
+    # 80-99% batt_percentery
+    [ "$batt_percent" -lt 100 ] && [ "$batt_percent" -gt 80 ] && {
+        notifycmd
+        $backlightcmd 80$pct
+    }
+
+    # 40-80% battery
+    [ "$batt_percent" -lt 81 ] && [ "$batt_percent" -gt 40 ] && {
+        notifycmd
+        $backlightcmd 80$pct
+    }
+
+    # 20-40% battery
+    [ "$batt_percent" -lt 41 ] && [ "$batt_percent" -gt 20 ] && {
+        notifycmd
+        $backlightcmd 40$pct
+    }
+
+    # 10-20% battery
+    [ "$batt_percent" -lt 21 ] && [ "$batt_percent" -gt 10 ] && {
+        notifycmd
+        $backlightcmd 40$pct
+    }
+
+    # 5-10% battery
+    [ "$batt_percent" -lt 11 ] && [ "$batt_percent" -gt 5 ] && {
+        notifycmd
+        $backlightcmd 5$pct
+    }
+
+    # 5% battery or less
+    [ "$batt_percent" -lt 6 ] && {
+        notifycmd
+        $backlightcmd 5$pct
+    }
+}
+
+charging_or_full_hook() {
+    # battery Charging / Full
+    notifycmd
+    $backlightcmd 100$pct
+}

@@ -30,8 +30,7 @@
   (switch-to-buffer "*Messages*"))
 
 (setq magit-diff-refine-hunk t)
-(setq magit-repository-directories '(("~/repos" . 1)
-                                     ("/mnt/kiss/home/adam/kiss" . 1)))
+(setq magit-repository-directories '(("~/repos" . 1)))
 
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
@@ -51,6 +50,7 @@
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-flip-when-above t)
 
+;; allow me to decline a suggestion and keep typing through as normal
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "SPC") nil))
 (setq company-auto-complete-chars nil)

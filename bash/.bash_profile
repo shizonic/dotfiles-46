@@ -1,4 +1,7 @@
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+EDITOR=emacsclient
+VISUAL="EDITOR"
+export PATH EDITOR VISUAL
 
 # GPG as master keyring #
 

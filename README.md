@@ -34,7 +34,7 @@ cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
 ```bash
 cd ~/dotfiles
 mkdir -p ~/{bin,.emacs.d/straight/versions,.config/{mpv,spm,dunst}}
-stow bin bash config emacs gnupg misc ssh wallpaper
+stow bin bash config emacs misc wallpaper ssh gnupg
 ```
 
 ### But why not just use full disk, or even $HOME encryption?

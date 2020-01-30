@@ -10,7 +10,7 @@
 
 ```bash
 fscrypt encrypt ~/LOCKER
-# Store misc. stuff that should be encrypted (like browser files) in here...
+# Store misc. stuff that should be encrypted (like a browser that might stay logged in to your favorite websites) in here...
 mv ~/.config/chromium ~/LOCKER
 ln -s ~/LOCKER/chromium ~/.config
 ```

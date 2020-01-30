@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(require 'aweshell)
-
 (add-hook 'after-init-hook 'projectile-mode)
 (add-hook 'prog-mode-hook 'company-mode)
 ;; (add-hook 'after-init-hook 'global-flycheck-mode) ;; prefer buffer-local, manual enablement for security reasons, I also don't like being harassed.
@@ -45,14 +43,17 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-(setq company-idle-delay 0.0)
 (setq company-show-numbers t)
 (setq company-tooltip-limit 10)
 (setq company-minimum-prefix-length 2)
 (setq company-tooltip-align-annotations t)
 (setq company-tooltip-flip-when-above t)
 
-;; allow me to decline a suggestion and keep typing through as normal
+;; manual trigger company
+(setq company-idle-delay nil)
+(bind-key "M-/" 'company-complete)
+
+;; allow me to decline a suggestion and keep typing through as normal...
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "SPC") nil))
 (setq company-auto-complete-chars nil)

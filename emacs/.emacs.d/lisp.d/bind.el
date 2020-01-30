@@ -25,7 +25,6 @@
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region) ; because -nox
 (bind-key* "C-x ;" 'comment-line)                                      ; because -nox
 (bind-key* "<f5>" 'compile)
-(bind-key "M-/" 'hippie-expand)
 (bind-key* "C-t" 'eshell)
 
 (bind-key* (kbd "<mouse-4>") '(lambda () (interactive) (scroll-down 5)))

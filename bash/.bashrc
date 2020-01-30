@@ -6,6 +6,11 @@ esac
 
 PS1='$ '
 
-[ "$(id -u)" = 0 ] && PS1='# '
+restow(){
+    cd ~/dotfiles
+    mkdir -p ~/{bin,.emacs.d/straight/versions,.config/{mpv,spm,dunst}}
+    stow -R bin bash config emacs misc wallpaper ssh gnupg
+}
 
-alias emacs="emacsclient -t -e \"(eshell)\" -e \"(xterm-mouse-mode)\""
+# ESHELL !
+emacsclient -t -e "(eshell)" -e "(xterm-mouse-mode)"

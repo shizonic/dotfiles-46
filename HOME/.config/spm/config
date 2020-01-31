@@ -16,14 +16,13 @@ backlightcmd="lux -S"            ; pct="%"                      #uncomment for l
 discharging_hook() {
     # 80-99% batt_percentery
     [ "$batt_percent" -lt 100 ] && [ "$batt_percent" -gt 80 ] && {
-        notifycmd
-        $backlightcmd 80$pct
+        echo
     }
 
     # 40-80% battery
     [ "$batt_percent" -lt 81 ] && [ "$batt_percent" -gt 40 ] && {
         notifycmd
-        $backlightcmd 80$pct
+        echo
     }
 
     # 20-40% battery
@@ -35,19 +34,18 @@ discharging_hook() {
     # 10-20% battery
     [ "$batt_percent" -lt 21 ] && [ "$batt_percent" -gt 10 ] && {
         notifycmd
-        $backlightcmd 40$pct
+        $backlightcmd 20$pct
     }
 
     # 5-10% battery
     [ "$batt_percent" -lt 11 ] && [ "$batt_percent" -gt 5 ] && {
         notifycmd
-        $backlightcmd 5$pct
+        $backlightcmd 10$pct
     }
 
     # 5% battery or less
     [ "$batt_percent" -lt 6 ] && {
         notifycmd
-        $backlightcmd 5$pct
     }
 }
 

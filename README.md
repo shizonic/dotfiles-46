@@ -4,12 +4,13 @@
 
 ![scrot2](screenshots/2020-01-27-032512_1366x768_scrot.png)
 
+## Replicate
 ```bash
 fscrypt encrypt ~/LOCKER
 mv ~/.config/chromium ~/LOCKER
 ln -s ~/LOCKER/chromium ~/.config
 
-git clone git@github.com:a-schaefers/dotfiles.git
+git clone --recursive git@github.com:a-schaefers/dotfiles.git
 cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
 
 ~/dotfiles/bin/restow
@@ -17,4 +18,6 @@ cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
 cd ~/dotfiles/suckless-desktop/dwm/ && ./build
 cd ~/dotfiles/suckless-desktop/dmenu && ./build
 cd ~/dotfiles/suckless-desktop/st && ./build
+
+build-emacs.sh
 ```

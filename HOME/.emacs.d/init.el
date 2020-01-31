@@ -16,18 +16,7 @@
 
 ;;;;reproduceable package management with straight.el
 
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+(load (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
 
 ;; "Note that installing a package will activate all of its autoloads, but it
 ;; will not actually require the features provided by the package. This
@@ -80,3 +69,17 @@
         (load (file-name-sans-extension fullpath)))))))
 
 (load-directory (expand-file-name "lisp.d" user-emacs-directory))
+
+;; use xclip to copy/paste in emacs-nox
+(unless window-system
+  (when (getenv "DISPLAY")
+    (defun xclip-cut-function (text &optional push)
+      (with-temp-buffer
+        (insert text)
+        (call-process-region (point-min) (point-max) "xclip" nil 0 nil "-i" "-selection" "clipboard")))
+    (defun xclip-paste-function ()
+      (let ((xclip-output (shell-command-to-string "xclip -o -selection clipboard")))
+        (unless (string= (car kill-ring) xclip-output)
+          xclip-output)))
+    (setq interprogram-cut-function 'xclip-cut-function)
+    (setq interprogram-paste-function 'xclip-paste-function)))

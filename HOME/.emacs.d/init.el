@@ -290,6 +290,8 @@
 (bind-key* "C-c f" 'flycheck-mode)
 (bind-key* "C-c t r" 'region-to-termbin)
 (bind-key* "C-c t b" 'buffer-to-termbin)
+(bind-key* "C-c I" 'crux-find-user-init-file)
+(bind-key* "C-c S" 'crux-find-shell-init-file)
 (bind-key* "C-o" 'crux-smart-open-line)
 (bind-key* "C-c C-l" 'crux-duplicate-current-line-or-region)
 (bind-key* "C-c -" 'crux-kill-whole-line)

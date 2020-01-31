@@ -215,13 +215,8 @@
 (setq company-tooltip-flip-when-above t)
 
 ;; manual trigger company
-(setq company-idle-delay 0.0)
+(setq company-idle-delay nil)
 (bind-key "M-/" 'company-complete)
-
-;; allow me to decline a suggestion and keep typing through as normal...
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "SPC") nil))
-(setq company-auto-complete-chars nil)
 
 ;;;;languages
 

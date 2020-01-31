@@ -17,9 +17,7 @@ autoreconf
     --without-x \
     --with-x-toolkit=no \
     --with-x=no \
-    --with-dbus=yes \
-    --with-gnutls=yes \
-    --with-xml2=yes
+    --with-gnutls=yes
 
 make
 make install

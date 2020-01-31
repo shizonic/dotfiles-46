@@ -1,7 +1,10 @@
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-EDITOR=emacsclient
-VISUAL="EDITOR"
-export PATH EDITOR VISUAL
+
+ALTERNATE_EDITOR=""
+EDITOR="emacsclient -t"
+VISUAL="$EDITOR"
+
+export PATH EDITOR VISUAL ALTERNATE_EDITOR
 
 # GPG as master keyring #
 
@@ -40,7 +43,7 @@ EOF
     #~/LOCKER
     gpg -d < "$HOME/.authinfo.fscrypt.gpg" | fscrypt unlock "$HOME/LOCKER"
 
-    x
+    startx
 
     exit
 }

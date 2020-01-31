@@ -6,11 +6,8 @@
 #HACK (just make sure we encrypt important stuff in ~/LOCKER)
 [ -z "$DISPLAY" ] && [ "$(who | grep $USER | wc -l)" = 1 ] && {
     export pid="$BASHPID"
-    gpgconf --kill gpg-agent
-    kill "$SSH_AGENT_PID"
-    emacsclient "(kill-emacs)"
     cd /
-    ps -U $USER | egrep -v "PID|pid" | awk '{print $1}' | xargs -t kill -15
-    ps -U $USER | egrep -v "PID|$pid" | awk '{print $1}' | xargs -t kill -9
+    ps -U $USER | grep -Ev "PID|$pid" | awk '{print $1}' | xargs -t kill -15
+    ps -U $USER | grep -Ev "PID|$pid" | awk '{print $1}' | xargs -t kill -9
     fscrypt lock $HOME/LOCKER
 }

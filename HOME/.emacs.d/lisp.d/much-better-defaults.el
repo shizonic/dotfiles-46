@@ -56,8 +56,11 @@
   (define-key dired-mode-map (kbd "C-c !") 'dired-xdg-open-file))
 
 (setq browse-url-browser-function 'eww-browse-url
-      shr-external-browser 'browse-url-chromium ;; inside `eww', press the "&" key to launch page in external browser...
       eww-search-prefix "https://www.google.com/search?hl=en&q=")
+
+(if (> emacs-major-version 26)
+    (setq browse-url-secondary-browser-function 'browse-url-chromium)
+  (setq shr-external-browser 'browse-url-chromium))
 
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl) ;; inside `eww' press ^ to open the url with youtube-dl

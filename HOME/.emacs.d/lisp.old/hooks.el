@@ -26,4 +26,3 @@ hooks of `internet-connected-hook' only after internet connectivity
 
 (add-hook 'internet-connected-hook 'gnus)
 (add-hook 'internet-connected-hook 'freenode)
-(add-hook 'internet-connected-hook 'edit-server-start)

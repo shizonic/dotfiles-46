@@ -288,9 +288,6 @@
 (bind-key "C-a" 'crux-move-beginning-of-line)
 
 ;; minor modes may not override
-(bind-key* "C-c I" #'(lambda ()
-                       (interactive)
-                       (find-file user-init-file)))
 (bind-key* "C-x C-b" 'ido-switch-buffer)
 (bind-key* "M-y" 'browse-kill-ring)
 (bind-key* "C-c p" 'projectile-command-map)
@@ -307,12 +304,9 @@
 (bind-key* "<f5>" 'compile)
 
 (bind-key* "C-t" 'better-shell-for-current-dir)
-(bind-key* "C-c T" 'better-shell-for-projectile-root)
-(bind-key* "C-c r" 'better-shell-remote-open)
+(bind-key* "C-c T" 'better-shell-remote-open)
+(bind-key* "C-c P" 'better-shell-for-projectile-root)
 (bind-key* "C-c s" 'better-shell-sudo-here)
-
-(bind-key* "C-c S" 'better-shell-sudo-here)
-(bind-key* "C-c r" 'better-shell-remote-open)
 
 (bind-key* (kbd "<mouse-4>") '(lambda () (interactive) (scroll-down 5)))
 (bind-key* (kbd "<mouse-5>") '(lambda () (interactive) (scroll-up 5)))

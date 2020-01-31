@@ -40,6 +40,7 @@
 (straight-use-package 'browse-kill-ring)
 (straight-use-package 'company)
 (straight-use-package 'crux)
+(require 'crux)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'flycheck)
 (straight-use-package 'magit)

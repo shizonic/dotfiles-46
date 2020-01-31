@@ -4,4 +4,4 @@ case $- in
     *) return;;
 esac
 
-[ "$TERM" != "dumb" ] && emacsclient -t -e "(shell)" -e "(delete-other-windows)" -e "(xterm-mouse-mode)"
+[ -z "$INSIDE_EMACS" ] && emacs

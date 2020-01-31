@@ -25,7 +25,15 @@
 (bind-key* "C-c ;" 'crux-duplicate-and-comment-current-line-or-region) ; because -nox
 (bind-key* "C-x ;" 'comment-line)                                      ; because -nox
 (bind-key* "<f5>" 'compile)
-(bind-key* "C-t" 'shell)
+
+(bind-key* "C-t" 'better-shell-for-current-dir)
+(bind-key* "C-c P" 'better-shell-for-projectile-root)
+(bind-key* "C-c r" 'better-shell-remote-open)
+(bind-key* "C-c s" 'better-shell-sudo-here)
+(bind-key* "C-@" 'better-shell-shell)
+
+(bind-key* "C-c S" 'better-shell-sudo-here)
+(bind-key* "C-c r" 'better-shell-remote-open)
 
 (bind-key* (kbd "<mouse-4>") '(lambda () (interactive) (scroll-down 5)))
 (bind-key* (kbd "<mouse-5>") '(lambda () (interactive) (scroll-up 5)))

@@ -33,6 +33,7 @@
 (straight-use-package 'cl-lib);Common Lisp extensions
 (straight-use-package 'dash)  ;A modern list library
 (straight-use-package 'f)     ;Modern API for working with files and directories
+(require 'f)
 (straight-use-package 'ht)    ;The missing hash table library
 (straight-use-package 's)     ;String manipulation library
 (straight-use-package 'seq)   ;Sequence manipulation functions
@@ -40,7 +41,10 @@
 ;;;;pkgs
 (straight-use-package 'aggressive-indent)
 (straight-use-package 'bind-key)
+(straight-use-package 'better-shell)
+(require 'better-shell)
 (straight-use-package 'browse-kill-ring)
+(straight-use-package 'buffer-flip)
 (straight-use-package 'company)
 (straight-use-package 'crux)
 (straight-use-package 'edit-server)

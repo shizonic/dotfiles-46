@@ -8,12 +8,12 @@
 ```bash
 fscrypt encrypt ~/LOCKER
 mv ~/.config/chromium ~/LOCKER
-ln -s ~/LOCKER/chromium ~/.config
+mv ~/.thunderbird ~/LOCKER
 
 git clone --recursive git@github.com:a-schaefers/dotfiles.git
 cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
 
-~/dotfiles/bin/restow
+~/dotfiles/HOME/bin/restow
 
 cd ~/dotfiles/suckless-desktop/dwm/ && ./build
 cd ~/dotfiles/suckless-desktop/dmenu && ./build

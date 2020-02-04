@@ -1,3 +1,6 @@
+# System battery directory
+sys_battery="/sys/class/power_supply/BAT0"
+
 # power threshholds
 set -- 99 80 40 20 10 5
 
@@ -16,13 +19,14 @@ backlightcmd="lux -S"            ; pct="%"                      #uncomment for l
 discharging_hook() {
     # 80-99% batt_percentery
     [ "$batt_percent" -lt 100 ] && [ "$batt_percent" -gt 80 ] && {
-        echo
+        notifycmd
+        $backlightcmd 80$pct
     }
 
     # 40-80% battery
     [ "$batt_percent" -lt 81 ] && [ "$batt_percent" -gt 40 ] && {
         notifycmd
-        echo
+        $backlightcmd 80$pct
     }
 
     # 20-40% battery
@@ -34,18 +38,19 @@ discharging_hook() {
     # 10-20% battery
     [ "$batt_percent" -lt 21 ] && [ "$batt_percent" -gt 10 ] && {
         notifycmd
-        $backlightcmd 20$pct
+        $backlightcmd 40$pct
     }
 
     # 5-10% battery
     [ "$batt_percent" -lt 11 ] && [ "$batt_percent" -gt 5 ] && {
         notifycmd
-        $backlightcmd 10$pct
+        $backlightcmd 5$pct
     }
 
     # 5% battery or less
     [ "$batt_percent" -lt 6 ] && {
         notifycmd
+        $backlightcmd 5$pct
     }
 }
 

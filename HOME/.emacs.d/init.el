@@ -93,7 +93,9 @@
       tramp-default-method "ssh"
       tramp-copy-size-limit nil
 
-      vc-follow-symlinks t)
+      vc-follow-symlinks t
+
+      ring-bell-function 'ignore)
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -320,6 +322,7 @@
                                      "#kisslinux"
                                      "#commanduser"
                                      "##apoptosis"
+                                     "#liguros"
                                         ;"#emacs"
                                         ;"#lisp"
                                      )))

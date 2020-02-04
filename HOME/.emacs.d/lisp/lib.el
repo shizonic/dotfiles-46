@@ -31,7 +31,6 @@
 (require 'crux)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'flycheck)
-(straight-use-package 'gnus-desktop-notify)
 (straight-use-package 'magit)
 (straight-use-package 'paredit)
 (straight-use-package 'projectile)

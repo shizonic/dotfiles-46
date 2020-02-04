@@ -43,8 +43,9 @@ EOF
     #~/LOCKER
     gpg -d < "$HOME/.authinfo.fscrypt.gpg" | fscrypt unlock "$HOME/LOCKER"
 
-    startx
+    xinit -- :1
 
+    . ~/.bash_logout
     exit
 }
 

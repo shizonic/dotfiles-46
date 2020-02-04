@@ -4,9 +4,10 @@ case $- in
     *) return;;
 esac
 
-[ "$(tty)" = /dev/tty1 ] || {
-    screen -qxRR "$USER"
-
-    [ -z "$INSIDE_EMACS" ] && [ "$TERM" = vt100 ] &&
+[ -z "$INSIDE_EMACS" ] && [ "$(tty)" != /dev/tty1 ] && {
+    if [ "$TERM" = vt100 ];then
         emacsclient -create-frame --alternate-editor="" -e "(xterm-mouse-mode)"
+    else
+        screen -qxRR "$USER" -T vt100
+    fi
 }

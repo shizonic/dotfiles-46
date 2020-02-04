@@ -1,4 +1,3 @@
-term vt100
 escape ^Tt
 startup_message off
 vbell off

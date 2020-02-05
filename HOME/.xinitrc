@@ -14,9 +14,7 @@ picom --backend glx &
 dunst &
 spm &
 xss-lock -- slock &
-pgrep emacs || emacs --fg-daemon &
 
-notify-send "$(uname -a)"
-notify-send "$(emacs --version)"
+st &
 
 exec dwm

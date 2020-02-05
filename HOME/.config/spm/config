@@ -25,8 +25,7 @@ discharging_hook() {
 
     # 40-80% battery
     [ "$batt_percent" -lt 81 ] && [ "$batt_percent" -gt 40 ] && {
-        notifycmd
-        $backlightcmd 80$pct
+        echo
     }
 
     # 20-40% battery
@@ -37,8 +36,7 @@ discharging_hook() {
 
     # 10-20% battery
     [ "$batt_percent" -lt 21 ] && [ "$batt_percent" -gt 10 ] && {
-        notifycmd
-        $backlightcmd 40$pct
+        echo
     }
 
     # 5-10% battery
@@ -49,8 +47,7 @@ discharging_hook() {
 
     # 5% battery or less
     [ "$batt_percent" -lt 6 ] && {
-        notifycmd
-        $backlightcmd 5$pct
+        echo
     }
 }
 

@@ -15,9 +15,12 @@
                                (dolist (file (directory-files (expand-file-name "lisp.d" user-emacs-directory) t "\.el$" nil))
                                  (load (file-name-sans-extension file)))
 
-                               (if (file-directory-p "~/repos")
-                                   (find-file "~/repos")
-                                 (about-emacs))))
+                               (find-file user-init-file)
+
+                               (use-package zone :demand
+                                 :config
+                                 (zone-when-idle 120)
+                                 (zone))))
 
 (load (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
 

@@ -63,20 +63,27 @@
 
 ;; Libs for Emacs hackers
 
-(use-package subr-x :straight nil) ;Extra Lisp Functions
-(use-package a)                    ;Associative data structure functions
-(use-package async)                ;Simple library for asynchronous processing in Emacs
-(use-package cl-lib)               ;Common Lisp extensions
-(use-package dash)                 ;A modern list library
-(use-package f)                    ;Modern API for working with files and directories
-(use-package ht)                   ;The missing hash table library
-(use-package s)                    ;String manipulation library
-(use-package seq)                  ;Sequence manipulation functions
+(use-package subr-x :straight nil :ensure nil) ;Extra Lisp Functions
+(use-package a)      ;Associative data structure functions
+(use-package async)  ;Simple library for asynchronous processing in Emacs
+(use-package cl-lib) ;Common Lisp extensions
+(use-package dash)   ;A modern list library
+(use-package f)      ;Modern API for working with files and directories
+(use-package ht)     ;The missing hash table library
+(use-package s)      ;String manipulation library
+(use-package seq)    ;Sequence manipulation functions
 
 ;; Load lisp.d/ modules...
 
 (dolist (file (directory-files (expand-file-name "lisp.d" user-emacs-directory) t "\.el$" nil))
   (load (file-name-sans-extension file)))
+
+;; Check Email / Join IRC, but only if connected to the internet and only in my first Emacs session...
+
+(when (eq 1 (string-to-number (string-trim (shell-command-to-string "pgrep -c emacs"))))
+  (progn
+    (add-hook 'internet-connected-hook 'gnus)
+    (add-hook 'internet-connected-hook 'freenode)))
 
 ;; A helpful binding to return to this file...
 

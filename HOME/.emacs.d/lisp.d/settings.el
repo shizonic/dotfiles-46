@@ -28,15 +28,9 @@
 
       ring-bell-function 'ignore)
 
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
-(global-set-key (kbd "C-x -") 'bury-buffer)
-(global-set-key (kbd "<f5>") 'compile)
-
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(show-paren-mode 1)
-
+(require 'delsel)
 (delete-selection-mode 1)
 
 (prefer-coding-system 'utf-8)
@@ -44,13 +38,25 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+(require 'winner)
 (winner-mode 1)
 
+(require 'paren)
 (show-paren-mode 1)
+
+(require 'elec-pair)
 (electric-pair-mode 1)
 
+(require 'executable)
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
 (setq grep-command "grep -r ")
 
+(require 'whitespace)
 (add-hook 'before-save-hook 'whitespace-cleanup)
+
+(require 'saveplace)
+(save-place-mode 1)
+
+(require 'recentf)
+(recentf-mode 1)

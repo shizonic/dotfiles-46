@@ -18,10 +18,3 @@ hooks of `internet-connected-hook' only after internet connectivity
      (run-hooks 'internet-connected-hook))))
 
 (add-hook 'after-init-hook 'internet-detect)
-
-(async-start
- (lambda ()
-   (while (not (eq 0 (call-process "nc" nil nil nil "-zw1" "google.com" "80")))
-     (sleep-for 5)))
- (lambda (result)
-   (run-hooks 'internet-connected-hook)))

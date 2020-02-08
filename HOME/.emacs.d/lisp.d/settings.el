@@ -28,35 +28,14 @@
 
       ring-bell-function 'ignore)
 
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+(global-set-key (kbd "C-x -") 'bury-buffer)
+(global-set-key (kbd "<f5>") 'compile)
+
 (fset 'yes-or-no-p 'y-or-n-p)
 
-(setq-default indent-tabs-mode nil
-              tab-width 8
-              fill-column 80)
-
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-create-new-buffer 'always
-      ido-auto-merge-work-directories-length -1
-      ido-enable-flex-matching t
-      ido-use-filename-at-point 'guess)
-
 (show-paren-mode 1)
-
-(require 'dired-x)
-(add-hook 'dired-load-hook
-          (function (lambda () (load "dired-x"))))
-
-(defun dired-xdg-open-file ()
-  "from https://www.emacswiki.org/emacs/OperatingOnFilesInDired"
-  (interactive)
-  (let* ((file (dired-get-filename nil t)))
-    (call-process "xdg-open" nil 0 nil file)))
-
-(with-eval-after-load 'dired
-  (define-key dired-mode-map (kbd "C-c !") 'dired-xdg-open-file))
-
-(setq browse-url-browser-function 'browse-url-chromium)
 
 (delete-selection-mode 1)
 
@@ -71,6 +50,7 @@
 (electric-pair-mode 1)
 
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
 (setq grep-command "grep -r ")
 
 (add-hook 'before-save-hook 'whitespace-cleanup)

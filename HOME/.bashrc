@@ -4,10 +4,12 @@ case $- in
     *) return;;
 esac
 
-[ -z "$INSIDE_EMACS" ] && [ "$(tty)" != /dev/tty1 ] && {
-    if [ "$TERM" = vt100 ];then
-        pgrep emacs &>/dev/null || emacs
-    else
-        screen -qxRR "$USER" -T vt100
-    fi
+[ -z "$INSIDE_EMACS" ] && [ "$(tty)" != /dev/tty1 ] &&
+    emacs -nw
+
+
+backup_root() {
+    sudo rsync -aAXv \
+         --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/*/.local/share/Trash/*","/home/*/.cache/*"} \
+         / /mnt/backup
 }

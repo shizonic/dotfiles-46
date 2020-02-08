@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
+(use-package systemd)
+
 (defun shutdown ()
   (interactive)
   (let ((choices '("kexec" "suspend" "hibernate" "reboot" "poweroff")))
@@ -20,7 +22,12 @@
                       (install . "yay -S")
                       (search . "yay -Ss")
                       (uninstall . "yay -Rs")
-                      (update . "yay -Syu")
+                      (update . "expect << EOF
+spawn yay
+expect \"password for foo\"
+send \"$\(gpg -d < \"$HOME/.authinfo.sudo.gpg\"\)\\r\"
+expect eof
+EOF")
                       (clean-cache . "yay -Sc")
                       (log . "cat /var/log/pacman.log")
                       (get-info . "yay -Qi")

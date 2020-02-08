@@ -1,3 +1,5 @@
+;;; -*- lexical-binding: t; -*-
+
 (use-package slime
   :init
   (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))

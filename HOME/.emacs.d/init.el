@@ -1,45 +1,27 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; Tweak GC to reduce startup time... Thanks: https://github.com/ianpan870102/yay-evil-emacs/blob/master/init.el
+;; Tweak GC to reduce startup time... Thanks: https://github.com/jwiegley/dot-emacs/blob/master/init.el
 
-(defvar file-name-handler-alist-original file-name-handler-alist)
+(defvar file-name-handler-alist-old file-name-handler-alist)
 
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
+(setq package-enable-at-startup nil
       file-name-handler-alist nil
-      site-run-file nil)
+      gc-cons-threshold 402653184
+      gc-cons-percentage 0.6)
 
-(defvar ian/gc-cons-threshold 20000000)
+(add-hook 'after-init-hook
+          `(lambda ()
+             (setq file-name-handler-alist file-name-handler-alist-old
+                   gc-cons-threshold 800000
+                   gc-cons-percentage 0.1)
+             (garbage-collect)) t)
 
-(add-hook 'emacs-startup-hook ; hook run after loading init files
-          (lambda ()
-            (setq gc-cons-threshold ian/gc-cons-threshold
-                  gc-cons-percentage 0.1
-                  file-name-handler-alist file-name-handler-alist-original)))
-
-(add-hook 'minibuffer-setup-hook (lambda ()
-                                   (setq gc-cons-threshold (* ian/gc-cons-threshold 2))))
-(add-hook 'minibuffer-exit-hook (lambda ()
-                                  (garbage-collect)
-                                  (setq gc-cons-threshold ian/gc-cons-threshold)))
-
-;; Further reduce startup time by disabling package.el...
-
-(setq package-enable-at-startup nil)
-
-;; startup misc.
+;; startup related settings...
 
 (setq custom-file "/dev/null"
       initial-major-mode 'emacs-lisp-mode
       inhibit-startup-screen nil
       load-prefer-newer t)
-
-;; Start an Emacs server...
-
-(add-hook 'after-init-hook #'(lambda ()
-                               (require 'server)
-                               (or (server-running-p)
-                                   (server-start))))
 
 ;; Kill unwanted startup buffers...
 
@@ -54,7 +36,7 @@
 
 (setq straight-use-package-by-default t)
 
-;; Use-package for greater control over our packages...
+;; Use-package for greater control over our package loading...
 
 (straight-use-package 'use-package)
 
@@ -80,13 +62,22 @@
 
 ;; Check Email / Join IRC, but only if connected to the internet and only in my first Emacs session...
 
-(when (eq 1 (string-to-number (string-trim (shell-command-to-string "pgrep -c emacs"))))
-  (progn
-    (add-hook 'internet-connected-hook 'gnus)
-    (add-hook 'internet-connected-hook 'freenode)))
+;; (when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
+;;   (progn
+;;     (add-hook 'internet-connected-hook 'gnus)
+;;     (add-hook 'internet-connected-hook 'freenode)))
 
 ;; A helpful binding to return to this file...
 
 (global-set-key (kbd "C-c I") #'(lambda ()
                                   (interactive)
                                   (find-file user-init-file)))
+
+;; Start an Emacs server...
+
+(add-hook 'after-init-hook #'(lambda ()
+                               (require 'server)
+                               (or (server-running-p)
+                                   (server-start))))
+
+;;; init.el ends here

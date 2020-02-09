@@ -36,7 +36,7 @@
 
 (setq straight-use-package-by-default t)
 
-;; Use-package for greater control over our package loading...
+;; Use-package for greater control over package loading...
 
 (straight-use-package 'use-package)
 

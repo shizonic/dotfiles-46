@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
+(require 'ido)
+
 (ido-mode 1)
 
 (ido-everywhere 1)
@@ -10,8 +12,6 @@
       ido-use-filename-at-point 'guess)
 
 (use-package ido-completing-read+ :init (ido-ubiquitous-mode +1))
-
-(use-package flx-ido :init (flx-ido-mode +1))
 
 (use-package amx :init (amx-mode 1))
 

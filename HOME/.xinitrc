@@ -7,6 +7,7 @@ internal=LVDS-1
 if xrandr | grep -q "$external connected"; then xrandr --output "$internal" --off --output "$external" --auto; fi
 
 xsetroot -cursor_name left_ptr
+xrdb ~/.Xresources
 feh --no-fehbg --bg-max ~/.wallpaper
 
 while pgrep X; do xsetroot -name " $(date) "; sleep 60; done &

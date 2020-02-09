@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-(use-package yasnippet :demand :after company
+(use-package yasnippet :diminish :demand :after company
   :diminish yas-minor-mode
   :preface (defvar tmp/company-point nil)
   :config

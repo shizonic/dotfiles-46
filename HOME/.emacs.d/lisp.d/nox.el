@@ -10,12 +10,6 @@
     (unless (string= (car kill-ring) xclip-output)
       xclip-output)))
 
-(use-package awesome-tray :demand
-  :straight (awesome-tray :type git :host github :repo "manateelazycat/awesome-tray")
-  :config
-  (awesome-tray-mode 1)
-  (setq-default mode-line-format nil))
-
 (or window-system
     (progn
       (global-set-key (kbd "C-x ;") 'comment-line)

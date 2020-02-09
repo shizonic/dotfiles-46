@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package company
+  :diminish
   :hook (prog-mode . company-mode)
   :config
   (setq company-minimum-prefix-length 1

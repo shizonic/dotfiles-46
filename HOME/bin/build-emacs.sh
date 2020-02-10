@@ -11,15 +11,16 @@ git pull --rebase
 autoreconf
 
 ./configure \
-    --prefix=$HOME/.local \
+    --prefix=/usr \
     --with-modules \
-    --without-all \
-    --without-x \
-    --with-x-toolkit=no \
-    --with-x=no \
+    --with-xft \
+    --with-x-toolkit=athena \
+    --without-toolkit-scroll-bars \
+    --without-dbus \
+    --without-gconf \
+    --without-gsettings \
+    --with-xpm=no \
     --with-gnutls=yes \
-    --with-xml2=yes \
-    --with-dbus=yes \
     --with-json=yes
 
 make

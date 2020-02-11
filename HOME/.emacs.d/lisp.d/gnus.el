@@ -66,18 +66,4 @@
    gnus-mime-display-multipart-related-as-mixed t
    gnus-auto-select-first nil
    smiley-style 'medium
-   gnus-keep-backlog '0)
-
-  (gnus-demon-add-scanmail)
-  (gnus-demon-add-handler 'gnus-demon-scan-news 3 t)
-  (setq gnus-no-groups-message "")
-  (defadvice gnus-demon-scan-news (around gnus-demon-timeout activate)
-    (with-timeout
-        (3 (message "Gnus timed out."))
-      ad-do-it)))
-
-(use-package gnus-desktop-notify :demand :after gnus
-  :config
-  (setq gnus-desktop-notify-function 'gnus-desktop-notify-exec
-        gnus-desktop-notify-exec-program "notify-send")
-  (gnus-desktop-notify-mode))
+   gnus-keep-backlog '0))

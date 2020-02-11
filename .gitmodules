@@ -1,6 +1,3 @@
-[submodule "emacs"]
-        path = emacs
-        url = https://github.com/emacs-mirror/emacs.git
 [submodule "straight.el"]
         path = straight.el
         url = https://github.com/raxod502/straight.el.git

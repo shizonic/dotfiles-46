@@ -3,6 +3,3 @@ case $- in
     *i*) ;;
     *) return;;
 esac
-
-[ -z "$INSIDE_EMACS" ] && [ "$(tty)" != /dev/tty1 ] &&
-    emacs -nw

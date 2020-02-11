@@ -13,11 +13,7 @@
         erc-prompt-for-password nil
         erc-nick "adamantium"
         erc-autojoin-channels-alist '(("freenode.net"
-                                       ;; "#archlinux"
-                                       ;; "#kisslinux"
-                                       "#commanduser"
-                                       ;; "##apoptosis"
-                                       ;; "#liguros"
+                                       "#kisslinux"
                                        ;; "#emacs"
                                        ;; "#lisp"
                                        )))
@@ -26,6 +22,5 @@
     (when (string-match-p "\n+" string)
       (setq str nil)))
 
-  (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable)
-
-  (add-to-list 'erc-modules 'notifications))
+  ;; fool-proof anti-flood
+  (add-hook 'erc-send-pre-hook 'my-erc-multi-line-disable))

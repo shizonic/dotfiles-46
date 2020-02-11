@@ -17,5 +17,3 @@
 
 (setq magit-completing-read-function 'magit-ido-completing-read)
 (setq gnus-completing-read-function 'gnus-ido-completing-read)
-
-(global-set-key (kbd "C-x C-b") 'ido-switch-buffer)

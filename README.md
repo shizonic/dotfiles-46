@@ -6,6 +6,5 @@ cp -r $USBSTICK/{ssh,gpg} ~/dotfiles
 
 mkdir -p ~/{bin,.emacs.d/straight/{versions,repos},.config/mpv}
 
-cd ~/dotfiles
-~/dotfiles/HOME/bin/stow HOME
+cd ~/dotfiles && HOME/bin/stow HOME
 ```

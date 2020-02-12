@@ -13,9 +13,6 @@
 (or window-system
     (progn
       (global-set-key (kbd "C-x ;") 'comment-line)
-      (menu-bar-mode -1)
-      (setq-default default-frame-alist '((tty-color-mode . never)))
-      (custom-set-faces '(font-lock-function-name-face ((t (:weight bold)))))
       (and (getenv "DISPLAY")
            (progn
              (xterm-mouse-mode 1)

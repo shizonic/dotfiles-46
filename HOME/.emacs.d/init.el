@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(set-frame-font "Unifont-24")
-
 ;; tweak GC to reduce startup time...
 
 (defvar file-name-handler-alist-old file-name-handler-alist)
@@ -22,15 +20,22 @@
 
 (setq custom-file "/dev/null"
       initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen nil
+      inhibit-startup-screen t
       load-prefer-newer t)
 
-;; kill unwanted startup buffers...
-
 (add-hook 'window-setup-hook #'(lambda ()
+                                 ;; kill unwanted initial buffers...
                                  (dolist (buffer '("*scratch*" "*straight-process*"))
                                    (when (get-buffer buffer)
-                                     (kill-buffer buffer)))))
+                                     (kill-buffer buffer)))
+
+                                 ;; start an Emacs server...
+                                 (require 'server)
+                                 (or (server-running-p)
+                                     (server-start))
+
+                                 ;; startup to dired
+                                 (find-file "~/")))
 
 ;; straight.el for reproduceable package management...
 
@@ -64,22 +69,15 @@
 
 ;; check email / join irc, but only if connected to the internet and only in my first Emacs session...
 
-;; (when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
-;;   (progn
-;;     (add-hook 'internet-connected-hook 'gnus)
-;;     (add-hook 'internet-connected-hook 'freenode)))
+(when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
+  (progn
+    (add-hook 'internet-connected-hook 'gnus)
+    (add-hook 'internet-connected-hook 'freenode)))
 
 ;; a helpful binding to return to this file...
 
 (global-set-key (kbd "C-c I") #'(lambda ()
                                   (interactive)
                                   (find-file user-init-file)))
-
-;; start an Emacs server...
-
-(add-hook 'after-init-hook #'(lambda ()
-                               (require 'server)
-                               (or (server-running-p)
-                                   (server-start))))
 
 ;;; init.el ends here

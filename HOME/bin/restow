@@ -1,4 +1,0 @@
-#!/bin/bash
-cd ~/dotfiles
-mkdir -p ~/{bin,.emacs.d/straight/{versions,repos},.config/{mpv,spm,dunst}}
-stow -R HOME ssh gnupg

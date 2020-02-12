@@ -1,5 +1,9 @@
 ;;; -*- lexical-binding: t; -*-
 
+(use-package rainbow-delimiters
+  :init
+  (rainbow-delimiters-mode 1))
+
 ;; all lisp
 
 ;; replace insane C-M-prefixed binds with something that doesn't break the wrist

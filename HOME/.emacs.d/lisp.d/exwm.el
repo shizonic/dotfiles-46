@@ -60,12 +60,6 @@
      "xrandr" "--output" external "--off" "--output" internal "--auto"))
 
   (defun xrandr ()
-    ;; HACK when external is already plugged
-    (when (and (string-match (concat external " connected")
-                             (shell-command-to-string "xrandr"))
-               (< (string-to-number (emacs-uptime "%s")) 10))
-      (switch-to-internal-monitor))
-
     (if (string-match (concat external " connected")
                       (shell-command-to-string "xrandr"))
         (switch-to-external-monitor)
@@ -86,4 +80,19 @@
   (setq desktop-environment-brightness-set-command "lux %s"
         desktop-environment-brightness-normal-increment "-a 5%"
         desktop-environment-brightness-normal-decrement "-s 5%"
-        desktop-environment-brightness-get-command "lux -G"))
+        desktop-environment-brightness-get-command "lux -G")
+
+  (exwm-input-set-key (kbd "<XF86AudioMute>") 'desktop-environment-toggle-mute)
+  (exwm-input-set-key (kbd "<XF86AudioLowerVolume>") 'desktop-environment-volume-decrement)
+  (exwm-input-set-key (kbd "<XF86AudioRaiseVolume>") 'desktop-environment-volume-increment)
+  (exwm-input-set-key (kbd "<XF86MonBrightnessDown>")'desktop-environment-brightness-decrement)
+  (exwm-input-set-key (kbd "<XF86MonBrightnessUp>")'desktop-environment-brightness-increment)
+
+  (exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-increment)
+  (exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-decrement)
+
+  (exwm-input-set-key (kbd "<XF86PowerOff>") #'(lambda ()
+                                                 (interactive)
+                                                 (with-temp-buffer
+                                                   (cd "/su::")
+                                                   (shell-command "echo mem > /sys/power/state")))))

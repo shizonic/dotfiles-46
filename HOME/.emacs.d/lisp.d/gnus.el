@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
 ;; TODO -- replace gnus with something sane
-
 (use-package gnus
   :config
 
@@ -19,8 +18,6 @@
   (setq gnus-select-method '(nnimap "gmail"
                                     (nnimap-address "imap.gmail.com")
                                     (nnimap-server-port 993)
-                                    (nnimap-server-port "imaps")
-                                    (nnimap-stream ssl)
                                     (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash")
                                     (nnmail-expiry-wait immediate)))
 

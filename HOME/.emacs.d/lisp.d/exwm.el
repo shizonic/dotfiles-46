@@ -49,15 +49,20 @@
   (defvar external "VGA-1")
   (defvar internal "LVDS-1")
 
+  (defun set-wallpaper ()
+    (shell-command "feh --no-fehbg --bg-max ~/.wallpaper"))
+
   (defun switch-to-external-monitor ()
     (start-process
      "xrandr" nil
-     "xrandr" "--output" internal "--off" "--output" external "--auto"))
+     "xrandr" "--output" internal "--off" "--output" external "--auto")
+    (set-wallpaper))
 
   (defun  switch-to-internal-monitor ()
     (start-process
      "xrandr" nil
-     "xrandr" "--output" external "--off" "--output" internal "--auto"))
+     "xrandr" "--output" external "--off" "--output" internal "--auto")
+    (set-wallpaper))
 
   (defun xrandr ()
     (if (string-match (concat external " connected")

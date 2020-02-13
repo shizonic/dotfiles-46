@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package emms
-  :config
+  :init
   (emms-standard)
   (emms-default-players)
   (when (file-directory-p "~/Downloads")

@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package company
-  :init (global-company-mode 1)
+  :init (add-hook 'prog-mode-hook 'company-mode)
   :config
   (setq company-minimum-prefix-length 1
         company-show-numbers t

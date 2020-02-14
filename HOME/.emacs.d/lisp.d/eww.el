@@ -22,5 +22,5 @@ Specify the video player to use by setting the value of `yt-dl-player'"
   (setq browse-url-secondary-browser-function 'browse-url-firefox))
 
 (with-eval-after-load 'eww
-  (define-key eww-mode-map (kbd "^") 'eww-open-yt-dl) ;; inside `eww' press ^ to open the url with youtube-dl
+  (define-key eww-mode-map (kbd "^") 'open-yt-dl) ;; inside `eww' press ^ to open the url with youtube-dl
   (define-key eww-mode-map (kbd "W") 'shr-copy-url));; "w" by default copies current page URL, while "W" now will copy url at point.

@@ -35,7 +35,7 @@
        (fringe-mode -1)
 
        (setq my-font "Unifont")
-       (setq my-font-size '24)
+       (setq my-font-size '12)
 
        (defun my-font-resizer (x)
          (when (> x 0)

@@ -18,6 +18,8 @@
 
 ;; startup related settings...
 
+(toggle-frame-fullscreen)
+
 (setq custom-file "/dev/null"
       initial-major-mode 'emacs-lisp-mode
       inhibit-startup-screen t
@@ -34,8 +36,8 @@
                                  (or (server-running-p)
                                      (server-start))
 
-                                 ;; startup to dired
-                                 (find-file "~/")))
+                                 (shell)
+                                 (delete-other-windows)))
 
 ;; straight.el for reproduceable package management...
 

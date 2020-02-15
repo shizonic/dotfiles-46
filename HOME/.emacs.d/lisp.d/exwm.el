@@ -93,8 +93,10 @@
   (exwm-input-set-key (kbd "<XF86MonBrightnessDown>")'desktop-environment-brightness-decrement)
   (exwm-input-set-key (kbd "<XF86MonBrightnessUp>")'desktop-environment-brightness-increment)
 
-  (exwm-input-set-key (kbd "<s-up>") 'desktop-environment-volume-increment)
-  (exwm-input-set-key (kbd "<s-down>") 'desktop-environment-volume-decrement)
+  (exwm-input-set-key (kbd "<s-kp-add>") 'desktop-environment-volume-increment)
+  (exwm-input-set-key (kbd "<s-kp-subtract>") 'desktop-environment-volume-decrement)
+
+  (exwm-input-set-key (kbd "<f9>") 'exwm-input-toggle-keyboard)
 
   (exwm-input-set-key (kbd "<XF86PowerOff>") #'(lambda ()
                                                  (interactive)

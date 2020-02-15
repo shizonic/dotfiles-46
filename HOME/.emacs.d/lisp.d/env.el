@@ -3,9 +3,14 @@
 (setq shell-file-name "/bin/bash")
 (setenv "SHELL" "/bin/bash")
 
-(setenv "PAGER" "cat")
-(setenv "EDITOR" "emacsclient")
-(setenv "VISUAL" (getenv "EDITOR"))
+(or (getenv "PAGER")
+    (setenv "PAGER" "cat"))
+
+(or (getenv "EDITOR")
+    (setenv "EDITOR" "emacsclient"))
+
+(or (getenv "VISUAL")
+    (setenv "VISUAL" (getenv "EDITOR")))
 
 (defvar system-path-inherited
   (concat

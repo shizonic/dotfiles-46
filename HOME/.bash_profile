@@ -1,19 +1,11 @@
-PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-
-PAGER=cat
-EDITOR=emacsclient
-VISUAL="$EDITOR"
-
-export PATH EDITOR VISUAL PAGER
-
 [ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
     # start gpg-agent
-    gpg-connect-agent /bye
+    gpg-connect-agent /bye > /dev/null 2>&1
     GPG_TTY=$(tty)
     export GPG_TTY
 
     # start ssh-agent
-    eval $(ssh-agent)
+    eval $(ssh-agent) > /dev/null 2>&1
     export SSH_AUTH_SOCK SSH_AGENT_PID
 
     # unlock them simultaneously with the help of `expect'
@@ -24,7 +16,10 @@ send "$(gpg -d < "$HOME/.authinfo.id_rsa.gpg")\r"
 expect eof
 EOF
 
-    startx
+    read -rp "start X?" && [ -z "$DISPLAY" ] && {
+        startx > /dev/null 2>&1
+    }
+
 }
 
 [ -f ~/.bashrc ] && . ~/.bashrc

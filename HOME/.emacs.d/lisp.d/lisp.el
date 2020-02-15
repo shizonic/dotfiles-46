@@ -42,7 +42,7 @@
 (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))
 
-(use-package slime :disabled
+(use-package slime
   :config
   (setq slime-default-lisp 'sbcl)
   (setq slime-contribs '(slime-fancy slime-cl-indent))
@@ -52,12 +52,12 @@
         slime-autodoc-use-multiline-p t)
   (define-key slime-mode-map (kbd "C-c C-s") 'slime-selector))
 
-(use-package sly
+(use-package sly :disabled
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl"))
 
-(use-package sly-quicklisp)
-(use-package sly-named-readtables)
-(use-package sly-asdf)
-(use-package sly-package-inferred
+(use-package sly-quicklisp :disabled)
+(use-package sly-named-readtables :disabled)
+(use-package sly-asdf :disabled)
+(use-package sly-package-inferred :disabled
   :straight (sly-package-inferred :type git :host github :repo "40ants/sly-package-inferred"))

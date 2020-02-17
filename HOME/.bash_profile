@@ -23,4 +23,3 @@ EOF
 }
 
 [ -f ~/.bashrc ] && . ~/.bashrc
-if [ -e /home/foo/.nix-profile/etc/profile.d/nix.sh ]; then . /home/foo/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

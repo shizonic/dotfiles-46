@@ -71,10 +71,10 @@
 
 ;; check email / join irc, but only if connected to the internet and only in my first Emacs session...
 
-;; (when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
-;;   (progn
-;;     (add-hook 'internet-connected-hook 'gnus)
-;;     (add-hook 'internet-connected-hook 'freenode)))
+(when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
+  (progn
+    (add-hook 'internet-connected-hook 'gnus)
+    (add-hook 'internet-connected-hook 'freenode)))
 
 ;; a helpful binding to return to this file...
 

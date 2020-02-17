@@ -44,3 +44,8 @@ current frame."
     ;; Check window was not found successfully
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
+
+(defun scrot ()
+  (interactive)
+  (shell-command
+   (concat "import -window root ~/scrot" (number-to-string(random 1000000)) ".png")))

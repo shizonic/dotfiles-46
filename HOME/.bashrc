@@ -4,3 +4,5 @@ case $- in
 esac
 
 PS1='$(pwd) $ '
+
+kiss() { PAGER="$EDITOR" /bin/kiss "$@" ; }

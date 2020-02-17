@@ -10,7 +10,7 @@
     (setenv "VISUAL" (getenv "EDITOR")))
 
 (or (getenv "PAGER")
-    (setenv "PAGER") (getenv "EDITOR"))
+    (setenv "PAGER" "cat"))
 
 (setenv "KISS_AUDIT" "1")
 

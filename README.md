@@ -6,3 +6,7 @@ mkdir -p ~/{bin,.emacs.d/straight/{versions,repos},.config/mpv}
 
 cd ~/dotfiles && HOME/bin/stow HOME
 ```
+
+![scrot](scrot1.png)
+
+![scrot](scrot2.png)

@@ -4,3 +4,5 @@ name = Adam Schaefers
 signingkey = 77CF5C5C65A8F9F44940A72CDD4795B51117D906
 [commit]
         gpgsign = true
+[github]
+	user = a-schaefers

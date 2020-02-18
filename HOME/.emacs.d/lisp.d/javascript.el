@@ -28,5 +28,6 @@
                 (interactive)
                 (setq-local browse-url-browser-function 'browse-url-firefox))))
 
-(when (executable-find "javascript-typescript-stdio")
+(when (or (executable-find "javascript-typescript-stdio")
+          (executable-find "javascript-typescript-langserver"))
   (add-hook 'js-mode-hook 'eglot-ensure))

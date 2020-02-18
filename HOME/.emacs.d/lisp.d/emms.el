@@ -8,6 +8,7 @@
     (setq emms-source-file-default-directory "~/Downloads"))
 
   (emms-mode-line-disable)
+  (emms-playing-time -1)
 
   (add-to-list 'emms-streams-built-in-list
                '(*track*

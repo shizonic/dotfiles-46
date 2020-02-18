@@ -10,7 +10,7 @@ If Emacs does something to interrupt flow, I turn it off. This does not apply on
 
 ...and build your way up. "Spacemacs" and the like will only hinder learning to use Emacs as a platform. Starter kits are also insecure, as long as they are using MELPA, and are to be avoided.
 
-- Use Emacs as a Linux window manager
+- Use Emacs as a Linux window manager.
 
 This is a great way to improve flow. Exwm is to be preferred for this reason. Now the brain is not required to separate Emacs from window managing, and switching back and forth from a browser to code feels more natural this way.
 
@@ -32,7 +32,7 @@ On that note, a mechanical keyboard is a necessity and the best way to prevent R
 
 AND/OR poorly configured...
 
-- Use a modular Emacs configuration
+- Use a modular Emacs configuration.
 
 Prefer lots of simple files as [un]pluggable modules instead of a monolithic, 1000 line init.el (or worse .org file.)
 

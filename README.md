@@ -1,5 +1,7 @@
 # [mostly] About Emacs
 
+![scrot](scrot249249.png)
+
 ## Productivity Principles:
 
 - Don't interrupt my flow. Flow is money.

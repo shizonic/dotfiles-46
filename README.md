@@ -40,9 +40,9 @@ Use completion-at-point via TAB informed by an eglot lsp server or just simple h
 
 Use flymake instead of flycheck.
 
-Prefer xref-find-definitions instead of dumb-jump or something similar.
+Prefer xref-find-definitions informed by an lsp server instead of dumb-jump or something even worse, like CTAGS/GTAGS/GNUGLOBAL etc.
 
-Basically just install eglot and relevant language servers if needed. Most of this (IDE crap) is crap anyways, and can get in the way of "flow." At the end of the day, Emacs will never be as good of an IDE as visual studio or even jetbrains. Use an IDE when you want an IDE. Use Emacs when you want an Emacs. What's wrong with using "both" approaches. We have a job to do. We have lots of tools. Let's do get it done.
+Basically just install eglot and relevant language servers if needed. Most of this (IDE crap) is crap anyways, and can get in the way of "flow." At the end of the day, Emacs will never be as good of an IDE as visual studio or even jetbrains. Use an IDE when you want an IDE. Use an Emacs when you want an Emacs. What's wrong with using "both" approaches?
 
 - Use simple Elisp and don't turn on stuff / change defaults if unsure about what it does.
 

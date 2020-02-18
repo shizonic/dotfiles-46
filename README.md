@@ -6,6 +6,10 @@
 
 If Emacs does something to interrupt flow, I turn it off. This does not apply only to Emacs. I use Emacs and Linux mainly because it allows me to configure my development environment in a way that keeps me in the flow as much as possible. This includes modeline garbage from erc or company-mode completion popups, they are all turned off. "Spell check" is also turned off because I studied English and typing in school, and do not appreciate the often unhelpful distractions of "Spell Check." Likewise "linting" is not always-on for the same reason. I don't want to be surprised by anything on my screen. This includes desktop notifications, cell-phone rings and social media beeps.
 
+- Start from `better-defaults' https://github.com/technomancy/better-defaults
+
+...and build your way up. "Spacemacs" and the like will only hinder learning to use Emacs as a platform. Starter kits are also insecure, as long as they are using MELPA, and are to be avoided.
+
 - Use Emacs as a Linux window manager
 
 This is a great way to improve flow. Exwm is to be preferred for this reason. Now the brain is not required to separate Emacs from window managing, and switching back and forth from a browser to code feels more natural this way. Just don't fall into "ricing", the default Emacs "light" theme is actually perfect.
@@ -32,9 +36,9 @@ If the code requires tons of comments it's probably crap. This includes so-calle
 
 For example,
 
-Prefer ido-mode instead of ivy or helm. Not only is ido-mode built-in, and faster for most tasks, but it also only uses the minibuffer! Why do modern developers think it's a good idea to shift the entire screen and cover up code with popup menus when we don't have to? This is distracting and gets in the way of flow.
+Prefer ido-mode instead of ivy or helm. Not only is ido-mode built-in, and faster for most tasks, but it also only uses the minibuffer! Why do developers think it's a good idea to shift the entire screen and cover up code with popup menus when we don't have to? This is distracting and gets in the way of flow.
 
-Prefer paredit-mode instead of lispy, (Much fewer dependencies...)
+Prefer paredit instead of lispy, as it has fewer dependencies, and is time-tested.
 
 Use completion-at-point via TAB informed by an eglot lsp server or just simple hippie-expand via M-/ instead of company-mode.
 

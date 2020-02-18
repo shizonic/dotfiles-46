@@ -4,9 +4,9 @@
 
 (and window-system
      (progn
-       ;; all theme-related stuff for when in the gui
+       ;; gui
 
-       (use-package doom-themes
+       (use-package doom-themes :disabled
          :init
          (load-theme 'doom-outrun-electric t))
 
@@ -34,8 +34,8 @@
        (scroll-bar-mode -1)
        (fringe-mode -1)
 
-       (setq my-font "Terminus")
-       (setq my-font-size '20)
+       (setq my-font "Liberation Mono")
+       (setq my-font-size '10)
 
        (defun my-font-resizer (x)
          (when (> x 0)
@@ -79,6 +79,7 @@
                                            (my-font-resizer -1)))))
 
 (or window-system
+    ;; nox
     (progn
       (menu-bar-mode -1)
       (setq-default default-frame-alist '((tty-color-mode . never)))

@@ -8,7 +8,7 @@ If Emacs does something to interrupt flow, I turn it off. This does not apply on
 
 - Start from `better-defaults' https://github.com/technomancy/better-defaults
 
-...and build your way up. "Spacemacs" and the like will only hinder learning to use Emacs as a platform. Starter kits are also insecure, as long as they are using MELPA, and are to be avoided.
+...and build up from there. "Spacemacs" and the like will only hinder learning to use Emacs as a platform. Starter kits are also insecure, as long as they are using MELPA, and are to be avoided.
 
 - Use Emacs as a Linux window manager.
 
@@ -18,9 +18,9 @@ This is a great way to improve flow. Exwm is to be preferred for this reason. No
 
 (guilty)
 
-While customizing your linux desktop may be endlessly fun, it is also endlessly worthless.
+While customizing a linux desktop may be endlessly fun, it is also endlessly worthless.
 
-The default Emacs light theme is actually perfect. "But--" No, you don't need dark-mode-- the entire internet is actually in LIGHT mode, you will blind yourself switching back and forth from a light web browser to a dark text editor, and if you use a "dark-reader" browser extension, the internet breaks.
+The default Emacs light theme is actually perfect. "But--" No, we don't need dark-mode-- the entire internet is actually in light mode, and switching back and forth from a light web browser to a dark text editor is blinding; while using a "dark-reader" browser extension, the internet breaks.
 
 - Left Control and Left Alt are swapped.
 
@@ -56,7 +56,7 @@ Use flymake instead of flycheck.
 
 Prefer xref-find-definitions informed by an lsp server instead of dumb-jump or something even worse, like CTAGS/GTAGS/GNUGLOBAL etc.
 
-Basically just install eglot and relevant language servers if needed. Most of this (IDE crap) is crap anyways, and can get in the way of "flow." At the end of the day, Emacs will never be as good of an IDE as visual studio or even jetbrains. Use an IDE when you want an IDE. Use an Emacs when you want an Emacs. What's wrong with using "both" approaches?
+Basically just install eglot and relevant language servers if needed. Most of this (IDE crap) is crap anyways, and can get in the way of "flow." At the end of the day, Emacs will never be as good of an IDE as visual studio or even jetbrains. Use an IDE when you want an IDE. Use an Emacs when you want an Emacs.
 
 - Use simple Elisp and don't turn on stuff / change defaults if unsure about what it does.
 

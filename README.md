@@ -12,6 +12,8 @@ Surprisingly, using Emacs as a Linux window manager is a great way to improve fl
 
 Old keyboards from back in the day were actually designed with control closer to the space bar. With this simple swap, one can press Left Control with one's left thumb; likewise Right Alt may be pressed with the right thumb-- ensuring proper ergonomics whilst using modifiers (goodbye "Emacs pinky!") and rendering modal editing unnecessary.
 
+On that note, a mechanical keyboard is a necessity and the best way to prevent RSI, not vim. We may be hackers, but first of all, we are typists. Click clack clack, rat a tat tat. I recommend cherry blues.
+
 - If Emacs loads in more than 1 second, it is bloated
 
 AND/OR poorly configured...

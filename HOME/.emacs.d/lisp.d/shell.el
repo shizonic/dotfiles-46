@@ -12,3 +12,9 @@
 ;; TODO
 (use-package emacs-piper :disabled
   :straight (emacs-piper :type git :host gitlab :repo "howardabrams/emacs-piper"))
+
+(use-package flymake-shellcheck
+  :commands flymake-shellcheck-load
+  :init
+  (when (executable-find "shellcheck")
+    (add-hook 'sh-mode-hook 'flymake-shellcheck-load)))

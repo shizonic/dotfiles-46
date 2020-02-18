@@ -14,29 +14,33 @@ Old keyboards from back in the day were actually designed with control closer to
 
 On that note, a mechanical keyboard is a necessity and the best way to prevent RSI, not vim. We may be hackers, but first of all, we are typists. Click clack clack, rat a tat tat. I recommend cherry blues.
 
-- If Emacs loads in more than 1 second, it is bloated
+- If Emacs loads in more than 1 second, it is bloated.
 
 AND/OR poorly configured...
 
 - Use a modular Emacs configuration
 
-Prefer lots of simple files as pluggable modules instead of a monolithic, 1000 line init.el (or worse .org file.)
+Prefer lots of simple files as [un]pluggable modules instead of a monolithic, 1000 line init.el (or worse .org file.)
 
 - Use fewer comments, except when necessary. Prefer self-documented code and systems.
 
 If the code requires tons of comments it's probably crap. This includes so-called "literate programming," a bad idea from the start. In Emacs, C-h v and C-h f, etc. may be used to inspect what "this or that" function or variable may be doing.
 
-- Use Emacs built-ins instead of packages when possible.
+- Use Emacs built-ins instead of packages whenever possible. And when deciding between packages that perform the same function, prefer the simpler and/or time-tested solution, to newer solutions or to solutions that have many dependencies.
 
 For example,
 
-Use completion-at-point informed by an eglot lsp server or just simple hippie-expand instead of company-mode.
+Prefer ido-mode instead of ivy or helm. Not only is ido-mode built-in, and faster for most tasks, but it also only uses the minibuffer! Why do modern developers think it's a good idea to shift the entire screen and cover up code with popup menus when we don't have to? This is distracting and gets in the way of flow.
+
+Prefer paredit-mode instead of lispy, (Much fewer dependencies...)
+
+Use completion-at-point via TAB informed by an eglot lsp server or just simple hippie-expand via M-/ instead of company-mode.
 
 Use flymake instead of flycheck.
 
 Prefer xref-find-definitions instead of dumb-jump or something similar.
 
-Basically just install eglot and relevant language servers if needed. This (ide) crap is overrated anyways, and can get in the way of "flow."
+Basically just install eglot and relevant language servers if needed. Most of this (IDE crap) is crap anyways, and can get in the way of "flow." At the end of the day, Emacs will never be as good of an IDE as visual studio or even jetbrains. Use an IDE when you want an IDE. Use Emacs when you want an Emacs. What's wrong with using "both" approaches. We have a job to do. We have lots of tools. Let's do get it done.
 
 - Use simple Elisp and don't turn on stuff / change defaults if unsure about what it does.
 

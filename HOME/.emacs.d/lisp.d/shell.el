@@ -9,8 +9,8 @@
   (global-set-key (kbd "C-c P") 'better-shell-for-projectile-root)
   (global-set-key (kbd "C-c s") 'better-shell-sudo-here))
 
-;; TODO
 (use-package emacs-piper :disabled
+  ;; TODO -- this looks fun
   :straight (emacs-piper :type git :host gitlab :repo "howardabrams/emacs-piper"))
 
 (use-package flymake-shellcheck

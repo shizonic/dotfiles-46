@@ -1,11 +1,11 @@
 [ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
     # start gpg-agent
-    gpg-connect-agent /bye > /dev/null 2>&1
+    gpg-connect-agent /bye
     GPG_TTY=$(tty)
     export GPG_TTY
 
     # start ssh-agent
-    eval $(ssh-agent) > /dev/null 2>&1
+    eval $(ssh-agent)
     export SSH_AUTH_SOCK SSH_AGENT_PID
 
     # unlock them simultaneously with the help of `expect'
@@ -17,9 +17,12 @@ expect eof
 EOF
 
     read -rp "start X?" && [ -z "$DISPLAY" ] && {
-        startx > /dev/null 2>&1
+        startx
     }
 
 }
 
 [ -f ~/.bashrc ] && . ~/.bashrc
+
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"

@@ -12,7 +12,15 @@ If Emacs does something to interrupt flow, I turn it off. This does not apply on
 
 - Use Emacs as a Linux window manager
 
-This is a great way to improve flow. Exwm is to be preferred for this reason. Now the brain is not required to separate Emacs from window managing, and switching back and forth from a browser to code feels more natural this way. Just don't fall into "ricing." The default Emacs light theme is actually perfect. "But--" No, you don't need dark-mode-- the entire internet is actually in LIGHT mode, you will blind yourself switching back and forth from a light web browser to a dark text editor, and if you use a "dark-reader" browser extension, the internet breaks.
+This is a great way to improve flow. Exwm is to be preferred for this reason. Now the brain is not required to separate Emacs from window managing, and switching back and forth from a browser to code feels more natural this way.
+
+- Just don't fall into "ricing."
+
+(guilty)
+
+While customizing your linux desktop may be endlessly fun, it is also endlessly worthless.
+
+The default Emacs light theme is actually perfect. "But--" No, you don't need dark-mode-- the entire internet is actually in LIGHT mode, you will blind yourself switching back and forth from a light web browser to a dark text editor, and if you use a "dark-reader" browser extension, the internet breaks.
 
 - Left Control and Left Alt are swapped.
 

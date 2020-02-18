@@ -6,7 +6,9 @@
 
 If Emacs does something to interrupt flow, I turn it off. This does not apply only to Emacs. I use Emacs and Linux mainly because it allows me to configure my development environment in a way that keeps me in the flow as much as possible. This includes modeline garbage from erc or company-mode completion popups, they are all turned off. "Spell check" is also turned off because I studied English and typing in school, and do not appreciate the often unhelpful distractions of "Spell Check." Likewise "linting" is not always-on for the same reason. I don't want to be surprised by anything on my screen. This includes desktop notifications, cell-phone rings and social media beeps.
 
-Surprisingly, using Emacs as a Linux window manager is a great way to improve flow. Exwm is to be preferred for this reason. Now the brain is not required to separate Emacs from window managing, and switching back and forth from a browser to code feels more natural this way.
+- Use Emacs as a Linux window manager
+
+This is a great way to improve flow. Exwm is to be preferred for this reason. Now the brain is not required to separate Emacs from window managing, and switching back and forth from a browser to code feels more natural this way. Just don't fall into "ricing", the default Emacs "light" theme is actually perfect.
 
 - Left Control and Left Alt are swapped.
 

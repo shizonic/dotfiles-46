@@ -14,6 +14,7 @@
   :straight (emacs-piper :type git :host gitlab :repo "howardabrams/emacs-piper"))
 
 (use-package flymake-shellcheck
+  :after flymake
   :commands flymake-shellcheck-load
   :init
   (when (executable-find "shellcheck")

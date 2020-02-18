@@ -27,7 +27,8 @@
   (concat
    (getenv "HOME") "/bin:"
    (getenv "HOME") "/.local/bin:"
-   (getenv "HOME") "/.nix-profile/bin:"))
+   (getenv "HOME") "/.nix-profile/bin:"
+   (getenv "HOME") "/.npm-global/bin:"))
 
 (defvar my-path-append (concat exec-directory))
 

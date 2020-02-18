@@ -10,7 +10,4 @@ if xrandr | grep -q "$external connected"; then xrandr --output "$internal" --of
 
 xsetroot -cursor_name left_ptr
 
-feh --no-fehbg --bg-max ~/.wallpaper
-picom --backend glx &
-
 exec emacs

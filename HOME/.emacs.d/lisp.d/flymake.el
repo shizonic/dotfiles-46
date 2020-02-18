@@ -2,8 +2,7 @@
 
 (use-package flymake
   :init
-  (add-hook 'prog-mode-hook #'(lambda ()
-                                (flymake-mode 1)))
+  (global-set-key (kbd "C-c f") 'flymake-mode)
   :config
   (global-set-key (kbd "C-?") 'flymake-show-diagnostics-buffer)
   (global-set-key (kbd "C->") 'flymake-goto-next-error)

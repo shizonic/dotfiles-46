@@ -14,15 +14,25 @@ Old keyboards from back in the day were actually designed with control closer to
 
 AND/OR poorly configured...
 
+- Use a modular Emacs configuration
+
+Prefer lots of simple files as pluggable modules instead of monolithic, hard to navigate 1000 line init.el or worse .org file.
+
+- Use fewer comments, except when necessary. Prefer self-documented code and systems.
+
+If the code requires tons of comments it's probably crap. This includes so-called "literate programming," a bad idea from the start. In Emacs, C-h v and C-h f, etc. may be used to inspect what "this or that" function or variable may be doing.
+
 - Use Emacs built-ins instead of packages when possible.
 
 For example,
 
 Use completion-at-point informed by an lsp server or just simple hippie-expand instead of company-mode.
 
-Use flymake (informed by an lsp server) instead of flycheck.
+Use flymake instead of flycheck.
 
-Prefer xref-find-definitions (informed by an lsp server) instead of dumb-jump or something similar.
+Prefer xref-find-definitions instead of dumb-jump or something similar.
+
+Prefer lsp (eglot) over non-lsp related packages, unless lsp support is poor for a particular language.
 
 - Use simple Elisp and don't turn on stuff / change defaults if unsure about what it does.
 

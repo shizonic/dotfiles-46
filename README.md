@@ -64,7 +64,7 @@ Defaults are a great way to stay in the flow. Instead of constantly tweaking my 
 
 - Always follow security best practices:
 
-**Do source code audits. Don't just run scripts without viewing them. One reason I use KISS (https://k1ss.org) Linux is I am able to audit the entire system single-handedly. How many distros can you do this on? Likewise, using straight.el, we are able to audit Emacs packages as we have time, and stick to known safe (and stable) packages because of reproduceability. Say goodbye to the wild-west that is MELPA!**
+**Do source code audits. Don't just run scripts without viewing them. One reason I use KISS (https://k1ss.org) Linux is I am able to audit the entire system single-handedly. How many distros can you do this on? Likewise, using straight.el, we are able to audit Emacs packages as we have time, and stick to known safe (and stable) packages because of reproducibility. Say goodbye to the wild-west that is MELPA!**
 
 ## Replicate
 ```bash

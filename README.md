@@ -1,6 +1,6 @@
 # [mostly] About Emacs
 
-Productivity Principles:
+## Productivity Principles:
 
 - Don't interrupt my flow. Flow is money.
 

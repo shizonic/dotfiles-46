@@ -48,6 +48,8 @@ Prefer ido-mode instead of ivy or helm. Not only is ido-mode built-in, and faste
 
 Prefer paredit instead of lispy, as it has fewer dependencies, and is time-tested.
 
+Prefer eglot instead lsp-mode.
+
 Use completion-at-point via TAB informed by an eglot lsp server or just simple hippie-expand via M-/ instead of company-mode.
 
 Use flymake instead of flycheck.

@@ -38,23 +38,13 @@ Prefer lsp (eglot) over non-lsp related packages, unless lsp support is poor for
 
 - Always follow security best practices:
 
-Basically follow this https://wiki.archlinux.org/index.php/Security guide, but also some other common sense things, namely the following:
+Basically follow this https://wiki.archlinux.org/index.php/Security guide, and aside from some other common sense practices such as, GPG keys and signatures. (Web of trust!) SSH keys. Passphrases and agents. Disk/directory/file/transfer encryption. Checksum checking. Keep systems up-to-date using the latest of upstream software packages (these updates contain security fixes and this approach is simpler than backporting and patching old versions of software.)
 
-GPG keys and signatures. (Web of trust!)
+...
 
-SSH keys.
+**Do source code audits. Don't just run scripts without viewing them. One reason I use KISS (https://k1ss.org) Linux is I am able to audit the entire system single-handedly. How many distros can you do this on? Likewise, using straight.el, we are able to audit Emacs packages as we have time, and stick to known safe (and stable) packages because of reproduceability. Say goodbye to the wild-west that is MELPA!**
 
-Passphrases and agents.
-
-Disk/directory/file/transfer encryption.
-
-Checksum checking.
-
-Keep systems up-to-date using the latest of upstream software packages (these updates contain security fixes and this approach is simpler than backporting and patching old versions of software.)
-
-Do source code audits. Don't just run scripts without viewing them. One reason I use KISS (https://k1ss.org) Linux is I am able to audit the entire system single-handedly. How many distros can you do this on?
-
-When writing code, always sanity check your input and your variables, etc.
+When writing code, always sanity check input, variables, etc.
 
 Use less software and services instead of more.
 

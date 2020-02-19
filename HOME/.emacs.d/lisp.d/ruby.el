@@ -17,3 +17,7 @@
 
     ;; CamelCase aware editing operations
     (subword-mode +1)))
+
+;; might not need this
+;; (use-package flymake-ruby
+;; :init (add-hook 'ruby-mode-hook 'flymake-ruby-load))

@@ -16,7 +16,7 @@ send "$(gpg -d < "$HOME/.authinfo.id_rsa.gpg")\r"
 expect eof
 EOF
 
-    read -rp "start X?" && [ -z "$DISPLAY" ] && {
+    read -rp "start X?" && {
         startx
     }
 

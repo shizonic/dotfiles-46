@@ -1,7 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(use-package simple-httpd)
-
 ;; js-mode in Emacs 27 includes full support for syntax highlighting and indenting of JSX syntax.
 ;; So install js2-mode as a minor mode just for JavaScript linting...
 
@@ -28,10 +26,10 @@
                 (interactive)
                 (setq-local browse-url-browser-function 'browse-url-firefox))))
 
-(with-eval-after-load 'eglot
-  (when (or (executable-find "javascript-typescript-stdio")
-            (executable-find "javascript-typescript-langserver"))
-    (add-hook 'js-mode-hook 'eglot-ensure)))
+(when (or (executable-find "javascript-typescript-stdio")
+          (executable-find "javascript-typescript-langserver"))
+  (add-hook 'js-mode-hook 'eglot-ensure))
 
-(with-eval-after-load 'shim
+(when (executable-find "nodenv")
+  (add-hook 'after-init-hook 'shim-init-node)
   (add-hook 'js-mode-hook #'shim-mode))

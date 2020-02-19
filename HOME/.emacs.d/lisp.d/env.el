@@ -14,11 +14,6 @@
 
 (setenv "KISS_AUDIT" "1")
 
-(when (file-directory-p "/nix")
-  (setenv "NIX_PROFILES" (concat (getenv "HOME") "/nix/var/nix/profiles/default " (getenv "HOME") "/.nix-profile"))
-  (setenv "NIX_PATH" (concat (getenv "HOME") "/.nix-defexpr/channels"))
-  (setenv "NIX_SSL_CERT_FILE" (concat (getenv "HOME") "/.nix-profile/etc/ssl/certs/ca-bundle.crt")))
-
 (defvar system-path-inherited
   (concat
    (getenv "PATH") ":"))
@@ -26,9 +21,7 @@
 (defvar my-path-insert
   (concat
    (getenv "HOME") "/bin:"
-   (getenv "HOME") "/.local/bin:"
-   (getenv "HOME") "/.nix-profile/bin:"
-   (getenv "HOME") "/.npm-global/bin:"))
+   (getenv "HOME") "/.local/bin:"))
 
 (defvar my-path-append (concat exec-directory))
 

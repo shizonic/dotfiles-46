@@ -3,13 +3,12 @@
 (defun shutdown ()
   (interactive)
   (let ((choices '("reboot" "poweroff" "suspend")))
-    (progn
-      (with-temp-buffer
-        (message "%s" (setq choice (ido-completing-read "Shutdown:" choices )))
-        (cd "/su::")
-        (if (string-equal choice "suspend")
-            (shell-command "echo mem > /sys/power/state")
-          (shell-command (concat choice)))))))
+    (message "%s" (setq choice (ido-completing-read "Shutdown:" choices )))
+    (with-temp-buffer
+      (cd "/su::")
+      (if (string-equal choice "suspend")
+          (shell-command "echo mem > /sys/power/state")
+        (shell-command (concat choice))))))
 
 (defun dmenu ()
   (interactive)

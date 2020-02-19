@@ -56,13 +56,15 @@
     (start-process
      "xrandr" nil
      "xrandr" "--output" internal "--off" "--output" external "--auto")
-    (set-wallpaper))
+    ;; (set-wallpaper)
+    )
 
   (defun  switch-to-internal-monitor ()
     (start-process
      "xrandr" nil
      "xrandr" "--output" external "--off" "--output" internal "--auto")
-    (set-wallpaper))
+    ;; (set-wallpaper)
+    )
 
   (defun xrandr ()
     (if (string-match (concat external " connected")

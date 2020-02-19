@@ -37,7 +37,7 @@
 
 ;; common lisp
 
-(use-package common-lisp-snippets :disabled)
+(use-package common-lisp-snippets :after yasnippet)
 
 (add-to-list 'auto-mode-alist '("\\.sbclrc\\'" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.cl\\'" . lisp-mode))

@@ -11,6 +11,9 @@
       ido-enable-flex-matching t
       ido-use-filename-at-point 'guess)
 
+(use-package flx-ido
+  :init (flx-ido-mode 1))
+
 (use-package ido-completing-read+ :init (ido-ubiquitous-mode +1))
 
 (use-package amx :init (amx-mode 1))

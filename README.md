@@ -22,15 +22,15 @@ This is a great way to improve flow. Exwm is to be preferred for this reason. No
 
 While customizing a linux desktop may be endlessly fun, it is also endlessly worthless.
 
-The default Emacs light theme is actually perfect. "But--" No, we don't need dark-mode-- the entire internet is actually in light mode, and switching back and forth from a light web browser to a dark text editor is blinding; while using a "dark-reader" browser extension, the internet breaks.
+The default Emacs light theme is actually perfect. "But--" No, we don't need "dark-mode." The entire internet is already in "light mode" and switching back and forth from a light browser to a dark editor is blinding. And when using a "dark-reader" browser extension, the internet breaks.
 
 - Left Control and Left Alt are swapped.
 
-Old keyboards from back in the day were actually designed with control closer to the space bar. With this simple swap, one can press Left Control with one's left thumb; likewise Right Alt may be pressed with the right thumb-- ensuring proper ergonomics whilst using modifiers (goodbye "Emacs pinky!") and rendering modal editing unnecessary.
+Ancient keyboards were actually designed with control closer to the space bar intentionally. With this simple swap, one can press Left Control with one's left thumb; likewise Right Alt may be pressed with the right thumb-- ensuring proper ergonomics whilst using modifiers (goodbye "Emacs pinky!") and rendering modal editing unnecessary.
 
 On that note, a mechanical keyboard is a necessity and the best way to prevent RSI, not vim. We may be hackers, but first of all, we are typists. Click clack clack, rat a tat tat. I recommend cherry blues.
 
-- If Emacs loads in more than 1 second, it is bloated.
+- If starting Emacs takes longer than ~1-2 seconds, it is bloated.
 
 AND/OR poorly configured...
 

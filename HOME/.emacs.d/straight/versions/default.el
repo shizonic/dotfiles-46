@@ -6,7 +6,6 @@
  ("better-shell" . "70c787b981caeef8c5f8012b170eb7b9f167cd13")
  ("browse-kill-ring" . "1ef72cc6accd94cd7032c02b1b2c78ae7f1d1965")
  ("closql" . "1e78f96dc976badb59067c986f7766cce89405cc")
- ("common-lisp-snippets" . "c82ebf18f4ad49f390dd96ffcc59f8683c1a868b")
  ("crux" . "903db7b1a2052f4959d934cae26ec40a3f323ed4")
  ("dash.el" . "721436b04da4e2795387cb48a98ac6de37ece0fd")
  ("desktop-environment" . "cd5145288944f4bbd7b2459e4b55a6a95e37f06d")

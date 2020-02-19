@@ -6,7 +6,7 @@
 
 - Don't interrupt my flow. Flow is money.
 
-If Emacs does something to interrupt flow, I turn it off. This does not apply only to Emacs. I use Emacs and Linux mainly because it allows me to configure my development environment in a way that keeps me in the flow as much as possible. This includes modeline garbage from erc or company-mode completion popups, they are all turned off. "Spell check" is also turned off because I studied English and typing in school, and do not appreciate the often unhelpful distractions of "Spell Check." Likewise "linting" is not always-on for the same reason. Additionally linters are a security risk and should not always be turned on. I don't want to be surprised by anything on my screen. This includes desktop notifications, cell-phone rings and social media beeps.
+If Emacs does something to interrupt flow, I turn it off. This does not apply only to Emacs. I use Emacs and Linux mainly because it allows me to configure my development environment in a way that keeps me in the flow as much as possible. I don't want to be surprised by anything on my screen. This includes desktop notifications, cell-phone rings and social media beeps.
 
 - Start from better-defaults https://github.com/technomancy/better-defaults
 

@@ -12,6 +12,8 @@
 (use-package inf-ruby
   ;; https://github.com/nonsequitur/inf-ruby
   :init
+
+  ;; TODO - this is wrong
   (with-eval-after-load 'ruby-mode
     (inf-ruby-minor-mode +1)
 

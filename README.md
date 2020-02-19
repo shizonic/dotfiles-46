@@ -30,9 +30,9 @@ Ancient keyboards were actually designed with control closer to the space bar in
 
 On that note, a mechanical keyboard is a necessity and the best way to prevent RSI, not vim. We may be hackers, but first of all, we are typists. Click clack clack, rat a tat tat. I recommend cherry blues.
 
-- If starting Emacs takes longer than ~1-2 seconds, it is bloated.
+- If starting Emacs takes longer than ~1-2 seconds...
 
-AND/OR poorly configured...
+(and (or (bloated) (poorly-configured)))
 
 - Use a modular Emacs configuration.
 
@@ -48,7 +48,7 @@ For example,
 
 Prefer ido-mode instead of ivy or helm. Not only is ido-mode built-in, and faster for most tasks, but it also only uses the minibuffer! Why do developers think it's a good idea to shift the entire screen and cover up code with popup menus when we don't have to? This is distracting and gets in the way of flow.
 
-Prefer paredit instead of lispy, as it has fewer dependencies, and is time-tested.
+Prefer paredit instead of lispy.
 
 Prefer eglot instead lsp-mode.
 
@@ -58,7 +58,7 @@ Use flymake instead of flycheck.
 
 Prefer xref-find-definitions informed by an lsp server instead of dumb-jump or something even worse, like CTAGS/GTAGS/GNUGLOBAL etc.
 
-Basically just install eglot and relevant language servers if needed. Most of this (IDE crap) is crap anyways, and can get in the way of "flow." At the end of the day, Emacs will never be as good of an IDE as visual studio or even jetbrains. Use an IDE when you want an IDE. Use an Emacs when you want an Emacs.
+Basically just install eglot and relevant language servers if needed.
 
 - Use simple Elisp and don't turn on stuff / change defaults if unsure about what it does.
 

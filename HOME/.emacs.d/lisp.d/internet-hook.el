@@ -18,3 +18,10 @@ hooks of `internet-connected-hook' only after internet connectivity
      (run-hooks 'internet-connected-hook))))
 
 (add-hook 'after-init-hook 'internet-detect)
+
+;; check email / join irc, but only if connected to the internet and only in my first Emacs session...
+
+;; (when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
+;;   (progn
+;;     (add-hook 'internet-connected-hook 'gnus)
+;;     (add-hook 'internet-connected-hook 'freenode)))

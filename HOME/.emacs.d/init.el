@@ -1,43 +1,26 @@
 ;;; -*- lexical-binding: t; -*-
 
-;; tweak GC to reduce startup time...
+;; init settings...
 
-(defvar file-name-handler-alist-old file-name-handler-alist)
+(setq gc-cons-threshold 20000000)
 
-(setq package-enable-at-startup nil
-      file-name-handler-alist nil
-      gc-cons-threshold 402653184
-      gc-cons-percentage 0.6)
-
-(add-hook 'after-init-hook
-          `(lambda ()
-             (setq file-name-handler-alist file-name-handler-alist-old
-                   gc-cons-threshold 800000
-                   gc-cons-percentage 0.1)
-             (garbage-collect)) t)
-
-;; startup related settings...
-
-(toggle-frame-fullscreen)
+(setq package-enable-at-startup nil)
 
 (setq custom-file "/dev/null"
       initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen t
+      inhibit-startup-screen nil
       load-prefer-newer t)
 
-(add-hook 'window-setup-hook #'(lambda ()
-                                 ;; kill unwanted initial buffers...
-                                 (dolist (buffer '("*scratch*" "*straight-process*"))
-                                   (when (get-buffer buffer)
-                                     (kill-buffer buffer)))
+(add-hook 'after-init-hook #'(lambda ()
+                               ;; kill unwanted initial buffers...
+                               (dolist (buffer '("*scratch*" "*straight-process*"))
+                                 (when (get-buffer buffer)
+                                   (kill-buffer buffer)))
 
-                                 ;; start an Emacs server...
-                                 (require 'server)
-                                 (or (server-running-p)
-                                     (server-start))
-
-                                 (shell)
-                                 (delete-other-windows)))
+                               ;; start an Emacs server...
+                               (require 'server)
+                               (or (server-running-p)
+                                   (server-start))))
 
 ;; straight.el for reproduceable package management...
 
@@ -52,7 +35,7 @@
 (setq use-package-always-defer t
       use-package-always-ensure t)
 
-;; libs for Emacs hackers
+;; libs for Emacs hackers...
 
 (use-package subr-x :straight nil :ensure nil) ;Extra Lisp Functions
 (use-package a)      ;Associative data structure functions
@@ -68,13 +51,6 @@
 
 (dolist (file (directory-files (expand-file-name "lisp.d" user-emacs-directory) t "\.el$" nil))
   (load (file-name-sans-extension file)))
-
-;; check email / join irc, but only if connected to the internet and only in my first Emacs session...
-
-;; (when (eq 1 (string-to-number (string-trim (shell-command-to-string (concat "pgrep -u " user-login-name " -c emacs")))))
-;;   (progn
-;;     (add-hook 'internet-connected-hook 'gnus)
-;;     (add-hook 'internet-connected-hook 'freenode)))
 
 ;; a helpful binding to return to this file...
 

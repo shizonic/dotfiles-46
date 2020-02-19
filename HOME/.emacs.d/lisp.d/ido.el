@@ -12,7 +12,9 @@
       ido-use-filename-at-point 'guess)
 
 (use-package flx-ido
-  :init (flx-ido-mode 1))
+  :init (flx-ido-mode 1)
+  :config
+  (setq flx-ido-threshold 10000))
 
 (use-package ido-completing-read+ :init (ido-ubiquitous-mode +1))
 

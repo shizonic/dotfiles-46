@@ -1,4 +1,4 @@
-# [mostly] About Emacs
+# [mostly] Emacs
 
 ![scrot](scrot249249.png)
 

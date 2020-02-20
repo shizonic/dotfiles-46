@@ -6,19 +6,14 @@
   (add-hook 'ruby-mode-hook 'eglot-ensure))
 
 (when (executable-find "rbenv")
-  (add-hook 'after-init-hook 'shim-init-ruby)
-  (add-hook 'ruby-mode-hook 'shim-mode))
+  (add-hook 'after-init-hook #'shim-init-ruby)
+  (add-hook 'ruby-mode-hook #'shim-mode))
 
 (use-package inf-ruby
   ;; https://github.com/nonsequitur/inf-ruby
   :init
-
-  ;; TODO - this is wrong
-  (with-eval-after-load 'ruby-mode
-    (inf-ruby-minor-mode +1)
-
-    ;; CamelCase aware editing operations
-    (subword-mode +1)))
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+  (add-hook 'ruby-mode-hook 'subword-mode))
 
 ;; might not need this
 ;; (use-package flymake-ruby

@@ -37,10 +37,10 @@
 
 ;; libs for Emacs hackers...
 
-(use-package subr-x :straight nil :ensure nil) ;Extra Lisp Functions
+(require 'subr-x)    ;Extra Lisp Functions
+(require 'cl-lib)    ;Common Lisp extensions
 (use-package a)      ;Associative data structure functions
 (use-package async)  ;Simple library for asynchronous processing in Emacs
-(use-package cl-lib) ;Common Lisp extensions
 (use-package dash)   ;A modern list library
 (use-package f)      ;Modern API for working with files and directories
 (use-package ht)     ;The missing hash table library

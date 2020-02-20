@@ -12,13 +12,7 @@
 
 (defun dmenu ()
   (interactive)
-  (let ((choices (remove "."
-                         (remove ".."
-                                 (delete-dups ;; todo - iterate exec-path instead
-                                  (append
-                                   (when (file-exists-p (concat (getenv "HOME") "/.nix-profile/bin"))
-                                     (directory-files (concat (getenv "HOME") "/.nix-profile/bin")))
-                                   (directory-files "/bin")))))))
+  (let ((choices (directory-files "/bin")))
     (setq-local choice (message "%s" (ido-completing-read "Shutdown:" choices )))
     (start-process choice nil choice)))
 

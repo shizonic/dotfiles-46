@@ -50,7 +50,7 @@
 ;; load lisp.d/ modules...
 
 (dolist (file (directory-files (expand-file-name "lisp.d" user-emacs-directory) t "\.el$" nil))
-  (load (file-name-sans-extension file)))
+  (load file))
 
 ;; a helpful binding to return to this file...
 

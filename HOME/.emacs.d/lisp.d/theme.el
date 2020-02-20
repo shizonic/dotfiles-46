@@ -13,23 +13,23 @@
          :init
          (load-theme 'doom-outrun-electric t))
 
-       (use-package doom-modeline
+       (use-package doom-modeline :disabled
          :init
          (setq doom-modeline-icon t)
-         (doom-modeline-mode 1))
+         (doom-modeline-mode 1)
+         :config
+         (setq display-time-default-load-average nil
+               display-time-day-and-date t)
+         (display-time-mode 1))
 
-       (use-package all-the-icons
+       (use-package all-the-icons :disabled
          :config
          (when (not (file-exists-p (concat (getenv "HOME") "/.local/share/fonts/all-the-icons.ttf")))
            (all-the-icons-install-fonts t)))
 
-       (use-package all-the-icons-dired
+       (use-package all-the-icons-dired :disabled
          :init
          (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-
-       (setq display-time-default-load-average nil
-             display-time-day-and-date t)
-       (display-time-mode 1)
 
        (blink-cursor-mode 1)
        (tool-bar-mode -1)
@@ -38,7 +38,7 @@
        (fringe-mode -1)
 
        (setq my-font "Liberation Mono")
-       (setq my-font-size '10)
+       (setq my-font-size '20)
 
        (defun my-font-resizer (x)
          (when (> x 0)

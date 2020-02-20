@@ -48,18 +48,6 @@ For example,
 
 Prefer ido-mode instead of ivy or helm. Not only is ido-mode built-in, and faster for most tasks, but it also only uses the minibuffer! Why do developers think it's a good idea to shift the entire screen and cover up code with popup menus when we don't have to? This is distracting and gets in the way of flow.
 
-Prefer paredit instead of lispy.
-
-Prefer eglot instead lsp-mode.
-
-Use completion-at-point via TAB informed by an eglot lsp server or just simple hippie-expand via M-/ instead of company-mode.
-
-Use flymake instead of flycheck.
-
-Prefer xref-find-definitions informed by an lsp server instead of dumb-jump or something even worse, like CTAGS/GTAGS/GNUGLOBAL etc.
-
-Basically just install eglot and relevant language servers if needed.
-
 - Use simple Elisp and don't turn on stuff / change defaults if unsure about what it does.
 
 Defaults are a great way to stay in the flow. Instead of constantly tweaking my setup, I learn defaults, which are probably going to be well thought-out. Because we are staying as close to vanilla Emacs (on steroids) as possible, which means there are a million engineering hours invested in the product I am using, and I am not going to be reinventing the wheel every day.

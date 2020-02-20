@@ -26,10 +26,9 @@
                 (interactive)
                 (setq-local browse-url-browser-function 'browse-url-firefox))))
 
-(when (or (executable-find "javascript-typescript-stdio")
-          (executable-find "javascript-typescript-langserver"))
+(when (executable-find "javascript-typescript-stdio")
   (add-hook 'js-mode-hook 'eglot-ensure))
 
 (when (executable-find "nodenv")
-  (add-hook 'after-init-hook 'shim-init-node)
+  (add-hook 'after-init-hook #'shim-init-node)
   (add-hook 'js-mode-hook #'shim-mode))

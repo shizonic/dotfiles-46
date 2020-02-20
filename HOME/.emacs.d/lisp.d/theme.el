@@ -1,3 +1,6 @@
+;;; -*- lexical-binding: t; -*-
+
+;; disable the old theme before loading a new theme
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))

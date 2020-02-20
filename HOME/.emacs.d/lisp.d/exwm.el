@@ -1,4 +1,7 @@
-(use-package exwm :demand
+;;; -*- lexical-binding: t; -*-
+
+(use-package exwm
+  :demand
   :config
   (require 'exwm-config)
 
@@ -79,7 +82,8 @@
   ;; last thing
   (exwm-enable))
 
-(use-package desktop-environment :demand :after exwm
+(use-package desktop-environment
+  :demand :after exwm
   :config
   (desktop-environment-mode 1)
   ;; This will use alsautils to adjust volume on keyboard volume keys and

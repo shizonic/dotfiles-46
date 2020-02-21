@@ -1,5 +1,9 @@
 ;;; -*- lexical-binding: t; -*-
 
+(setq display-time-default-load-average nil
+      display-time-day-and-date t)
+(display-time-mode 1)
+
 ;; disable the old theme before loading a new theme
 (defadvice load-theme (before disable-themes-first activate)
   (dolist (i custom-enabled-themes)
@@ -16,11 +20,7 @@
        (use-package doom-modeline :disabled
          :init
          (setq doom-modeline-icon t)
-         (doom-modeline-mode 1)
-         :config
-         (setq display-time-default-load-average nil
-               display-time-day-and-date t)
-         (display-time-mode 1))
+         (doom-modeline-mode 1))
 
        (use-package all-the-icons :disabled
          :config
@@ -38,7 +38,7 @@
        (fringe-mode -1)
 
        (setq my-font "Liberation Mono")
-       (setq my-font-size '20)
+       (setq my-font-size '10)
 
        (defun my-font-resizer (x)
          (when (> x 0)
@@ -57,29 +57,7 @@
                                  :font (concat my-font "-" (number-to-string my-font-size)))))
          (message (concat my-font "-" (number-to-string my-font-size))))
 
-       (my-font-resizer 0))
-
-     (with-eval-after-load 'exwm
-
-       (defun exwm-transparency ()
-         (set-frame-parameter (selected-frame) 'alpha '(80)))
-       (add-hook 'exwm-workspace-switch-hook 'exwm-transparency)
-       (exwm-transparency)
-
-       (exwm-input-set-key (kbd "<C-kp-add>") #'(lambda ()
-                                                  (interactive)
-                                                  (my-font-resizer 1)))
-
-       (exwm-input-set-key (kbd "<C-kp-subtract>") #'(lambda ()
-                                                       (interactive)
-                                                       (my-font-resizer -1)))
-       (exwm-input-set-key (kbd "C-=") #'(lambda ()
-                                           (interactive)
-                                           (my-font-resizer 1)))
-
-       (exwm-input-set-key (kbd "C--") #'(lambda ()
-                                           (interactive)
-                                           (my-font-resizer -1)))))
+       (my-font-resizer 0)))
 
 (or window-system
     ;; nox

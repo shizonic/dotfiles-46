@@ -109,3 +109,9 @@
                                                  (with-temp-buffer
                                                    (cd "/su::")
                                                    (shell-command "echo mem > /sys/power/state")))))
+
+;; (with-eval-after-load 'exwm
+;;   (defun exwm-transparency ()
+;;     (set-frame-parameter (selected-frame) 'alpha '(80)))
+;;   (add-hook 'exwm-workspace-switch-hook 'exwm-transparency)
+;;   (exwm-transparency))

@@ -16,11 +16,6 @@ send "$(gpg -d < "$HOME/.authinfo.id_rsa.gpg")\r"
 expect eof
 EOF
 
-    export PATH="$HOME/.nodenv/bin:$PATH"
-    eval "$(nodenv init -)"
-    export PATH="$HOME/.rbenv/bin:$PATH"
-    eval "$(rbenv init -)"
-
     read -rp "start X?" && {
         startx
     }

@@ -1,13 +1,9 @@
 ;;; -*- lexical-binding: t; -*-
 
-(use-package better-shell :demand
+(use-package better-shell
+  :commands better-shell-for-current-dir
   :init
-  (bind-key* (kbd "C-t") 'better-shell-for-current-dir)
-  (with-eval-after-load 'exwm (exwm-input-set-key (kbd "C-t") 'better-shell-for-current-dir))
-
-  (global-set-key (kbd "C-c T") 'better-shell-remote-open)
-  (global-set-key (kbd "C-c P") 'better-shell-for-projectile-root)
-  (global-set-key (kbd "C-c s") 'better-shell-sudo-here))
+  (bind-key* (kbd "s-t") 'better-shell-for-current-dir))
 
 (use-package emacs-piper :disabled
   ;; TODO -- this looks fun

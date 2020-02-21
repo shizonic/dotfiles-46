@@ -21,9 +21,7 @@
 (defvar my-path-insert
   (concat
    (getenv "HOME") "/bin:"
-   (getenv "HOME") "/.local/bin:"
-   (getenv "HOME") "/.npm-global/bin:"
-   ))
+   (getenv "HOME") "/.local/bin:"))
 
 (defvar my-path-append (concat exec-directory))
 

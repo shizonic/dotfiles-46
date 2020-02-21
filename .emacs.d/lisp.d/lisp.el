@@ -1,8 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
 (use-package rainbow-delimiters
-  :init
-  (rainbow-delimiters-mode 1))
+  :init (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
 ;; all lisp
 

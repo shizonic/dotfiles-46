@@ -3,7 +3,10 @@
 (add-to-list 'completion-ignored-extensions ".rbc")
 
 (when (executable-find "solargraph")
-  (add-hook 'ruby-mode-hook 'eglot-ensure))
+  (add-hook 'ruby-mode-hook #'lsp))
+
+(with-eval-after-load 'dap-mode
+  (require 'dap-ruby))
 
 (when (executable-find "rbenv")
   (add-hook 'after-init-hook #'shim-init-ruby)
@@ -14,7 +17,3 @@
   :init
   (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
   (add-hook 'ruby-mode-hook 'subword-mode))
-
-;; might not need this
-;; (use-package flymake-ruby
-;; :init (add-hook 'ruby-mode-hook 'flymake-ruby-load))

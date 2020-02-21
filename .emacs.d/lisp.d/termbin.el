@@ -6,8 +6,7 @@
   "push the marked region to termbin.com via shell command"
   (interactive "r")
   (message "pushing region to termbin.com...")
-  (shell-command-on-region start end "nc termbin.com 9999")
-  (switch-to-buffer "*Messages*"))
+  (shell-command-on-region start end "nc termbin.com 9999"))
 
 (defun buffer-to-termbin ()
   "push the whole buffer to termbin.com via shell command"

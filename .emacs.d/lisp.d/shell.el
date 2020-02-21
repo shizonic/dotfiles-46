@@ -3,7 +3,7 @@
 (use-package better-shell
   :commands better-shell-for-current-dir
   :init
-  (bind-key* (kbd "s-t") 'better-shell-for-current-dir))
+  (bind-key* (kbd "C-t") 'better-shell-for-current-dir))
 
 (use-package emacs-piper :disabled
   ;; TODO -- this looks fun

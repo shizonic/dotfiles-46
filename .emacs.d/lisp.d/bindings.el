@@ -32,6 +32,13 @@
 (global-set-key (kbd "C-3") 'split-window-right)
 (global-set-key (kbd "C-0") 'delete-window)
 
+(global-set-key (kbd "C-=") #'(lambda ()
+                                (interactive)
+                                (my-font-resizer 1)))
+(global-set-key (kbd "C--") #'(lambda ()
+                                (interactive)
+                                (my-font-resizer -1)))
+
 (with-eval-after-load 'exwm
   (exwm-input-set-key (kbd "C-x C-o") 'spacemacs/alternate-window)
   (exwm-input-set-key (kbd "C-x C-b") 'spacemacs/alternate-buffer)

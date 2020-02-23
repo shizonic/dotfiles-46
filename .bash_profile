@@ -23,4 +23,3 @@ EOF
 }
 
 [ -f ~/.bashrc ] && . ~/.bashrc
-#

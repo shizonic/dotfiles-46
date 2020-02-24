@@ -268,7 +268,8 @@ before packages are loaded."
   (set-terminal-coding-system 'utf-8)
   (set-keyboard-coding-system 'utf-8)
   (setq require-final-newline t
-        apropos-do-all t))
+        apropos-do-all t
+        vc-follow-symlinks t))
 
 (setq custom-file "~/.emacs.d/.cache/.custom-settings")
 (load custom-file)

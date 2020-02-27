@@ -70,7 +70,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Noto Mono"
-                               :size 10.0
+                               :size 12.0
                                :weight normal
                                :width normal)
    dotspacemacs-leader-key "SPC"
@@ -111,7 +111,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-server-socket-dir nil
    dotspacemacs-persistent-server nil
    dotspacemacs-search-tools '("grep")
-   dotspacemacs-frame-title-format "%I@%S"
+   dotspacemaedcs-frame-title-format "%I@%S"
    dotspacemacs-icon-title-format nil
    dotspacemacs-whitespace-cleanup 'all
    dotspacemacs-zone-out-when-idle nil
@@ -269,7 +269,11 @@ before packages are loaded."
   (set-keyboard-coding-system 'utf-8)
   (setq require-final-newline t
         apropos-do-all t
-        vc-follow-symlinks t))
+        vc-follow-symlinks t)
+
+  (shell-command "setxkbmap -option ctrl:swap_lalt_lctl")
+  (shell-command "xset r rate 250 50"))
 
 (setq custom-file "~/.emacs.d/.cache/.custom-settings")
-(load custom-file)
+(when (file-exists-p custom-file)
+  (load custom-file))

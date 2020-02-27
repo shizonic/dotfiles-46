@@ -8,7 +8,7 @@
 
 (setq custom-file "/dev/null"
       initial-major-mode 'emacs-lisp-mode
-      inhibit-startup-screen nil
+      inhibit-startup-screen t
       load-prefer-newer t)
 
 (add-hook 'after-init-hook #'(lambda ()
@@ -20,7 +20,9 @@
                                ;; start an Emacs server...
                                (require 'server)
                                (or (server-running-p)
-                                   (server-start))))
+                                   (server-start))
+
+                               (find-file ".")))
 
 ;; straight.el for reproduceable package management...
 

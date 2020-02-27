@@ -20,7 +20,7 @@
       auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t))
 
-      tab-always-indent 'complete
+      tab-always-indent t
 
       tramp-default-method "ssh"
       tramp-copy-size-limit nil

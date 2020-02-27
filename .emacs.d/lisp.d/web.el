@@ -13,3 +13,7 @@
                '("/\\(views\\|html\\|theme\\|templates\\)/.*\\.php\\'" . web-mode))
 
   (setq web-mode-enable-auto-pairing nil))
+
+(use-package rainbow-mode
+  :init
+  (rainbow-mode 1))

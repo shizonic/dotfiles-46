@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 
+(require 'async)
+
 (defun internet-connected-default ()
   "Sends a message that Internet Connectivity has been detected
 via `internet-detect'"

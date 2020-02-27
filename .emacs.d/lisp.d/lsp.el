@@ -3,6 +3,8 @@
 ;; requires language servers be installed to actually do stuff
 
 (or
+ ;; keep one of these use-package declarations set to :disabled
+
  (use-package lsp-mode :disabled
    :init (setq lsp-keymap-prefix "M-m")
    :config

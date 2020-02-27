@@ -16,6 +16,8 @@ send "$(gpg -d < "$HOME/.authinfo.id_rsa.gpg")\r"
 expect eof
 EOF
 
+    . /home/foo/.nix-profile/etc/profile.d/nix.sh
+
     read -rp "start X?" && {
         startx
     }

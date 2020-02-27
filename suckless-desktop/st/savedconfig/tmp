@@ -1,0 +1,1094 @@
+execve("/home/foo/.local/bin/st", ["st"], 0x7ffc360d8340 /* 32 vars */) = 0
+arch_prctl(ARCH_SET_FS, 0x7f8ddeea9d48) = 0
+set_tid_address(0x7f8ddeeaa31c)         = 15998
+open("/etc/ld-musl-x86_64.path", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/lib/libX11.so.6", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=1305864, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20\371\1\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 1310720, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddecb7000
+mmap(0x7f8ddecd4000, 561152, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x1d000) = 0x7f8ddecd4000
+mmap(0x7f8dded5d000, 602112, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0xa6000) = 0x7f8dded5d000
+mmap(0x7f8ddedf1000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x139000) = 0x7f8ddedf1000
+close(3)                                = 0
+open("/lib/libXft.so.2", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=97512, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0pI\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 102400, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddec9e000
+mmap(0x7f8ddeca2000, 61440, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x4000) = 0x7f8ddeca2000
+mmap(0x7f8ddecb1000, 16384, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x13000) = 0x7f8ddecb1000
+mmap(0x7f8ddecb5000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x16000) = 0x7f8ddecb5000
+close(3)                                = 0
+open("/lib/libXrender.so.1", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=47376, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0p\"\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 53248, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddec91000
+mmap(0x7f8ddec93000, 28672, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x2000) = 0x7f8ddec93000
+mmap(0x7f8ddec9a000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x9000) = 0x7f8ddec9a000
+mmap(0x7f8ddec9c000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xa000) = 0x7f8ddec9c000
+close(3)                                = 0
+open("/lib/libfontconfig.so.1", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=285432, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\320\207\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 290816, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddec4a000
+mmap(0x7f8ddec52000, 147456, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x8000) = 0x7f8ddec52000
+mmap(0x7f8ddec76000, 98304, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x2c000) = 0x7f8ddec76000
+mmap(0x7f8ddec8e000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x43000) = 0x7f8ddec8e000
+close(3)                                = 0
+open("/lib/libfreetype.so.6", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=711992, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0 \353\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 716800, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddeb9b000
+mmap(0x7f8ddeba9000, 462848, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0xe000) = 0x7f8ddeba9000
+mmap(0x7f8ddec1a000, 163840, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x7f000) = 0x7f8ddec1a000
+mmap(0x7f8ddec42000, 32768, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xa6000) = 0x7f8ddec42000
+close(3)                                = 0
+open("/lib/libxcb.so.1", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=170696, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\327\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 176128, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddeb70000
+mmap(0x7f8ddeb7d000, 77824, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0xd000) = 0x7f8ddeb7d000
+mmap(0x7f8ddeb90000, 36864, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x20000) = 0x7f8ddeb90000
+mmap(0x7f8ddeb99000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x28000) = 0x7f8ddeb99000
+close(3)                                = 0
+open("/lib/libXau.so.6", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=14272, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\22\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 20480, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddeb6b000
+mmap(0x7f8ddeb6c000, 4096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x1000) = 0x7f8ddeb6c000
+mmap(0x7f8ddeb6d000, 4096, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x2000) = 0x7f8ddeb6d000
+mmap(0x7f8ddeb6e000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x2000) = 0x7f8ddeb6e000
+close(3)                                = 0
+open("/lib/libexpat.so.1", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=178120, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\200A\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 184320, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddeb3e000
+mmap(0x7f8ddeb42000, 110592, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x4000) = 0x7f8ddeb42000
+mmap(0x7f8ddeb5d000, 40960, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x1f000) = 0x7f8ddeb5d000
+mmap(0x7f8ddeb68000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x29000) = 0x7f8ddeb68000
+close(3)                                = 0
+open("/lib/libharfbuzz.so.0", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=1033504, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\235\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 1040384, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8ddea40000
+mmap(0x7f8ddea49000, 798720, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x9000) = 0x7f8ddea49000
+mmap(0x7f8ddeb0c000, 188416, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0xcc000) = 0x7f8ddeb0c000
+mmap(0x7f8ddeb3b000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0xfa000) = 0x7f8ddeb3b000
+mmap(0x7f8ddeb3d000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f8ddeb3d000
+close(3)                                = 0
+open("/lib/libglib-2.0.so.0", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=1381256, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20\335\1\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 1388544, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8dde8ed000
+mmap(0x7f8dde90a000, 684032, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x1d000) = 0x7f8dde90a000
+mmap(0x7f8dde9b1000, 569344, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0xc4000) = 0x7f8dde9b1000
+mmap(0x7f8ddea3d000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x14f000) = 0x7f8ddea3d000
+mmap(0x7f8ddea3f000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7f8ddea3f000
+close(3)                                = 0
+open("/lib/libbz2.so.1.0", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=74888, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\"\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 77824, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8dde8da000
+mmap(0x7f8dde8dc000, 53248, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x2000) = 0x7f8dde8dc000
+mmap(0x7f8dde8e9000, 8192, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0xf000) = 0x7f8dde8e9000
+mmap(0x7f8dde8eb000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x10000) = 0x7f8dde8eb000
+close(3)                                = 0
+open("/lib/libpng16.so.16", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=228424, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@i\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 233472, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8dde8a1000
+mmap(0x7f8dde8a7000, 151552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x6000) = 0x7f8dde8a7000
+mmap(0x7f8dde8cc000, 49152, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x2b000) = 0x7f8dde8cc000
+mmap(0x7f8dde8d8000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x36000) = 0x7f8dde8d8000
+close(3)                                = 0
+open("/lib/libz.so.1", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+fstat(3, {st_mode=S_IFREG|0755, st_size=100648, ...}) = 0
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0003\0\0\0\0\0\0"..., 960) = 960
+mmap(NULL, 106496, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7f8dde887000
+mmap(0x7f8dde88a000, 57344, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED, 3, 0x3000) = 0x7f8dde88a000
+mmap(0x7f8dde898000, 24576, PROT_READ, MAP_PRIVATE|MAP_FIXED, 3, 0x11000) = 0x7f8dde898000
+mmap(0x7f8dde89f000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED, 3, 0x17000) = 0x7f8dde89f000
+close(3)                                = 0
+mprotect(0x7f8ddedf1000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddecb5000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddec9c000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddec8e000, 8192, PROT_READ) = 0
+mprotect(0x7f8ddec42000, 28672, PROT_READ) = 0
+mprotect(0x7f8ddeea6000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddeb99000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddeb6e000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddeb68000, 8192, PROT_READ) = 0
+mprotect(0x7f8ddeb3b000, 4096, PROT_READ) = 0
+mprotect(0x7f8ddea3d000, 4096, PROT_READ) = 0
+mprotect(0x7f8dde8eb000, 4096, PROT_READ) = 0
+mprotect(0x7f8dde8d8000, 4096, PROT_READ) = 0
+mprotect(0x7f8dde89f000, 4096, PROT_READ) = 0
+mprotect(0x561d049c7000, 4096, PROT_READ) = 0
+brk(NULL)                               = 0x561d058a3000
+brk(0x561d058a8000)                     = 0x561d058a8000
+brk(0x561d058ab000)                     = 0x561d058ab000
+open("/usr/share/X11/locale/locale.alias", O_RDONLY) = 3
+read(3, "\n\n\n\n\n\n\n\n\n\n#\n#\tThis file contains"..., 1024) = 1024
+read(3, "AE\t\t\t\t\t\tar_AE.ISO8859-6\nar_AE.is"..., 1024) = 1024
+read(3, "B.utf8\t\t\t\t\tar_LB.UTF-8\nar_LY\t\t\t\t"..., 1024) = 1024
+read(3, "s\t\t\t\t\t\tas_IN.UTF-8\nas_IN\t\t\t\t\t\tas"..., 1024) = 1024
+read(3, "\t\t\t\t\t\tbr_FR.ISO8859-1\nbr_FR\t\t\t\t\t"..., 1024) = 1024
+read(3, "9-15\nca_ES.utf8\t\t\t\t\tca_ES.UTF-8\n"..., 1024) = 1024
+read(3, "cs_CZ.ISO8859-2\ncs_CZ.utf8\t\t\t\t\tc"..., 1024) = 1024
+read(3, "SO8859-1\nde_AT@euro\t\t\t\t\tde_AT.IS"..., 1024) = 1024
+read(3, "\tde_DE.ISO8859-1\nde_DE.88591.en\t"..., 1024) = 1024
+read(3, "-15\t\t\t\tde_LU.ISO8859-15\nde_LU.IS"..., 1024) = 1024
+read(3, "en_CA.utf8\t\t\t\t\ten_CA.UTF-8\nen_DL"..., 1024) = 1024
+read(3, "n_NZ.ISO8859-1\nen_NZ.utf8\t\t\t\t\ten"..., 1024) = 1024
+read(3, "F-8\nen_ZW\t\t\t\t\t\ten_ZW.ISO8859-1\ne"..., 1024) = 1024
+read(3, "859-1\t\t\t\tes_DO.ISO8859-1\nes_DO.u"..., 1024) = 1024
+read(3, "s_NI.ISO-8859-1\t\t\t\tes_NI.ISO8859"..., 1024) = 1024
+read(3, "-1\nes_UY.iso885915\t\t\t\tes_UY.ISO8"..., 1024) = 1024
+read(3, "\t\t\teu_ES.UTF-8\nfa\t\t\t\t\t\tfa_IR.UTF"..., 1024) = 1024
+read(3, "9-1\nfr_BE.ISO_8859-1\t\t\t\tfr_BE.IS"..., 1024) = 1024
+read(3, "iso885915\t\t\t\tfr_FR.ISO8859-15\nfr"..., 1024) = 1024
+read(3, "a_IE.UTF-8@euro\t\t\t\tga_IE.UTF-8\ng"..., 1024) = 1024
+read(3, "59-8\nHE_IL\t\t\t\t\t\the_IL.ISO8859-8\n"..., 1024) = 1024
+read(3, "O8859-1\nis\t\t\t\t\t\tis_IS.ISO8859-1\n"..., 1024) = 1024
+read(3, "le else on this encoding.\niu\t\t\t\t"..., 1024) = 1024
+read(3, "ACADEMY\nka_GE.georgianps\t\t\t\tka_G"..., 1024) = 1024
+read(3, "B.ISO8859-15\nky\t\t\t\t\t\tky_KG.UTF-8"..., 1024) = 1024
+read(3, "k_MK\t\t\t\t\t\tmk_MK.ISO8859-5\nmk_MK."..., 1024) = 1024
+read(3, "\t\tnl_BE.ISO8859-1\nnl_BE.88591.en"..., 1024) = 1024
+read(3, "NO.UTF-8\nno\t\t\t\t\t\tno_NO.ISO8859-1"..., 1024) = 1024
+read(3, "-15\noc_FR@euro\t\t\t\t\toc_FR.ISO8859"..., 1024) = 1024
+read(3, "59-1\npt_BR.iso885915\t\t\t\tpt_BR.IS"..., 1024) = 1024
+read(3, "ru_UA.koi8u\t\t\t\t\tru_UA.KOI8-U\nru_"..., 1024) = 1024
+read(3, "f8\t\t\t\t\tsr_RS.UTF-8@latin\nsi\t\t\t\t\t"..., 1024) = 1024
+read(3, "r_CS.UTF-8@latin\nsr_RS\t\t\t\t\t\tsr_R"..., 1024) = 1024
+read(3, "O8859-1\nsv_SE.ISO_8859-1\t\t\t\tsv_S"..., 1024) = 1024
+read(3, "tr_TR.utf8\t\t\t\t\ttr_TR.UTF-8\nTR_TR"..., 1024) = 1024
+read(3, "\t\t\tve_ZA.UTF-8\nvi\t\t\t\t\t\tvi_VN.TCV"..., 1024) = 1024
+read(3, "\tzh_TW.big5\nzh_CN.euc\t\t\t\t\tzh_CN."..., 1024) = 1024
+read(3, "-1\nenglish_us.8859\t\t\t\ten_US.ISO8"..., 1024) = 1024
+read(3, "CH.ISO8859-1\ngalego\t\t\t\t\t\tgl_ES.I"..., 1024) = 1024
+read(3, "\tes_ES.ISO8859-1\nspanish.iso8859"..., 1024) = 1024
+lseek(3, -11, SEEK_CUR)                 = 40949
+close(3)                                = 0
+open("/usr/share/X11/locale/locale.dir", O_RDONLY) = 3
+read(3, "\n\n\n\n\n\n\n\n\n\n#\n#\tThis file contains"..., 1024) = 1024
+read(3, "ISO8859-5\nmicrosoft-cp1251/XLC_L"..., 1024) = 1024
+read(3, "LE\t\t\tde_BE.ISO8859-15\niso8859-1/"..., 1024) = 1024
+read(3, "/XLC_LOCALE\t\t\ten_NZ.ISO8859-1\nis"..., 1024) = 1024
+read(3, "LC_LOCALE\t\t\tes_PA.ISO8859-1\niso8"..., 1024) = 1024
+read(3, "59-1\niso8859-15/XLC_LOCALE\t\t\tfr_"..., 1024) = 1024
+read(3, "ALE\t\t\thy_AM.ARMSCII-8\niso8859-1/"..., 1024) = 1024
+read(3, "_NZ.ISO8859-13\niso8859-5/XLC_LOC"..., 1024) = 1024
+read(3, "LOCALE\t\t\tpl_PL.ISO8859-2\niso8859"..., 1024) = 1024
+read(3, "59-1/XLC_LOCALE\t\t\tsv_SE.ISO8859-"..., 1024) = 1024
+read(3, "/XLC_LOCALE\t\t\tzh_HK.big5\nzh_HK.b"..., 1024) = 1024
+read(3, "r_TN.UTF-8\nen_US.UTF-8/XLC_LOCAL"..., 1024) = 1024
+read(3, ".UTF-8\nen_US.UTF-8/XLC_LOCALE\t\t\t"..., 1024) = 1024
+read(3, "CALE\t\t\tes_CR.UTF-8\nen_US.UTF-8/X"..., 1024) = 1024
+read(3, "UTF-8/XLC_LOCALE\t\t\tgl_ES.UTF-8\ne"..., 1024) = 1024
+read(3, "C_LOCALE\t\t\tlo_LA.UTF-8\nen_US.UTF"..., 1024) = 1024
+read(3, "\t\tpt_BR.UTF-8\npt_PT.UTF-8/XLC_LO"..., 1024) = 1024
+read(3, "ALE\t\t\tte_IN.UTF-8\nen_US.UTF-8/XL"..., 1024) = 1024
+read(3, " name and\n#\tthe second word is t"..., 1024) = 1024
+read(3, "G.ISO8859-5\nmicrosoft-cp1251/XLC"..., 1024) = 1024
+read(3, "8859-1\niso8859-15/XLC_LOCALE:\t\t\t"..., 1024) = 1024
+read(3, "\niso8859-1/XLC_LOCALE:\t\t\ten_PH.I"..., 1024) = 1024
+read(3, "OCALE:\t\t\tes_PA.ISO8859-1\niso8859"..., 1024) = 1024
+read(3, "_LOCALE:\t\t\tfr_BE.ISO8859-1\niso88"..., 1024) = 1024
+read(3, "XLC_LOCALE:\t\t\thu_HU.ISO8859-2\nar"..., 1024) = 1024
+read(3, "59-4\niso8859-13/XLC_LOCALE:\t\t\tlv"..., 1024) = 1024
+read(3, "-1\niso8859-15/XLC_LOCALE:\t\t\tpd_U"..., 1024) = 1024
+read(3, "o8859-1/XLC_LOCALE:\t\t\tst_ZA.ISO8"..., 1024) = 1024
+read(3, "5\nzh_CN/XLC_LOCALE:\t\t\tzh_CN.eucC"..., 1024) = 1024
+read(3, "n_US.UTF-8/XLC_LOCALE:\t\t\tar_QA.U"..., 1024) = 1024
+read(3, "LOCALE:\t\t\tde_DE.UTF-8\nen_US.UTF-"..., 1024) = 1024
+lseek(3, -90, SEEK_CUR)                 = 31654
+close(3)                                = 0
+access("/usr/share/X11/locale/en_US.UTF-8/XLC_LOCALE", R_OK) = 0
+open("/usr/share/X11/locale/en_US.UTF-8/XLC_LOCALE", O_RDONLY) = 3
+read(3, "\n\n\n\n\n\n\n\n\n\n#  XLocale Database Sa"..., 1024) = 1024
+read(3, "9 families)\nfs8\t{\n\tcharset\t{\n\t\tn"..., 1024) = 1024
+brk(0x561d058ac000)                     = 0x561d058ac000
+read(3, "0646-1\n\t}\n\tfont\t{\n\t\tprimary\tISO1"..., 1024) = 1024
+brk(0x561d058ad000)                     = 0x561d058ad000
+read(3, "    ct_encoding     ISO8859-7:GR"..., 1024) = 1024
+brk(0x561d058ae000)                     = 0x561d058ae000
+read(3, "ength\t\t1\n\tct_encoding\tJISX0201.1"..., 1024) = 120
+brk(0x561d058af000)                     = 0x561d058af000
+read(3, "", 1024)                       = 0
+close(3)                                = 0
+brk(0x561d058b2000)                     = 0x561d058b2000
+brk(0x561d058b3000)                     = 0x561d058b3000
+brk(0x561d058b4000)                     = 0x561d058b4000
+brk(0x561d058b5000)                     = 0x561d058b5000
+brk(0x561d058b6000)                     = 0x561d058b6000
+brk(0x561d058b7000)                     = 0x561d058b7000
+brk(0x561d058b8000)                     = 0x561d058b8000
+brk(0x561d058b9000)                     = 0x561d058b9000
+brk(0x561d058ba000)                     = 0x561d058ba000
+brk(0x561d058bb000)                     = 0x561d058bb000
+brk(0x561d058bc000)                     = 0x561d058bc000
+brk(0x561d058bd000)                     = 0x561d058bd000
+brk(0x561d058be000)                     = 0x561d058be000
+brk(0x561d058bf000)                     = 0x561d058bf000
+brk(0x561d058c0000)                     = 0x561d058c0000
+brk(0x561d058c1000)                     = 0x561d058c1000
+getpid()                                = 15998
+brk(0x561d058c3000)                     = 0x561d058c3000
+socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC, 0) = 3
+connect(3, {sa_family=AF_UNIX, sun_path=@"/tmp/.X11-unix/X0"}, 20) = -1 ECONNREFUSED (Connection refused)
+close(3)                                = 0
+socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC, 0) = 3
+getsockopt(3, SOL_SOCKET, SO_SNDBUF, [212992], [4]) = 0
+connect(3, {sa_family=AF_UNIX, sun_path="/tmp/.X11-unix/X0"}, 110) = 0
+getpeername(3, {sa_family=AF_UNIX, sun_path="/tmp/.X11-unix/X0"}, [124->20]) = 0
+uname({sysname="Linux", nodename="bar", ...}) = 0
+access("/home/foo/.Xauthority", R_OK)   = -1 ENOENT (No such file or directory)
+brk(0x561d058c9000)                     = 0x561d058c9000
+fcntl(3, F_GETFL)                       = 0x2 (flags O_RDWR)
+fcntl(3, F_SETFL, O_RDWR|O_NONBLOCK)    = 0
+fcntl(3, F_SETFD, FD_CLOEXEC)           = 0
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="l\0\v\0\0\0\0\0\0\0\0\0", iov_len=12}, {iov_base="", iov_len=0}], 2) = 12
+recvfrom(3, "\1\0\v\0\0\0O\2", 8, 0, NULL, NULL) = 8
+recvfrom(3, "X6\267\0\0\0\0\1\377\377\37\0\0\1\0\0\24\0\377\377\1\7\0\0  \10\377\0\0\0\0"..., 2364, 0, NULL, NULL) = 2364
+brk(0x561d058ce000)                     = 0x561d058ce000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="b\0\5\0\f\0\0\0BIG-REQUESTS", iov_len=20}], 1) = 20
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\1\0\0\0\0\0\1\205\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\205\0\1\0", iov_len=4}], 1) = 4
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\2\0\0\0\0\0\377\377?\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+recvmsg(3, {msg_namelen=0}, 0)          = -1 EAGAIN (Resource temporarily unavailable)
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="7\0\5\0\0\0\0\1e\1\0\0\10\0\0\0\377\377\377\0\24\0\6\0e\1\0\0\27\0\0\0"..., iov_len=44}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 44
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\4\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="b\0\5\0\t\0\0\1", iov_len=8}, {iov_base="XKEYBOARD", iov_len=9}, {iov_base="\0\0\0", iov_len=3}], 3) = 20
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\5\0\0\0\0\0\1\207U\211\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\207\0\2\0\1\0\0\0", iov_len=8}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 8
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\1\6\0\0\0\0\0\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+access("/etc/fonts/fonts.conf", R_OK)   = 0
+access("/etc/fonts/fonts.conf", R_OK)   = 0
+readlink("/etc/fonts/fonts.conf", 0x7fffe39f20d0, 4095) = -1 EINVAL (Invalid argument)
+stat("/etc/fonts/fonts.conf", {st_mode=S_IFREG|0644, st_size=2814, ...}) = 0
+open("/etc/fonts/fonts.conf", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+read(4, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+brk(0x561d058cf000)                     = 0x561d058cf000
+read(4, "s.\n\n\tKeith Packard\n-->\n\n<!-- Fon"..., 1024) = 1024
+read(4, "atch>\n<!--\n  Accept alternate 's"..., 1024) = 766
+read(4, "", 1024)                       = 0
+close(4)                                = 0
+brk(0x561d058d0000)                     = 0x561d058d0000
+getrandom("\x21\x90\xef\x6c\x9d\xd8\xca\xc0", 8, GRND_NONBLOCK) = 8
+brk(0x561d058d1000)                     = 0x561d058d1000
+brk(0x561d058d2000)                     = 0x561d058d2000
+brk(0x561d058d5000)                     = 0x561d058d5000
+access("/etc/fonts/conf.d", R_OK)       = 0
+access("/etc/fonts/conf.d", R_OK)       = 0
+readlink("/etc/fonts/conf.d", 0x7fffe39f02c0, 4095) = -1 EINVAL (Invalid argument)
+stat("/etc/fonts/conf.d", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+open("/etc/fonts/conf.d", O_RDONLY|O_CLOEXEC|O_DIRECTORY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+brk(0x561d058d7000)                     = 0x561d058d7000
+getdents64(4, /* 3 entries */, 2048)    = 80
+getdents64(4, /* 0 entries */, 2048)    = 0
+close(4)                                = 0
+access("/etc/fonts/conf.d", R_OK)       = 0
+access("/usr/share/fontconfig/conf.avail", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail", 0x7fffe39f20d0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+open("/usr/share/fontconfig/conf.avail", O_RDONLY|O_CLOEXEC|O_DIRECTORY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+getdents64(4, /* 39 entries */, 2048)   = 1664
+getdents64(4, /* 0 entries */, 2048)    = 0
+access("/usr/share/fontconfig/conf.avail/05-reset-dirs-sample.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/05-reset-dirs-sample.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/05-reset-dirs-sample.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/05-reset-dirs-sample.conf", {st_mode=S_IFREG|0644, st_size=198, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/05-reset-dirs-sample.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 198
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x8d\xe7\x70\xba\x02\x41\x3d\x86", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/09-autohint-if-no-hinting.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/09-autohint-if-no-hinting.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/09-autohint-if-no-hinting.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/09-autohint-if-no-hinting.conf", {st_mode=S_IFREG|0644, st_size=793, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/09-autohint-if-no-hinting.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 793
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x0c\xec\xd7\xbe\xf6\x3c\x50\x59", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-autohint.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-autohint.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-autohint.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-autohint.conf", {st_mode=S_IFREG|0644, st_size=706, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-autohint.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 706
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x6d\x44\x53\x52\xff\x40\xe4\x36", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-hinting-full.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-hinting-full.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-hinting-full.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-hinting-full.conf", {st_mode=S_IFREG|0644, st_size=692, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-hinting-full.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 692
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x54\x55\x05\x3b\xe7\xfa\x87\x77", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-hinting-medium.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-hinting-medium.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-hinting-medium.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-hinting-medium.conf", {st_mode=S_IFREG|0644, st_size=696, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-hinting-medium.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 696
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x70\x27\xf0\xb2\xa1\x45\x36\xf1", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-hinting-none.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-hinting-none.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-hinting-none.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-hinting-none.conf", {st_mode=S_IFREG|0644, st_size=692, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-hinting-none.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 692
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x5c\xc5\xf9\xc2\x11\x46\xc9\x75", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-hinting-slight.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-hinting-slight.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-hinting-slight.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-hinting-slight.conf", {st_mode=S_IFREG|0644, st_size=696, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-hinting-slight.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 696
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xdf\x40\x86\xef\x2b\x53\xa6\xab", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-no-sub-pixel.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-no-sub-pixel.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-no-sub-pixel.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-no-sub-pixel.conf", {st_mode=S_IFREG|0644, st_size=723, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-no-sub-pixel.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 723
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x08\x9c\xf4\x12\x6c\x1c\xdc\x77", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-scale-bitmap-fonts.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-scale-bitmap-fonts.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-scale-bitmap-fonts.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-scale-bitmap-fonts.conf", {st_mode=S_IFREG|0644, st_size=2228, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-scale-bitmap-fonts.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "t>\n  <test name=\"hinting\" compar"..., 1024) = 1024
+brk(0x561d058d8000)                     = 0x561d058d8000
+read(5, " </times>\n  </edit>\n  <edit name"..., 1024) = 180
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xb8\xe6\xc7\xc7\xe6\x89\x53\x9b", 8, GRND_NONBLOCK) = 8
+brk(0x561d058d9000)                     = 0x561d058d9000
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-bgr.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-bgr.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-sub-pixel-bgr.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-sub-pixel-bgr.conf", {st_mode=S_IFREG|0644, st_size=748, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-sub-pixel-bgr.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 748
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xfc\xcd\xc0\xc4\xb1\xe7\x0b\x4b", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf", {st_mode=S_IFREG|0644, st_size=748, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 748
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x97\xaf\xb4\xe4\x00\x18\x42\xb8", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-vbgr.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-vbgr.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-sub-pixel-vbgr.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-sub-pixel-vbgr.conf", {st_mode=S_IFREG|0644, st_size=758, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-sub-pixel-vbgr.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 758
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xdd\x3f\xcd\x86\x2e\x12\xe1\x99", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-vrgb.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-sub-pixel-vrgb.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-sub-pixel-vrgb.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-sub-pixel-vrgb.conf", {st_mode=S_IFREG|0644, st_size=758, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-sub-pixel-vrgb.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 758
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xa5\xfc\x78\x49\x9e\x4d\x4a\xac", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/10-unhinted.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/10-unhinted.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/10-unhinted.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/10-unhinted.conf", {st_mode=S_IFREG|0644, st_size=701, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/10-unhinted.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 701
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x01\x50\xf5\xc7\x8c\x10\x59\xd1", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf", {st_mode=S_IFREG|0644, st_size=771, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 771
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x07\x04\xf1\xe2\x7e\xfb\x2c\x6e", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/11-lcdfilter-legacy.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/11-lcdfilter-legacy.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/11-lcdfilter-legacy.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/11-lcdfilter-legacy.conf", {st_mode=S_IFREG|0644, st_size=768, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/11-lcdfilter-legacy.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 768
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x8a\x52\xe1\xc9\x93\xad\xdf\xc5", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/11-lcdfilter-light.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/11-lcdfilter-light.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/11-lcdfilter-light.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/11-lcdfilter-light.conf", {st_mode=S_IFREG|0644, st_size=765, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/11-lcdfilter-light.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 765
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xed\x33\x08\xea\xbe\x9f\x3e\x3c", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/20-unhint-small-vera.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/20-unhint-small-vera.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/20-unhint-small-vera.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/20-unhint-small-vera.conf", {st_mode=S_IFREG|0644, st_size=1537, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/20-unhint-small-vera.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "e=\"eq\" ignore-blanks=\"true\">\n\t\t\t"..., 1024) = 513
+brk(0x561d058da000)                     = 0x561d058da000
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xa9\x61\xd6\xec\x33\xc5\x3e\x56", 8, GRND_NONBLOCK) = 8
+brk(0x561d058db000)                     = 0x561d058db000
+access("/usr/share/fontconfig/conf.avail/25-unhint-nonlatin.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/25-unhint-nonlatin.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/25-unhint-nonlatin.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/25-unhint-nonlatin.conf", {st_mode=S_IFREG|0644, st_size=3489, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/25-unhint-nonlatin.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "est name=\"family\" compare=\"eq\" i"..., 1024) = 1024
+read(5, "<test name=\"family\" compare=\"eq\""..., 1024) = 1024
+read(5, "h target=\"font\">\n\t\t<test name=\"f"..., 1024) = 417
+brk(0x561d058dd000)                     = 0x561d058dd000
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x29\xdf\x3e\xa1\x5f\xc2\xf4\xd2", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/30-metric-aliases.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/30-metric-aliases.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/30-metric-aliases.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/30-metric-aliases.conf", {st_mode=S_IFREG|0644, st_size=13274, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/30-metric-aliases.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "             P052               "..., 1024) = 1024
+read(5, "imilar designs first.  We do thi"..., 1024) = 1024
+read(5, "\"same\">\n\t  <family>Nimbus Sans N"..., 1024) = 1024
+read(5, ">\n\t  <family>TeX Gyre Cursor</fa"..., 1024) = 1024
+read(5, "</alias>\n\n\t<alias binding=\"same\""..., 1024) = 1024
+read(5, "y</family>\n\t  </default>\n\t</alia"..., 1024) = 1024
+brk(0x561d058e1000)                     = 0x561d058e1000
+read(5, "y>New Century Schoolbook</family"..., 1024) = 1024
+read(5, "ly>\n\t  <default>\n\t    <family>Ti"..., 1024) = 1024
+read(5, "o</family>\n\t  <default>\n\t  <fami"..., 1024) = 1024
+read(5, "/family>\n\t  </default>\n\t</alias>"..., 1024) = 1024
+read(5, "Gyre Adventor</family>\n\t  </acce"..., 1024) = 1024
+read(5, "ow</family>\n\t  </accept>\n\t</alia"..., 1024) = 986
+brk(0x561d058e8000)                     = 0x561d058e8000
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xa3\xb5\x59\x11\x0d\x01\x13\xeb", 8, GRND_NONBLOCK) = 8
+brk(0x561d058e9000)                     = 0x561d058e9000
+access("/usr/share/fontconfig/conf.avail/35-lang-normalize.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/35-lang-normalize.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/35-lang-normalize.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/35-lang-normalize.conf", {st_mode=S_IFREG|0644, st_size=41959, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/35-lang-normalize.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<fontconfig>\n  <!-- aa* -> aa --"..., 1024) = 1024
+read(5, "><string>an</string></test>\n    "..., 1024) = 1024
+read(5, "string>ay</string></edit>\n  </ma"..., 1024) = 1024
+read(5, "me=\"lang\" compare=\"contains\"><st"..., 1024) = 1024
+read(5, "de=\"assign\" binding=\"same\"><stri"..., 1024) = 1024
+read(5, "ce* -> ce -->\n  <match>\n    <tes"..., 1024) = 1024
+read(5, "rh</string></test>\n    <edit nam"..., 1024) = 1024
+read(5, "y</string></edit>\n  </match>\n  <"..., 1024) = 1024
+read(5, "\" compare=\"contains\"><string>ee<"..., 1024) = 1024
+read(5, "binding=\"same\"><string>et</strin"..., 1024) = 1024
+read(5, "atch>\n    <test name=\"lang\" comp"..., 1024) = 1024
+read(5, "<edit name=\"lang\" mode=\"assign\" "..., 1024) = 1024
+read(5, "tch>\n  <!-- gu* -> gu -->\n  <mat"..., 1024) = 1024
+read(5, "ring>hi</string></test>\n    <edi"..., 1024) = 1024
+read(5, "string>ht</string></edit>\n  </ma"..., 1024) = 1024
+read(5, "lang\" compare=\"contains\"><string"..., 1024) = 1024
+read(5, "gn\" binding=\"same\"><string>is</s"..., 1024) = 1024
+read(5, "atch>\n    <test name=\"lang\" comp"..., 1024) = 1024
+read(5, "<edit name=\"lang\" mode=\"assign\" "..., 1024) = 1024
+read(5, "tch>\n  <!-- ks* -> ks -->\n  <mat"..., 1024) = 1024
+read(5, "><string>ky</string></test>\n    "..., 1024) = 1024
+read(5, "e\"><string>lg</string></edit>\n  "..., 1024) = 1024
+read(5, "name=\"lang\" compare=\"contains\"><"..., 1024) = 1024
+read(5, "de=\"assign\" binding=\"same\"><stri"..., 1024) = 1024
+read(5, "y -->\n  <match>\n    <test name=\""..., 1024) = 1024
+brk(0x561d058f6000)                     = 0x561d058f6000
+read(5, "st>\n    <edit name=\"lang\" mode=\""..., 1024) = 1024
+read(5, ">\n  </match>\n  <!-- nso* -> nso "..., 1024) = 1024
+read(5, "ins\"><string>or</string></test>\n"..., 1024) = 1024
+read(5, "e\"><string>pt</string></edit>\n  "..., 1024) = 1024
+read(5, "t name=\"lang\" compare=\"contains\""..., 1024) = 1024
+read(5, "lang\" mode=\"assign\" binding=\"sam"..., 1024) = 1024
+read(5, "!-- sh* -> sh -->\n  <match>\n    "..., 1024) = 1024
+read(5, ">sl</string></test>\n    <edit na"..., 1024) = 1024
+read(5, "\"><string>sms</string></edit>\n  "..., 1024) = 1024
+read(5, "me=\"lang\" compare=\"contains\"><st"..., 1024) = 1024
+read(5, "de=\"assign\" binding=\"same\"><stri"..., 1024) = 1024
+read(5, "l -->\n  <match>\n    <test name=\""..., 1024) = 1024
+read(5, "    <edit name=\"lang\" mode=\"assi"..., 1024) = 1024
+read(5, "</match>\n  <!-- ur* -> ur -->\n  "..., 1024) = 1024
+read(5, "string>vot</string></test>\n    <"..., 1024) = 1024
+read(5, "e\"><string>xh</string></edit>\n  "..., 1024) = 999
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xaa\xe6\xf4\x21\xb3\xc3\x03\x83", 8, GRND_NONBLOCK) = 8
+brk(0x561d058f7000)                     = 0x561d058f7000
+brk(0x561d058f8000)                     = 0x561d058f8000
+brk(0x561d058f9000)                     = 0x561d058f9000
+brk(0x561d058fa000)                     = 0x561d058fa000
+brk(0x561d058fb000)                     = 0x561d058fb000
+brk(0x561d058fc000)                     = 0x561d058fc000
+brk(0x561d058fd000)                     = 0x561d058fd000
+brk(0x561d058fe000)                     = 0x561d058fe000
+brk(0x561d058ff000)                     = 0x561d058ff000
+brk(0x561d05900000)                     = 0x561d05900000
+brk(0x561d05901000)                     = 0x561d05901000
+brk(0x561d05902000)                     = 0x561d05902000
+brk(0x561d05903000)                     = 0x561d05903000
+brk(0x561d05906000)                     = 0x561d05906000
+access("/usr/share/fontconfig/conf.avail/40-nonlatin.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/40-nonlatin.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/40-nonlatin.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/40-nonlatin.conf", {st_mode=S_IFREG|0644, st_size=7935, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/40-nonlatin.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "></default>\n\t</alias>\n\t<alias>\n\t"..., 1024) = 1024
+read(5, "y>\n\t\t<default><family>serif</fam"..., 1024) = 1024
+read(5, "<family>Terafik</family>\n\t\t<defa"..., 1024) = 1024
+read(5, "hanHeiSun Uni</family>\n\t\t<defaul"..., 1024) = 1024
+read(5, "family>\n\t\t<default><family>fanta"..., 1024) = 1024
+read(5, "ystem-ui</family></default>\n\t</a"..., 1024) = 1024
+read(5, "\t<default><family>system-ui</fam"..., 1024) = 767
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x61\xc9\x0d\xb1\xb4\x1a\x05\x3a", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/45-generic.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/45-generic.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/45-generic.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/45-generic.conf", {st_mode=S_IFREG|0644, st_size=3543, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/45-generic.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "emoji</family></default>\n\t</alia"..., 1024) = 1024
+read(5, "g>\n\t\t</edit>\n\t</match>\n\n\n<!-- Ma"..., 1024) = 1024
+read(5, " math fonts. -->\n\t<match>\n\t\t<tes"..., 1024) = 471
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x38\x85\x8d\xf8\x3c\x99\x6b\xb2", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/45-latin.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/45-latin.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/45-latin.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/45-latin.conf", {st_mode=S_IFREG|0644, st_size=7117, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/45-latin.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, ">\n\t\t<default><family>serif</fami"..., 1024) = 1024
+read(5, "if faces\n -->\n\t<alias>\n\t\t<family"..., 1024) = 1024
+read(5, "/family>\n\t\t<default><family>sans"..., 1024) = 1024
+read(5, "mily>sans-serif</family></defaul"..., 1024) = 1024
+read(5, "nospace</family></default>\n\t</al"..., 1024) = 1024
+read(5, "amily></default>\n\t</alias>\n\t<ali"..., 1024) = 973
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xbd\x6b\x84\x6c\x6f\x05\x1f\xae", 8, GRND_NONBLOCK) = 8
+brk(0x561d05907000)                     = 0x561d05907000
+brk(0x561d05908000)                     = 0x561d05908000
+brk(0x561d05909000)                     = 0x561d05909000
+brk(0x561d0590a000)                     = 0x561d0590a000
+brk(0x561d0590b000)                     = 0x561d0590b000
+brk(0x561d0590e000)                     = 0x561d0590e000
+access("/usr/share/fontconfig/conf.avail/49-sansserif.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/49-sansserif.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/49-sansserif.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/49-sansserif.conf", {st_mode=S_IFREG|0644, st_size=799, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/49-sansserif.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 799
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x56\x0f\x74\x5f\x2f\x09\x6c\x5c", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/50-user.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/50-user.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/50-user.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/50-user.conf", {st_mode=S_IFREG|0644, st_size=911, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/50-user.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 911
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xb9\xe0\xbc\x5d\xcf\x5a\x75\x22", 8, GRND_NONBLOCK) = 8
+stat("/home/foo/.config/fontconfig/conf.d", 0x7fffe39f1060) = -1 ENOENT (No such file or directory)
+stat("/home/foo/.config/fontconfig/conf.d", 0x7fffe39f1060) = -1 ENOENT (No such file or directory)
+access("/home/foo/.config/fontconfig/conf.d", R_OK) = -1 ENOENT (No such file or directory)
+access("/home/foo/.config/fontconfig/conf.d", R_OK) = -1 ENOENT (No such file or directory)
+stat("/home/foo/.config/fontconfig/fonts.conf", 0x7fffe39f1060) = -1 ENOENT (No such file or directory)
+stat("/home/foo/.config/fontconfig/fonts.conf", 0x7fffe39f1060) = -1 ENOENT (No such file or directory)
+access("/home/foo/.config/fontconfig/fonts.conf", R_OK) = -1 ENOENT (No such file or directory)
+access("/home/foo/.config/fontconfig/fonts.conf", R_OK) = -1 ENOENT (No such file or directory)
+access("/home/foo/.fonts.conf.d", R_OK) = -1 ENOENT (No such file or directory)
+access("/home/foo/.fonts.conf.d", R_OK) = -1 ENOENT (No such file or directory)
+access("/home/foo/.fonts.conf", R_OK)   = -1 ENOENT (No such file or directory)
+access("/home/foo/.fonts.conf", R_OK)   = -1 ENOENT (No such file or directory)
+access("/usr/share/fontconfig/conf.avail/51-local.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/51-local.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/51-local.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/51-local.conf", {st_mode=S_IFREG|0644, st_size=423, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/51-local.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 423
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x77\x43\xc4\x19\x3b\x87\x2c\x07", 8, GRND_NONBLOCK) = 8
+access("/etc/fonts/local.conf", R_OK)   = -1 ENOENT (No such file or directory)
+access("/etc/fonts/local.conf", R_OK)   = -1 ENOENT (No such file or directory)
+access("/usr/share/fontconfig/conf.avail/60-generic.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/60-generic.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/60-generic.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/60-generic.conf", {st_mode=S_IFREG|0644, st_size=2041, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/60-generic.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "amily>Noto Color Emoji</family> "..., 1024) = 1017
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xb7\x28\x6d\x55\x31\x00\xa6\xf9", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/60-latin.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/60-latin.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/60-latin.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/60-latin.conf", {st_mode=S_IFREG|0644, st_size=2326, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/60-latin.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "\t\t\t<family>BPG Glaho Internation"..., 1024) = 1024
+read(5, "ias>\n<!--\n  system-ui\n-->\n\t<alia"..., 1024) = 278
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x5e\x58\x30\xae\xfd\x3f\x7b\x76", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/65-fonts-persian.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/65-fonts-persian.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/65-fonts-persian.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/65-fonts-persian.conf", {st_mode=S_IFREG|0644, st_size=10293, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/65-fonts-persian.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "NT SHALL THE AUTHOR(S) BE LIABLE"..., 1024) = 1024
+read(5, "\">\n\t  <family>Nesf2</family>\n\t  "..., 1024) = 1024
+read(5, "Persian_title</family></accept>\n"..., 1024) = 1024
+read(5, "ept>\n\t  <family>Persian_square</"..., 1024) = 1024
+read(5, "amily>Farnaz</family>\n\t  <family"..., 1024) = 1024
+read(5, "\n\t\t\t<string>Roya</string>\n\t\t</te"..., 1024) = 1024
+brk(0x561d05912000)                     = 0x561d05912000
+read(5, "lant the font -->\n\t\t<edit name=\""..., 1024) = 1024
+read(5, ">Badr</family>\n\t\t\t<family>Zar</f"..., 1024) = 1024
+read(5, "size\" compare=\"more_eq\">\n\t\t\t<dou"..., 1024) = 1024
+read(5, "ing>Roya</string>\n\t\t</edit>\n\t</m"..., 1024) = 53
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x66\xc2\x1c\x0e\xef\x2a\xb8\xbc", 8, GRND_NONBLOCK) = 8
+brk(0x561d05913000)                     = 0x561d05913000
+brk(0x561d05914000)                     = 0x561d05914000
+access("/usr/share/fontconfig/conf.avail/65-khmer.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/65-khmer.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/65-khmer.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/65-khmer.conf", {st_mode=S_IFREG|0644, st_size=464, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/65-khmer.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 464
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xe2\x81\x68\xa1\xeb\xe7\xe7\xeb", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/65-nonlatin.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/65-nonlatin.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/65-nonlatin.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/65-nonlatin.conf", {st_mode=S_IFREG|0644, st_size=9451, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/65-nonlatin.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "ly> <!-- devanagari -->\n\t\t\t<fami"..., 1024) = 1024
+read(5, "Mingti2L Big5</family>\n \t\t\t<fami"..., 1024) = 1024
+read(5, "y> <!-- hebrew -->\n\t\t\t<family>Lu"..., 1024) = 1024
+read(5, "\t\t<family>Sampige</family> <!-- "..., 1024) = 1024
+read(5, ">\n\t\t\t<family>\357\274\255\357\274\263 \343\202\264\343\202\267\343\203\203\343\202\257"..., 1024) = 1024
+read(5, "refer>\n\t\t\t<family>Miriam Mono</f"..., 1024) = 1024
+read(5, "</family> <!-- hangul (ko) -->\n\t"..., 1024) = 1024
+read(5, "oto Sans Arabic UI</family><!-- "..., 1024) = 1024
+read(5, "\t\t<family>Khmer UI</family><!-- "..., 1024) = 235
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x95\x60\x74\xf5\x37\xf6\x49\xb9", 8, GRND_NONBLOCK) = 8
+brk(0x561d05917000)                     = 0x561d05917000
+brk(0x561d05918000)                     = 0x561d05918000
+brk(0x561d0591b000)                     = 0x561d0591b000
+access("/usr/share/fontconfig/conf.avail/69-unifont.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/69-unifont.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/69-unifont.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/69-unifont.conf", {st_mode=S_IFREG|0644, st_size=847, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/69-unifont.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 847
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x0d\x7b\x95\xd7\xd1\x9b\xc2\x35", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/70-no-bitmaps.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/70-no-bitmaps.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/70-no-bitmaps.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/70-no-bitmaps.conf", {st_mode=S_IFREG|0644, st_size=487, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/70-no-bitmaps.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 487
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x2a\x7e\xb5\xb8\x67\x08\xfc\xe7", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf", {st_mode=S_IFREG|0644, st_size=487, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/70-yes-bitmaps.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 487
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\xe9\x89\xc8\xf8\x28\x9d\x9b\xb1", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/80-delicious.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/80-delicious.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/80-delicious.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/80-delicious.conf", {st_mode=S_IFREG|0644, st_size=597, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/80-delicious.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 597
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x1b\x0e\x83\xb5\x8a\x8f\xe9\x68", 8, GRND_NONBLOCK) = 8
+access("/usr/share/fontconfig/conf.avail/90-synthetic.conf", R_OK) = 0
+access("/usr/share/fontconfig/conf.avail/90-synthetic.conf", R_OK) = 0
+readlink("/usr/share/fontconfig/conf.avail/90-synthetic.conf", 0x7fffe39f17b0, 4095) = -1 EINVAL (Invalid argument)
+stat("/usr/share/fontconfig/conf.avail/90-synthetic.conf", {st_mode=S_IFREG|0644, st_size=1917, ...}) = 0
+open("/usr/share/fontconfig/conf.avail/90-synthetic.conf", O_RDONLY|O_CLOEXEC) = 5
+fcntl(5, F_SETFD, FD_CLOEXEC)           = 0
+read(5, "<?xml version=\"1.0\"?>\n<!DOCTYPE "..., 1024) = 1024
+read(5, "que -->\n\t\t<edit name=\"embeddedbi"..., 1024) = 893
+read(5, "", 1024)                       = 0
+close(5)                                = 0
+getrandom("\x1f\xe0\x60\xc3\xd8\x27\x2b\xec", 8, GRND_NONBLOCK) = 8
+close(4)                                = 0
+stat("/usr/share/fonts", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+open("/usr/share/fonts", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525243, f_bavail=25055900, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+close(4)                                = 0
+open("/var/cache/fontconfig//3830d5c3ddfd5cd38a049b759396e72e-le64.cache-7", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=136, ...}) = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525243, f_bavail=25055900, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+read(4, "\4\374\2\374\7\0\0\0\210\0\0\0\0\0\0\0@\0\0\0\0\0\0\0X\0\0\0\0\0\0\0"..., 136) = 136
+close(4)                                = 0
+open("/home/foo/.cache/fontconfig//3830d5c3ddfd5cd38a049b759396e72e-le64.cache-7", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=136, ...}) = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525243, f_bavail=25055900, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+read(4, "\4\374\2\374\7\0\0\0\210\0\0\0\0\0\0\0@\0\0\0\0\0\0\0X\0\0\0\0\0\0\0"..., 136) = 136
+close(4)                                = 0
+stat("/home/foo/.local/share/fonts", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+open("/home/foo/.local/share/fonts", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525243, f_bavail=25055900, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+close(4)                                = 0
+open("/var/cache/fontconfig//f86ce1f1bdbf3f84c3d549ca38ed8865-le64.cache-7", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/home/foo/.local/share/fonts/.uuid", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)
+open("/home/foo/.cache/fontconfig//f86ce1f1bdbf3f84c3d549ca38ed8865-le64.cache-7", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=11040, ...}) = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525243, f_bavail=25055900, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+mmap(NULL, 11040, PROT_READ, MAP_SHARED, 4, 0) = 0x7f8dde884000
+fadvise64(4, 0, 11040, POSIX_FADV_WILLNEED) = 0
+close(4)                                = 0
+stat("/home/foo/.fonts", 0x7fffe39f3570) = -1 ENOENT (No such file or directory)
+stat("/home/foo/.fonts", 0x7fffe39f36e0) = -1 ENOENT (No such file or directory)
+stat("/usr/share/fonts/TTF", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+open("/usr/share/fonts/TTF", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525242, f_bavail=25055899, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+close(4)                                = 0
+open("/var/cache/fontconfig//f6b893a7224233d96cb72fd88691c0b4-le64.cache-7", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=20064, ...}) = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525242, f_bavail=25055899, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+mmap(NULL, 20064, PROT_READ, MAP_SHARED, 4, 0) = 0x7f8dde87f000
+fadvise64(4, 0, 20064, POSIX_FADV_WILLNEED) = 0
+munmap(0x7f8dde87f000, 20064)           = 0
+close(4)                                = 0
+open("/home/foo/.cache/fontconfig//f6b893a7224233d96cb72fd88691c0b4-le64.cache-7", O_RDONLY|O_CLOEXEC) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=20352, ...}) = 0
+fstatfs(4, {f_type=EXT2_SUPER_MAGIC, f_bsize=4096, f_blocks=28713623, f_bfree=26525242, f_bavail=25055899, f_files=7331840, f_ffree=7033751, f_fsid={val=[2892200273, 3412045584]}, f_namelen=255, f_frsize=4096, f_flags=ST_VALID|ST_RELATIME}) = 0
+mmap(NULL, 20352, PROT_READ, MAP_SHARED, 4, 0) = 0x7f8dde87f000
+fadvise64(4, 0, 20352, POSIX_FADV_WILLNEED) = 0
+close(4)                                = 0
+readlink("/proc/self/exe", "/home/foo/.local/bin/st", 4095) = 23
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="b\0\4\0\6\0\0\0", iov_len=8}, {iov_base="RENDER", iov_len=6}, {iov_base="\0\0", iov_len=2}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\7\0\0\0\0\0\1\212\0\214\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\0\3\0\0\0\0\0\v\0\0\0\212\1\1\0", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\10\0\0\0\0\0\0\0\0\0\v\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 1636
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/home/foo/.Xdefaults", O_RDONLY)  = -1 ENOENT (No such file or directory)
+uname({sysname="Linux", nodename="bar", ...}) = 0
+open("/home/foo/.Xdefaults-bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/share/fonts/TTF/LiberationMono-Regular.ttf", O_RDONLY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=314844, ...}) = 0
+mmap(NULL, 314844, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f8dde832000
+close(4)                                = 0
+brk(0x561d05926000)                     = 0x561d05926000
+brk(0x561d05928000)                     = 0x561d05928000
+brk(0x561d05929000)                     = 0x561d05929000
+brk(0x561d0592a000)                     = 0x561d0592a000
+brk(0x561d0592b000)                     = 0x561d0592b000
+brk(0x561d05935000)                     = 0x561d05935000
+brk(0x561d05936000)                     = 0x561d05936000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\21\3\0\1\0\0\1&\0\0\0\212\24\7\0\1\0\0\1\1\0\0\0\3\0\0\0\2\0\0\0"..., iov_len=15988}, {iov_base="\20\0\0\0\377\274h\274p\304\377\304\0\0\30\0\0\0\0\0\0\0\0\0\2014\n4\372\367\316\367"..., iov_len=440}, {iov_base="", iov_len=0}], 3) = 16428
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24_\0\1\0\0\1\1\0\0\0/\0\0\0\10\0\v\0\377\377\v\0\n\0\0\0x$\0$"..., iov_len=16312}, {iov_base="\0\0\0\0\2\0\0\0\177I\36I\336\311\253\311\370\363\351\363\342\356\366\356\210\261\316\261\4\"P\""..., iov_len=324}, {iov_base="", iov_len=0}], 3) = 16636
+brk(0x561d05937000)                     = 0x561d05937000
+open("/usr/share/fonts/TTF/LiberationMono-Italic.ttf", O_RDONLY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=276668, ...}) = 0
+mmap(NULL, 276668, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f8dde7ee000
+close(4)                                = 0
+brk(0x561d05938000)                     = 0x561d05938000
+brk(0x561d05939000)                     = 0x561d05939000
+brk(0x561d05944000)                     = 0x561d05944000
+brk(0x561d05945000)                     = 0x561d05945000
+brk(0x561d05947000)                     = 0x561d05947000
+brk(0x561d05948000)                     = 0x561d05948000
+brk(0x561d05949000)                     = 0x561d05949000
+brk(0x561d0594a000)                     = 0x561d0594a000
+brk(0x561d05954000)                     = 0x561d05954000
+brk(0x561d05955000)                     = 0x561d05955000
+brk(0x561d05956000)                     = 0x561d05956000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24_\0\1\0\0\1\1\0\0\0W\0\0\0\10\0\v\0\377\377\v\0\n\0\0\0\0\0\0\0"..., iov_len=16232}, {iov_base="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\21\0\0\0\210^2^\336\313\257\313\365\362\350\362"..., iov_len=672}, {iov_base="", iov_len=0}], 3) = 16904
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24\213\0\2\0\0\1\1\0\0\0$\0\0\0\f\0\v\0\2\0\v\0\n\0\0\0\0\0\0\0"..., iov_len=16172}, {iov_base="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0A\0\0\0"..., iov_len=480}, {iov_base="", iov_len=0}], 3) = 16652
+open("/usr/share/fonts/TTF/LiberationMono-BoldItalic.ttf", O_RDONLY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=279668, ...}) = 0
+mmap(NULL, 279668, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f8dde7a9000
+close(4)                                = 0
+brk(0x561d05957000)                     = 0x561d05957000
+brk(0x561d05958000)                     = 0x561d05958000
+brk(0x561d05963000)                     = 0x561d05963000
+brk(0x561d05964000)                     = 0x561d05964000
+brk(0x561d05966000)                     = 0x561d05966000
+brk(0x561d05967000)                     = 0x561d05967000
+brk(0x561d05968000)                     = 0x561d05968000
+brk(0x561d05969000)                     = 0x561d05969000
+brk(0x561d05973000)                     = 0x561d05973000
+brk(0x561d05974000)                     = 0x561d05974000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24a\0\2\0\0\1\1\0\0\0H\0\0\0\n\0\t\0\0\0\t\0\n\0\0\0\0\0\0\0"..., iov_len=16340}, {iov_base="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., iov_len=576}, {iov_base="", iov_len=0}], 3) = 16916
+brk(0x561d05975000)                     = 0x561d05975000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24u\0\3\0\0\1\1\0\0\0\23\0\0\0\n\0\v\0\0\0\v\0\n\0\0\0\0\0\0\0"..., iov_len=15940}, {iov_base="\0\0\0\0\0\0\0\0\4\0\0\0sE\34E\324\273\234\273\366\360\345\360\341\356\366\356\222\271\323\271"..., iov_len=560}, {iov_base="", iov_len=0}], 3) = 16500
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24\213\0\3\0\0\1\1\0\0\0005\0\0\0\f\0\v\0\1\0\v\0\n\0\0\0\0\0\0\0"..., iov_len=16376}, {iov_base="\n\0\t\0\0\0\t\0\n\0\0\0", iov_len=12}, {iov_base="", iov_len=0}], 3) = 16388
+brk(0x561d05976000)                     = 0x561d05976000
+open("/usr/share/fonts/TTF/LiberationMono-Bold.ttf", O_RDONLY) = 4
+fcntl(4, F_SETFD, FD_CLOEXEC)           = 0
+fstat(4, {st_mode=S_IFREG|0644, st_size=303656, ...}) = 0
+mmap(NULL, 303656, PROT_READ, MAP_PRIVATE, 4, 0) = 0x7f8dde75e000
+close(4)                                = 0
+brk(0x561d05977000)                     = 0x561d05977000
+brk(0x561d05982000)                     = 0x561d05982000
+brk(0x561d05983000)                     = 0x561d05983000
+brk(0x561d05985000)                     = 0x561d05985000
+brk(0x561d05986000)                     = 0x561d05986000
+brk(0x561d05987000)                     = 0x561d05987000
+brk(0x561d05988000)                     = 0x561d05988000
+brk(0x561d05989000)                     = 0x561d05989000
+brk(0x561d05993000)                     = 0x561d05993000
+brk(0x561d05994000)                     = 0x561d05994000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\0\0\0\0\2148\08\377\377\344\377\250\370\377\370\0\4P\4\0\0\0\0d\20\0\20\377\377\274\377"..., iov_len=15808}, {iov_base="\0\0\0\0\0\0\0\0(\v\0\v\260\210V\210\354\335\315\335\350\362\364\362\223\272\326\272\f-]-"..., iov_len=600}, {iov_base="", iov_len=0}], 3) = 16408
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24\200\0\4\0\0\1\1\0\0\0$\0\0\0\v\0\v\0\1\0\v\0\n\0\0\0\0\0\0\0"..., iov_len=16208}, {iov_base="\0\0\0\0\0\0\0\0\0\0\0\0Z*\10*\317\264\220\264\364\353\341\353\361\367\371\367\331\341\351\341"..., iov_len=480}, {iov_base="", iov_len=0}], 3) = 16688
+brk(0x561d05996000)                     = 0x561d05996000
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\212\24\177\0\4\0\0\1\1\0\0\0J\0\0\0\n\0\f\0\0\0\t\0\n\0\0\0\0\0\0\0"..., iov_len=10104}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 10104
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\213\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="\20\1\t\0\31\0\0\1XDCCC_LINEAR_RGB_MATRICE"..., iov_len=36}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 36
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\214\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\356\0\350\0\325LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\215\1\0\0\0\0\356\356\350\350\325\325\0\0\325\350\356\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\334\0002\0/LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\216\1\0\0\0\0\334\33422//\0\0/2\334\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\205\0\231\0\0LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\217\1\0\0\0\0\205\205\231\231\0\0\0\0\0\231\205\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\265\0\211\0\0LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\220\1\0\0\0\0\265\265\211\211\0\0\0\0\0\211\265\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0&\0\213\0\322LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\221\1\0\0\0\0&&\213\213\322\322\0\0\322\213&\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\323\0006\0\202LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\222\1\0\0\0\0\323\32366\202\202\0\0\2026\323\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0*\0\241\0\230LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\223\1\0\0\0\0**\241\241\230\230\0\0\230\241*\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\7\0006\0BLI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\224\1\0\0\0\0\7\00766BB\0\0B6\7\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\375\0\366\0\343LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\225\1\0\0\0\0\375\375\366\366\343\343\0\0\343\366\375\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\313\0K\0\26LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\226\1\0\0\0\0\313\313KK\26\26\0\0\26K\313\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\223\0\241\0\241LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\227\1\0\0\0\0\223\223\241\241\241\241\0\0\241\241\223\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\203\0\224\0\226LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\230\1\0\0\0\0\203\203\224\224\226\226\0\0\226\224\203\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0e\0{\0\203LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\231\1\0\0\0\0ee{{\203\203\0\0\203{e\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0l\0q\0\304LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\232\1\0\0\0\0llqq\304\304\0\0\304ql\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0X\0n\0uLI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\233\1\0\0\0\0XXnnuu\0\0unX\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+poll([{fd=3, events=POLLIN|POLLOUT}], 1, -1) = 1 ([{fd=3, revents=POLLOUT}])
+writev(3, [{iov_base="T\1\4\0\5\0\0\1\0\0\0+\0006LI", iov_len=16}, {iov_base=NULL, iov_len=0}, {iov_base="", iov_len=0}], 3) = 16
+poll([{fd=3, events=POLLIN}], 1, -1)    = 1 ([{fd=3, revents=POLLIN}])
+recvmsg(3, {msg_name=NULL, msg_namelen=0, msg_iov=[{iov_base="\1\0\234\1\0\0\0\0\0\0++66\0\0006+\0\377\0\0\0\0\0\0\0\0\0\0\0\0", iov_len=4096}], msg_iovlen=1, msg_controllen=0, msg_flags=0}, 0) = 32
+open("/usr/share/X11/locale/compose.dir", O_RDONLY) = 4
+--- SIGSEGV {si_signo=SIGSEGV, si_code=SI_KERNEL, si_addr=NULL} ---
++++ killed by SIGSEGV +++

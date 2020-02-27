@@ -1,8 +1,14 @@
 ;;; -*- lexical-binding: t; -*-
 
+;; modeline
+
 (setq display-time-default-load-average nil
       display-time-day-and-date t)
 (display-time-mode 1)
+
+(use-package minions
+  :init
+  (minions-mode 1))
 
 ;; disable the old theme before loading a new theme
 (defadvice load-theme (before disable-themes-first activate)
@@ -13,21 +19,12 @@
      (progn
        ;; gui
 
-       (use-package doom-themes :disabled
-         :init
-         (load-theme 'doom-outrun-electric t))
-
-       (use-package doom-modeline :disabled
-         :init
-         (setq doom-modeline-icon t)
-         (doom-modeline-mode 1))
-
-       (use-package all-the-icons :disabled
+       (use-package all-the-icons
          :config
          (when (not (file-exists-p (concat (getenv "HOME") "/.local/share/fonts/all-the-icons.ttf")))
            (all-the-icons-install-fonts t)))
 
-       (use-package all-the-icons-dired :disabled
+       (use-package all-the-icons-dired
          :init
          (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 

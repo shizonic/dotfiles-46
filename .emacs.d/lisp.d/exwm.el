@@ -80,7 +80,7 @@
   (exwm-randr-enable)
 
   ;; last thing
-  (exwm-enable))
+  (add-hook 'after-init-hook 'exwm-enable))
 
 (use-package desktop-environment
   :demand :after exwm

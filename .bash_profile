@@ -1,7 +1,8 @@
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-PAGER=cat
-EDITOR=emacsclient
-VISUAL="$EDITOR"
+export PAGER=cat
+export EDITOR=emacsclient
+export VISUAL="$EDITOR"
+
 
 [ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
     # start gpg-agent

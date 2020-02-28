@@ -6,10 +6,10 @@
       display-time-day-and-date t)
 (display-time-mode 1)
 
-(use-package grandshell-theme
+(use-package nofrils-acme-theme
   :init
   (add-hook 'after-init-hook #'(lambda ()
-                                 (load-theme 'grandshell t))))
+                                 (load-theme 'nofrils-sepia t))))
 
 (use-package minions
   :init

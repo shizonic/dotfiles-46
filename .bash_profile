@@ -3,7 +3,6 @@ export PAGER=cat
 export EDITOR=emacsclient
 export VISUAL="$EDITOR"
 
-
 [ "$(tty)" = /dev/tty1 ] && [ -z "$DISPLAY" ] && {
     # start gpg-agent
     gpg-connect-agent /bye

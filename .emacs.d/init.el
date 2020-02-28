@@ -2,6 +2,8 @@
 
 ;; init settings...
 
+(toggle-frame-maximized)
+
 (setq gc-cons-threshold 20000000)
 
 (setq package-enable-at-startup nil)

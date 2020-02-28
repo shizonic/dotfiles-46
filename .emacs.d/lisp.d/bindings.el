@@ -25,8 +25,7 @@
 ;; windows and buffers
 (global-set-key (kbd "C-x C-o") 'spacemacs/alternate-window)
 (global-set-key (kbd "C-x C-b") 'spacemacs/alternate-buffer)
-(global-set-key (kbd "<s-backspace>") 'bury-buffer)
-(global-set-key (kbd "<s-return>") 'dmenu)
+(global-set-key (kbd "C-x <C-backspace>") 'bury-buffer)
 (global-set-key (kbd "C-1") 'delete-other-windows)
 (global-set-key (kbd "C-2") 'split-window-below)
 (global-set-key (kbd "C-3") 'split-window-right)
@@ -38,16 +37,6 @@
 (global-set-key (kbd "C--") #'(lambda ()
                                 (interactive)
                                 (my-font-resizer -1)))
-
-(with-eval-after-load 'exwm
-  (exwm-input-set-key (kbd "C-x C-o") 'spacemacs/alternate-window)
-  (exwm-input-set-key (kbd "C-x C-b") 'spacemacs/alternate-buffer)
-  (exwm-input-set-key (kbd "<s-backspace>") 'bury-buffer)
-  (exwm-input-set-key (kbd "<s-return>") 'dmenu)
-  (exwm-input-set-key (kbd "C-1") 'delete-other-windows)
-  (exwm-input-set-key (kbd "C-2") 'split-window-below)
-  (exwm-input-set-key (kbd "C-3") 'split-window-right)
-  (exwm-input-set-key (kbd "C-0") 'delete-window))
 
 ;; misc
 (global-set-key (kbd "<f5>") 'compile)

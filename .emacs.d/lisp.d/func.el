@@ -1,29 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
 
-(defun shutdown ()
-  "uses tramp to run the commands as root with creds stored in ~/.authinfo.gpg"
-  (interactive)
-  (let ((choices '("reboot" "poweroff" "suspend")))
-    (message "%s" (setq choice (ido-completing-read "Shutdown:" choices )))
-    (with-temp-buffer
-      (cd "/su::")
-      (if (string-equal choice "suspend")
-          (shell-command "echo mem > /sys/power/state")
-        (shell-command (concat choice))))))
-
-(defun dmenu ()
-  "requires ido-mode"
-  (interactive)
-  (let ((choices (directory-files "/bin")))
-    (setq-local choice (message "%s" (ido-completing-read "Shutdown:" choices )))
-    (start-process choice nil choice)))
-
-(defun scrot ()
-  "requires imagemagick"
-  (interactive)
-  (shell-command
-   (concat "import -window root ~/scrot" (number-to-string(random 1000000)) ".png")))
-
 (defun spacemacs/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
 current window."

@@ -4,9 +4,9 @@ wget https://dl.suckless.org/tools/dmenu-4.9.tar.gz
 
 tar xzvf dmenu-4.9.tar.gz
 
-cd dmenu-4.9
+sh
 
-#for patch in ../patches/*.diff; do patch -p1 < "$patch"; done
+cd dmenu-4.9
 
 cp ../savedconfig/mine.config.def.h config.h
 

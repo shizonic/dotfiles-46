@@ -6,8 +6,6 @@ tar xzvf dwm-6.2.tar.gz
 
 cd dwm-6.2
 
-for patch in ../patches/*.diff; do patch -p1 < "$patch"; done
-
 cp ../savedconfig/mine.config.def.h config.h
 
 make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2

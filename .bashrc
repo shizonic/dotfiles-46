@@ -30,5 +30,5 @@ lock() {
 }
 
 suspend() {
-    sudo echo mem > /sys/power/state
+    sudo sh -c 'echo mem > /sys/power/state'
 }

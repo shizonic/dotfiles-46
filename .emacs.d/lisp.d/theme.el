@@ -40,7 +40,7 @@
        (fringe-mode -1)
 
        (setq my-font "Liberation Mono")
-       (setq my-font-size '12)
+       (setq my-font-size '10)
 
        (defun my-font-resizer (x)
          (when (> x 0)

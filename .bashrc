@@ -8,11 +8,11 @@ PS1='$(pwd) $ '
 unlock() {
     # start gpg-agent
     gpg-connect-agent /bye
-    GPG_TTY=$(tty)
+    GPG_TTY="$(tty)"
     export GPG_TTY
 
     # start ssh-agent
-    eval $(ssh-agent)
+    eval "$(ssh-agent)"
     export SSH_AUTH_SOCK SSH_AGENT_PID
 
     # unlock them simultaneously with the help of `expect'

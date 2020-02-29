@@ -6,10 +6,20 @@
       display-time-day-and-date t)
 (display-time-mode 1)
 
-(use-package nofrils-acme-theme
+(use-package sexy-monochrome-theme
   :init
   (add-hook 'after-init-hook #'(lambda ()
-                                 (load-theme 'nofrils-sepia t))))
+                                 (load-theme 'sexy-monochrome t)))
+  :config
+  (with-eval-after-load 'company
+    (require 'color)
+    (let ((bg (face-attribute 'default :background)))
+      (custom-set-faces
+       `(company-tooltip ((t (:inherit default :background ,(color-lighten-name bg 2)))))
+       `(company-scrollbar-bg ((t (:background ,(color-lighten-name bg 10)))))
+       `(company-scrollbar-fg ((t (:background ,(color-lighten-name bg 5)))))
+       `(company-tooltip-selection ((t (:inherit font-lock-function-name-face))))
+       `(company-tooltip-common ((t (:inherit font-lock-constant-face))))))))
 
 (use-package minions
   :init

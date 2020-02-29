@@ -14,17 +14,19 @@
       load-prefer-newer t)
 
 (add-hook 'after-init-hook #'(lambda ()
-                               ;; kill unwanted initial buffers...
-                               (dolist (buffer '("*scratch*" "*straight-process*"))
-                                 (when (get-buffer buffer)
-                                   (kill-buffer buffer)))
+                               (progn
+                                 ;; kill unwanted initial buffers...
+                                 (dolist (buffer '("*scratch*" "*straight-process*"))
+                                   (when (get-buffer buffer)
+                                     (kill-buffer buffer)))
 
-                               ;; start an Emacs server...
-                               (require 'server)
-                               (or (server-running-p)
-                                   (server-start))
+                                 ;; start an Emacs server...
+                                 (require 'server)
+                                 (or (server-running-p)
+                                     (server-start))
 
-                               (find-file ".")))
+                                 (shell)
+                                 (delete-other-windows))))
 
 ;; straight.el for reproduceable package management...
 

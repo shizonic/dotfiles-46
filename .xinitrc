@@ -17,4 +17,6 @@ xset s off -dpms #Disable DPMS and prevent screen from blanking
 
 xsetroot -cursor_name left_ptr
 
+st &
+
 exec dwm

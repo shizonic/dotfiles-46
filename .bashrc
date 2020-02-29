@@ -28,3 +28,7 @@ lock() {
     pkill -u "$USER" ssh-agent
     pkill -u "$USER" gpg-agent
 }
+
+suspend() {
+    echo mem > /sys/power/state
+}

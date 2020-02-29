@@ -1,0 +1,25 @@
+sys_battery="/sys/class/power_supply/BAT0"
+set -- 99 80 40 20 10 5
+sleep 10
+
+export DISPLAY=":0"
+backlightcmd="lux -S"            ; pct="%"                      #uncomment for lux
+
+discharging_hook() {
+    # discharging
+    [ "$batt_percent" -lt 100 ] && [ "$batt_percent" -gt 5 ] && {
+        /root/pow bat
+        $backlightcmd "80$pct"
+    }
+
+    # 5% battery or less
+    [ "$batt_percent" -lt 6 ] && {
+        echo mem > /sys/power/state
+    }
+}
+
+charging_or_full_hook() {
+    # battery Charging / Full
+    /root/pow pow
+    $backlightcmd "100$pct"
+}

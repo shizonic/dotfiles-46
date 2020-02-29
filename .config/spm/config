@@ -3,14 +3,12 @@ set -- 99 80 40 20 10 5
 sleep 10
 
 export DISPLAY=":0"
-backlightcmd=""
-pct="%"
 
 discharging_hook() {
     # discharging
     [ "$batt_percent" -lt 100 ] && [ "$batt_percent" -gt 5 ] && {
         /root/pow bat
-        su foo -c 'lux -S 80%' 
+        su root -c 'lux -S 80%'
     }
 
     # 5% battery or less
@@ -22,5 +20,5 @@ discharging_hook() {
 charging_or_full_hook() {
     # battery Charging / Full
     /root/pow pow
-    su foo -c 'lux -S 100%' 
+    su root -c 'lux -S 100%'
 }

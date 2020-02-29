@@ -1,0 +1,2 @@
+#!/bin/sh
+~/.nix-profile/bin/google-chrome-stable --incognito google.com
